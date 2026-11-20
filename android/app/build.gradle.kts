@@ -146,7 +146,7 @@ val stageClinicalAsset by tasks.registering {
                   ${source.absolutePath}
 
                 Build it first:
-                  cd handover/app && python3 -I build.py
+                  cd app && python3 -I build.py
 
                 The HTML is not committed to the repository on purpose — the
                 single source of truth is labref_data_v1.10.js, and a committed

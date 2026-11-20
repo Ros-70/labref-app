@@ -43,21 +43,20 @@ jobs:
           python -m playwright install --with-deps chromium
 
       - name: Build the single-file app
-        working-directory: handover/app
+        working-directory: app
         run: python3 -I build.py
 
       # Methods 1 and 4 launch a browser. The suite honours CHROME_PATH and
       # otherwise falls back to Playwright's bundled Chromium, which is what
       # happens here.
       - name: Run all four verification methods
-        working-directory: handover
         run: bash qa/run_all.sh
 
       - name: Upload the verified build
         uses: actions/upload-artifact@v4
         with:
           name: labref-html
-          path: handover/app/LabRef_v1.10.html
+          path: app/LabRef_v1.10.html
           retention-days: 30
           if-no-files-found: error
 
@@ -88,26 +87,26 @@ jobs:
       # the build if it is absent, so building it here is what makes the APK
       # contain clinical content at all.
       - name: Build the single-file app
-        working-directory: handover/app
+        working-directory: app
         run: python3 -I build.py
 
       - name: Assemble debug APK
-        working-directory: handover/android
+        working-directory: android
         run: ./gradlew --no-daemon assembleDebug
 
       - name: Lint
-        working-directory: handover/android
+        working-directory: android
         run: ./gradlew --no-daemon lintDebug
 
       - name: Unit tests
-        working-directory: handover/android
+        working-directory: android
         run: ./gradlew --no-daemon testDebugUnitTest
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
           name: labref-debug-apk
-          path: handover/android/app/build/outputs/apk/debug/*.apk
+          path: android/app/build/outputs/apk/debug/*.apk
           retention-days: 30
           if-no-files-found: error
 
@@ -117,7 +116,7 @@ jobs:
         with:
           name: android-reports
           path: |
-            handover/android/app/build/reports/
+            android/app/build/reports/
           retention-days: 14
           if-no-files-found: ignore
 
@@ -152,7 +151,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
 
       - name: Build the single-file app
-        working-directory: handover/app
+        working-directory: app
         run: python3 -I build.py
 
       - name: Enable KVM for the emulator
@@ -169,7 +168,7 @@ jobs:
           target: google_apis
           arch: x86_64
           disable-animations: true
-          working-directory: handover/android
+          working-directory: android
           script: ./gradlew --no-daemon connectedDebugAndroidTest
 
       - name: Upload instrumentation report
@@ -177,7 +176,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: instrumentation-report
-          path: handover/android/app/build/reports/androidTests/
+          path: android/app/build/reports/androidTests/
           retention-days: 14
           if-no-files-found: ignore
 
@@ -208,7 +207,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
 
       - name: Build the single-file app
-        working-directory: handover/app
+        working-directory: app
         run: python3 -I build.py
 
       - name: Decode keystore if one is configured
@@ -225,7 +224,7 @@ jobs:
           fi
 
       - name: Build release bundle
-        working-directory: handover/android
+        working-directory: android
         env:
           LABREF_KEYSTORE: ${{ runner.temp }}/release.jks
           LABREF_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -237,6 +236,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: labref-release-aab
-          path: handover/android/app/build/outputs/bundle/release/*.aab
+          path: android/app/build/outputs/bundle/release/*.aab
           retention-days: 90
           if-no-files-found: error
