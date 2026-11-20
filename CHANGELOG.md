@@ -1,9 +1,81 @@
 # Changelog
 
-## v2.0 — IN DEVELOPMENT (branch `v2-data-model`)
+## v2.1 — reset, dialogs, and untrusted stored state
 
-v1.10 remains the shipped, frozen release on `main`. v2.0 exists to fix a
-defect found in hands-on use of the v1.10 APK, and is staged so each step is
+Reported from hands-on use of the installed APK: tapping **Reset all
+settings and local values** raised a dialog reading *The page at
+"https://appassets.androidplatform.net" says:* above the question, and
+accepting it did nothing — every saved My Lab value was still there.
+
+Both were real. The second one mattered: a reset that reports nothing and
+erases nothing leaves a clinician believing a shared or handed-over device
+holds no local overrides when it still does, and the Result Interpreter
+keeps grading against those overrides.
+
+**The dialog wording.** The app called `window.confirm()`. A WebView renders
+that with its own chrome, which names the origin the APK serves its assets
+from. Correct for a web page, wrong for something presented as an offline
+app, and worst on the destructive action, where it reads like a web page
+asking to delete the user's data. Replaced with in-app `ask()`/`say()`
+dialogs: themed, Escape- and backdrop-dismissible, and assertable from the
+QA suite by selector. The four `alert()` calls (backup restored, restore
+failed, profile imported, import failed) went the same way, and the reset
+now confirms in-app that it actually happened instead of saying nothing at
+all. `qa/audit_build.js` (method 3) fails the build if `alert`/`confirm`/
+`prompt` reappears anywhere in the shipped file — the guard strips comments
+first, so the comment explaining the rule doesn't trip it, and it is
+self-tested against an injected call.
+
+**Why reset erased nothing.** `Object.assign({}, defaults)` is a shallow
+copy, so every state object built that way shared one live reference to
+`defaults.local`, `defaults.panels` and `defaults.picker`. Those three are
+mutated in place (`S.local[id] = …`, `delete S.local[id]`,
+`S.picker.push(…)`), so `defaults` itself quietly accumulated the user's
+data — and reset rebuilt the state *from defaults*, handing the same
+polluted objects straight back. It reproduced exactly on the path a new
+user takes: install, save a value, reset. Fixed with a `freshState()` deep
+copy used at load, at restore and at reset. The reset also now clears the
+pre-rename `medref_v1` key: the passive migration path deliberately leaves
+it, but keeping a second full copy of values someone just chose to erase
+would make the button a lie.
+
+**Three more of the same kind, found while verifying the fix.** All state
+read off disk was trusted without checking, and all of it is reachable
+through the app's own Restore button, since a backup file is just
+user-supplied JSON:
+
+- `{"local":null}` or `{"favs":null}` threw on the first lookup and left the
+  Tests tab permanently blank — the app dead, with no way to clear storage
+  from a screen that won't render.
+- A patient mode outside the known values (`{"preg":"BOGUS"}`) threw nothing
+  and matched **no** range row at all, so a test opened with an empty
+  reference table and no error. The quiet one is the dangerous one.
+- An unknown theme id left the app unstyled.
+
+Only `panels` had been guarded, and only on load, not on restore. Replaced
+with a single `normalizeState()` that repairs every container and every
+patient-mode/appearance value, called on all three paths.
+
+**Also fixed:** a test's own **Clear all** discarded every value saved for
+that test with no confirmation, one tap from Save, with no undo — it now
+asks, naming the test, and stays silent when there is nothing to lose.
+`app/build.py` now fails if the data module's filename version and its
+`LABREF_VERSION` disagree; they already had (`labref_data_v2.0.js`
+declaring `2.0-dev`), which is how the app bar, the APK's `versionName` and
+the dataset could have drifted apart despite deriving from "one source of
+truth".
+
+New suite `qa/test_reset.py` (36 checks) covers all of it: the reported
+reset bug, cancel/Escape/backdrop, the legacy-key erase, every malformed
+state above, the Clear all confirmation, the backup round-trip, and a
+blanket assertion that **no native dialog is raised anywhere** in the run.
+
+---
+
+## v2.0 — the data-model rebuild (merged to `main`)
+
+v1.10 was the shipped, frozen release. v2.0 exists to fix a
+defect found in hands-on use of the v1.10 APK, and was staged so each step is
 CI-verified before the next begins.
 
 ### The defect

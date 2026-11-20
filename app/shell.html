@@ -287,6 +287,22 @@ input.fi:focus,select.fi:focus,textarea.fi:focus{border-color:var(--accent)}
 #nav button .ni{font-size:1.25rem;line-height:1}
 #nav button.on{color:var(--accent)}
 
+/* ===================== IN-APP DIALOG =====================
+   Replaces window.confirm()/alert(). A WebView renders those with its own
+   chrome, which prefixes the message with 'The page at
+   "https://appassets.androidplatform.net" says:' — the asset origin the
+   APK serves from. Correct for a web page, wrong for what the user sees
+   as an app, and alarming on a destructive action. This also makes the
+   dialogs themeable and testable with ordinary selectors. */
+#dlgWrap{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.45);padding:24px}
+#dlgWrap.on{display:flex}
+#dlg{background:var(--surface);color:var(--text);border-radius:14px;border:1px solid var(--border);
+  max-width:420px;width:100%;padding:20px;box-shadow:0 12px 40px rgba(0,0,0,.3)}
+#dlg h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+#dlg p{font-size:.92rem;line-height:1.55;color:var(--text2);white-space:pre-line}
+#dlg .btnrow{margin-top:18px}
+
 .empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:.9rem}
 .muted{color:var(--text2);font-size:.84rem}
 .handout{background:var(--surface);padding:18px;border-radius:10px;border:1px solid var(--border);
@@ -337,6 +353,17 @@ input.fi:focus,select.fi:focus,textarea.fi:focus{border-color:var(--accent)}
   <button data-nav="more"><span class="ni">⚙</span>More</button>
 </nav>
 
+<div id="dlgWrap" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+  <div id="dlg">
+    <h3 id="dlgTitle"></h3>
+    <p id="dlgBody"></p>
+    <div class="btnrow">
+      <button class="btn sec" id="dlgCancel">Cancel</button>
+      <button class="btn" id="dlgOk">OK</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /*__LABREF_DATA__*/
 </script>
@@ -371,7 +398,18 @@ const defaults = {
   picker:[], recent:[],
   panels:{}          /* persisted open/closed state of the Tests tab panels */
 };
-let S = Object.assign({}, defaults);
+/* A DEEP copy of defaults. Object.assign({}, defaults) is shallow, so every
+   state object built that way shared ONE live reference to defaults.local,
+   defaults.panels and defaults.picker. Since those are mutated in place
+   (S.local[id]=…, delete S.local[id], S.panels[id]=…, S.picker.push(…)),
+   the defaults object itself accumulated the user's data — and "Reset all
+   settings and local values", which rebuilt S from defaults, handed those
+   same polluted objects straight back. Reported from the APK: reset ran,
+   said nothing, and every saved lab value was still there. A reset that
+   silently fails to erase is worse than no reset button, because the
+   clinician believes the device is clean. */
+const freshState = () => JSON.parse(JSON.stringify(defaults));
+let S = freshState();
 /* Read the current key; fall back to the pre-rename key so a user who already
    saved their lab's values under MedRef does not silently lose them. The old
    key is left in place rather than deleted — migration is one-way and cheap,
@@ -380,11 +418,42 @@ let migratedFromLegacy = false;
 try {
   let raw = localStorage.getItem(LS);
   if(!raw){ raw = localStorage.getItem(LS_LEGACY); if(raw) migratedFromLegacy = true; }
-  if(raw) S = Object.assign({}, defaults, JSON.parse(raw));
+  if(raw) S = Object.assign(freshState(), JSON.parse(raw));
 } catch(e){}
-/* a stored blob written before panels existed, or holding an explicit null,
-   would otherwise make every panelOpen() lookup throw */
-if(!S.panels || typeof S.panels !== "object") S.panels = {};
+
+/* Everything above this line is untrusted input: a stored blob written by an
+   older build, a backup file the user restored, a hand-edited profile. The
+   app then indexes into S.local / S.favs / S.panels and compares S.sex /
+   S.age / S.preg without checking either. Two failure modes, both reachable
+   through the app's own Restore button:
+     - a null container ({"local":null}, {"favs":null}) throws on the first
+       lookup and leaves the Tests tab permanently blank — the app is simply
+       dead until storage is cleared, which the user has no way to do from a
+       screen that won't render;
+     - a patient mode that is not one of the known values ({"preg":"BOGUS"})
+       throws nothing at all and silently matches NO range row, so the test
+       opens with an empty reference table. In a clinical reference app that
+       quiet version is the more dangerous of the two.
+   Only panels was guarded before, and only on load, not on restore. */
+const AGES = ["neonate","infant","child","adolescent","adult"];
+const PREGS = ["none","T1","T2","T3"];
+function normalizeState(){
+  ["notes","local","panels"].forEach(k=>{
+    if(!S[k] || typeof S[k]!=="object" || Array.isArray(S[k])) S[k] = {};
+  });
+  ["favs","picker","recent"].forEach(k=>{ if(!Array.isArray(S[k])) S[k] = []; });
+  if(!THEME_LABELS.some(([t])=>t===S.theme)) S.theme = defaults.theme;
+  if(typeof S.fs!=="number" || !isFinite(S.fs) || S.fs<85 || S.fs>145) S.fs = defaults.fs;
+  if(S.units!=="conv" && S.units!=="si") S.units = defaults.units;
+  if(S.sex!=="M" && S.sex!=="F") S.sex = defaults.sex;
+  if(!AGES.includes(S.age)) S.age = defaults.age;
+  if(!PREGS.includes(S.preg)) S.preg = defaults.preg;
+  if(typeof S.localOnly !== "boolean") S.localOnly = defaults.localOnly;
+  ["labName","labAnalyser","labNabl"].forEach(k=>{
+    if(typeof S[k] !== "string") S[k] = defaults[k];
+  });
+}
+normalizeState();
 const save = () => { try{ localStorage.setItem(LS, JSON.stringify(S)); }catch(e){} };
 /* Write the migrated copy under the new key straight away, so the legacy
    fallback is needed exactly once and the two keys cannot drift apart. */
@@ -394,6 +463,37 @@ if(migratedFromLegacy) save();
 const esc = s => String(s==null?"":s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const $  = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
+
+/* ---- in-app dialogs ------------------------------------------------------
+   window.confirm()/alert() are never used. Inside the APK's WebView they
+   render with the browser's own chrome, which announces the asset origin
+   ('The page at "https://appassets.androidplatform.net" says:') above the
+   message — confusing in something presented as an offline app, and worst
+   of all on the destructive reset, where it reads like a web page asking
+   to delete the user's data. These render in-app instead: themed, keyboard
+   dismissible, and assertable from the QA suite by selector.
+   ask() resolves true/false; say() resolves when acknowledged. */
+let dlgResolve = null;
+function closeDlg(result){
+  $("#dlgWrap").classList.remove("on");
+  const r = dlgResolve; dlgResolve = null;
+  if(r) r(result);
+}
+function openDlg(title, body, opts){
+  opts = opts || {};
+  $("#dlgTitle").textContent = title;
+  $("#dlgBody").textContent  = body || "";
+  $("#dlgBody").style.display = body ? "" : "none";
+  const ok = $("#dlgOk"), cancel = $("#dlgCancel");
+  ok.textContent = opts.okLabel || "OK";
+  ok.classList.toggle("dgr", !!opts.danger);
+  cancel.style.display = opts.confirm ? "" : "none";
+  $("#dlgWrap").classList.add("on");
+  ok.focus();
+  return new Promise(res => { dlgResolve = res; });
+}
+const ask = (title, body, opts) => openDlg(title, body, Object.assign({confirm:true}, opts||{}));
+const say = (title, body) => openDlg(title, body, {confirm:false});
 
 /* Range text for one range object in the active unit system */
 function rangeText(r, units){
@@ -1187,7 +1287,22 @@ function renderDetail(){
     saveNote(t.id, $("#lcNote").value.trim());
     save(); renderDetail();
   };
-  $("#lcClear").onclick = ()=>{ delete S.local[t.id]; save(); renderDetail(); };
+  /* Destructive, sits one tap from Save, and throws away numbers the user
+     transcribed off their own lab's report — so it asks first, the same as
+     the global reset does. Clearing a test's values by mis-tap and only
+     noticing later, when the Interpreter silently grades against textbook
+     ranges again, is exactly the kind of quiet wrong answer this app
+     cannot afford. */
+  $("#lcClear").onclick = async ()=>{
+    if(!hasLocal(t.id)){ delete S.local[t.id]; save(); renderDetail(); return; }
+    const ok = await ask("Clear your values for " + t.name + "?",
+      "Every range, unit, method, critical value and note you have saved for "
+      + "this test on this device will be removed. Your other tests are not "
+      + "affected.",
+      { okLabel:"Clear this test", danger:true });
+    if(!ok) return;
+    delete S.local[t.id]; save(); renderDetail();
+  };
 }
 
 function tubeColor(tb){
@@ -1594,8 +1709,10 @@ function renderMyLab(){
       if(d.type!=="labref-lab-profile" && d.type!=="medref-lab-profile") throw 0;
       S.local=Object.assign({},S.local,d.local||{});
       S.labName=d.labName||S.labName; S.labAnalyser=d.labAnalyser||S.labAnalyser; S.labNabl=d.labNabl||S.labNabl;
-      save(); renderMyLab(); alert("Lab profile imported.");
-    }catch(err){ alert("That file is not a LabRef lab profile."); } };
+      normalizeState();
+      save(); renderMyLab();
+      say("Lab profile imported", "Your lab's saved values are now in use.");
+    }catch(err){ say("Import failed", "That file is not a LabRef lab profile."); } };
     r.readAsText(f); e.target.value="";
   };
 }
@@ -1650,12 +1767,31 @@ function renderMore(){
     r.onload=()=>{ try{ const d=JSON.parse(r.result);
       /* accept backups written by the pre-rename MedRef builds too */
       if(d.type!=="labref-backup" && d.type!=="medref-backup") throw 0;
-      S=Object.assign({},defaults,d); save(); applyTheme(); renderMode(); render(); alert("Backup restored.");
-    }catch(err){ alert("That file is not a LabRef backup."); } };
+      S=Object.assign(freshState(),d); normalizeState();
+      save(); applyTheme(); renderMode(); render();
+      say("Backup restored", "Your settings and saved lab values are back.");
+    }catch(err){ say("Restore failed", "That file is not a LabRef backup."); } };
     r.readAsText(f); e.target.value="";
   };
-  $("#bkReset").onclick = ()=>{ if(confirm("Erase all settings, favourites, notes and local lab values?")){
-    S=Object.assign({},defaults); save(); applyTheme(); renderMode(); render(); } };
+  $("#bkReset").onclick = async ()=>{
+    const ok = await ask("Reset LabRef?",
+      "This erases your theme and text size, units, patient mode, favourites, "
+      + "the test picker, and every lab value, method and note you have saved "
+      + "under My Lab.\n\nThe app's own reference data is not affected. This "
+      + "cannot be undone — use Backup everything first if you may want them back.",
+      { okLabel:"Erase everything", danger:true });
+    if(!ok) return;
+    S = freshState();
+    save();
+    /* The user asked for an erase, so the pre-rename copy goes too. The
+       passive migration path deliberately leaves medref_v1 in place, but
+       leaving a full second copy of the values someone just chose to erase
+       would make the button a lie — and a reload would migrate them back
+       the moment labref_v1 were ever cleared. */
+    try{ localStorage.removeItem(LS_LEGACY); }catch(e){}
+    applyTheme(); renderMode(); render();
+    await say("Reset complete", "Everything you had saved on this device has been erased.");
+  };
 }
 
 function download(name,txt){
@@ -1721,6 +1857,18 @@ function render(){
 /* version label in the app bar, written from the data module so the number
    has exactly one source of truth (LABREF_VERSION) */
 (()=>{ const v = $("#appVer"); if(v) v.textContent = "v " + LABREF_VERSION; })();
+
+/* in-app dialog wiring: OK confirms, Cancel and Escape and a tap on the
+   backdrop all cancel. A cancelled confirm must resolve false, never hang. */
+$("#dlgOk").onclick = ()=> closeDlg(true);
+$("#dlgCancel").onclick = ()=> closeDlg(false);
+$("#dlgWrap").onclick = e=>{ if(e.target === $("#dlgWrap")) closeDlg(false); };
+document.addEventListener("keydown", e=>{
+  if(!$("#dlgWrap").classList.contains("on")) return;
+  if(e.key === "Escape"){ e.preventDefault(); closeDlg(false); }
+  if(e.key === "Enter"){ e.preventDefault(); closeDlg(true); }
+});
+
 applyTheme(); renderMode(); go("tests"); render();
 
 })();

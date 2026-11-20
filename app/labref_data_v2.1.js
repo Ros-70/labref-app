@@ -78,7 +78,7 @@
    rows; falls back to colors when absent), additive, inv, uses, notes.
    ============================================================================ */
 
-const LABREF_VERSION = "2.0-dev";
+const LABREF_VERSION = "2.1";
 
 /* ---------------------------------------------------------------- CATEGORIES */
 const LABREF_CATEGORIES = [

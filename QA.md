@@ -16,8 +16,8 @@ cd handover/app && python3 -I build.py && cd .. && bash qa/run_all.sh
 ## Method 1 — behaviour in a real browser (Playwright)
 
 `qa/test_v11_features.py` and the companion suites
-(`test_panel.py`, `test_override_sweep.py`, `test5.py`, `test3.py`,
-`test6.py`, `checkbc.py`, `fstest.py`, `test_themes.py`).
+(`test_panel.py`, `test_override_sweep.py`, `test_reset.py`, `test5.py`,
+`test3.py`, `test6.py`, `checkbc.py`, `fstest.py`, `test_themes.py`).
 
 **What it does:** drives the shipped HTML in headless Chrome at a 390×844
 phone viewport, using real clicks, real typing and real page reloads — never
@@ -51,7 +51,14 @@ isolation property swept across every overridable row in the entire
 corpus (not one hand-picked example), plus the original defect scenario
 reproduced and refuted live — save Haemoglobin's Adult male row, switch
 to Newborn, confirm the textbook newborn range is shown rather than the
-saved adult value.
+saved adult value; (v2.1, `test_reset.py`) that "Reset all settings and
+local values" actually erases every container it claims to and that the
+erase survives a reload, that cancelling (button, Escape or a backdrop
+tap) changes nothing, that a test's own "Clear all" asks first, that a
+backup round-trips, and that **no native browser dialog is raised
+anywhere** in the run — plus seven malformed-stored-state cases (null
+containers, unknown patient mode, unknown theme) that previously either
+bricked the Tests tab or silently matched no range row at all.
 
 ---
 
@@ -93,7 +100,9 @@ conventional numbers quoted beside it looks completely normal on screen.
 
 ## Method 3 — built-artifact structural audit
 
-`qa/audit_build.js` — static analysis of the shipped `LabRef_v1.10.html`.
+`qa/audit_build.js` — static analysis of the shipped `LabRef_v*.html`
+(resolved by glob, so it always audits the current build rather than a
+version written into this document).
 
 **What it does:** treats the built file as the artifact under test, not the
 sources it came from.
@@ -117,7 +126,22 @@ correct data file and a correct shell can still produce a broken output.
   that produces it.
 - Rename hygiene: counts remaining `MedRef`/`medref` strings and asserts
   each one is in a migration or backward-compatibility path.
+- **No native browser dialogs** (new in v2.1) — `alert`/`confirm`/`prompt`
+  anywhere in the shipped file fails the build, and the in-app dialog host
+  (`#dlgWrap`) must be present. A WebView renders native dialogs with its
+  own chrome, announcing the asset origin
+  (`https://appassets.androidplatform.net`) to the user above the message;
+  that shipped once, on the destructive reset of all places. Comments are
+  stripped before the scan so the rule's own explanation doesn't trip it,
+  and the check is self-tested by injecting a real call into a copy of the
+  build.
 - Tag balance and self-containment; reports the final byte size.
+
+The build itself (`app/build.py`) also refuses to run if the data module's
+filename version and its `LABREF_VERSION` constant disagree — they had
+(`labref_data_v2.0.js` declaring `2.0-dev`), which is the one way the app
+bar, the APK's `versionName` and the dataset could drift apart despite all
+three deriving from "one source of truth".
 
 ---
 

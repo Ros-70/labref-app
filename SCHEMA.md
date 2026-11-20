@@ -1,13 +1,17 @@
-# LabRef Data Schema — v1.1
+# LabRef Data Schema
 
-The data file (`app/labref_data_v1.10.js`) is the single source of truth for
-all app content. The UI (`app/shell.html`) only ever reads it. **Do not
-rename fields** — the shell's JS reads them by exact name throughout, and
-renaming without updating every call site will silently break rendering.
+The data file (`app/labref_data_v*.js` — one per repository, the version in
+its name must match the `LABREF_VERSION` it declares, and `build.py` fails
+if they disagree) is the single source of truth for all app content. The UI
+(`app/shell.html`) only ever reads it. **Do not rename fields** — the
+shell's JS reads them by exact name throughout, and renaming without
+updating every call site will silently break rendering.
 
 The authoritative copy of this schema also lives as a comment block at the
-top of `labref_data_v1.10.js` itself — keep the two in sync if either
-changes. This document expands on it with worked examples.
+top of the data module itself — keep the two in sync if either changes.
+This document expands on it with worked examples. Neither this heading nor
+the text below names a version on purpose: both went stale through the v2.0
+rename while still claiming to describe the current file.
 
 ---
 

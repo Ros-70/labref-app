@@ -26,6 +26,22 @@ m = re.search(r'labref_data_v(.+)\.js$', os.path.basename(DATA))
 if not m:
     sys.exit('ERROR: cannot read a version token from ' + DATA)
 OUT = 'LabRef_v%s.html' % m.group(1)
+
+# The filename token and the module's own LABREF_VERSION are two statements of
+# the same fact, and the comment above claims they cannot drift. They could,
+# and had: labref_data_v2.0.js declared "2.0-dev", so the built file was
+# LabRef_v2.0.html while the app bar, the APK's versionName (Gradle reads
+# LABREF_VERSION) and the on-device version assertion all said 2.0-dev.
+# Harmless there, but the whole point of deriving the version from one place
+# is that a mismatch is impossible rather than merely unlikely.
+vm = re.search(r'LABREF_VERSION\s*=\s*"([^"]+)"', data)
+if not vm:
+    sys.exit('ERROR: LABREF_VERSION not found in ' + DATA)
+if vm.group(1) != m.group(1):
+    sys.exit('ERROR: version mismatch — %s is named for version %r but declares '
+             'LABREF_VERSION = %r. Rename the file or fix the constant so the '
+             'APK label, the app bar and the dataset cannot disagree.'
+             % (os.path.basename(DATA), m.group(1), vm.group(1)))
 shell = io.open(SHELL, encoding='utf-8').read()
 
 # strip research citation markup from content strings

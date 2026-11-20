@@ -112,6 +112,46 @@ if(medrefHits.length !== legit.length)
   warn('rename', `${medrefHits.length-legit.length} MedRef mention(s) outside the migration path`);
 notes.push(`legacy MedRef references: ${medrefHits.length} (all in migration/compat paths: ${medrefHits.length===legit.length})`);
 
+/* ---- 8b. no native browser dialogs ----
+   Reported from the installed APK: the reset button raised the WebView's own
+   confirm(), which prefixes the message with 'The page at
+   "https://appassets.androidplatform.net" says:'. Inside something presented
+   as an offline clinical app that reads like a web page asking to delete the
+   user's data, and on the destructive action of all places. The app uses its
+   own ask()/say() dialogs instead (#dlgWrap). This guards the class rather
+   than the one instance, because the next alert() someone adds would look
+   perfectly reasonable in the diff.
+   Matched on a call shape, then filtered to occurrences that are not inside
+   a comment — the fix's own comments necessarily name the functions they
+   replace, and a guard that trips on the explanation of why it exists is a
+   guard nobody keeps. Comment detection is line-based, which suits this
+   file's block-comment style and cannot be fooled into passing a real call:
+   a genuine `confirm(...)` sits on a line of code, not a comment line.
+   window.print() has no in-app equivalent and is deliberately not listed. */
+function stripComments(src){
+  let out = '', inBlock = false, inLine = false;
+  for (let i = 0; i < src.length; i++) {
+    const two = src.substr(i, 2);
+    if (inBlock) {
+      if (two === '*/') { inBlock = false; i++; }
+      continue;
+    }
+    if (inLine) { if (src[i] === '\n') { inLine = false; out += '\n'; } continue; }
+    if (two === '/*') { inBlock = true; i++; continue; }
+    if (two === '//') { inLine = true; i++; continue; }
+    out += src[i];
+  }
+  return out;
+}
+const nativeDialogs = [...stripComments(html).matchAll(/(^|[^.\w$])(alert|confirm|prompt)\s*\(/g)]
+  .map(m => m[2])
+  .filter((v, i, a) => a.indexOf(v) === i);
+if (nativeDialogs.length)
+  err('dialog', `native browser dialog call(s) found (${nativeDialogs.join(', ')}) — `
+    + `use the in-app ask()/say() helpers instead; a WebView renders these with `
+    + `its own chrome and announces the asset origin to the user`);
+if (!/id="dlgWrap"/.test(html)) err('dialog', 'the in-app dialog host (#dlgWrap) is missing from the shell');
+
 /* ---- 9. tag balance ---- */
 ['script','style','header','main','nav'].forEach(tag=>{
   const open  = (html.match(new RegExp(`<${tag}[\\s>]`,'gi'))||[]).length;
