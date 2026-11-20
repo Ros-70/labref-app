@@ -54,6 +54,7 @@ jobs:
 
       - name: Upload the verified build
         uses: actions/upload-artifact@v4
+        continue-on-error: true  # account-wide Actions storage quota is outside this repo's control; GitHub recalculates it every 6-12h
         with:
           name: labref-html
           path: app/LabRef_v1.10.html
@@ -104,6 +105,7 @@ jobs:
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
+        continue-on-error: true  # account-wide Actions storage quota is outside this repo's control; GitHub recalculates it every 6-12h
         with:
           name: labref-debug-apk
           path: android/app/build/outputs/apk/debug/*.apk
@@ -113,6 +115,7 @@ jobs:
       - name: Upload lint and test reports
         if: always()
         uses: actions/upload-artifact@v4
+        continue-on-error: true  # account-wide Actions storage quota is outside this repo's control; GitHub recalculates it every 6-12h
         with:
           name: android-reports
           path: |
@@ -174,6 +177,7 @@ jobs:
       - name: Upload instrumentation report
         if: always()
         uses: actions/upload-artifact@v4
+        continue-on-error: true  # account-wide Actions storage quota is outside this repo's control; GitHub recalculates it every 6-12h
         with:
           name: instrumentation-report
           path: android/app/build/reports/androidTests/
@@ -234,6 +238,7 @@ jobs:
 
       - name: Upload AAB
         uses: actions/upload-artifact@v4
+        continue-on-error: true  # account-wide Actions storage quota is outside this repo's control; GitHub recalculates it every 6-12h
         with:
           name: labref-release-aab
           path: android/app/build/outputs/bundle/release/*.aab
