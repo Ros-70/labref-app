@@ -285,6 +285,26 @@ asset origin. This test writes that exact shape, forces a real reload (not
 the same in-memory page the write ran against), and confirms the UI reads
 the saved value back unchanged.
 
+**A second real gap, more serious than the first, found by actually running
+this job instead of trusting it.** `.github/workflows/build.yml` gates the
+instrumented-smoke job behind `pull_request`/`workflow_dispatch` on purpose
+(an emulator is slow and occasionally flaky, so it shouldn't block every
+push) — but that also meant a plain push never compiles the `androidTest`
+source set at all (`assembleDebug`/`lintDebug`/`testDebugUnitTest` all skip
+it). Manually dispatching the full workflow to actually exercise the new
+round-trip test above found that `SmokeTest.kt` had never successfully
+compiled: `android/app/build.gradle.kts` had `buildConfig = false`, so
+every reference to `BuildConfig.VERSION_NAME` — in the pre-existing
+`versionMatchesTheShippedDataset`/`appRendersItsOwnUi` tests, not just the
+new one — was a compile error nobody had ever seen, because nothing had
+exercised `compileDebugAndroidTestKotlin` before. The smoke test existed
+specifically to catch host failures that ship "broken and silent"; it was
+itself broken and silent in exactly that way. Fixed by flipping
+`buildConfig` to `true` (the versionName it needs is already set in
+`defaultConfig`, so no further wiring). A standing reminder for future
+stages: a CI job that's gated off the default path needs to actually be
+run, not just read, before trusting what it would have said.
+
 Merged `v2-data-model` into `main` once all of the above was CI-green —
 closing out the rebuild this CHANGELOG opens with.
 

@@ -135,10 +135,16 @@ android {
     }
 
     buildFeatures {
-        // No Compose, no view binding, no BuildConfig fields needed. Every
-        // feature left off is one less thing in the dependency graph that can
-        // break an unattended build.
-        buildConfig = false
+        // No Compose, no view binding. BuildConfig IS needed -- SmokeTest.kt
+        // (androidTest) reads BuildConfig.VERSION_NAME to assert the APK's
+        // own version label matches the clinical dataset packaged inside it.
+        // Found broken (buildConfig=false here, left over from before that
+        // test existed) only once the instrumented-smoke job was actually
+        // run end-to-end for the first time, in Stage 4 -- compileDebugKotlin
+        // for the main app module never touches androidTest sources, and a
+        // normal push doesn't run connectedDebugAndroidTest, so nothing had
+        // ever compiled this test file against a real Gradle config before.
+        buildConfig = true
     }
 
     packaging {
