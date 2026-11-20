@@ -38,7 +38,15 @@ state and persisted collapse; the app-bar version label and that it renders
 smaller than the app name; patient-mode range matching across a 24-case
 specificity matrix; all six themes; the blood-culture tube's
 brand-specific-caps handling; the clinician/patient split in the prep
-handout.
+handout; (Stage 3, new) that a My Lab override saved against one
+demographic row never bleeds into another row on the same component (saved
+against HDL's male row, confirmed absent from HDL's female row and from
+every other test's `byRid` store); that a legacy-shaped pre-Stage-3 override
+is surfaced as an orphan rather than silently becoming the active range; that
+a locked row (`dx`/`target`, or a `cutoff` row on an assayDep:false test)
+renders no input and shows the lock message; that an assayDep:true cutoff
+row (troponin) does render an input and that a saved critical value there
+feeds the Result Interpreter.
 
 ---
 

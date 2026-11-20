@@ -181,10 +181,11 @@ v2.0. One of:
 
 This exists because `ranges[]` mixes two fundamentally different things a lab
 value can be compared against, and conflating them was the root cause of two
-separate bugs (see CHANGELOG's Stage 2a/2b). **It is why My Lab overrides will
-be restricted to `ref`/`method` rows in Stage 3** — a lab can publish its own
-reference interval, but should never be able to silently redefine a
-diagnostic threshold or treatment target.
+separate bugs (see CHANGELOG's Stage 2a/2b). **It is why My Lab overrides are
+restricted to `ref`/`method` rows (plus `cutoff` rows on assayDep tests —
+see §3), as of Stage 3** — a lab can publish its own reference interval, but
+should never be able to silently redefine a diagnostic threshold or
+treatment target.
 
 `kind` is deliberately **not** part of a rid's frozen identity fingerprint
 (unlike `sex`/`age`/`preg`/analyte) — it is pure, correctable content
@@ -325,24 +326,78 @@ one JSON blob, `S`. The fields that matter for content work:
 S.local = {
   "<test-id>": {
     note: "free-text notes (TAT, send-out lab, sample quirks)",
-    comp: {
-      "<component-key-or-_>": {
-        lo: "string", hi: "string", unit: "string",
-        crit: "string", method: "string"
-      }
+    assay: {
+      "<component-key-or-_>": { unit: "string", method: "string", crit: "string" }
+    },
+    byRid: {
+      "<rid>": { lo: "string", hi: "string" }
     }
   }
 }
 ```
 
-For an ordinary (non-panel) test, the single override box is stored under
-the synthetic key `"_"`. For a panel test, each component gets its own
-entry keyed by its `analyte.key`. **Never assume a flat
-`S.local[id].lo`/`.hi`/`.crit` shape** — that was the v1.0-prototype bug;
-everything now goes through `S.local[id].comp[key]`. The helper functions
-`localBlob()`, `compOverride()`, `saveComponent()`, `saveNote()`, and
-`hasLocal()` in `shell.html` are the only sanctioned way to read or write
-this — don't access `S.local` directly from new code.
+**Added in v2.0 Stage 3**, replacing a flat per-component shape
+(`comp:{key:{lo,hi,unit,crit,method}}`) that was itself a replacement for the
+original v1.0-prototype shape (`S.local[id].lo`/`.hi`/`.crit` directly) — see
+CHANGELOG's Stage 3 for why: a per-component override carries no demographic
+scope, so one saved value silently applied to every stratum of that
+component, including ones it was never measured against (a saved adult-male
+haemoglobin range displayed, and graded against, as the newborn range too).
+
+The split is deliberate and the two halves are **not** interchangeable:
+
+- **`assay`** holds what genuinely is component-level, not row-level — the
+  unit your lab reports in, the analyser/method name, and your lab's
+  critical/panic value. These don't vary by patient, so they're keyed by
+  `analyte.key` (or `"_"` for a non-panel test), the same key used throughout
+  §2b. An entry only persists once `method` or `crit` is actually filled in —
+  the unit field is always pre-filled with a textbook default and therefore
+  never meaningfully blank, so `unit` alone is deliberately excluded from
+  the "is this worth saving" check; saving one without touching it would
+  otherwise write a phantom entry for every component on every save.
+- **`byRid`** holds the actual lo/hi numbers, one entry per **row**, keyed by
+  that row's permanent `rid` (§2a) — never by component, sex, age, or preg
+  individually; the rid already encodes the full stratum. Only rows where
+  `overridableKind(r, t)` is true may ever get an entry here:
+
+  ```js
+  function overridableKind(r, t){
+    return r.kind==="ref" || r.kind==="method" || r.kind==null
+         || (r.kind==="cutoff" && !!t.assayDep);
+  }
+  ```
+
+  `ref`/`method` rows (and legacy rows with no `kind` at all) are always
+  overridable — a lab publishing its own reference interval is exactly what
+  My Lab exists for. `cutoff` rows are overridable **only** when the test
+  carries `assayDep:true` (D-dimer, NT-proBNP, drug levels, serology index
+  cutoffs — the threshold shifts with the assay, so "your lab's cutoff" is a
+  real thing). SAAG's cutoff stays locked: its test is `assayDep:false`, so
+  the threshold is a published constant, not something the local analyser
+  changes. `dx`, `target`, and `note` rows are **never** overridable, on any
+  test — a lab doesn't get to redefine a diagnostic band or a treatment
+  target, only report its own measurement against one.
+
+**A saved value whose rid no longer maps onto an overridable row** — the row
+was retired, reclassified to a locked `kind`, or the value predates Stage 3
+and is still in the old `comp` shape — is never silently applied and never
+silently dropped. `orphanedOverrides(t)` lists each one in plain language so
+the My Lab screen can surface it for the user to re-enter or clear; see
+`myLabBlockHtml()` in `shell.html`.
+
+**`effectiveBounds(t, r)`** is the single function that decides a row's
+active numbers — a saved `byRid` override if one exists and the row is
+overridable, otherwise the textbook `conv`/`si` bounds. Both the ref/method
+comparison (`activeRange()`) and the value-ladder classifier
+(`classifyAgainstLadder()` → `bandBounds()`) read through this one function,
+so an override on an assayDep cutoff row feeds both without a second,
+independently-maintained copy of the same lookup.
+
+The helper functions `localBlob()`, `overridableKind()`, `assayOverride()`,
+`ridOverride()`, `saveAssay()`, `saveRid()`, `saveNote()`, `hasLocal()`,
+`orphanedOverrides()`, and `effectiveBounds()` in `shell.html` are the only
+sanctioned way to read or write this — don't access `S.local` directly from
+new code.
 
 ### Collapse state (`S.panels`)
 

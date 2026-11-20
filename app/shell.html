@@ -518,20 +518,24 @@ function ladderRowsFor(t, key){
   const rows = comps ? rowsFor(t, key || comps[0].key) : t.ranges;
   return rows.filter(r=> (r.kind==="dx"||r.kind==="cutoff"||r.kind==="target") && rangeMatches(r));
 }
-function bandBounds(r){
-  const u = S.units==="si" ? r.si : r.conv;
-  return [ u&&u.lo!=null ? u.lo : -Infinity, u&&u.hi!=null ? u.hi : Infinity ];
+/* t is threaded through every helper below (added in Stage 3) so a local
+   override — only ever possible on a cutoff row when the test is
+   assayDep (see overridableKind()) — is honoured in the ladder the same
+   way it's honoured in the ref/method comparison, via effectiveBounds(). */
+function bandBounds(t, r){
+  const eb = effectiveBounds(t, r);
+  return [ eb.lo!=null ? eb.lo : -Infinity, eb.hi!=null ? eb.hi : Infinity ];
 }
 /* True when every pair of rows is either non-overlapping or one fully
    contains the other (a severity refinement, e.g. "deficient <20" wholly
    containing "severely deficient <10") — the two shapes a real value
    ladder takes. Any other overlap means picking between them needs
    something a number alone can't supply. */
-function isValueLadder(rows){
-  const withBounds = rows.filter(r=>{ const u=S.units==="si"?r.si:r.conv; return u && (u.lo!=null||u.hi!=null); });
+function isValueLadder(t, rows){
+  const withBounds = rows.filter(r=>{ const eb=effectiveBounds(t,r); return eb.lo!=null||eb.hi!=null; });
   if(withBounds.length < rows.length) return false;   // a non-numeric row can't be placed on the axis
   for(let i=0;i<withBounds.length;i++) for(let j=i+1;j<withBounds.length;j++){
-    const [alo,ahi]=bandBounds(withBounds[i]), [blo,bhi]=bandBounds(withBounds[j]);
+    const [alo,ahi]=bandBounds(t,withBounds[i]), [blo,bhi]=bandBounds(t,withBounds[j]);
     if(alo<bhi && blo<ahi){                            // intervals overlap at all
       const nested = (alo<=blo && bhi<=ahi) || (blo<=alo && ahi<=bhi);
       if(!nested) return false;
@@ -547,10 +551,10 @@ function isValueLadder(rows){
    case: only one "band" exists at all) — returns the nearest edge row
    instead, flagged so the caller reports "below/above" rather than
    pretending the value matched it. */
-function bandForValue(rows, v){
+function bandForValue(t, rows, v){
   let best=null, bestWidth=Infinity;
   rows.forEach(r=>{
-    const [lo,hi] = bandBounds(r);
+    const [lo,hi] = bandBounds(t,r);
     if(v>=lo && v<hi){
       const w = hi-lo;
       if(w<bestWidth){ bestWidth=w; best=r; }
@@ -559,7 +563,7 @@ function bandForValue(rows, v){
   if(best) return { row:best, dir:null };
   let nearest=null, nearestDist=Infinity, nearestDir=null;
   rows.forEach(r=>{
-    const [lo,hi] = bandBounds(r);
+    const [lo,hi] = bandBounds(t,r);
     const dist = v<lo ? lo-v : v-hi;
     const dir = v<lo ? "below" : "above";
     if(dist<nearestDist){ nearestDist=dist; nearest=r; nearestDir=dir; }
@@ -574,8 +578,8 @@ function bandForValue(rows, v){
 function classifyAgainstLadder(t, key, v){
   const rows = ladderRowsFor(t, key);
   if(!rows.length) return null;
-  if(rows.length===1 || isValueLadder(rows)){
-    const picked = bandForValue(rows, v);
+  if(rows.length===1 || isValueLadder(t, rows)){
+    const picked = bandForValue(t, rows, v);
     return picked ? { row:picked.row, dir:picked.dir } : null;
   }
   return { needsChoice:true, choices: rows };
@@ -593,67 +597,172 @@ function componentUnit(t, an){
 }
 
 /* ---- local ("My Lab") override storage ----------------------------------
-   Normalised shape: S.local[id] = { note, comp:{ [key]: {lo,hi,unit,crit,method} } }
-   key is the analyte key for a panel test, or "_" for an ordinary test.
-   Transparently reads the flat shape used before panels existed, so any
-   value already saved on a device keeps working. */
+   v2.0 Stage 3 shape: S.local[id] = { note, assay:{[key]:{unit,method,crit}},
+   byRid:{[rid]:{lo,hi}} }. An override is now scoped to the SPECIFIC
+   published row (rid) it replaces, not to the whole component — this is the
+   actual fix for the defect this rebuild exists for (see CHANGELOG's "The
+   defect"): the old shape keyed an override by component alone, with no
+   demographic dimension at all, so a saved "adult male" value silently
+   applied to every stratum of that component, including newborn and
+   pregnant patients. unit/method/crit stay at the assay (component) level,
+   because a lab's own analyser and critical-value policy don't vary by
+   patient demographic the way its reference numbers do.
+   overridableKind() gates which rows may ever carry a byRid entry: a lab can
+   publish its own reference interval (kind ref/method), and — when the test
+   itself is flagged assayDep — its own assay-specific decision cutoff, but
+   it can never redefine a diagnostic band or a guideline treatment target
+   (kind dx/target), which are set by clinical consensus, not the local
+   analyser. */
+function overridableKind(r, t){
+  return r.kind==="ref" || r.kind==="method" || r.kind==null || (r.kind==="cutoff" && !!t.assayDep);
+}
 function localBlob(id){
   const L = S.local[id];
-  if(!L) return { note:"", comp:{} };
-  if(L.comp) return L;
-  return { note:L.note||"", comp:{ _:{ lo:L.lo, hi:L.hi, unit:L.unit, crit:L.crit, method:L.method } } };
+  if(!L) return { note:"", assay:{}, byRid:{} };
+  if(L.byRid || L.assay) return { note:L.note||"", assay:L.assay||{}, byRid:L.byRid||{} };
+  /* Pre-Stage-3 shape (comp:{key:{lo,hi,unit,crit,method}}), or the even
+     older flat single-component shape before panels existed. Never silently
+     applied under the new rid-scoped lookup — surfaced instead via
+     orphanedOverrides() so nothing a clinician saved just vanishes, or worse,
+     silently reapplies to the wrong stratum. */
+  const legacy = L.comp ? L.comp : { _:{ lo:L.lo, hi:L.hi, unit:L.unit, crit:L.crit, method:L.method } };
+  return { note:L.note||"", assay:{}, byRid:{}, legacy };
 }
-function compOverride(id, key){
-  const c = localBlob(id).comp[key||"_"];
-  if(!c) return null;
-  if((c.lo==null||c.lo==="") && (c.hi==null||c.hi==="") && !c.crit) return null;
-  return c;
+function commitLocal(id, L){
+  const empty = !L.note && !Object.keys(L.assay).length && !Object.keys(L.byRid).length;
+  if(empty) delete S.local[id];
+  else S.local[id] = { note:L.note, assay:L.assay, byRid:L.byRid };
 }
-function saveComponent(id, key, data){
+function assayOverride(id, key){
+  const a = localBlob(id).assay[key||"_"];
+  if(!a) return null;
+  /* Unit alone never counts as "saved" — the unit field is pre-filled with
+     the textbook default so the input is never blank, and that default
+     left untouched carries no information worth persisting or badging as
+     local. Only a method or a critical value, actually typed, does. */
+  if(!a.method && !a.crit) return null;
+  return a;
+}
+function ridOverride(id, rid){
+  const o = localBlob(id).byRid[rid];
+  if(!o) return null;
+  if((o.lo==null||o.lo==="") && (o.hi==null||o.hi==="")) return null;
+  return o;
+}
+function saveAssay(id, key, data){
   const L = localBlob(id);
-  L.comp[key||"_"] = data;
-  Object.keys(L.comp).forEach(k=>{
-    const c = L.comp[k];
-    if(!(c.lo||c.hi||c.crit||c.method)) delete L.comp[k];
-  });
-  if(Object.keys(L.comp).length===0 && !L.note) delete S.local[id];
-  else S.local[id] = L;
+  L.assay[key||"_"] = data;
+  Object.keys(L.assay).forEach(k=>{ const a=L.assay[k]; if(!(a.method||a.crit)) delete L.assay[k]; });
+  commitLocal(id, L);
+}
+function saveRid(id, rid, data){
+  const L = localBlob(id);
+  L.byRid[rid] = data;
+  Object.keys(L.byRid).forEach(k=>{ const o=L.byRid[k]; if(!(o.lo||o.hi)) delete L.byRid[k]; });
+  commitLocal(id, L);
 }
 function saveNote(id, note){
-  const L = localBlob(id); L.note = note;
-  if(Object.keys(L.comp).length===0 && !note) delete S.local[id];
-  else S.local[id] = L;
+  const L = localBlob(id);
+  L.note = note;
+  commitLocal(id, L);
 }
 function hasLocal(id){
   const t = testById(id); if(!t) return false;
   const L = localBlob(id);
   if(L.note) return true;
-  return Object.keys(L.comp).some(k=>{ const c=L.comp[k]; return !!(c.lo||c.hi||c.crit||c.method); });
+  if(Object.keys(L.assay).some(k=>{ const a=L.assay[k]; return !!(a.method||a.crit); })) return true;
+  if(Object.keys(L.byRid).some(k=>{ const o=L.byRid[k]; return !!(o.lo||o.hi); })) return true;
+  if(L.legacy) return true;
+  return false;
+}
+/* Every stored value for this test that no longer maps onto a currently-
+   overridable row: a rid retired or reclassified out of ref/method/
+   assayDep-cutoff since the value was saved, an assay entry for a component
+   that no longer exists, or data in a pre-Stage-3 shape. Surfaced in the My
+   Lab editor rather than silently dropped or silently misapplied — the
+   clinician decides whether to re-enter it against the row it now belongs
+   to, or clear it. */
+function orphanedOverrides(t){
+  const L = localBlob(t.id);
+  const out = [];
+  const fmt = o => [o.lo&&o.hi?`${o.lo}–${o.hi}`:(o.lo?`≥${o.lo}`:o.hi?`<${o.hi}`:null)].filter(Boolean).join("");
+  if(L.legacy){
+    Object.keys(L.legacy).forEach(key=>{
+      const c = L.legacy[key];
+      if(!(c.lo||c.hi||c.crit||c.method)) return;
+      const an = (componentsOf(t)||[]).find(a=>a.key===key);
+      const label = an ? an.label+": " : "";
+      out.push(label+"saved before this app version tracked which row a value belongs to — "+
+        [fmt(c), c.unit, c.method?`(${c.method})`:null, c.crit?`critical: ${c.crit}`:null].filter(Boolean).join(" "));
+    });
+  }
+  const validRids = new Set(t.ranges.filter(r=>overridableKind(r,t)).map(r=>r.rid));
+  Object.keys(L.byRid).forEach(rid=>{
+    const o = L.byRid[rid]; if(!(o.lo||o.hi)) return;
+    if(validRids.has(rid)) return;
+    const row = t.ranges.find(r=>r.rid===rid);
+    out.push(row
+      ? `"${row.grp}" is no longer an editable row (reclassified as ${row.kind||"a guideline band"}) — your saved value (${fmt(o)}) no longer applies.`
+      : `A saved value for a row that no longer exists on this test — your lab's number (${fmt(o)}) is no longer used.`);
+  });
+  const validKeys = new Set([...(componentsOf(t)||[]).map(a=>a.key), "_"]);
+  Object.keys(L.assay).forEach(key=>{
+    const a = L.assay[key]; if(!(a.method||a.crit)) return;
+    if(validKeys.has(key)) return;
+    out.push(`A saved unit/method/critical value for a component that no longer exists on this test.`);
+  });
+  return out;
+}
+/* Short summary of what's saved for one test, for the My Lab index list —
+   every overridden row's own label and numbers, plus the first saved
+   method (labs normally run one assay per test, so one is enough to show
+   at a glance; the test's own detail page has the full per-component
+   breakdown). */
+function summarizeLocal(t){
+  const L = localBlob(t.id);
+  const ranges = Object.keys(L.byRid).map(rid=>{
+    const o = L.byRid[rid]; if(!(o.lo||o.hi)) return null;
+    const row = t.ranges.find(r=>r.rid===rid);
+    const val = [o.lo,o.hi].filter(v=>v).join(" – ");
+    return row ? `${row.grp}: ${val}` : val;
+  }).filter(Boolean);
+  const method = Object.values(L.assay).map(a=>a.method).filter(Boolean)[0] || "";
+  return { ranges, method };
 }
 const num = v => (v===""||v==null||isNaN(parseFloat(v))) ? null : parseFloat(v);
 
-/* Local override takes priority when present, for the given component
-   (omit key for an ordinary single-analyte test). forcedRid lets a caller
-   that has already resolved a tie (see tiedCandidates()) pin the exact row
-   instead of falling through to bestRange()'s guess. */
+/* The bounds actually in force for one range row: the clinician's own saved
+   value when the row is overridable and one is saved, otherwise the
+   textbook number. Used by BOTH the ref/method comparison (activeRange())
+   and the value-ladder classification (classifyAgainstLadder()), so a local
+   override is honoured wherever that row's numbers are consulted. */
+function effectiveBounds(t, r){
+  if(overridableKind(r, t)){
+    const ov = ridOverride(t.id, r.rid);
+    if(ov) return { lo:num(ov.lo), hi:num(ov.hi), local:true };
+  }
+  const u = S.units==="si" ? r.si : r.conv;
+  return { lo: u&&u.lo!=null?u.lo:null, hi: u&&u.hi!=null?u.hi:null, local:false };
+}
+
+/* The ref/method row in force for the current patient mode, with any saved
+   local override substituted for its numbers — never its label: "grp"
+   always names the real demographic group an override applies to, so a
+   clinician is never shown a bare "Your lab" with no indication of which
+   stratum it is (the defect this rebuild exists to fix). forcedRid lets a
+   caller that has already resolved a tie (see tiedCandidates()) pin the
+   exact row instead of falling through to bestRange()'s guess. */
 function activeRange(t, key, forcedRid){
   const comps = componentsOf(t);
   const compKey = comps ? (key || comps[0].key) : null;
-  const ov = compOverride(t.id, compKey);
-  /* An override only replaces the numeric range when it actually carries a
-     lower or upper limit. A clinician who has saved ONLY a critical/panic
-     value (no lo/hi) still needs the textbook range for normal/high/low
-     comparison — otherwise the Result Interpreter would silently report
-     "no range available" for every test with a crit-only override. */
-  const ovHasRange = ov && ((ov.lo!=null && ov.lo!=="") || (ov.hi!=null && ov.hi!==""));
-  if(ovHasRange) return { local:true, grp:"Your lab", lo:num(ov.lo), hi:num(ov.hi), unit:ov.unit };
   const tie = tiedCandidates(t, compKey);
   let r = null;
   if(forcedRid && tie) r = tie.find(x=>x.rid===forcedRid) || null;
   if(!r) r = bestRange(t, compKey);
   if(!r) return null;
-  const u = S.units==="si" ? r.si : r.conv;
-  return { local:false, grp:r.grp, lo:u&&u.lo!=null?u.lo:null, hi:u&&u.hi!=null?u.hi:null, txt:u&&u.txt,
+  const eb = effectiveBounds(t, r);
+  return { local:eb.local, grp:r.grp, lo:eb.lo, hi:eb.hi,
+           txt: eb.local ? null : (S.units==="si"?r.si:r.conv).txt,
            tie: (!forcedRid && !!tie) || null };
 }
 
@@ -843,7 +952,6 @@ function qualitativeTest(t){ return t.units.conv==="Qualitative"||t.units.conv==
 function componentRangeHtml(t, an){
   const key = an ? an.key : null;
   const cu = componentUnit(t, an);
-  const ov = compOverride(t.id, key||"_");
   /* A genuine tie (see tiedCandidates()) means more than one row equally
      matches the current patient mode — e.g. ESR "male <50y" and "male
      ≥50y" both just match sex=male, age=adult. Highlighting only the
@@ -864,19 +972,24 @@ function componentRangeHtml(t, an){
     ? rowsFor(t,key).filter(r=>rangeMatches(r) && r.kind!=="ref" && r.kind!=="method" && r.kind!=="note")
     : null;
   const highlightSet = tie || (demoFallback && demoFallback.length ? demoFallback : null);
+  /* Overrides are per-row (per-rid) since Stage 3 — each row shows its own
+     saved value inline, under its own textbook number, rather than one
+     summary row standing in for the whole component. S.localOnly swaps the
+     textbook number out for the override on just the rows that have one;
+     rows with nothing saved are unaffected either way. */
   let rows = "";
-  if(ov){
-    rows += `<tr class="localrow"><td class="grp"><b>Your lab</b>${ov.method?'<br><span class="muted">'+esc(ov.method)+'</span>':''}</td>
-      <td class="val">${esc((ov.lo||"")+(ov.lo&&ov.hi?" – ":"")+(ov.hi||""))} ${esc(ov.unit||cu.conv||"")}</td></tr>`;
-  }
-  if(!(S.localOnly && ov)){
-    rowsFor(t,key).forEach(r=>{
-      const m = highlightSet ? highlightSet.includes(r) : (r===br);
-      const unitSuffix = qualitativeTest(t) ? "" : " "+esc(S.units==="si"?cu.si:cu.conv);
-      const rtxt = rangeText(r,S.units);
-      rows += `<tr class="${m?'match':''}"><td class="grp">${esc(r.grp)}</td><td class="val${rtxt.length>24?' wrap':''}">${rtxt}${unitSuffix}</td></tr>`;
-    });
-  }
+  rowsFor(t,key).forEach(r=>{
+    const m = highlightSet ? highlightSet.includes(r) : (r===br);
+    const unitSuffix = qualitativeTest(t) ? "" : " "+esc(S.units==="si"?cu.si:cu.conv);
+    const rtxt = rangeText(r,S.units);
+    const ov = overridableKind(r,t) ? ridOverride(t.id, r.rid) : null;
+    const ovTxt = ov ? esc((ov.lo||"")+(ov.lo&&ov.hi?" – ":"")+(ov.hi||""))+unitSuffix : "";
+    let valHtml;
+    if(ov && S.localOnly) valHtml = `${ovTxt} <span class="badge b-local">Your lab</span>`;
+    else if(ov) valHtml = `${rtxt}${unitSuffix}<br><span class="muted">Your lab: ${ovTxt}</span> <span class="badge b-local" style="font-size:.65rem">Your lab</span>`;
+    else valHtml = `${rtxt}${unitSuffix}`;
+    rows += `<tr class="${m?'match':''}"><td class="grp">${esc(r.grp)}</td><td class="val wrap">${valHtml}</td></tr>`;
+  });
   let footnote = "";
   if(!qualitativeTest(t) && !cu.noConvert){
     const multi = highlightSet && highlightSet.length>1;
@@ -915,25 +1028,52 @@ function rangeSectionHtml(t){
 }
 
 /* "Your lab's values" block body — one override sub-form per component. */
+/* "Your lab's values" block body — assay-level unit/method/critical value
+   per component, plus one lo/hi override input per overridable row
+   (ref/method always, cutoff only on an assayDep test — see
+   overridableKind()). A diagnostic band or treatment target is a guideline
+   fixed by clinical consensus, not a lab measurement, so it is never
+   offered an input here; its rows are named instead, so it's clear nothing
+   is missing by accident. */
 function myLabBlockHtml(t){
   const comps = componentsOf(t);
-  const Lb = localBlob(t.id);
   const list = comps || [null];
+  const orphans = orphanedOverrides(t);
   let html = `<p class="muted">Stored on this device only. Overrides the textbook range above and is used by the Result Interpreter.</p>`;
+  if(orphans.length){
+    html += `<div class="alert warn"><b>${orphans.length===1?"A saved value no longer applies":"Saved values no longer apply"}:</b>
+      <ul class="lst" style="margin:6px 0 0">${orphans.map(o=>`<li>${esc(o)}</li>`).join("")}</ul>
+      Use "Clear all" below, or re-enter it against the row it now belongs to.</div>`;
+  }
   list.forEach(an=>{
-    const key = an ? an.key : "_";
-    const c = Lb.comp[key] || {};
+    /* rowsFor() special-cases a literal null key for a non-panel test
+       (its rows carry no .analyte at all) -- "_" is only the storage key
+       used once persisted, so the two must not be conflated here. */
+    const key = an ? an.key : null;
+    const a = assayOverride(t.id, key) || {};
     const cu = componentUnit(t, an);
-    html += `<div class="mylab-comp" data-key="${esc(key)}">
+    const rows = rowsFor(t, key);
+    const editable = rows.filter(r=>overridableKind(r,t));
+    const locked = rows.filter(r=>!overridableKind(r,t) && r.kind!=="note");
+    html += `<div class="mylab-comp" data-key="${esc(key||"_")}">
       ${an?`<div class="comp-h">${esc(an.label)}</div>`:""}
-      <label class="fl">Lower limit</label><input class="fi lc-lo" value="${esc(c.lo||"")}" inputmode="decimal">
-      <label class="fl">Upper limit</label><input class="fi lc-hi" value="${esc(c.hi||"")}" inputmode="decimal">
-      <label class="fl">Unit as your lab reports it</label><input class="fi lc-unit" value="${esc(c.unit||cu.conv||unitLabel(t))}">
-      <label class="fl">Your critical / panic value</label><input class="fi lc-crit" value="${esc(c.crit||"")}" placeholder="e.g. &lt;2.5 or &gt;6.5">
-      <label class="fl">Method / analyser</label><input class="fi lc-method" value="${esc(c.method||"")}" placeholder="e.g. CLIA, Beckman DxI 800">
+      <label class="fl">Unit as your lab reports it</label><input class="fi lc-unit" value="${esc(a.unit||cu.conv||unitLabel(t))}">
+      <label class="fl">Method / analyser</label><input class="fi lc-method" value="${esc(a.method||"")}" placeholder="e.g. CLIA, Beckman DxI 800">
+      <label class="fl">Your critical / panic value</label><input class="fi lc-crit" value="${esc(a.crit||"")}" placeholder="e.g. &lt;2.5 or &gt;6.5">
+      ${editable.length ? editable.map(r=>{
+          const ov = ridOverride(t.id, r.rid) || {};
+          return `<div class="mylab-rid" data-rid="${esc(r.rid)}" style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)">
+            <label class="fl">${esc(r.grp)} <span class="muted">(textbook: ${rangeText(r,S.units)})</span> — lower</label>
+            <input class="fi lc-lo" value="${esc(ov.lo||"")}" inputmode="decimal">
+            <label class="fl">${esc(r.grp)} — upper</label>
+            <input class="fi lc-hi" value="${esc(ov.hi||"")}" inputmode="decimal">
+          </div>`;
+        }).join("")
+        : `<p class="muted" style="margin-top:8px">No locally editable rows for ${an?esc(an.label):"this test"} — see below.</p>`}
+      ${locked.length ? `<p class="unitnote" style="margin-top:8px">${locked.map(r=>esc(r.grp)).join(", ")} ${locked.length===1?"is":"are"} a fixed guideline band, not a lab reference range, and can't be overridden here.</p>` : ""}
     </div>`;
   });
-  html += `<label class="fl">Notes — TAT, send-out lab, sample quirks</label><textarea class="fi" id="lcNote" rows="3">${esc(Lb.note||"")}</textarea>
+  html += `<label class="fl">Notes — TAT, send-out lab, sample quirks</label><textarea class="fi" id="lcNote" rows="3">${esc(localBlob(t.id).note||"")}</textarea>
     <div class="btnrow"><button class="btn" id="lcSave">Save</button><button class="btn sec" id="lcClear">Clear all</button></div>`;
   return html;
 }
@@ -955,7 +1095,7 @@ function renderDetail(){
   /* Any locally-saved critical values, one per component if this is a panel */
   const localCrits = [];
   (comps||[null]).forEach(an=>{
-    const ov = compOverride(t.id, an?an.key:"_");
+    const ov = assayOverride(t.id, an?an.key:"_");
     if(ov && ov.crit) localCrits.push((an?esc(an.label)+": ":"")+esc(ov.crit));
   });
   const critTxt = localCrits.length
@@ -1032,12 +1172,16 @@ function renderDetail(){
   $("#lcSave").onclick = ()=>{
     $$("#v-detail .mylab-comp").forEach(div=>{
       const key = div.dataset.key;
-      saveComponent(t.id, key, {
-        lo: div.querySelector(".lc-lo").value.trim(),
-        hi: div.querySelector(".lc-hi").value.trim(),
+      saveAssay(t.id, key, {
         unit: div.querySelector(".lc-unit").value.trim(),
-        crit: div.querySelector(".lc-crit").value.trim(),
-        method: div.querySelector(".lc-method").value.trim()
+        method: div.querySelector(".lc-method").value.trim(),
+        crit: div.querySelector(".lc-crit").value.trim()
+      });
+      div.querySelectorAll(".mylab-rid").forEach(ridDiv=>{
+        saveRid(t.id, ridDiv.dataset.rid, {
+          lo: ridDiv.querySelector(".lc-lo").value.trim(),
+          hi: ridDiv.querySelector(".lc-hi").value.trim()
+        });
       });
     });
     saveNote(t.id, $("#lcNote").value.trim());
@@ -1234,7 +1378,7 @@ function renderInterp(el){
     }
     const cu = componentUnit(t, an);
     const shownUnit = S.units==="si" ? cu.si : cu.conv;
-    const ov = compOverride(t.id, key||"_");
+    const ov = assayOverride(t.id, key||"_");
     /* A panel's test-wide critical value may name only one of its components
        (e.g. Lipid Profile's critical figure is triglycerides-specific) --
        t.critical.analyte, when present, restricts it to those component keys
@@ -1251,8 +1395,9 @@ function renderInterp(el){
     let bandHtml = "";
     if(band && band.row){
       const dirTxt = band.dir==="below" ? "Below the lowest defined band — nearest: " : band.dir==="above" ? "Above the highest defined band — nearest: " : "";
+      const bandLocal = overridableKind(band.row,t) && ridOverride(t.id, band.row.rid);
       bandHtml = `<div class="kv" style="margin-top:10px"><span class="k">Classification</span>
-        <span class="v">${dirTxt}${esc(band.row.grp)}</span></div>`;
+        <span class="v">${dirTxt}${esc(band.row.grp)}${bandLocal?' <span class="badge b-local">Your lab</span>':''}</span></div>`;
     } else if(band && band.needsChoice){
       bandHtml = `<div class="alert info" style="margin-top:10px">This also sits in one of several named categories, but which one depends on clinical context, not just the number — see the test page: ${band.choices.map(c=>esc(c.grp)).join(", ")}.</div>`;
     }
@@ -1413,12 +1558,12 @@ function renderMyLab(){
 
   <h2 class="sec">Overridden tests (${ids.length})</h2>
   ${ids.length ? `<div class="card">${ids.map(id=>{
-    const t=testById(id); if(!t) return ""; const L=S.local[id];
-    const r=[L.lo,L.hi].filter(Boolean).join(" – ");
+    const t=testById(id); if(!t) return "";
+    const s = summarizeLocal(t);
     return `<button class="row" data-test="${id}">
       <span class="ic" style="background:var(--local)">${esc(t.abbr.slice(0,3))}</span>
       <span class="bd"><span class="nm">${esc(t.name)}</span>
-      <span class="ds">${esc(r||"—")} ${esc(L.unit||"")}${L.method?" · "+esc(L.method):""}</span></span>
+      <span class="ds">${esc(s.ranges.join("; ")||"—")}${s.method?" · "+esc(s.method):""}</span></span>
       <span class="ch">›</span></button>`;}).join("")}</div>`
    : `<div class="empty">No local values saved yet.<br><span class="muted">Open any test and use “Your lab's values”.</span></div>`}
 

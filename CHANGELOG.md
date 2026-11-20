@@ -171,13 +171,74 @@ isn't in `qa/known_tie_groups.json`'s reviewed baseline — the same
 append-only-review discipline as the rid guard, now covering both the Stage 2a
 picker-tie class and this stage's ladder-fallback class in one pass.
 
+### Stage 3 — scoped override store and My Lab UI
+
+This is the stage that actually closes the original defect. Stage 1 built the
+`rid` system specifically to make it possible; Stages 2a/2b classified rows by
+`kind` so the restriction below has something to key on; neither stage touched
+the override store itself, so until now a saved value was still demographically
+blind the moment it was written.
+
+**`overridableKind(r, t)`** decides which rows may ever carry a saved value:
+`ref` and `method` rows always; `cutoff` rows only when the test itself is
+flagged `assayDep:true` (D-dimer, NT-proBNP, drug levels, serology index
+cutoffs — the threshold is an assay artifact, not a literature constant); `dx`,
+`target`, and `note` rows never, on any test. SAAG's cutoff row stays locked
+(assayDep:false — the gradient cut-off is a published constant, not something
+a local assay shifts); D-dimer's and NT-proBNP's stay editable. This carve-out
+was an explicit decision, not a default: a strict ref/method-only rule would
+have left 35 assay-dependent tests with no editable row at all.
+
+**Storage re-keyed to `(test id, rid)`.** The old shape stored one value per
+*component*, with no demographic scope — the exact defect. The new shape is
+`{ note, assay:{[key]:{unit,method,crit}}, byRid:{[rid]:{lo,hi}} }`: `assay`
+holds unit/method/critical-value at the component level (these aren't
+demographic — a lab's analyser doesn't change by patient sex), `byRid` holds
+one lo/hi pair per overridable *row*, keyed by that row's permanent `rid`. A
+saved adult-male haemoglobin range can no longer apply itself to a newborn,
+because it is no longer stored as "haemoglobin" — it's stored as "row r3."
+
+**One shared lookup, both consumers.** `effectiveBounds(t, r)` checks for a rid
+override before falling back to the textbook interval, and is now the only
+place either the ref/method comparison (`activeRange`) or the ladder
+classifier (`classifyAgainstLadder` → `bandBounds`) reads a range's numbers
+from — so a saved override on an assayDep cutoff row is honoured wherever that
+row's numbers are used, without a second copy of the lookup to fall out of
+sync.
+
+**Orphaned overrides are surfaced, never silently dropped or silently
+misapplied.** A value saved before this stage (the old flat/per-component
+shape), or against a row later retired or reclassified, no longer maps onto
+anything the UI will read — `orphanedOverrides(t)` lists each one in plain
+language ("'Pregnancy T1' is no longer an editable row (reclassified as a
+guideline band) — your saved value (…) no longer applies") so the user can
+re-enter it against the right row or clear it, rather than it vanishing
+unexplained or, worse, re-attaching itself to the wrong row by coincidence of
+storage key.
+
+**My Lab UI** now shows one Unit/Method/Critical-value set per component
+(always present, since those are component-level), followed by one lo/hi
+input pair per overridable row with its own demographic label and a
+"(textbook: …)" hint, followed by a note naming any locked rows and why
+("… is a fixed guideline band, not a lab reference range, and can't be
+overridden here"). The test detail page's range table shows the override badge
+on the specific row it applies to — "HDL-C — male YOUR LAB" — not a single
+undifferentiated "Your lab" line standing in for the whole component.
+
+No clinical content changed in this stage; it is purely a storage and UI fix.
+Caught in self-testing before any commit: an inline style referenced an
+undefined CSS variable (`--line`, should be `--border`); and the unit field,
+which is always pre-filled with a default and therefore never blank, was
+making every save write an `assay` entry for every component regardless of
+whether the user had actually entered anything — fixed by dropping `unit`
+from the "is this meaningful" check everywhere it's made (only `method`/`crit`
+count).
+
 ### Still to come
 
-- Stage 3 — scoped override store and My Lab UI: per-stratum entry restricted
-  to `ref`/`method` rows, assay-level unit/method, locked guideline bands,
-  orphaned overrides surfaced.
 - Stage 4 — combinatorial QA over every (test, analyte, sex, age, pregnancy)
-  combination; provenance display checks; updated on-device smoke test.
+  combination; provenance display checks; updated on-device smoke test; merge
+  of `v2-data-model` to `main`.
 
 Because the v1.10 store held only test data, v2.0 resets it on upgrade rather
 than carrying migration code that would run once and never be exercised again.

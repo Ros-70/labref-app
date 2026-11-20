@@ -105,8 +105,18 @@ with sync_playwright() as p:
     pg.click("[data-test='creatinine']"); pg.wait_for_timeout(300)
     loc_open = pg.evaluate("()=>document.querySelector(\"[data-blk='loc']\").classList.contains('open')")
     check("My Lab block stays collapsed even with a saved value", loc_open is False)
-    check("but the saved value still shows as the active range",
-          "Your lab" in pg.inner_text("[data-blk='rng']"))
+    # Stage 3: a value saved under the pre-rid-scoped shape (no record of
+    # WHICH demographic stratum it was for) is exactly the defect this
+    # rebuild exists to fix -- it must never silently reapply as if it were
+    # a resolved row's range. It shows as an orphaned/no-longer-applies
+    # notice in the My Lab editor instead, and the reference-range table
+    # shows the textbook value, not a "Your lab" badge, until the clinician
+    # re-enters it against the specific row it belongs to.
+    check("a pre-Stage-3 saved value does NOT silently become the active range",
+          "Your lab" not in pg.inner_text("[data-blk='rng']"))
+    pg.click("[data-blk='loc'] .bh"); pg.wait_for_timeout(200)
+    check("the orphaned pre-Stage-3 value is surfaced for review instead",
+          "no longer" in pg.inner_text("[data-blk='loc']").lower())
     pg.evaluate("()=>localStorage.clear()"); pg.reload(); pg.wait_for_timeout(400)
 
     # ---------- 3. breadcrumb ----------
