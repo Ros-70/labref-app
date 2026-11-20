@@ -1,6 +1,6 @@
 /* ============================================================================
    LabRef — Laboratory Test Reference
-   DATA MODULE  v1.10
+   DATA MODULE  v2.0
    ----------------------------------------------------------------------------
    This file holds the entire content database. The UI reads from it and never
    writes to it. To extend the app, append records to LABREF_TESTS following the
@@ -78,7 +78,7 @@
    rows; falls back to colors when absent), additive, inv, uses, notes.
    ============================================================================ */
 
-const LABREF_VERSION = "1.10";
+const LABREF_VERSION = "2.0-dev";
 
 /* ---------------------------------------------------------------- CATEGORIES */
 const LABREF_CATEGORIES = [

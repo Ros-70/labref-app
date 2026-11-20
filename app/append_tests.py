@@ -13,7 +13,10 @@ cannot silently duplicate content.
 """
 import sys, re, io, os
 
-DATA = "labref_data_v1.10.js"
+import glob as _glob
+_hits = sorted(_glob.glob("labref_data_v*.js"))
+assert len(_hits) == 1, "expected exactly one data module, found: %s" % _hits
+DATA = _hits[0]
 
 def main(chunk_path):
     data = io.open(DATA, encoding="utf-8").read()

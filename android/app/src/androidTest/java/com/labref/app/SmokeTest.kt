@@ -49,7 +49,11 @@ class SmokeTest {
 
     @Test
     fun versionMatchesTheShippedDataset() {
-        assertEquals("1.10", evaluate("LABREF_VERSION").trim('"'))
+        // Compared against the APK's own versionName, which build.gradle.kts
+        // derives from LABREF_VERSION in the data module. So this asserts the
+        // thing that actually matters — that the APK label and the clinical
+        // content inside it agree — with no literal to hand-maintain.
+        assertEquals(BuildConfig.VERSION_NAME, evaluate("LABREF_VERSION").trim('"'))
     }
 
     @Test
@@ -90,6 +94,7 @@ class SmokeTest {
         val hasBar = evaluate("!!document.querySelector('#appbar .title')")
         assertEquals("true", hasBar)
         val version = evaluate("document.querySelector('#appbar .ver').textContent").trim('"')
-        assertTrue("app bar should show the version, got: $version", version.contains("1.10"))
+        assertTrue("app bar should show version ${BuildConfig.VERSION_NAME}, got: $version",
+            version.contains(BuildConfig.VERSION_NAME))
     }
 }

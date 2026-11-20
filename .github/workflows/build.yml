@@ -8,7 +8,7 @@ name: LabRef — verify and build
 
 on:
   push:
-    branches: [main]
+    branches: [main, v2-data-model]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -57,7 +57,7 @@ jobs:
         continue-on-error: true  # account-wide Actions storage quota is outside this repo's control; GitHub recalculates it every 6-12h
         with:
           name: labref-html
-          path: app/LabRef_v1.10.html
+          path: app/LabRef_v*.html
           retention-days: 30
           if-no-files-found: error
 

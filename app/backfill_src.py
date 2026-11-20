@@ -105,4 +105,7 @@ def main(path):
         print("not patched:", ", ".join(missed))
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else "labref_data_v1.10.js")
+    import glob as _glob
+    _hits = sorted(_glob.glob("labref_data_v*.js"))
+    assert len(_hits) == 1, "expected exactly one data module, found: %s" % _hits
+    main(sys.argv[1] if len(sys.argv) > 1 else _hits[0])

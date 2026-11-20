@@ -16,13 +16,25 @@ def _chrome_path():
     return found  # None -> Playwright falls back to its own bundled browser
 
 def _labref_html():
-    """Resolve the built app in either layout: repo root (dev) or app/ (handover)."""
+    """Resolve the built app by glob, in either layout: repo root or app/.
+
+    The version is NOT hardcoded here on purpose. It used to be, and that let
+    this suite pass against a stale build from an earlier version while the
+    current data sat unverified. Globbing with a strict "exactly one" rule
+    turns a leftover build into a hard error instead of a silent fallback."""
+    import glob as _glob
     here = _os.path.dirname(_os.path.abspath(__file__))
-    for rel in ("../LabRef_v1.10.html", "../app/LabRef_v1.10.html"):
-        p = _os.path.normpath(_os.path.join(here, rel))
-        if _os.path.exists(p):
-            return "file://" + p
-    raise SystemExit("LabRef_v1.10.html not found — run build.py first")
+    hits = []
+    for rel in ("../LabRef_v*.html", "../app/LabRef_v*.html"):
+        hits += _glob.glob(_os.path.normpath(_os.path.join(here, rel)))
+    hits = sorted(set(hits))
+    if not hits:
+        raise SystemExit("No LabRef_v*.html found — run build.py first")
+    if len(hits) > 1:
+        raise SystemExit(
+            "%d builds found (%s) — remove stale versions so the suite cannot "
+            "verify the wrong one" % (len(hits), ", ".join(_os.path.basename(h) for h in hits)))
+    return "file://" + hits[0]
 
 URL = _labref_html()
 
