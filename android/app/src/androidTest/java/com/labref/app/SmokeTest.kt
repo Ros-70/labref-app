@@ -78,13 +78,24 @@ class SmokeTest {
         assertEquals("180", evaluate("LABREF_TESTS.length").trim('"'))
     }
 
+    // build.gradle.kts appends "-debug" to versionName for the debug build
+    // type only (versionNameSuffix) -- a cosmetic marker so a debug APK is
+    // never mistaken for a release one. This test always runs against
+    // connectedDebugAndroidTest, so BuildConfig.VERSION_NAME always carries
+    // it; the web asset's own LABREF_VERSION never does and never should
+    // (it's build-type-agnostic). Strip it before comparing, or every run
+    // of this test fails by construction regardless of whether the content
+    // actually matches -- which is exactly what happened the first time
+    // this job was ever actually run (Stage 4).
+    private fun baseVersion() = BuildConfig.VERSION_NAME.removeSuffix("-debug")
+
     @Test
     fun versionMatchesTheShippedDataset() {
         // Compared against the APK's own versionName, which build.gradle.kts
         // derives from LABREF_VERSION in the data module. So this asserts the
         // thing that actually matters — that the APK label and the clinical
         // content inside it agree — with no literal to hand-maintain.
-        assertEquals(BuildConfig.VERSION_NAME, evaluate("LABREF_VERSION").trim('"'))
+        assertEquals(baseVersion(), evaluate("LABREF_VERSION").trim('"'))
     }
 
     @Test
@@ -183,7 +194,7 @@ class SmokeTest {
         val hasBar = evaluate("!!document.querySelector('#appbar .title')")
         assertEquals("true", hasBar)
         val version = evaluate("document.querySelector('#appbar .ver').textContent").trim('"')
-        assertTrue("app bar should show version ${BuildConfig.VERSION_NAME}, got: $version",
-            version.contains(BuildConfig.VERSION_NAME))
+        assertTrue("app bar should show version ${baseVersion()}, got: $version",
+            version.contains(baseVersion()))
     }
 }

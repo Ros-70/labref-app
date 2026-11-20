@@ -301,9 +301,25 @@ exercised `compileDebugAndroidTestKotlin` before. The smoke test existed
 specifically to catch host failures that ship "broken and silent"; it was
 itself broken and silent in exactly that way. Fixed by flipping
 `buildConfig` to `true` (the versionName it needs is already set in
-`defaultConfig`, so no further wiring). A standing reminder for future
-stages: a CI job that's gated off the default path needs to actually be
-run, not just read, before trusting what it would have said.
+`defaultConfig`, so no further wiring).
+
+Fixing the compile uncovered a second, independent latent bug behind it,
+on the very next run: with compilation fixed, `versionMatchesTheShippedDataset`
+and `appRendersItsOwnUi` both failed for real —
+`expected:<2.0-dev-debug> but was:<2.0-dev>`. `build.gradle.kts`'s debug
+build type appends `-debug` to `versionName` (`versionNameSuffix`), a
+cosmetic marker so a debug APK is never mistaken for a release one; the
+web asset's own `LABREF_VERSION` is build-type-agnostic and never carries
+it. Since this instrumented test only ever runs against
+`connectedDebugAndroidTest`, comparing the two directly could never have
+passed, by construction, regardless of whether the content actually
+matched — a second bug that had been sitting in the same always-skipped
+test the whole time. Fixed by stripping the known debug suffix
+(`baseVersion()`) before either comparison. A standing reminder for
+future stages: a CI job that's gated off the default path needs to
+actually be run, not just read, before trusting what it would have said
+— and fixing the first thing that blocks it doesn't mean the next run is
+clean either.
 
 Merged `v2-data-model` into `main` once all of the above was CI-green —
 closing out the rebuild this CHANGELOG opens with.
