@@ -1107,8 +1107,8 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mOsm/kg", si:"mmol/kg", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:275,hi:295}, si:{lo:275,hi:295} },
-      { rid:"r2", grp:"Osmolal gap (normal)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} }
+      { rid:"r3", analyte:{key:"osm",label:"Osmolality"}, grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:275,hi:295}, si:{lo:275,hi:295} },
+      { rid:"r4", analyte:{key:"gap",label:"Osmolal Gap"}, grp:"Osmolal gap (normal)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} }
     ],
     critical:{ txt:"<265 or >320 mOsm/kg", lo:265, hi:320 },
     inc:["Dehydration and hypernatraemia","Hyperglycaemia and uraemia","Ethanol, methanol, ethylene glycol, isopropanol, mannitol","Diabetes insipidus"],
@@ -1648,12 +1648,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"%", si:"%", factor:1 },
     ranges:[
-      { rid:"r1", grp:"HbA — adult", sex:"any", age:"adult", preg:null, conv:{lo:96.5,hi:98.5}, si:{lo:96.5,hi:98.5} },
-      { rid:"r2", grp:"HbA2 — normal", sex:"any", age:"adult", preg:null, conv:{lo:2.0,hi:3.3}, si:{lo:2.0,hi:3.3} },
-      { rid:"r3", grp:"HbA2 — borderline", sex:"any", age:"adult", preg:null, conv:{lo:3.3,hi:3.9}, si:{lo:3.3,hi:3.9} },
-      { rid:"r4", grp:"HbA2 — β-thalassaemia trait", sex:"any", age:"adult", preg:null, conv:{lo:4.0,hi:null}, si:{lo:4.0,hi:null} },
-      { rid:"r5", grp:"HbF — adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1.0}, si:{lo:null,hi:1.0} },
-      { rid:"r6", grp:"HbF — newborn", sex:"any", age:"neonate", preg:null, conv:{lo:60,hi:90}, si:{lo:60,hi:90} }
+      { rid:"r7", analyte:{key:"hba",label:"HbA"}, grp:"HbA — adult", sex:"any", age:"adult", preg:null, conv:{lo:96.5,hi:98.5}, si:{lo:96.5,hi:98.5} },
+      { rid:"r8", analyte:{key:"hba2",label:"HbA2"}, grp:"HbA2 — normal", sex:"any", age:"adult", preg:null, conv:{lo:2.0,hi:3.3}, si:{lo:2.0,hi:3.3} },
+      { rid:"r9", analyte:{key:"hba2",label:"HbA2"}, grp:"HbA2 — borderline", sex:"any", age:"adult", preg:null, conv:{lo:3.3,hi:3.9}, si:{lo:3.3,hi:3.9} },
+      { rid:"r10", analyte:{key:"hba2",label:"HbA2"}, grp:"HbA2 — β-thalassaemia trait", sex:"any", age:"adult", preg:null, conv:{lo:4.0,hi:null}, si:{lo:4.0,hi:null} },
+      { rid:"r11", analyte:{key:"hbf",label:"HbF"}, grp:"HbF — adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1.0}, si:{lo:null,hi:1.0} },
+      { rid:"r12", analyte:{key:"hbf",label:"HbF"}, grp:"HbF — newborn", sex:"any", age:"neonate", preg:null, conv:{lo:60,hi:90}, si:{lo:60,hi:90} }
     ],
     critical:{ txt:"Pattern consistent with a major haemoglobinopathy (HbSS, HbE/β-thal, β-thalassaemia major) — arrange counselling and haematology referral", lo:null, hi:null },
     inc:["HbA2 raised: beta-thalassaemia trait (the diagnostic finding, usually >4.0%)","HbF raised: beta-thalassaemia major and intermedia, HPFH, sickle cell disease, some leukaemias, pregnancy","HbS present: sickle cell trait (usually ~40%) or disease (>80% with absent HbA)","HbE: very common in north-east India and Bengal; HbE/β-thalassaemia is a major cause of transfusion-dependent anaemia"],
@@ -2434,10 +2434,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"nmol/L", factor:2.266 },
     ranges:[
-      { rid:"r1", grp:"Serum folate — normal", sex:"any", age:"adult", preg:null, conv:{lo:4.0,hi:20.0}, si:{lo:9.1,hi:45.3} },
-      { rid:"r2", grp:"Serum folate — deficient", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:3.0}, si:{lo:null,hi:6.8} },
-      { rid:"r3", grp:"Serum folate — borderline", sex:"any", age:"adult", preg:null, conv:{lo:3.0,hi:4.0}, si:{lo:6.8,hi:9.1} },
-      { rid:"r4", grp:"Red cell folate — normal", sex:"any", age:"adult", preg:null, conv:{lo:140,hi:628}, si:{lo:317,hi:1423} }
+      { rid:"r5", analyte:{key:"serum",label:"Serum Folate"}, grp:"Serum folate — normal", sex:"any", age:"adult", preg:null, conv:{lo:4.0,hi:20.0}, si:{lo:9.1,hi:45.3} },
+      { rid:"r6", analyte:{key:"serum",label:"Serum Folate"}, grp:"Serum folate — deficient", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:3.0}, si:{lo:null,hi:6.8} },
+      { rid:"r7", analyte:{key:"serum",label:"Serum Folate"}, grp:"Serum folate — borderline", sex:"any", age:"adult", preg:null, conv:{lo:3.0,hi:4.0}, si:{lo:6.8,hi:9.1} },
+      { rid:"r8", analyte:{key:"rbc",label:"Red Cell Folate"}, grp:"Red cell folate — normal", sex:"any", age:"adult", preg:null, conv:{lo:140,hi:628}, si:{lo:317,hi:1423} }
     ],
     critical:null,
     inc:["Folic acid supplementation","Recent blood transfusion","Vitamin B12 deficiency — the 'folate trap' raises serum folate while red cell folate falls","Blind loop syndrome (bacterial folate synthesis)"],
@@ -3354,14 +3354,14 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"Descriptive", si:"Descriptive", factor:null },
     ranges:[
-      { rid:"r1", grp:"Appearance", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Clear, pale yellow"}, si:{lo:null,hi:null,txt:"Clear, pale yellow"} },
-      { rid:"r2", grp:"pH", sex:"any", age:"adult", preg:null, conv:{lo:4.5,hi:8.0}, si:{lo:4.5,hi:8.0} },
-      { rid:"r3", grp:"Specific gravity", sex:"any", age:"adult", preg:null, conv:{lo:1.003,hi:1.030}, si:{lo:1.003,hi:1.030} },
-      { rid:"r4", grp:"Protein", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Nil or trace (dipstick); >1+ needs quantification by ACR or PCR"}, si:{lo:null,hi:null,txt:"Nil or trace"} },
-      { rid:"r5", grp:"Glucose / ketones / nitrite / bilirubin", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r6", grp:"Red cells (microscopy)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:2}, si:{lo:null,hi:2} },
-      { rid:"r7", grp:"White cells / pus cells (microscopy)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
-      { rid:"r8", grp:"Casts", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Occasional hyaline casts only; RED CELL casts always abnormal"}, si:{lo:null,hi:null,txt:"Occasional hyaline casts only"} }
+      { rid:"r9", analyte:{key:"appearance",label:"Appearance"}, grp:"Appearance", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Clear, pale yellow"}, si:{lo:null,hi:null,txt:"Clear, pale yellow"} },
+      { rid:"r10", analyte:{key:"ph",label:"pH"}, grp:"pH", sex:"any", age:"adult", preg:null, conv:{lo:4.5,hi:8.0}, si:{lo:4.5,hi:8.0} },
+      { rid:"r11", analyte:{key:"sg",label:"Specific Gravity"}, grp:"Specific gravity", sex:"any", age:"adult", preg:null, conv:{lo:1.003,hi:1.030}, si:{lo:1.003,hi:1.030} },
+      { rid:"r12", analyte:{key:"protein",label:"Protein"}, grp:"Protein", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Nil or trace (dipstick); >1+ needs quantification by ACR or PCR"}, si:{lo:null,hi:null,txt:"Nil or trace"} },
+      { rid:"r13", analyte:{key:"dipstick",label:"Glucose / Ketones / Nitrite / Bilirubin"}, grp:"Glucose / ketones / nitrite / bilirubin", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r14", analyte:{key:"rbc",label:"Red Cells"}, grp:"Red cells (microscopy)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:2}, si:{lo:null,hi:2} },
+      { rid:"r15", analyte:{key:"wbc",label:"White Cells / Pus Cells"}, grp:"White cells / pus cells (microscopy)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
+      { rid:"r16", analyte:{key:"casts",label:"Casts"}, grp:"Casts", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Occasional hyaline casts only; RED CELL casts always abnormal"}, si:{lo:null,hi:null,txt:"Occasional hyaline casts only"} }
     ],
     critical:{ txt:"Red cell casts or dysmorphic red cells with proteinuria — glomerulonephritis; needs same-day renal assessment", lo:null, hi:null },
     inc:["Proteinuria: glomerular disease, diabetic nephropathy, hypertension, pre-eclampsia, orthostatic proteinuria (benign, in young people), fever, exercise","Haematuria: infection, stones, glomerulonephritis, malignancy, trauma, schistosomiasis, anticoagulation","Pyuria: urinary tract infection; sterile pyuria suggests tuberculosis, stones, interstitial nephritis or partially treated infection","Glycosuria: diabetes, pregnancy (lowered renal threshold), SGLT2 inhibitors, renal glycosuria","Ketonuria: fasting, DKA, vomiting, pregnancy","Nitrite: Gram-negative bacteriuria (specific but insensitive — needs several hours' bladder dwell time)"],
@@ -3459,13 +3459,13 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"Descriptive", si:"Descriptive", factor:null },
     ranges:[
-      { rid:"r1", grp:"Opening pressure (adult, lateral decubitus)", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:20}, si:{lo:10,hi:20} },
-      { rid:"r2", grp:"Appearance", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Crystal clear and colourless"}, si:{lo:null,hi:null,txt:"Crystal clear and colourless"} },
-      { rid:"r3", grp:"White cells (adult)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
-      { rid:"r4", grp:"White cells (neonate)", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
-      { rid:"r5", grp:"Protein (adult)", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:45}, si:{lo:0.15,hi:0.45} },
-      { rid:"r6", grp:"Protein (neonate)", sex:"any", age:"neonate", preg:null, conv:{lo:60,hi:150}, si:{lo:0.6,hi:1.5} },
-      { rid:"r7", grp:"Glucose (CSF:plasma ratio)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"≥0.6 of plasma (≥0.5 acceptable); absolute 45–80 mg/dL"}, si:{lo:null,hi:null,txt:"≥0.6 of plasma; 2.5–4.4 mmol/L"} }
+      { rid:"r8", analyte:{key:"pressure",label:"Opening Pressure"}, grp:"Opening pressure (adult, lateral decubitus)", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:20}, si:{lo:10,hi:20} },
+      { rid:"r9", analyte:{key:"appearance",label:"Appearance"}, grp:"Appearance", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Crystal clear and colourless"}, si:{lo:null,hi:null,txt:"Crystal clear and colourless"} },
+      { rid:"r10", analyte:{key:"wbc",label:"White Cells"}, grp:"White cells (adult)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
+      { rid:"r11", analyte:{key:"wbc",label:"White Cells"}, grp:"White cells (neonate)", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
+      { rid:"r12", analyte:{key:"protein",label:"Protein"}, grp:"Protein (adult)", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:45}, si:{lo:0.15,hi:0.45} },
+      { rid:"r13", analyte:{key:"protein",label:"Protein"}, grp:"Protein (neonate)", sex:"any", age:"neonate", preg:null, conv:{lo:60,hi:150}, si:{lo:0.6,hi:1.5} },
+      { rid:"r14", analyte:{key:"glucratio",label:"CSF:Plasma Glucose Ratio"}, grp:"Glucose (CSF:plasma ratio)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"≥0.6 of plasma (≥0.5 acceptable); absolute 45–80 mg/dL"}, si:{lo:null,hi:null,txt:"≥0.6 of plasma; 2.5–4.4 mmol/L"} }
     ],
     critical:{ txt:"Turbid CSF, neutrophil pleocytosis, high protein or low glucose — bacterial meningitis. Give antibiotics IMMEDIATELY; never delay them for the lumbar puncture or its result", lo:null, hi:null },
     inc:["BACTERIAL: turbid, neutrophils in the hundreds to thousands, protein high (often >1 g/L), glucose LOW (ratio <0.4)","VIRAL: clear, lymphocytes tens to hundreds, protein normal or mildly raised, glucose NORMAL","TUBERCULOUS: clear or cobweb clot, lymphocytes (neutrophils may dominate early), protein HIGH (often >1–2 g/L), glucose LOW, raised adenosine deaminase","FUNGAL (cryptococcal): lymphocytes, high protein, low glucose, positive India ink or cryptococcal antigen","Subarachnoid haemorrhage: uniformly blood-stained in all tubes, xanthochromia after 12 h","Guillain-Barré: high protein with NORMAL cell count (albuminocytological dissociation)"],

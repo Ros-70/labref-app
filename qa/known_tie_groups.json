@@ -1,0 +1,36 @@
+{
+  "_comment": "Every group of 2+ ref/method rows that legitimately share the exact same (analyte, sex, age, preg) key — found by Stage 2a's collision check. These are NOT classification errors: each row genuinely applies to the same coarse demographic bucket, distinguished only by a clinical condition the sex/age/preg chips don't express (a finer age band, menstrual-cycle phase, time of draw, specimen type, or another one-off covariate). bestRange() in shell.html used to pick one of these silently, by array order, whenever none scored higher than the others — the same class of silent-wrong-value risk as the original My Lab bug, just in the interpreter's row-picker instead of the override store. The fix: the Result Interpreter now detects a tie against this list and makes the user pick which row applies, by its own grp label, instead of guessing (see activeRange()/bestRange() and renderInterp() in shell.html). qa/validate_ties.js fails the build if a NEW, unlisted tie shows up among ref/method rows for any test — the same append-only-review discipline as qa/validate_rids.js, so a future content update can't silently reintroduce a guessed pick without a human looking at it first.",
+  "_dimension_summary": {
+    "age-subband": "A single age bucket (adult, neonate) is too coarse — the real reference interval changes within it (ESR by decade, IGF-1 by decade, testosterone by decade, PSA by decade, cystatin ≥60y, bilirubin by hours-of-life, ammonia preterm/sick-neonate).",
+    "cycle-phase": "Reproductive hormones vary by menstrual-cycle phase or menopausal status, which the sex/age/preg chips don't capture (LH, FSH, estradiol, progesterone, 17-OHP, and bone turnover markers by meno status).",
+    "timing": "Same analyte, same patient, different expected value depending on WHEN or under what test condition it's drawn (cortisol/ACTH by time of day, glucose random vs post-prandial).",
+    "one_off_covariate": "A single extra covariate with no other home in the schema (lactate venous vs arterial specimen, vWF by ABO blood group, CEA by smoking status, Bence Jones ratio by renal function)."
+  },
+  "groups": [
+    { "test": "lactate", "key": "_|any|adult|none", "dimension": "one_off_covariate", "rids": ["r1","r2"] },
+    { "test": "bilirubin", "key": "total|any|neonate|none", "dimension": "age-subband", "rids": ["r3","r4","r5"] },
+    { "test": "ammonia", "key": "_|any|neonate|none", "dimension": "age-subband", "rids": ["r2","r3"] },
+    { "test": "cystatin", "key": "_|any|adult|none", "dimension": "age-subband", "rids": ["r1","r2"] },
+    { "test": "glucosepp", "key": "_|any|adult|none", "dimension": "timing", "rids": ["r1","r2"] },
+    { "test": "esr", "key": "_|M|adult|none", "dimension": "age-subband", "rids": ["r1","r2"] },
+    { "test": "esr", "key": "_|F|adult|none", "dimension": "age-subband", "rids": ["r3","r4"] },
+    { "test": "vwf", "key": "_|any|adult|none", "dimension": "one_off_covariate", "rids": ["r1","r2"] },
+    { "test": "cortisol", "key": "_|any|adult|none", "dimension": "timing", "rids": ["r1","r5","r6"] },
+    { "test": "acth", "key": "_|any|adult|none", "dimension": "timing", "rids": ["r1","r2"] },
+    { "test": "igf1", "key": "_|any|adult|none", "dimension": "age-subband", "rids": ["r1","r2","r3"] },
+    { "test": "lh", "key": "_|F|adult|none", "dimension": "cycle-phase", "rids": ["r2","r4","r5"] },
+    { "test": "fsh", "key": "_|F|adult|none", "dimension": "cycle-phase", "rids": ["r2","r3","r4","r5"] },
+    { "test": "estradiol", "key": "_|F|adult|none", "dimension": "cycle-phase", "rids": ["r1","r3","r4"] },
+    { "test": "progesterone", "key": "_|F|adult|none", "dimension": "cycle-phase", "rids": ["r1","r2","r3","r4","r5"] },
+    { "test": "testosterone", "key": "_|M|adult|none", "dimension": "age-subband", "rids": ["r1","r2"] },
+    { "test": "17ohp", "key": "_|F|adult|none", "dimension": "cycle-phase", "rids": ["r2","r3"] },
+    { "test": "psa", "key": "_|M|adult|none", "dimension": "age-subband", "rids": ["r1","r2","r3","r4"] },
+    { "test": "cea", "key": "_|any|adult|none", "dimension": "one_off_covariate", "rids": ["r1","r2"] },
+    { "test": "boneturnover", "key": "ctx|F|adult|none", "dimension": "cycle-phase", "rids": ["r1","r2"] },
+    { "test": "boneturnover", "key": "p1np|F|adult|none", "dimension": "cycle-phase", "rids": ["r4","r5"] },
+    { "test": "bencejones", "key": "ratio|any|adult|none", "dimension": "one_off_covariate", "rids": ["r3","r4"] },
+    { "test": "ddimer", "key": "_|any|adult|none", "dimension": "age-subband",
+      "rids": ["r1","r2"],
+      "_why": "Found by qa/test5.py, not the original ref/method-only collision scan — these two rows are both kind=cutoff, not ref/method, but the same silent-wrong-pick risk applies: a D-dimer drawn from someone over 50 must be read against the age-adjusted cutoff (r2), not the <50y exclusion cutoff (r1). This is the first confirmation that the tie list isn't limited to ref/method rows; most of the ~130 other same-key groups among dx/cutoff/target rows across the corpus are value-ordered severity ladders (e.g. vitamin D deficient/insufficient/sufficient/toxic), which need a different fix — grading the entered value against the ladder, not asking the user to pre-pick a row — tracked separately as the kind-aware-interpreter stage, not solved by this file." }
+  ]
+}

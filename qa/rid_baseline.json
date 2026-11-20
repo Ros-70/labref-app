@@ -1,7 +1,45 @@
 {
  "_comment": "Published row identities. A rid here must never change meaning or be reused — see qa/validate_rids.js. Regenerate with: node qa/validate_rids.js --update",
  "generated_for_version": "2.0-dev",
- "retired": {},
+ "retired": {
+  "osmolality": [
+   "r1",
+   "r2"
+  ],
+  "hbelectrophoresis": [
+   "r1",
+   "r2",
+   "r3",
+   "r4",
+   "r5",
+   "r6"
+  ],
+  "folate": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "urineroutine": [
+   "r1",
+   "r2",
+   "r3",
+   "r4",
+   "r5",
+   "r6",
+   "r7",
+   "r8"
+  ],
+  "csfanalysis": [
+   "r1",
+   "r2",
+   "r3",
+   "r4",
+   "r5",
+   "r6",
+   "r7"
+  ]
+ },
  "tests": {
   "hb": {
    "r1": {
@@ -1358,19 +1396,19 @@
    }
   },
   "osmolality": {
-   "r1": {
+   "r3": {
     "grp": "Adult",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "osm"
    },
-   "r2": {
+   "r4": {
     "grp": "Osmolal gap (normal)",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "gap"
    }
   },
   "totalprotein": {
@@ -2048,47 +2086,47 @@
    }
   },
   "hbelectrophoresis": {
-   "r1": {
+   "r7": {
     "grp": "HbA — adult",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "hba"
    },
-   "r2": {
+   "r8": {
     "grp": "HbA2 — normal",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "hba2"
    },
-   "r3": {
+   "r9": {
     "grp": "HbA2 — borderline",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "hba2"
    },
-   "r4": {
+   "r10": {
     "grp": "HbA2 — β-thalassaemia trait",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "hba2"
    },
-   "r5": {
+   "r11": {
     "grp": "HbF — adult",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "hbf"
    },
-   "r6": {
+   "r12": {
     "grp": "HbF — newborn",
     "sex": "any",
     "age": "neonate",
     "preg": null,
-    "analyte": null
+    "analyte": "hbf"
    }
   },
   "fibrinogen": {
@@ -3113,33 +3151,33 @@
    }
   },
   "folate": {
-   "r1": {
+   "r5": {
     "grp": "Serum folate — normal",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "serum"
    },
-   "r2": {
+   "r6": {
     "grp": "Serum folate — deficient",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "serum"
    },
-   "r3": {
+   "r7": {
     "grp": "Serum folate — borderline",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "serum"
    },
-   "r4": {
+   "r8": {
     "grp": "Red cell folate — normal",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "rbc"
    }
   },
   "homocysteine": {
@@ -4143,61 +4181,61 @@
    }
   },
   "urineroutine": {
-   "r1": {
+   "r9": {
     "grp": "Appearance",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "appearance"
    },
-   "r2": {
+   "r10": {
     "grp": "pH",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "ph"
    },
-   "r3": {
+   "r11": {
     "grp": "Specific gravity",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "sg"
    },
-   "r4": {
+   "r12": {
     "grp": "Protein",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "protein"
    },
-   "r5": {
+   "r13": {
     "grp": "Glucose / ketones / nitrite / bilirubin",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "dipstick"
    },
-   "r6": {
+   "r14": {
     "grp": "Red cells (microscopy)",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "rbc"
    },
-   "r7": {
+   "r15": {
     "grp": "White cells / pus cells (microscopy)",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "wbc"
    },
-   "r8": {
+   "r16": {
     "grp": "Casts",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "casts"
    }
   },
   "urineculture": {
@@ -4326,54 +4364,54 @@
    }
   },
   "csfanalysis": {
-   "r1": {
+   "r8": {
     "grp": "Opening pressure (adult, lateral decubitus)",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "pressure"
    },
-   "r2": {
+   "r9": {
     "grp": "Appearance",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "appearance"
    },
-   "r3": {
+   "r10": {
     "grp": "White cells (adult)",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "wbc"
    },
-   "r4": {
+   "r11": {
     "grp": "White cells (neonate)",
     "sex": "any",
     "age": "neonate",
     "preg": null,
-    "analyte": null
+    "analyte": "wbc"
    },
-   "r5": {
+   "r12": {
     "grp": "Protein (adult)",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "protein"
    },
-   "r6": {
+   "r13": {
     "grp": "Protein (neonate)",
     "sex": "any",
     "age": "neonate",
     "preg": null,
-    "analyte": null
+    "analyte": "protein"
    },
-   "r7": {
+   "r14": {
     "grp": "Glucose (CSF:plasma ratio)",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "glucratio"
    }
   },
   "csfada": {

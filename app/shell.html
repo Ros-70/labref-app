@@ -452,12 +452,33 @@ function componentsOf(t){
 function rowsFor(t, key){
   return key==null ? t.ranges.filter(r=>!r.analyte) : t.ranges.filter(r=>r.analyte && r.analyte.key===key);
 }
-function bestRange(t, key){
+/* Score every row for a test/component and return the rows tied at the
+   top score, alongside the full row list. Used by both bestRange() (which
+   just needs ONE row) and tiedCandidates() (which needs to know when more
+   than one row genuinely ties, so the interpreter can ask instead of guess). */
+function scoredCandidates(t, key){
   const comps = componentsOf(t);
   const rows = comps ? rowsFor(t, key || comps[0].key) : t.ranges;
-  let best=null, bs=-1;
-  rows.forEach(r=>{ const s=rangeScore(r); if(s>bs){ bs=s; best=r; } });
-  return best || rows.find(r=>r.age==="adult"&&r.sex==="any") || rows[0] || null;
+  let bs = -1;
+  const scored = rows.map(r=>({ r, s:rangeScore(r) }));
+  scored.forEach(x=>{ if(x.s>bs) bs = x.s; });
+  const top = bs>=0 ? scored.filter(x=>x.s===bs).map(x=>x.r) : [];
+  return { top, rows };
+}
+function bestRange(t, key){
+  const { top, rows } = scoredCandidates(t, key);
+  return top[0] || rows.find(r=>r.age==="adult"&&r.sex==="any") || rows[0] || null;
+}
+/* When two or more rows score identically for the current patient mode —
+   e.g. ESR "male <50y" and "male ≥50y" both just match sex=male, age=adult —
+   there is no single correct pick. Returns the tied rows (2+) so the caller
+   can make the user choose by label instead of silently taking the first
+   one, or null when there's no genuine tie. qa/known_tie_groups.json tracks
+   every test where this is expected; qa/validate_ties.js fails the build if
+   a new, unreviewed tie shows up. */
+function tiedCandidates(t, key){
+  const { top } = scoredCandidates(t, key);
+  return top.length>1 ? top : null;
 }
 /* The unit label and conversion factor for one component, falling back to
    the test's panel-level default when the component doesn't override it. */
@@ -512,8 +533,10 @@ function hasLocal(id){
 const num = v => (v===""||v==null||isNaN(parseFloat(v))) ? null : parseFloat(v);
 
 /* Local override takes priority when present, for the given component
-   (omit key for an ordinary single-analyte test). */
-function activeRange(t, key){
+   (omit key for an ordinary single-analyte test). forcedRid lets a caller
+   that has already resolved a tie (see tiedCandidates()) pin the exact row
+   instead of falling through to bestRange()'s guess. */
+function activeRange(t, key, forcedRid){
   const comps = componentsOf(t);
   const compKey = comps ? (key || comps[0].key) : null;
   const ov = compOverride(t.id, compKey);
@@ -524,9 +547,14 @@ function activeRange(t, key){
      "no range available" for every test with a crit-only override. */
   const ovHasRange = ov && ((ov.lo!=null && ov.lo!=="") || (ov.hi!=null && ov.hi!==""));
   if(ovHasRange) return { local:true, grp:"Your lab", lo:num(ov.lo), hi:num(ov.hi), unit:ov.unit };
-  const r = bestRange(t, compKey); if(!r) return null;
+  const tie = tiedCandidates(t, compKey);
+  let r = null;
+  if(forcedRid && tie) r = tie.find(x=>x.rid===forcedRid) || null;
+  if(!r) r = bestRange(t, compKey);
+  if(!r) return null;
   const u = S.units==="si" ? r.si : r.conv;
-  return { local:false, grp:r.grp, lo:u&&u.lo!=null?u.lo:null, hi:u&&u.hi!=null?u.hi:null, txt:u&&u.txt };
+  return { local:false, grp:r.grp, lo:u&&u.lo!=null?u.lo:null, hi:u&&u.hi!=null?u.hi:null, txt:u&&u.txt,
+           tie: (!forcedRid && !!tie) || null };
 }
 
 /* ---------------------------------------------------------------- SEARCH */
@@ -716,6 +744,13 @@ function componentRangeHtml(t, an){
   const key = an ? an.key : null;
   const cu = componentUnit(t, an);
   const ov = compOverride(t.id, key||"_");
+  /* A genuine tie (see tiedCandidates()) means more than one row equally
+     matches the current patient mode — e.g. ESR "male <50y" and "male
+     ≥50y" both just match sex=male, age=adult. Highlighting only the
+     array's first one as "the" match would silently suggest a pick this
+     app never actually made on clinical grounds. Highlight every tied row
+     instead and say so, so the clinician picks by eye from the labels. */
+  const tie = tiedCandidates(t, key);
   const br = bestRange(t, key);
   let rows = "";
   if(ov){
@@ -724,7 +759,7 @@ function componentRangeHtml(t, an){
   }
   if(!(S.localOnly && ov)){
     rowsFor(t,key).forEach(r=>{
-      const m = (r===br);
+      const m = tie ? tie.includes(r) : (r===br);
       const unitSuffix = qualitativeTest(t) ? "" : " "+esc(S.units==="si"?cu.si:cu.conv);
       const rtxt = rangeText(r,S.units);
       rows += `<tr class="${m?'match':''}"><td class="grp">${esc(r.grp)}</td><td class="val${rtxt.length>24?' wrap':''}">${rtxt}${unitSuffix}</td></tr>`;
@@ -734,7 +769,8 @@ function componentRangeHtml(t, an){
   if(!qualitativeTest(t) && !cu.noConvert){
     footnote = `<div class="unitnote">Showing ${S.units==="si"?"SI":"conventional"} units (${esc(S.units==="si"?cu.si:cu.conv)}).
       ${cu.factor?`Conversion: ${esc(cu.conv)} × ${cu.factor} = ${esc(cu.si)}.`:""}
-      Highlighted row matches the current patient mode.</div>`;
+      ${tie ? "More than one highlighted row matches your current patient mode — pick the one that actually fits (see each row's own label) rather than trusting a single one."
+            : "Highlighted row matches the current patient mode."}</div>`;
   }
   return rows + footnote;
 }
@@ -1010,6 +1046,7 @@ function renderInterp(el){
       ${TESTS.filter(t=>t.units.conv!=="Qualitative"&&t.units.conv!=="Titre + pattern")
         .map(t=>`<option value="${t.id}">${esc(t.name)} (${esc(t.abbr)})</option>`).join("")}</select>
     <div id="ipComp"></div>
+    <div id="ipTie"></div>
     <label class="fl">Value</label><input class="fi" id="ipVal" inputmode="decimal" placeholder="Enter the measured value">
     <button class="btn wide" id="ipGo">Interpret</button>
     <div id="ipOut"></div>
@@ -1017,13 +1054,39 @@ function renderInterp(el){
   toolBack(el);
   /* A panel test (Lipid Profile, ABG, PT/INR, Troponin, Bilirubin, Calcium)
      needs the user to say WHICH component the value belongs to — comparing
-     a total cholesterol result against the HDL cutoff would be silently wrong. */
+     a total cholesterol result against the HDL cutoff would be silently wrong.
+     Separately, some single components still have more than one row tied
+     for the current patient mode (see tiedCandidates()) — e.g. ESR "male
+     <50y" vs "male ≥50y" both just match sex=male, age=adult. refreshTie()
+     re-checks that whenever the test or component selection changes, and
+     renders a required "which group applies?" picker instead of letting
+     the interpreter guess. */
+  function currentKey(){
+    const t = testById(el.querySelector("#ipTest").value);
+    const comps = t ? componentsOf(t) : null;
+    const partEl = el.querySelector("#ipPart");
+    return { t, key: comps ? (partEl ? partEl.value : comps[0].key) : null };
+  }
+  function refreshTie(){
+    const { t, key } = currentKey();
+    const tieEl = el.querySelector("#ipTie");
+    if(!t){ tieEl.innerHTML = ""; return; }
+    const tie = tiedCandidates(t, key);
+    tieEl.innerHTML = tie
+      ? `<label class="fl">Which group applies?</label>
+         <select class="fi" id="ipTieSel"><option value="">Select…</option>
+           ${tie.map(r=>`<option value="${r.rid}">${esc(r.grp)}</option>`).join("")}</select>
+         <p class="muted" style="margin-top:4px">More than one reference group matches your current patient mode (sex/age/pregnancy alone can't tell them apart) — pick the one that actually fits this result.</p>`
+      : "";
+  }
   el.querySelector("#ipTest").onchange = e=>{
     const t = testById(e.target.value);
     const comps = t ? componentsOf(t) : null;
     el.querySelector("#ipComp").innerHTML = comps
       ? `<label class="fl">Component</label><select class="fi" id="ipPart">
           ${comps.map(a=>`<option value="${a.key}">${esc(a.label)}</option>`).join("")}</select>` : "";
+    const partEl = el.querySelector("#ipPart"); if(partEl) partEl.onchange = refreshTie;
+    refreshTie();
   };
   el.querySelector("#ipGo").onclick = ()=>{
     const t = testById(el.querySelector("#ipTest").value);
@@ -1034,7 +1097,11 @@ function renderInterp(el){
     const partEl = el.querySelector("#ipPart");
     const key = comps ? (partEl ? partEl.value : comps[0].key) : null;
     const an = comps ? comps.find(a=>a.key===key) : null;
-    const r = activeRange(t, key);
+    const tie = tiedCandidates(t, key);
+    const tieSel = el.querySelector("#ipTieSel");
+    const forcedRid = tieSel ? tieSel.value : null;
+    if(tie && !forcedRid){ out.innerHTML = `<div class="alert warn">More than one reference group matches — select which one applies above before interpreting.</div>`; return; }
+    const r = activeRange(t, key, forcedRid || undefined);
     if(!r || (r.lo==null && r.hi==null)){ out.innerHTML = `<div class="alert info">No numeric range available for this group — see the test page.</div>`; return; }
     let flag="rf-normal", word="Within range";
     if(r.hi!=null && v>r.hi){ flag="rf-high"; word="ABOVE range"; }

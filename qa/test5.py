@@ -73,6 +73,13 @@ with sync_playwright() as p:
     # longer 1 for these. For a panel test, scope the lookup to the specific
     # component sub-table (".rng-sub") that contains the expected group label.
     panel_tests = {"lipid","abgpanel","ptinr","troponin","bilirubin","calcium"}
+    # Rows the interpreter now correctly refuses to silently pick between
+    # (see qa/known_tie_groups.json) highlight as MULTIPLE "match" rows on
+    # the detail page on purpose — ddimer's <50y exclusion cutoff and the
+    # age-adjusted (>50y) cutoff both match "adult, any sex" alone, and only
+    # the clinician knows which one actually fits. Exempt these from the
+    # n==1 assumption the same way panel tests already are.
+    tie_tests = {"ddimer"}
     ok=True
     for tid,cat,sex,preg,age,expect in cases:
         pg.evaluate("""([s,p,a])=>{const k='labref_v1';const o=JSON.parse(localStorage.getItem(k)||'{}');
@@ -96,7 +103,7 @@ with sync_playwright() as p:
         else:
             n=pg.locator("#v-detail tr.match").count()
             got=pg.locator("#v-detail tr.match .grp").first.inner_text() if n else "NONE"
-        good=(got==expect and (n==1 if tid not in panel_tests else got==expect)); ok=ok and good
+        good=(got==expect and (n==1 if tid not in panel_tests and tid not in tie_tests else got==expect)); ok=ok and good
         print(("PASS " if good else "FAIL "),f"{tid:11s} {sex} {preg:4s} {age:11s} -> {got!r} rows={n}")
         if not good: print("        expected:",repr(expect))
     print("\nRANGE SELECTION:", "ALL PASS" if ok else "FAILURES ABOVE")
