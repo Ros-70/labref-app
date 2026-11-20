@@ -86,10 +86,19 @@ with sync_playwright() as p:
         pg.fill("#searchBox", "")
         pg.wait_for_timeout(140)
         pg.fill("#searchBox", m["name"][:18])
-        pg.wait_for_timeout(200)   # oninput is debounced 120 ms
         sel = "[data-test='%s']" % m["id"]
+        # oninput is debounced 120 ms; poll for the row to become visible
+        # instead of a flat sleep, so a slow/contended CI runner doesn't
+        # produce a false "not reachable". Keep a short settle buffer
+        # afterwards — the list can still be mid-layout right as it
+        # becomes visible.
+        try:
+            pg.locator(sel).first.wait_for(state="visible", timeout=2000)
+        except Exception:
+            pass
         if pg.locator(sel).count() == 0:
             fail("not reachable by searching its own name", m["id"]); continue
+        pg.wait_for_timeout(60)
         pg.locator(sel).first.click()
         pg.wait_for_timeout(60)
         state = pg.evaluate("""()=>{
