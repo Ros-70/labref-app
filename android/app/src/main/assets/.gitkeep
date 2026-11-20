@@ -1,0 +1,3 @@
+index.html is produced by ../../app/build.py and copied here by the CI workflow
+(or by `make assets`). It is intentionally NOT committed: the single source of
+truth for clinical content is handover/app/labref_data_v1.10.js.

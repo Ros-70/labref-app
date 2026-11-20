@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>LabRef — Laboratory Test Reference</title>
+<style>
+/* ===================== THEME TOKENS ===================== */
+:root{
+  --bg:#f4f6f8; --surface:#ffffff; --surface2:#eef2f5; --border:#d8e0e6;
+  --text:#16212b; --text2:#5b6b78; --text3:#8b9aa6;
+  --accent:#0f766e; --accent-soft:#d7eeea; --accent-text:#0b5952;
+  --danger:#c62828; --danger-soft:#fdeaea;
+  --warn:#b45309; --warn-soft:#fdf3e3;
+  --ok:#2e7d32; --ok-soft:#e6f4e7;
+  --local:#6d28d9; --local-soft:#ede8fb;
+  --shadow:0 1px 3px rgba(16,32,45,.09),0 1px 2px rgba(16,32,45,.05);
+  --radius:12px;
+}
+/* Text size is applied to the root element's real font-size (see applyTheme()
+   in the script), not as a custom property — every rem unit in this file
+   measures against the root, so that single change scales the whole app. */
+html{-webkit-text-size-adjust:100%}
+[data-theme="dark"]{
+  --bg:#0e1419; --surface:#161e26; --surface2:#1d2831; --border:#2a3742;
+  --text:#e4ecf2; --text2:#9fb0bd; --text3:#6f8291;
+  --accent:#2dd4bf; --accent-soft:#14312e; --accent-text:#5eead4;
+  --danger:#f87171; --danger-soft:#3a1a1a;
+  --warn:#fbbf24; --warn-soft:#3a2d12;
+  --ok:#4ade80; --ok-soft:#14301c;
+  --local:#a78bfa; --local-soft:#241a3d;
+  --shadow:0 1px 3px rgba(0,0,0,.4);
+}
+[data-theme="sepia"]{
+  --bg:#f4ecd8; --surface:#fdf6e3; --surface2:#efe4ca; --border:#ddcdaa;
+  --text:#3b2f1e; --text2:#6b5a42; --text3:#917f63;
+  --accent:#8a6d3b; --accent-soft:#eadfc4; --accent-text:#6b5325;
+  --danger:#9b2c2c; --danger-soft:#f3dede;
+  --warn:#8a5a10; --warn-soft:#f0e3c8;
+  --ok:#4a6b2f; --ok-soft:#e3ecd6;
+  --local:#6b4f8a; --local-soft:#e8e0f0;
+  --shadow:0 1px 3px rgba(80,60,30,.15);
+}
+[data-theme="pista"]{
+  --bg:#eef3e3; --surface:#fbfdf7; --surface2:#e4ecd5; --border:#cddab0;
+  --text:#28361f; --text2:#5c6e49; --text3:#8a9975;
+  --accent:#577a30; --accent-soft:#e1ecd0; --accent-text:#3c5620;
+  --danger:#b5342f; --danger-soft:#f6e2df;
+  --warn:#9c6414; --warn-soft:#f1e3c4;
+  --ok:#2e7d32; --ok-soft:#e1efdc;
+  --local:#6d4f9e; --local-soft:#e9e1f4;
+  --shadow:0 1px 3px rgba(50,70,30,.12);
+}
+[data-theme="beige"]{
+  --bg:#f1e9d6; --surface:#fbf7ec; --surface2:#e7dcc0; --border:#dccda5;
+  --text:#382f1f; --text2:#6b5e45; --text3:#988968;
+  --accent:#7c6a42; --accent-soft:#ecdfc1; --accent-text:#59492a;
+  --danger:#ad3f36; --danger-soft:#f3e0da;
+  --warn:#946319; --warn-soft:#eedfbd;
+  --ok:#53713a; --ok-soft:#e4ecd7;
+  --local:#6c5690; --local-soft:#e8e1f1;
+  --shadow:0 1px 3px rgba(70,55,30,.13);
+}
+[data-theme="steel"]{
+  --bg:#e7ebee; --surface:#f8fafb; --surface2:#dde3e8; --border:#c3ccd3;
+  --text:#232d33; --text2:#55636c; --text3:#84929a;
+  --accent:#3f5b68; --accent-soft:#dbe6ea; --accent-text:#2c4149;
+  --danger:#bc3a34; --danger-soft:#f4e0de;
+  --warn:#a1650f; --warn-soft:#f0e2c9;
+  --ok:#33754a; --ok-soft:#dfeee3;
+  --local:#5a4d9e; --local-soft:#e4e0f3;
+  --shadow:0 1px 3px rgba(30,45,55,.13);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:1rem; line-height:1.5;
+  padding-bottom:calc(64px + env(safe-area-inset-bottom));
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+a{color:var(--accent-text)}
+
+/* ===================== APP BAR ===================== */
+#appbar{
+  position:sticky;top:0;z-index:50;background:var(--accent);color:#fff;
+  padding:calc(10px + env(safe-area-inset-top)) 12px 8px;
+  box-shadow:var(--shadow);
+}
+#appbar .bar-row{display:flex;align-items:center;gap:10px}
+[data-theme="dark"] #appbar,[data-theme="sepia"] #appbar{color:#06211e}
+[data-theme="sepia"] #appbar{color:#fff}
+#appbar .title{font-weight:650;font-size:1.05rem;flex:1;letter-spacing:-.01em;min-width:0}
+/* version sits beside the app name, deliberately quieter than it */
+#appbar .ver{font-size:.68rem;font-weight:500;opacity:.75;margin-left:6px;
+  letter-spacing:0;white-space:nowrap}
+/* Breadcrumb "page address". Laid out as a flex row so that when the trail is
+   too wide for a phone, the ancestor crumbs ellipsise first and the current
+   page name — the part that matters most — keeps its space. */
+#appbar .sub{font-size:.7rem;font-weight:400;letter-spacing:.02em;
+  display:flex;align-items:baseline;gap:4px;overflow:hidden;margin-top:1px}
+/* Shrink priority when the trail is too wide: the root crumb is always one
+   short word and never shrinks; the middle (category) crumb absorbs almost
+   all of the overflow; the current page name gives up space last. */
+#appbar .crumb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  flex:0 1 auto;min-width:0;padding:2px 0}
+#appbar .crumb.root{flex:0 0 auto}
+#appbar .crumb.mid{flex:0 100 auto;min-width:2.5em}
+#appbar .crumb.link{text-decoration:underline;text-underline-offset:2px}
+#appbar .crumb.link:active{opacity:.7}
+#appbar .crumb.now{flex:1 1 auto;max-width:none;font-weight:650;
+  color:var(--crumb-now);text-decoration:none}
+#appbar .csep{flex:none;opacity:.6}
+/* Current-page colour, tuned per theme. The app bar is the theme's accent
+   colour, so one global highlight cannot clear 4.5:1 (WCAG AA for text this
+   small) on all six — sepia's mid-brown accent tops out at 4.85:1 even
+   against pure white. Each value below is the most saturated warm tone that
+   still clears 4.5:1 on that theme's own bar; the default covers any theme
+   added later. */
+#appbar{--crumb-now:#fff4d1}
+[data-theme="light"] #appbar{--crumb-now:#ffe8a3}
+[data-theme="sepia"] #appbar{--crumb-now:#fff7de}
+[data-theme="pista"] #appbar{--crumb-now:#fff4d1}
+[data-theme="beige"] #appbar{--crumb-now:#ffedb5}
+[data-theme="steel"] #appbar{--crumb-now:#ffd966}
+[data-theme="dark"]  #appbar{--crumb-now:#6b1f0a}
+.iconbtn{
+  width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  font-size:1.15rem;color:inherit;flex:none;
+}
+.iconbtn:active{background:rgba(255,255,255,.18)}
+#backBtn{display:none}
+
+/* ===================== SEARCH ===================== */
+#searchWrap{padding:10px 12px;background:var(--surface);border-bottom:1px solid var(--border)}
+#searchBox{
+  width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);
+  background:var(--surface2);outline:none;
+}
+#searchBox:focus{border-color:var(--accent)}
+
+/* ===================== PATIENT MODE BAR ===================== */
+#modebar{
+  display:flex;gap:6px;padding:8px 12px;background:var(--surface);
+  border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;
+}
+#modebar::-webkit-scrollbar{display:none}
+.chip{
+  padding:5px 11px;border-radius:999px;border:1px solid var(--border);
+  background:var(--surface2);font-size:.8rem;white-space:nowrap;color:var(--text2);
+}
+.chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-text);font-weight:600}
+
+/* ===================== LAYOUT ===================== */
+main{padding:12px;max-width:760px;margin:0 auto}
+.view{display:none}
+.view.active{display:block}
+h2.sec{font-size:.76rem;text-transform:uppercase;letter-spacing:.09em;color:var(--text3);
+  margin:18px 0 8px;font-weight:700}
+h2.sec:first-child{margin-top:4px}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow:hidden;margin-bottom:10px}
+.card-pad{padding:14px}
+
+/* list rows */
+.row{display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid var(--border);
+  background:var(--surface);width:100%;text-align:left}
+.row:last-child{border-bottom:none}
+.row:active{background:var(--surface2)}
+.row .ic{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;
+  font-size:1.1rem;flex:none;color:#fff}
+.row .bd,.picker-item .bd{flex:1;min-width:0}
+.nm{display:block;font-weight:600;font-size:.95rem;line-height:1.3}
+.ds{display:block;font-size:.78rem;color:var(--text2);margin-top:2px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .ch{color:var(--text3);font-size:1.1rem;flex:none}
+.row .dot{width:7px;height:7px;border-radius:50%;background:var(--local);flex:none}
+
+/* badges */
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.68rem;
+  font-weight:700;letter-spacing:.03em;text-transform:uppercase;vertical-align:middle}
+.b-assay{background:var(--warn-soft);color:var(--warn)}
+.b-crit{background:var(--danger-soft);color:var(--danger)}
+.b-local{background:var(--local-soft);color:var(--local)}
+.b-fast{background:var(--accent-soft);color:var(--accent-text)}
+
+/* ===================== TEST DETAIL ===================== */
+.detail-head{padding:16px 14px;background:var(--surface);border-bottom:1px solid var(--border)}
+.detail-head h1{margin:0;font-size:1.3rem;line-height:1.25;letter-spacing:-.015em}
+.detail-head .abbr{color:var(--text2);font-size:.88rem;margin-top:3px}
+.detail-head .badges{margin-top:9px;display:flex;gap:6px;flex-wrap:wrap}
+
+.block{margin-bottom:10px}
+.block > .bh{display:flex;align-items:center;gap:8px;padding:12px 14px;
+  font-weight:650;font-size:.9rem;background:var(--surface);width:100%;text-align:left;
+  border-bottom:1px solid transparent}
+.block.open > .bh{border-bottom-color:var(--border)}
+.block > .bh .tw{margin-left:auto;color:var(--text3);transition:transform .18s;font-size:.85rem}
+.block.open > .bh .tw{transform:rotate(90deg)}
+.block > .bc{display:none;padding:12px 14px;background:var(--surface)}
+.block.open > .bc{display:block}
+/* a block whose body is a flush list of .row buttons — the rows carry their
+   own padding and must reach the card edges, so the body adds none */
+.block > .bc.flush{padding:0}
+
+ul.lst{margin:0;padding-left:18px}
+ul.lst li{margin-bottom:6px;font-size:.9rem;line-height:1.5}
+ul.lst li:last-child{margin-bottom:0}
+
+/* range table */
+table.rng{width:100%;border-collapse:collapse;font-size:.86rem}
+table.rng th{text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--text3);padding:6px 8px;border-bottom:1px solid var(--border);font-weight:700}
+table.rng td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+table.rng tr:last-child td{border-bottom:none}
+table.rng tr.match td{background:var(--accent-soft)}
+table.rng tr.localrow td{background:var(--local-soft)}
+.rng-sub + .rng-sub{margin-top:18px;padding-top:14px;border-top:1px dashed var(--border)}
+.rng-sub .comp-h{font-weight:700;font-size:.85rem;margin-bottom:6px}
+.mylab-comp + .mylab-comp{margin-top:18px;padding-top:14px;border-top:1px dashed var(--border)}
+.mylab-comp .comp-h{font-weight:700;font-size:.85rem;margin:0 0 4px}
+table.rng .grp{color:var(--text2);font-size:.82rem}
+table.rng .val{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+/* descriptive ranges (qualitative tests, films, cultures) are sentences, not
+   numbers — they must wrap rather than be clipped by the nowrap above */
+table.rng .val.wrap{white-space:normal;font-weight:600;line-height:1.45}
+.unitnote{font-size:.76rem;color:var(--text3);margin-top:8px;font-style:italic}
+
+.alert{padding:11px 13px;border-radius:9px;font-size:.86rem;margin-bottom:10px;line-height:1.45}
+.alert.crit{background:var(--danger-soft);color:var(--danger);border:1px solid currentColor}
+.alert.warn{background:var(--warn-soft);color:var(--warn);border:1px solid currentColor}
+.alert.info{background:var(--accent-soft);color:var(--accent-text)}
+.alert b{font-weight:700}
+
+.kv{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.kv:last-child{border-bottom:none}
+.kv .k{color:var(--text2);flex:none;width:33%;font-size:.82rem}
+.kv .v{flex:1}
+
+/* tube pill */
+.tubepill{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;
+  background:var(--surface2);border:1px solid var(--border);font-size:.85rem;font-weight:600}
+.tubedot{width:15px;height:15px;border-radius:50%;border:1.5px solid rgba(0,0,0,.25);flex:none}
+
+/* ===================== FORMS / TOOLS ===================== */
+label.fl{display:block;font-size:.78rem;color:var(--text2);margin:12px 0 5px;font-weight:600}
+input.fi,select.fi,textarea.fi{
+  width:100%;padding:10px 12px;border-radius:9px;border:1px solid var(--border);
+  background:var(--surface2);outline:none}
+input.fi:focus,select.fi:focus,textarea.fi:focus{border-color:var(--accent)}
+.btn{padding:11px 16px;border-radius:9px;background:var(--accent);color:#fff;
+  font-weight:650;font-size:.9rem;display:inline-block;text-align:center}
+[data-theme="dark"] .btn{color:#06211e}
+.btn.sec{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn.dgr{background:var(--danger);color:#fff}
+.btn.wide{width:100%;display:block;margin-top:12px}
+.btnrow{display:flex;gap:8px;margin-top:12px}
+.btnrow .btn{flex:1}
+
+.picker-item{display:flex;align-items:center;gap:11px;padding:11px 14px;border-bottom:1px solid var(--border);width:100%;text-align:left;background:var(--surface)}
+.picker-item:last-child{border-bottom:none}
+.cb{width:21px;height:21px;border-radius:5px;border:2px solid var(--border);flex:none;
+  display:grid;place-items:center;font-size:.8rem;color:#fff}
+.cb.on{background:var(--accent);border-color:var(--accent)}
+[data-theme="dark"] .cb.on{color:#06211e}
+
+.result-flag{padding:14px;border-radius:10px;text-align:center;font-weight:700;margin-top:12px;font-size:1rem}
+.rf-normal{background:var(--ok-soft);color:var(--ok)}
+.rf-high{background:var(--danger-soft);color:var(--danger)}
+.rf-low{background:var(--warn-soft);color:var(--warn)}
+
+/* ===================== BOTTOM NAV ===================== */
+#nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:60;display:flex;
+  background:var(--surface);border-top:1px solid var(--border);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+#nav button{flex:1;padding:8px 2px 7px;display:flex;flex-direction:column;align-items:center;
+  gap:3px;color:var(--text3);font-size:.65rem;font-weight:600}
+#nav button .ni{font-size:1.25rem;line-height:1}
+#nav button.on{color:var(--accent)}
+
+.empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:.9rem}
+.muted{color:var(--text2);font-size:.84rem}
+.handout{background:var(--surface);padding:18px;border-radius:10px;border:1px solid var(--border);
+  font-size:.92rem;line-height:1.65;white-space:pre-wrap}
+@media print{
+  #appbar,#nav,#searchWrap,#modebar,.noprint{display:none!important}
+  body{background:#fff;padding:0}
+  .handout{border:none;padding:0}
+}
+</style>
+</head>
+<body data-theme="light">
+
+<header id="appbar">
+  <div class="bar-row">
+    <button class="iconbtn" id="backBtn" aria-label="Back">‹</button>
+    <div class="title">LabRef<span class="ver" id="appVer"></span></div>
+    <button class="iconbtn" id="searchToggle" aria-label="Search">⌕</button>
+  </div>
+  <nav class="sub" id="crumbs" aria-label="Page address"></nav>
+</header>
+
+<div id="searchWrap" style="display:none">
+  <input id="searchBox" type="search" placeholder="Search tests, abbreviations, synonyms…" autocomplete="off">
+</div>
+
+<div id="modebar">
+  <button class="chip" data-mode="units">Units: Conventional</button>
+  <button class="chip" data-mode="sex">Male</button>
+  <button class="chip" data-mode="age">Adult</button>
+  <button class="chip" data-mode="preg">Not pregnant</button>
+</div>
+
+<main>
+  <section id="v-tests"  class="view active"></section>
+  <section id="v-tools"  class="view"></section>
+  <section id="v-tubes"  class="view"></section>
+  <section id="v-mylab"  class="view"></section>
+  <section id="v-more"   class="view"></section>
+  <section id="v-detail" class="view"></section>
+</main>
+
+<nav id="nav">
+  <button data-nav="tests" class="on"><span class="ni">☰</span>Tests</button>
+  <button data-nav="tools"><span class="ni">⚗</span>Tools</button>
+  <button data-nav="tubes"><span class="ni">▮</span>Tubes</button>
+  <button data-nav="mylab"><span class="ni">⌂</span>My Lab</button>
+  <button data-nav="more"><span class="ni">⚙</span>More</button>
+</nav>
+
+<script>
+/*__LABREF_DATA__*/
+</script>
+
+<script>
+/* ============================================================================
+   LabRef v1.10 — APPLICATION
+   All state in localStorage. No network calls. No permissions required.
+   ========================================================================== */
+(function(){
+"use strict";
+
+const LS = "labref_v1";
+const LS_LEGACY = "medref_v1";   /* pre-rename key — read once, then migrated */
+const TESTS = window.LABREF_TESTS, CATS = window.LABREF_CATEGORIES, TUBES = window.LABREF_TUBES;
+const tubeById = id => TUBES.find(t=>t.id===id) || null;
+const testById = id => TESTS.find(t=>t.id===id) || null;
+const catById  = id => CATS.find(c=>c.id===id) || null;
+
+/* ---------------------------------------------------------------- STATE */
+/* [theme id, display label] -- id must match a [data-theme="id"] CSS block
+   above and have an entry in the THEME_COLORS meta-tag map below. */
+const THEME_LABELS = [
+  ["light","Light"], ["dark","Dark"], ["sepia","Sepia"],
+  ["pista","Pista Green"], ["beige","Beige"], ["steel","Brushed Steel"]
+];
+const defaults = {
+  theme:"light", fs:100, units:"conv",
+  sex:"M", age:"adult", preg:"none",
+  favs:[], notes:{}, local:{}, localOnly:false,
+  labName:"", labAnalyser:"", labNabl:"",
+  picker:[], recent:[],
+  panels:{}          /* persisted open/closed state of the Tests tab panels */
+};
+let S = Object.assign({}, defaults);
+/* Read the current key; fall back to the pre-rename key so a user who already
+   saved their lab's values under MedRef does not silently lose them. The old
+   key is left in place rather than deleted — migration is one-way and cheap,
+   and leaving it costs nothing if the user reverts to an older build. */
+let migratedFromLegacy = false;
+try {
+  let raw = localStorage.getItem(LS);
+  if(!raw){ raw = localStorage.getItem(LS_LEGACY); if(raw) migratedFromLegacy = true; }
+  if(raw) S = Object.assign({}, defaults, JSON.parse(raw));
+} catch(e){}
+/* a stored blob written before panels existed, or holding an explicit null,
+   would otherwise make every panelOpen() lookup throw */
+if(!S.panels || typeof S.panels !== "object") S.panels = {};
+const save = () => { try{ localStorage.setItem(LS, JSON.stringify(S)); }catch(e){} };
+/* Write the migrated copy under the new key straight away, so the legacy
+   fallback is needed exactly once and the two keys cannot drift apart. */
+if(migratedFromLegacy) save();
+
+/* ---------------------------------------------------------------- HELPERS */
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $  = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+/* Range text for one range object in the active unit system */
+function rangeText(r, units){
+  const u = units==="si" ? r.si : r.conv;
+  if(!u) return "—";
+  if(u.txt) return esc(u.txt);
+  const lo = u.lo, hi = u.hi;
+  if(lo!=null && hi!=null) return lo+" – "+hi;
+  if(lo!=null) return "≥ "+lo;
+  if(hi!=null) return "< "+hi;
+  return "—";
+}
+function unitLabel(t){ return S.units==="si" ? t.units.si : t.units.conv; }
+
+/* Does a range row apply to the current patient mode? */
+function rangeMatches(r){
+  if(r.sex!=="any" && r.sex!==S.sex) return false;
+  if(r.age && r.age!==S.age) return false;
+  if(r.preg){
+    if(S.preg==="none") return false;
+    if(r.preg!=="any" && r.preg!==S.preg) return false;
+  } else {
+    if(S.preg!=="none" && r.sex==="F") return false;
+  }
+  return true;
+}
+/* Score a candidate range so the MOST specific applicable row wins.
+   Without this, a sex-neutral adult row outranks a trimester-specific one. */
+function rangeScore(r){
+  if(!rangeMatches(r)) return -1;
+  let s = 0;
+  if(S.preg!=="none"){
+    if(r.preg===S.preg) s += 100;
+    else if(r.preg==="any") s += 60;
+  }
+  if(r.sex===S.sex) s += 20;
+  if(r.age===S.age) s += 10;
+  return s;
+}
+
+/* -------------------------------------------------- PANEL / ANALYTE HELPERS
+   A handful of tests (Lipid Profile, ABG Panel, PT/INR, Troponin, Bilirubin,
+   Calcium) bundle more than one real, separately-reported analyte under one
+   test record — see the analyte{} note in the schema header of the data file.
+   Every function below is analyte-aware: for an ordinary single-analyte test,
+   componentsOf() returns null and everything behaves exactly as before. */
+function componentsOf(t){
+  if(!t.ranges.some(r=>r.analyte)) return null;
+  const seen=[], out=[];
+  t.ranges.forEach(r=>{
+    if(!r.analyte || seen.includes(r.analyte.key)) return;
+    seen.push(r.analyte.key); out.push(r.analyte);
+  });
+  return out;
+}
+function rowsFor(t, key){
+  return key==null ? t.ranges.filter(r=>!r.analyte) : t.ranges.filter(r=>r.analyte && r.analyte.key===key);
+}
+function bestRange(t, key){
+  const comps = componentsOf(t);
+  const rows = comps ? rowsFor(t, key || comps[0].key) : t.ranges;
+  let best=null, bs=-1;
+  rows.forEach(r=>{ const s=rangeScore(r); if(s>bs){ bs=s; best=r; } });
+  return best || rows.find(r=>r.age==="adult"&&r.sex==="any") || rows[0] || null;
+}
+/* The unit label and conversion factor for one component, falling back to
+   the test's panel-level default when the component doesn't override it. */
+function componentUnit(t, an){
+  if(!an) return { conv:t.units.conv, si:t.units.si, factor:t.units.factor, noConvert:false };
+  return {
+    conv: an.convUnit!=null ? an.convUnit : t.units.conv,
+    si:   an.siUnit!=null   ? an.siUnit   : t.units.si,
+    factor: an.factor!=null ? an.factor : t.units.factor,
+    noConvert: !!an.noConvert
+  };
+}
+
+/* ---- local ("My Lab") override storage ----------------------------------
+   Normalised shape: S.local[id] = { note, comp:{ [key]: {lo,hi,unit,crit,method} } }
+   key is the analyte key for a panel test, or "_" for an ordinary test.
+   Transparently reads the flat shape used before panels existed, so any
+   value already saved on a device keeps working. */
+function localBlob(id){
+  const L = S.local[id];
+  if(!L) return { note:"", comp:{} };
+  if(L.comp) return L;
+  return { note:L.note||"", comp:{ _:{ lo:L.lo, hi:L.hi, unit:L.unit, crit:L.crit, method:L.method } } };
+}
+function compOverride(id, key){
+  const c = localBlob(id).comp[key||"_"];
+  if(!c) return null;
+  if((c.lo==null||c.lo==="") && (c.hi==null||c.hi==="") && !c.crit) return null;
+  return c;
+}
+function saveComponent(id, key, data){
+  const L = localBlob(id);
+  L.comp[key||"_"] = data;
+  Object.keys(L.comp).forEach(k=>{
+    const c = L.comp[k];
+    if(!(c.lo||c.hi||c.crit||c.method)) delete L.comp[k];
+  });
+  if(Object.keys(L.comp).length===0 && !L.note) delete S.local[id];
+  else S.local[id] = L;
+}
+function saveNote(id, note){
+  const L = localBlob(id); L.note = note;
+  if(Object.keys(L.comp).length===0 && !note) delete S.local[id];
+  else S.local[id] = L;
+}
+function hasLocal(id){
+  const t = testById(id); if(!t) return false;
+  const L = localBlob(id);
+  if(L.note) return true;
+  return Object.keys(L.comp).some(k=>{ const c=L.comp[k]; return !!(c.lo||c.hi||c.crit||c.method); });
+}
+const num = v => (v===""||v==null||isNaN(parseFloat(v))) ? null : parseFloat(v);
+
+/* Local override takes priority when present, for the given component
+   (omit key for an ordinary single-analyte test). */
+function activeRange(t, key){
+  const comps = componentsOf(t);
+  const compKey = comps ? (key || comps[0].key) : null;
+  const ov = compOverride(t.id, compKey);
+  /* An override only replaces the numeric range when it actually carries a
+     lower or upper limit. A clinician who has saved ONLY a critical/panic
+     value (no lo/hi) still needs the textbook range for normal/high/low
+     comparison — otherwise the Result Interpreter would silently report
+     "no range available" for every test with a crit-only override. */
+  const ovHasRange = ov && ((ov.lo!=null && ov.lo!=="") || (ov.hi!=null && ov.hi!==""));
+  if(ovHasRange) return { local:true, grp:"Your lab", lo:num(ov.lo), hi:num(ov.hi), unit:ov.unit };
+  const r = bestRange(t, compKey); if(!r) return null;
+  const u = S.units==="si" ? r.si : r.conv;
+  return { local:false, grp:r.grp, lo:u&&u.lo!=null?u.lo:null, hi:u&&u.hi!=null?u.hi:null, txt:u&&u.txt };
+}
+
+/* ---------------------------------------------------------------- SEARCH */
+function searchTests(q){
+  q = q.trim().toLowerCase();
+  if(!q) return [];
+  const toks = q.split(/\s+/);
+  return TESTS.map(t=>{
+    const hay = (t.name+" "+t.abbr+" "+t.syn.join(" ")+" "+(catById(t.cat)||{}).name).toLowerCase();
+    let score = 0;
+    for(const tk of toks){
+      if(!hay.includes(tk)) return null;
+      if(t.abbr.toLowerCase()===tk) score += 100;
+      else if(t.name.toLowerCase().startsWith(tk)) score += 50;
+      else if(t.syn.some(s=>s.toLowerCase()===tk)) score += 40;
+      else score += 10;
+    }
+    return {t, score};
+  }).filter(Boolean).sort((a,b)=>b.score-a.score).map(x=>x.t);
+}
+
+/* ---------------------------------------------------------------- NAV */
+let navStack = [];
+let current = "tests";
+
+function go(view, push){
+  if(push && current!=="detail") navStack.push(current);
+  current = view;
+  $$(".view").forEach(v=>v.classList.remove("active"));
+  $("#v-"+view).classList.add("active");
+  const isDetail = view==="detail";
+  $("#backBtn").style.display = (isDetail || navStack.length) ? "grid" : "none";
+  $("#modebar").style.display = (view==="tests"||view==="detail"||view==="tools") ? "flex" : "none";
+  $$("#nav button").forEach(b=>b.classList.toggle("on", b.dataset.nav===view));
+  renderCrumbs();
+  window.scrollTo(0,0);
+}
+$("#backBtn").onclick = ()=>{ const p = navStack.pop() || "tests"; current="x"; go(p); render(); };
+$$("#nav button").forEach(b=> b.onclick = ()=>{
+  navStack=[];
+  /* tapping a tab you are already inside returns to that tab's top level */
+  if(b.dataset.nav==="tools") toolView=null;
+  if(b.dataset.nav==="tests"){ activeCat=null; $("#searchBox").value=""; }
+  go(b.dataset.nav); render();
+});
+
+/* ------------------------------------------------ BREADCRUMB "page address" */
+/* Shows where you are as a tappable trail: Tests › Lipids › Lipid Profile.
+   Every segment but the last navigates. A test's trail always names its own
+   category, whatever route was taken to reach it, so the crumb reads as the
+   test's address rather than as browser history. */
+const NAV_LABEL  = {tests:"Tests", tools:"Tools", tubes:"Tubes", mylab:"My Lab", more:"More"};
+const TOOL_LABEL = {picker:"Tube Picker", interp:"Result Interpreter",
+                    reverse:"Reverse Lookup", handout:"Prep Handout"};
+
+function crumbTrail(){
+  if(current==="detail"){
+    const t = testById(detailId);
+    const trail = [{label:"Tests", act:"root:tests"}];
+    const c = t && catById(t.cat);
+    if(c) trail.push({label:c.name, act:"cat:"+c.id});
+    trail.push({label: t ? t.name : "Test"});
+    return trail;
+  }
+  const trail = [{label: NAV_LABEL[current] || "", act:"root:"+current}];
+  if(current==="tests"){
+    const q = ($("#searchBox").value||"").trim();
+    if(q) trail.push({label:"Search: "+q});
+    else if(activeCat){ const c = catById(activeCat); if(c) trail.push({label:c.name}); }
+  }
+  if(current==="tools" && toolView) trail.push({label: TOOL_LABEL[toolView] || toolView});
+  return trail;
+}
+
+function renderCrumbs(){
+  const trail = crumbTrail(), el = $("#crumbs");
+  if(!el) return;
+  el.innerHTML = trail.map((c,i)=>{
+    const last = i === trail.length-1;
+    const cls  = "crumb" + (last ? " now" : (c.act ? " link" : "")) +
+                 (i===0 && !last ? " root" : "") +
+                 (i>0 && !last ? " mid" : "");
+    const attr = (!last && c.act) ? ` data-crumb="${esc(c.act)}"` : "";
+    return (i ? `<span class="csep">›</span>` : "") +
+           `<span class="${cls}"${attr}>${esc(c.label)}</span>`;
+  }).join("");
+  el.querySelectorAll("[data-crumb]").forEach(s=> s.onclick = ()=>{
+    const i = s.dataset.crumb.indexOf(":");
+    const kind = s.dataset.crumb.slice(0,i), val = s.dataset.crumb.slice(i+1);
+    navStack = [];
+    if(kind==="root"){
+      if(val==="tools") toolView = null;
+      if(val==="tests"){ activeCat = null; $("#searchBox").value = ""; }
+      go(val);
+    } else if(kind==="cat"){
+      activeCat = val; $("#searchBox").value = ""; go("tests");
+    }
+    render();
+  });
+}
+
+/* ---------------------------------------------------------------- RENDER: TESTS */
+let activeCat = null;
+
+function renderTests(){
+  renderCrumbs();
+  const q = $("#searchBox").value;
+  const el = $("#v-tests");
+
+  if(q.trim()){
+    const res = searchTests(q);
+    el.innerHTML = `<h2 class="sec">${res.length} result${res.length===1?"":"s"}</h2>`
+      + (res.length ? `<div class="card">${res.map(testRow).join("")}</div>`
+                    : `<div class="empty">No test matches “${esc(q)}”.<br><span class="muted">Try an abbreviation such as KFT, TLC or ABG.</span></div>`);
+    bindRows(el); return;
+  }
+
+  if(activeCat){
+    const c = catById(activeCat);
+    const list = TESTS.filter(t=>t.cat===activeCat);
+    el.innerHTML = `<h2 class="sec">${esc(c.name)} · ${list.length} test${list.length===1?"":"s"}</h2>`
+      + (list.length ? `<div class="card">${list.map(testRow).join("")}</div>`
+                     : `<div class="empty">No records in this category yet.<br><span class="muted">Scheduled for a later version.</span></div>`);
+    bindRows(el); return;
+  }
+
+  const favs = S.favs.map(testById).filter(Boolean);
+  const recent = S.recent.map(testById).filter(Boolean).slice(0,5);
+  const catRows = CATS.map(c=>{
+    const n = TESTS.filter(t=>t.cat===c.id).length;
+    return `<button class="row" data-cat="${c.id}">
+      <span class="ic" style="background:${c.color}">${c.icon}</span>
+      <span class="bd"><span class="nm">${esc(c.name)}</span>
+        <span class="ds">${n} test${n===1?"":"s"}${n===0?" · coming in a later version":""}</span></span>
+      <span class="ch">›</span></button>`;
+  }).join("");
+
+  let h = "";
+  if(favs.length)   h += block(`Favourites · ${favs.length}`, "p-favs",
+                       favs.map(testRow).join(""), panelOpen("p-favs"), {flush:true,persist:true});
+  if(recent.length) h += block(`Recently viewed · ${recent.length}`, "p-recent",
+                       recent.map(testRow).join(""), panelOpen("p-recent"), {flush:true,persist:true});
+  h += block(`Categories · ${CATS.length}`, "p-cats",
+         catRows, panelOpen("p-cats"), {flush:true,persist:true});
+  el.innerHTML = h;
+  bindRows(el);
+  bindBlocks(el);
+  el.querySelectorAll("[data-cat]").forEach(b=> b.onclick = ()=>{ activeCat=b.dataset.cat; renderTests(); window.scrollTo(0,0); });
+}
+
+function testRow(t){
+  const c = catById(t.cat) || {color:"#789"};
+  const comps = componentsOf(t);
+  let d;
+  if(comps){
+    /* A panel bundles several analytes — no single number can represent the
+       whole test, so the list shows what it contains rather than guessing. */
+    d = comps.length + " components: " + comps.map(a=>a.label).join(", ");
+  } else {
+    const r = activeRange(t);
+    d = r ? (r.txt ? r.txt : (r.lo!=null&&r.hi!=null ? r.lo+"–"+r.hi : r.lo!=null ? "≥"+r.lo : r.hi!=null ? "<"+r.hi : "—")) : "—";
+    if(t.units.conv!=="Qualitative" && t.units.conv!=="Titre + pattern") d += " " + unitLabel(t);
+  }
+  return `<button class="row" data-test="${t.id}">
+    <span class="ic" style="background:${c.color}">${esc(t.abbr.slice(0,3))}</span>
+    <span class="bd"><span class="nm">${esc(t.name)}</span><span class="ds">${esc(d)}</span></span>
+    ${hasLocal(t.id)?'<span class="dot" title="Local value set"></span>':''}
+    <span class="ch">›</span></button>`;
+}
+function bindRows(scope){
+  scope.querySelectorAll("[data-test]").forEach(b=> b.onclick = ()=> openTest(b.dataset.test));
+}
+
+/* ---------------------------------------------------------------- RENDER: DETAIL */
+let detailId = null;
+function openTest(id){
+  detailId = id;
+  S.recent = [id].concat(S.recent.filter(x=>x!==id)).slice(0,8); save();
+  go("detail", true); renderDetail();
+}
+
+function qualitativeTest(t){ return t.units.conv==="Qualitative"||t.units.conv==="Titre + pattern"; }
+
+/* One component's range table + its own conversion footnote (component may
+   be null, meaning "the whole test" for an ordinary single-analyte test). */
+function componentRangeHtml(t, an){
+  const key = an ? an.key : null;
+  const cu = componentUnit(t, an);
+  const ov = compOverride(t.id, key||"_");
+  const br = bestRange(t, key);
+  let rows = "";
+  if(ov){
+    rows += `<tr class="localrow"><td class="grp"><b>Your lab</b>${ov.method?'<br><span class="muted">'+esc(ov.method)+'</span>':''}</td>
+      <td class="val">${esc((ov.lo||"")+(ov.lo&&ov.hi?" – ":"")+(ov.hi||""))} ${esc(ov.unit||cu.conv||"")}</td></tr>`;
+  }
+  if(!(S.localOnly && ov)){
+    rowsFor(t,key).forEach(r=>{
+      const m = (r===br);
+      const unitSuffix = qualitativeTest(t) ? "" : " "+esc(S.units==="si"?cu.si:cu.conv);
+      const rtxt = rangeText(r,S.units);
+      rows += `<tr class="${m?'match':''}"><td class="grp">${esc(r.grp)}</td><td class="val${rtxt.length>24?' wrap':''}">${rtxt}${unitSuffix}</td></tr>`;
+    });
+  }
+  let footnote = "";
+  if(!qualitativeTest(t) && !cu.noConvert){
+    footnote = `<div class="unitnote">Showing ${S.units==="si"?"SI":"conventional"} units (${esc(S.units==="si"?cu.si:cu.conv)}).
+      ${cu.factor?`Conversion: ${esc(cu.conv)} × ${cu.factor} = ${esc(cu.si)}.`:""}
+      Highlighted row matches the current patient mode.</div>`;
+  }
+  return rows + footnote;
+}
+
+/* Full "Reference ranges" block body — one table for a simple test, or one
+   table per bundled analyte plus any patient-mode-only info rows for a panel. */
+function rangeSectionHtml(t){
+  const comps = componentsOf(t);
+  if(!comps){
+    return `<table class="rng"><thead><tr><th>Group</th><th>Range</th></tr></thead><tbody>${componentRangeHtml(t,null)}</tbody></table>
+      <div class="unitnote">Reference intervals are method- and population-dependent. Always defer to the interval printed on your own laboratory's report.</div>`;
+  }
+  let html = `<div class="alert info"><b>This test reports ${comps.length} separate values</b> — each has its own range, unit and My Lab override below.</div>`;
+  comps.forEach(an=>{
+    html += `<div class="rng-sub"><div class="comp-h">${esc(an.label)}</div>
+      <table class="rng"><thead><tr><th>Group</th><th>Range</th></tr></thead><tbody>${componentRangeHtml(t,an)}</tbody></table></div>`;
+  });
+  const infoRows = t.ranges.filter(r=>!r.analyte);
+  if(infoRows.length){
+    /* These are patient-mode-specific notes (e.g. the expected compensated
+       respiratory alkalosis pattern in pregnancy), not a bundled analyte --
+       still highlight the row when it matches the current patient mode,
+       exactly as a normal range row would be. */
+    html += `<div class="rng-sub"><div class="comp-h">Also note</div>
+      <table class="rng"><tbody>${infoRows.map(r=>`<tr class="${rangeMatches(r)?'match':''}"><td class="grp">${esc(r.grp)}</td><td class="val${rangeText(r,S.units).length>24?' wrap':''}">${rangeText(r,S.units)}</td></tr>`).join("")}</tbody></table></div>`;
+  }
+  html += `<div class="unitnote" style="margin-top:12px">Reference intervals are method- and population-dependent. Always defer to the interval printed on your own laboratory's report.</div>`;
+  return html;
+}
+
+/* "Your lab's values" block body — one override sub-form per component. */
+function myLabBlockHtml(t){
+  const comps = componentsOf(t);
+  const Lb = localBlob(t.id);
+  const list = comps || [null];
+  let html = `<p class="muted">Stored on this device only. Overrides the textbook range above and is used by the Result Interpreter.</p>`;
+  list.forEach(an=>{
+    const key = an ? an.key : "_";
+    const c = Lb.comp[key] || {};
+    const cu = componentUnit(t, an);
+    html += `<div class="mylab-comp" data-key="${esc(key)}">
+      ${an?`<div class="comp-h">${esc(an.label)}</div>`:""}
+      <label class="fl">Lower limit</label><input class="fi lc-lo" value="${esc(c.lo||"")}" inputmode="decimal">
+      <label class="fl">Upper limit</label><input class="fi lc-hi" value="${esc(c.hi||"")}" inputmode="decimal">
+      <label class="fl">Unit as your lab reports it</label><input class="fi lc-unit" value="${esc(c.unit||cu.conv||unitLabel(t))}">
+      <label class="fl">Your critical / panic value</label><input class="fi lc-crit" value="${esc(c.crit||"")}" placeholder="e.g. &lt;2.5 or &gt;6.5">
+      <label class="fl">Method / analyser</label><input class="fi lc-method" value="${esc(c.method||"")}" placeholder="e.g. CLIA, Beckman DxI 800">
+    </div>`;
+  });
+  html += `<label class="fl">Notes — TAT, send-out lab, sample quirks</label><textarea class="fi" id="lcNote" rows="3">${esc(Lb.note||"")}</textarea>
+    <div class="btnrow"><button class="btn" id="lcSave">Save</button><button class="btn sec" id="lcClear">Clear all</button></div>`;
+  return html;
+}
+
+function renderDetail(){
+  renderCrumbs();
+  const t = testById(detailId); if(!t) return;
+  const tube = tubeById(t.tube.id);
+  const comps = componentsOf(t);
+  const isFav = S.favs.includes(t.id);
+  const qualitative = qualitativeTest(t);
+
+  const badges = [];
+  if(t.assayDep) badges.push('<span class="badge b-assay">Assay-dependent</span>');
+  if(t.critical) badges.push('<span class="badge b-crit">Critical value</span>');
+  if(/\d\s*h/i.test(t.prep.fasting)) badges.push('<span class="badge b-fast">Fasting</span>');
+  if(hasLocal(t.id)) badges.push('<span class="badge b-local">Local value set</span>');
+
+  /* Any locally-saved critical values, one per component if this is a panel */
+  const localCrits = [];
+  (comps||[null]).forEach(an=>{
+    const ov = compOverride(t.id, an?an.key:"_");
+    if(ov && ov.crit) localCrits.push((an?esc(an.label)+": ":"")+esc(ov.crit));
+  });
+  const critTxt = localCrits.length
+    ? localCrits.join("<br>")+' <span class="badge b-local">Local</span>'
+    : (t.critical?esc(t.critical.txt):null);
+
+  $("#v-detail").innerHTML = `
+  <div class="card">
+    <div class="detail-head">
+      <h1>${esc(t.name)}</h1>
+      ${/* a few tests have an abbr equal to their category name (Lipid Profile
+            is abbr "Lipids" in category "Lipids") — printing both reads as a
+            glitch, so collapse the duplicate */""}
+      <div class="abbr">${[t.abbr, (catById(t.cat)||{}).name]
+          .filter((v,i,a)=> v && a.indexOf(v)===i).map(esc).join(" · ")}</div>
+      ${badges.length?`<div class="badges">${badges.join("")}</div>`:""}
+    </div>
+    <div class="card-pad" style="display:flex;gap:8px">
+      <button class="btn sec" style="flex:1" id="favBtn">${isFav?"★ Saved":"☆ Save"}</button>
+      <button class="btn sec" style="flex:1" id="addPick">＋ Tube Picker</button>
+    </div>
+  </div>
+
+  ${t.assayDep?`<div class="alert warn"><b>Assay-dependent.</b> The cutoff for this test is specific to the analyser and method your laboratory uses. The values below are widely cited defaults — enter your own in My Lab before relying on them.</div>`:""}
+  ${critTxt?`<div class="alert crit"><b>Critical value:</b> ${critTxt}</div>`:""}
+
+  ${block("Reference ranges","rng", rangeSectionHtml(t), true)}
+
+  ${block("Specimen & tube","tub",`
+    ${tube?`<div class="tubepill"><span class="tubedot" style="background:${tubeColor(tube)}"></span>${esc(tube.name)} — ${esc(tube.colors)}</div>`:""}
+    <div style="margin-top:12px">
+      <div class="kv"><span class="k">Specimen</span><span class="v">${esc(t.specimen)}</span></div>
+      <div class="kv"><span class="k">Volume</span><span class="v">${esc(t.tube.vol)}</span></div>
+      ${tube?`<div class="kv"><span class="k">Additive</span><span class="v">${esc(tube.additive)}</span></div>
+      <div class="kv"><span class="k">Inversions</span><span class="v">${esc(tube.inv)}</span></div>
+      <div class="kv"><span class="k">Order of draw</span><span class="v">Position ${tube.order||"—"} (CLSI GP41)</span></div>`:""}
+      <div class="kv"><span class="k">Handling</span><span class="v">${esc(t.tube.handling)}</span></div>
+    </div>`)}
+
+  ${block("Patient preparation","prp",`
+    <div class="alert ${/not required/i.test(t.prep.fasting)?"info":"warn"}"><b>Fasting:</b> ${esc(t.prep.fasting)}</div>
+    <div class="muted" style="font-weight:700;margin-bottom:6px">For collection staff</div>
+    <ul class="lst">${t.prep.items.map(i=>"<li>"+esc(i)+"</li>").join("")}</ul>
+    ${(t.prep.patient&&t.prep.patient.length)?`
+      <div class="muted" style="font-weight:700;margin:14px 0 6px">To tell the patient</div>
+      <ul class="lst">${t.prep.patient.map(i=>"<li>"+esc(i)+"</li>").join("")}</ul>
+      <div class="unitnote">These lines, and only these, go into the printed patient handout.</div>`:
+      `<div class="unitnote">Nothing specific for the patient to do before this test.</div>`}`)}
+
+  ${block("Causes of raised value","inc",`<ul class="lst">${t.inc.map(i=>"<li>"+esc(i)+"</li>").join("")}</ul>`)}
+  ${block("Causes of low value","dec",`<ul class="lst">${t.dec.map(i=>"<li>"+esc(i)+"</li>").join("")}</ul>`)}
+  ${block("Interferences","itf",`<ul class="lst">${t.interf.map(i=>"<li>"+md(i)+"</li>").join("")}</ul>`)}
+  ${block("Interpretation notes","prl",`<ul class="lst">${t.pearls.map(i=>"<li>"+md(i)+"</li>").join("")}</ul>`,true)}
+
+  ${/* Collapsed even when a local value is saved: an override already shows in
+       the open Reference ranges block above, carrying a "Your lab" badge, so
+       nothing is hidden by keeping this editor shut until it is wanted. */""}
+  ${block("Your lab's values","loc", myLabBlockHtml(t), false)}
+
+  ${t.rel && t.rel.length ? `<h2 class="sec">Related tests</h2><div class="card">${
+     t.rel.map(testById).filter(Boolean).map(testRow).join("")}</div>` : ""}
+  `;
+
+  bindBlocks($("#v-detail"));
+  bindRows($("#v-detail"));
+  $("#favBtn").onclick = ()=>{
+    S.favs = isFav ? S.favs.filter(x=>x!==t.id) : S.favs.concat(t.id); save(); renderDetail();
+  };
+  $("#addPick").onclick = ()=>{
+    if(!S.picker.includes(t.id)) S.picker.push(t.id);
+    save(); $("#addPick").textContent = "✓ In picker";
+  };
+  if(S.picker.includes(t.id)) $("#addPick").textContent = "✓ In picker";
+  $("#lcSave").onclick = ()=>{
+    $$("#v-detail .mylab-comp").forEach(div=>{
+      const key = div.dataset.key;
+      saveComponent(t.id, key, {
+        lo: div.querySelector(".lc-lo").value.trim(),
+        hi: div.querySelector(".lc-hi").value.trim(),
+        unit: div.querySelector(".lc-unit").value.trim(),
+        crit: div.querySelector(".lc-crit").value.trim(),
+        method: div.querySelector(".lc-method").value.trim()
+      });
+    });
+    saveNote(t.id, $("#lcNote").value.trim());
+    save(); renderDetail();
+  };
+  $("#lcClear").onclick = ()=>{ delete S.local[t.id]; save(); renderDetail(); };
+}
+
+function tubeColor(tb){
+  if(tb.id==="bc") return "linear-gradient(135deg,#8bc98b 50%,#e8975a 50%)"; /* not CLSI colour-coded — brand-specific */
+  const c = tb.colors.toLowerCase();
+  if(c.includes("light blue")) return "#7fb8e8";
+  if(c.includes("gold")) return "#d4a017";
+  if(c.includes("lavender")||c.includes("pink")) return "#c8a2d8";
+  if(c.includes("light green")) return "#90d490";
+  if(c.includes("green")) return "#4a9e4a";
+  if(c.includes("grey")||c.includes("gray")) return "#9aa5ad";
+  if(c.includes("royal blue")) return "#2a5ca8";
+  if(c.includes("black")) return "#3b3b3b";
+  if(c.includes("red")) return "#d14545";
+  return "#b8c2c9";
+}
+/* opts.flush   — body holds edge-to-edge .row buttons, so drop body padding
+   opts.persist — remember this block's open/closed state across renders in
+                  S.panels. Used by the Tests tab's landing panels, where a
+                  collapse that sprang back open on every navigation would
+                  read as a bug. Detail-page blocks deliberately do NOT
+                  persist: they reset to their documented defaults each time. */
+function block(title,id,inner,open,opts){
+  opts = opts || {};
+  return `<div class="block card ${open?"open":""}" data-blk="${id}"${opts.persist?' data-persist="1"':''}>
+    <button class="bh">${esc(title)}<span class="tw">›</span></button>
+    <div class="bc${opts.flush?" flush":""}">${inner}</div></div>`;
+}
+function bindBlocks(scope){
+  scope.querySelectorAll(".block .bh").forEach(h=>{
+    h.onclick = ()=>{
+      const b = h.parentElement;
+      b.classList.toggle("open");
+      if(b.dataset.persist){ S.panels[b.dataset.blk] = b.classList.contains("open"); save(); }
+    };
+  });
+}
+/* persisted panels default to open — only an explicit false closes one */
+const panelOpen = id => S.panels[id] !== false;
+/* strip any research-citation markup stored in data so it renders as plain text */
+function md(s){ return esc(String(s).replace(/<\/?cite[^>]*>/g,"")); }
+
+/* ---------------------------------------------------------------- TOOLS */
+let toolView = null;
+function renderTools(){
+  renderCrumbs();
+  const el = $("#v-tools");
+  if(!toolView){
+    el.innerHTML = `<h2 class="sec">Tools</h2><div class="card">
+      ${toolRow("picker","▮","Tube Picker","Select tests → tubes needed, volume and order of draw")}
+      ${toolRow("interp","⊕","Result Interpreter","Enter a value → normal, high or low with causes")}
+      ${toolRow("reverse","⇄","Reverse Lookup","Pick a finding → tests whose change explains it")}
+      ${toolRow("handout","✎","Prep Handout","Patient instructions for selected tests, printable")}
+    </div>`;
+    el.querySelectorAll("[data-tool]").forEach(b=> b.onclick=()=>{ toolView=b.dataset.tool; renderTools(); });
+    return;
+  }
+  if(toolView==="picker")  return renderPicker(el);
+  if(toolView==="interp")  return renderInterp(el);
+  if(toolView==="reverse") return renderReverse(el);
+  if(toolView==="handout") return renderHandout(el);
+}
+function toolRow(id,ic,nm,ds){
+  return `<button class="row" data-tool="${id}"><span class="ic" style="background:var(--accent)">${ic}</span>
+    <span class="bd"><span class="nm">${nm}</span><span class="ds">${ds}</span></span><span class="ch">›</span></button>`;
+}
+function toolBack(el){
+  const b = el.querySelector("#toolBack"); if(b) b.onclick = ()=>{ toolView=null; renderTools(); };
+}
+
+function renderPicker(el){
+  const sel = S.picker.map(testById).filter(Boolean);
+  const tubeMap = {};
+  sel.forEach(t=>{ (tubeMap[t.tube.id] = tubeMap[t.tube.id] || []).push(t); });
+  const needed = Object.keys(tubeMap).map(tubeById).filter(Boolean)
+                 .sort((a,b)=>(a.order||99)-(b.order||99));
+  const fasting = sel.filter(t=>!/not required/i.test(t.prep.fasting));
+
+  el.innerHTML = `<button class="btn sec" id="toolBack">‹ Tools</button>
+  <h2 class="sec">Tube Picker</h2>
+  ${sel.length===0 ? `<div class="empty">No tests selected.<br><span class="muted">Add tests from the list below, or from any test page.</span></div>` : `
+  <div class="card card-pad">
+    <b>Draw in this order (CLSI GP41)</b>
+    <div style="margin-top:10px">${needed.map((tb,i)=>`
+      <div class="kv"><span class="k"><span class="tubepill"><span class="tubedot" style="background:${tubeColor(tb)}"></span>${i+1}</span></span>
+      <span class="v"><b>${esc(tb.name)}</b> — ${esc(tb.shortColor||tb.colors)}<br>
+      <span class="muted">${tubeMap[tb.id].map(t=>esc(t.abbr)).join(", ")} · ${esc(tb.inv)} inversions</span></span></div>`).join("")}
+    </div>
+    ${fasting.length?`<div class="alert warn" style="margin-top:12px"><b>Fasting required</b> for: ${fasting.map(t=>esc(t.abbr)).join(", ")}</div>`:""}
+    <div class="btnrow"><button class="btn sec" id="clearPick">Clear all</button>
+      <button class="btn" id="toHandout">Prep handout ›</button></div>
+  </div>`}
+  <h2 class="sec">Add tests</h2>
+  <div class="card">${TESTS.map(t=>`<button class="picker-item" data-pk="${t.id}">
+    <span class="cb ${S.picker.includes(t.id)?"on":""}">${S.picker.includes(t.id)?"✓":""}</span>
+    <span class="bd"><span class="nm">${esc(t.name)}</span><span class="ds">${esc(t.abbr)}</span></span></button>`).join("")}</div>`;
+  toolBack(el);
+  el.querySelectorAll("[data-pk]").forEach(b=> b.onclick = ()=>{
+    const id=b.dataset.pk;
+    S.picker = S.picker.includes(id) ? S.picker.filter(x=>x!==id) : S.picker.concat(id);
+    save(); renderPicker(el); });
+  const cp = el.querySelector("#clearPick"); if(cp) cp.onclick=()=>{ S.picker=[]; save(); renderPicker(el); };
+  const th = el.querySelector("#toHandout"); if(th) th.onclick=()=>{ toolView="handout"; renderTools(); };
+}
+
+function renderInterp(el){
+  el.innerHTML = `<button class="btn sec" id="toolBack">‹ Tools</button>
+  <h2 class="sec">Result Interpreter</h2>
+  <div class="card card-pad">
+    <p class="muted">Uses your current patient mode, and your own lab's range when one is saved.</p>
+    <label class="fl">Test</label>
+    <select class="fi" id="ipTest"><option value="">Select a test…</option>
+      ${TESTS.filter(t=>t.units.conv!=="Qualitative"&&t.units.conv!=="Titre + pattern")
+        .map(t=>`<option value="${t.id}">${esc(t.name)} (${esc(t.abbr)})</option>`).join("")}</select>
+    <div id="ipComp"></div>
+    <label class="fl">Value</label><input class="fi" id="ipVal" inputmode="decimal" placeholder="Enter the measured value">
+    <button class="btn wide" id="ipGo">Interpret</button>
+    <div id="ipOut"></div>
+  </div>`;
+  toolBack(el);
+  /* A panel test (Lipid Profile, ABG, PT/INR, Troponin, Bilirubin, Calcium)
+     needs the user to say WHICH component the value belongs to — comparing
+     a total cholesterol result against the HDL cutoff would be silently wrong. */
+  el.querySelector("#ipTest").onchange = e=>{
+    const t = testById(e.target.value);
+    const comps = t ? componentsOf(t) : null;
+    el.querySelector("#ipComp").innerHTML = comps
+      ? `<label class="fl">Component</label><select class="fi" id="ipPart">
+          ${comps.map(a=>`<option value="${a.key}">${esc(a.label)}</option>`).join("")}</select>` : "";
+  };
+  el.querySelector("#ipGo").onclick = ()=>{
+    const t = testById(el.querySelector("#ipTest").value);
+    const v = num(el.querySelector("#ipVal").value);
+    const out = el.querySelector("#ipOut");
+    if(!t || v==null){ out.innerHTML = `<div class="alert warn">Select a test and enter a numeric value.</div>`; return; }
+    const comps = componentsOf(t);
+    const partEl = el.querySelector("#ipPart");
+    const key = comps ? (partEl ? partEl.value : comps[0].key) : null;
+    const an = comps ? comps.find(a=>a.key===key) : null;
+    const r = activeRange(t, key);
+    if(!r || (r.lo==null && r.hi==null)){ out.innerHTML = `<div class="alert info">No numeric range available for this group — see the test page.</div>`; return; }
+    let flag="rf-normal", word="Within range";
+    if(r.hi!=null && v>r.hi){ flag="rf-high"; word="ABOVE range"; }
+    else if(r.lo!=null && v<r.lo){ flag="rf-low"; word="BELOW range"; }
+    const causes = word==="ABOVE range" ? t.inc : word==="BELOW range" ? t.dec : null;
+    const cu = componentUnit(t, an);
+    const shownUnit = S.units==="si" ? cu.si : cu.conv;
+    const ov = compOverride(t.id, key||"_");
+    /* A panel's test-wide critical value may name only one of its components
+       (e.g. Lipid Profile's critical figure is triglycerides-specific) --
+       t.critical.analyte, when present, restricts it to those component keys
+       so it never appears while interpreting a different component. */
+    const testCritApplies = !t.critical || !t.critical.analyte || !key || t.critical.analyte.includes(key);
+    const crit = (ov&&ov.crit) || (testCritApplies && t.critical ? t.critical.txt : null);
+    out.innerHTML = `<div class="result-flag ${flag}">${v}${shownUnit?" "+esc(shownUnit):""} — ${word}${an?" ("+esc(an.label)+")":""}</div>
+      <div class="kv" style="margin-top:10px"><span class="k">Compared with</span>
+        <span class="v">${esc(r.grp)}${r.local?' <span class="badge b-local">Your lab</span>':''} · ${r.lo!=null?r.lo:"—"} – ${r.hi!=null?r.hi:"—"}</span></div>
+      ${crit?`<div class="alert crit" style="margin-top:10px"><b>Critical value:</b> ${esc(crit)}</div>`:""}
+      ${t.assayDep?`<div class="alert warn"><b>Assay-dependent</b> — confirm against your analyser's own cutoff.</div>`:""}
+      ${causes&&causes.length?`<h2 class="sec">Consider</h2><ul class="lst">${causes.slice(0,8).map(c=>"<li>"+esc(c)+"</li>").join("")}</ul>`:""}
+      <button class="btn sec wide" id="ipOpen">Open full test page ›</button>`;
+    const ob = out.querySelector("#ipOpen"); if(ob) ob.onclick = ()=> openTest(t.id);
+  };
+}
+
+function renderReverse(el){
+  const findings = [];
+  TESTS.forEach(t=>{
+    if(t.inc.length) findings.push({label:"Raised "+t.name, test:t, dir:"inc"});
+    if(t.dec.length) findings.push({label:"Low "+t.name, test:t, dir:"dec"});
+  });
+  findings.sort((a,b)=>a.label.localeCompare(b.label));
+  el.innerHTML = `<button class="btn sec" id="toolBack">‹ Tools</button>
+  <h2 class="sec">Reverse Lookup</h2>
+  <div class="card card-pad">
+    <p class="muted">Start from the abnormality and work back to the differential.</p>
+    <label class="fl">Finding</label>
+    <select class="fi" id="rvSel"><option value="">Select a finding…</option>
+      ${findings.map((f,i)=>`<option value="${i}">${esc(f.label)}</option>`).join("")}</select>
+    <div id="rvOut"></div>
+  </div>`;
+  toolBack(el);
+  el.querySelector("#rvSel").onchange = e=>{
+    const f = findings[e.target.value]; const out = el.querySelector("#rvOut");
+    if(!f){ out.innerHTML=""; return; }
+    const list = f.dir==="inc" ? f.test.inc : f.test.dec;
+    out.innerHTML = `<h2 class="sec">${esc(f.label)} — causes</h2>
+      <ul class="lst">${list.map(c=>"<li>"+esc(c)+"</li>").join("")}</ul>
+      ${f.test.rel.length?`<h2 class="sec">Next tests to consider</h2><div class="card">${
+        f.test.rel.map(testById).filter(Boolean).map(testRow).join("")}</div>`:""}`;
+    bindRows(out);
+  };
+}
+
+function renderHandout(el){
+  const sel = S.picker.map(testById).filter(Boolean);
+  const fastHrs = sel.map(t=>t.prep.fasting).filter(f=>!/not required/i.test(f));
+  const lines = [];
+  lines.push("INSTRUCTIONS BEFORE YOUR BLOOD TEST");
+  lines.push("");
+  if(S.labName) lines.push(S.labName);
+  lines.push("Tests: " + (sel.length?sel.map(t=>t.name).join(", "):"—"));
+  lines.push("");
+  if(fastHrs.length){
+    lines.push("FASTING REQUIRED");
+    lines.push("Do not eat or drink anything except plain water for 8–12 hours before the test. No tea, coffee, milk, sugar or tobacco. Take plain water freely.");
+    lines.push("");
+  } else if(sel.length) {
+    lines.push("NO FASTING REQUIRED — you may eat and drink normally.");
+    lines.push("");
+  }
+  /* Only prep.patient reaches the handout. prep.items is written for the
+     clinician and collection staff and must never be shown to the patient. */
+  const allItems = [];
+  sel.forEach(t=> (t.prep.patient||[]).forEach(i=>{
+    /* the generic fasting block above already states the fast — drop per-test duplicates */
+    if(fastHrs.length && /^fast for/i.test(i)) return;
+    if(!allItems.includes(i)) allItems.push(i);
+  }));
+  if(allItems.length){
+    lines.push("PLEASE ALSO NOTE");
+    allItems.forEach(i=> lines.push("• " + i));
+    lines.push("");
+  }
+  lines.push("GENERAL");
+  lines.push("• Bring this sheet, your prescription and any previous reports.");
+  lines.push("• Bring a written list of all medicines you take, including ayurvedic, herbal and over-the-counter preparations.");
+  lines.push("• Do not stop any prescribed medicine unless your doctor has told you to.");
+  lines.push("• Wear loose sleeves that roll up easily above the elbow.");
+  lines.push("• Tell the technician if you have fainted during a blood test before.");
+
+  el.innerHTML = `<button class="btn sec" id="toolBack">‹ Tools</button>
+  <h2 class="sec">Prep Handout</h2>
+  <div class="card card-pad noprint">
+    <p class="muted">Generated from the tests in your Tube Picker. Print or share with the patient.</p>
+    <div class="btnrow"><button class="btn" id="hoPrint">Print</button>
+    <button class="btn sec" id="hoCopy">Copy text</button></div>
+  </div>
+  <div class="handout" id="hoText">${esc(lines.join("\n"))}</div>`;
+  toolBack(el);
+  el.querySelector("#hoPrint").onclick = ()=> window.print();
+  el.querySelector("#hoCopy").onclick = function(){
+    const txt = lines.join("\n");
+    if(navigator.clipboard) navigator.clipboard.writeText(txt).then(()=>{ this.textContent="✓ Copied"; });
+    else { const ta=document.createElement("textarea"); ta.value=txt; document.body.appendChild(ta); ta.select();
+           document.execCommand("copy"); ta.remove(); this.textContent="✓ Copied"; }
+  };
+}
+
+/* ---------------------------------------------------------------- TUBES */
+function renderTubes(){
+  const ordered = TUBES.slice().sort((a,b)=>(a.order||99)-(b.order||99));
+  $("#v-tubes").innerHTML = `
+  <div class="alert info"><b>CLSI GP41 order of draw.</b> Tubes are filled in a set sequence so that additives
+  cannot carry over between them. The classic error is drawing EDTA before a chemistry tube, which produces a
+  grossly high potassium with a low calcium.</div>
+  ${ordered.map(tb=>`
+  <div class="block card" data-blk="tb-${tb.id}">
+    <button class="bh"><span class="tubedot" style="background:${tubeColor(tb)};width:17px;height:17px"></span>
+      ${tb.order?tb.order+". ":""}${esc(tb.name)}<span class="tw">›</span></button>
+    <div class="bc">
+      <div class="kv"><span class="k">Cap colour</span><span class="v">${esc(tb.colors)}</span></div>
+      <div class="kv"><span class="k">Additive</span><span class="v">${esc(tb.additive)}</span></div>
+      <div class="kv"><span class="k">Inversions</span><span class="v">${esc(tb.inv)}</span></div>
+      <div class="kv"><span class="k">Used for</span><span class="v">${esc(tb.uses)}</span></div>
+      <div style="margin-top:10px;font-size:.88rem;line-height:1.5">${esc(tb.notes)}</div>
+    </div>
+  </div>`).join("")}
+  <h2 class="sec">Sample rejection criteria</h2>
+  <div class="card card-pad"><ul class="lst">
+    <li>Unlabelled or mislabelled tube — never relabel, always recollect.</li>
+    <li>Haemolysed sample for potassium, LDH, AST or magnesium.</li>
+    <li>Clotted sample in an EDTA or citrate tube.</li>
+    <li>Citrate tube filled outside ±10% of the mark.</li>
+    <li>Wrong tube for the test, or wrong order of draw suspected.</li>
+    <li>Insufficient volume for the requested panel.</li>
+    <li>Excessive delay in transport, or incorrect storage temperature.</li>
+    <li>Sample drawn above a running intravenous line.</li>
+    <li>Blood gas syringe with visible air bubbles or a clot.</li>
+  </ul></div>
+  <h2 class="sec">Reducing contamination</h2>
+  <div class="card card-pad"><ul class="lst">
+    <li>Chlorhexidine 2% in 70% alcohol, 30 seconds of friction, then allow to dry completely before puncture.</li>
+    <li>Do not re-palpate the prepared site with an ungloved finger.</li>
+    <li>Release the tourniquet within one minute — prolonged stasis raises potassium, calcium, protein and lactate.</li>
+    <li>Blood culture contamination above 3% is a trainable, auditable quality indicator.</li>
+  </ul></div>`;
+  bindBlocks($("#v-tubes"));
+}
+
+/* ---------------------------------------------------------------- MY LAB */
+function renderMyLab(){
+  const ids = Object.keys(S.local).filter(hasLocal);
+  $("#v-mylab").innerHTML = `
+  <h2 class="sec">Laboratory profile</h2>
+  <div class="card card-pad">
+    <label class="fl">Laboratory / hospital name</label><input class="fi" id="mlName" value="${esc(S.labName)}">
+    <label class="fl">Main analyser</label><input class="fi" id="mlAn" value="${esc(S.labAnalyser)}" placeholder="e.g. Beckman DxI 800, Roche cobas e411">
+    <label class="fl">NABL accreditation number</label><input class="fi" id="mlNabl" value="${esc(S.labNabl)}">
+    <button class="btn wide" id="mlSave">Save profile</button>
+  </div>
+
+  <h2 class="sec">Display</h2>
+  <div class="card card-pad">
+    <button class="chip ${S.localOnly?"on":""}" id="mlOnly">${S.localOnly?"Showing your values only":"Showing both textbook and your values"}</button>
+    <p class="muted" style="margin-top:10px">When both are shown, your lab's range appears first and highlighted.
+    The Result Interpreter always uses your value when one exists.</p>
+  </div>
+
+  <h2 class="sec">Overridden tests (${ids.length})</h2>
+  ${ids.length ? `<div class="card">${ids.map(id=>{
+    const t=testById(id); if(!t) return ""; const L=S.local[id];
+    const r=[L.lo,L.hi].filter(Boolean).join(" – ");
+    return `<button class="row" data-test="${id}">
+      <span class="ic" style="background:var(--local)">${esc(t.abbr.slice(0,3))}</span>
+      <span class="bd"><span class="nm">${esc(t.name)}</span>
+      <span class="ds">${esc(r||"—")} ${esc(L.unit||"")}${L.method?" · "+esc(L.method):""}</span></span>
+      <span class="ch">›</span></button>`;}).join("")}</div>`
+   : `<div class="empty">No local values saved yet.<br><span class="muted">Open any test and use “Your lab's values”.</span></div>`}
+
+  <h2 class="sec">Share this profile</h2>
+  <div class="card card-pad">
+    <p class="muted">Export your lab's values as a file, then share it so the whole department works from the same numbers.</p>
+    <div class="btnrow"><button class="btn" id="mlExp">Export profile</button>
+    <button class="btn sec" id="mlImp">Import profile</button></div>
+    <input type="file" id="mlFile" accept=".json" style="display:none">
+  </div>`;
+  bindRows($("#v-mylab"));
+  $("#mlSave").onclick = ()=>{
+    S.labName=$("#mlName").value.trim(); S.labAnalyser=$("#mlAn").value.trim(); S.labNabl=$("#mlNabl").value.trim();
+    save(); $("#mlSave").textContent="✓ Saved"; setTimeout(()=>{ $("#mlSave").textContent="Save profile"; },1200);
+  };
+  $("#mlOnly").onclick = ()=>{ S.localOnly=!S.localOnly; save(); renderMyLab(); };
+  $("#mlExp").onclick = ()=> download("labref-lab-profile.json", JSON.stringify({
+    type:"labref-lab-profile", version:LABREF_VERSION,
+    labName:S.labName, labAnalyser:S.labAnalyser, labNabl:S.labNabl, local:S.local
+  },null,2));
+  $("#mlImp").onclick = ()=> $("#mlFile").click();
+  $("#mlFile").onchange = e=>{
+    const f=e.target.files[0]; if(!f) return;
+    const r=new FileReader();
+    r.onload = ()=>{ try{
+      const d=JSON.parse(r.result);
+      /* accept profiles exported by the pre-rename MedRef builds too */
+      if(d.type!=="labref-lab-profile" && d.type!=="medref-lab-profile") throw 0;
+      S.local=Object.assign({},S.local,d.local||{});
+      S.labName=d.labName||S.labName; S.labAnalyser=d.labAnalyser||S.labAnalyser; S.labNabl=d.labNabl||S.labNabl;
+      save(); renderMyLab(); alert("Lab profile imported.");
+    }catch(err){ alert("That file is not a LabRef lab profile."); } };
+    r.readAsText(f); e.target.value="";
+  };
+}
+
+/* ---------------------------------------------------------------- MORE */
+function renderMore(){
+  $("#v-more").innerHTML = `
+  <h2 class="sec">Appearance</h2>
+  <div class="card card-pad">
+    <label class="fl">Theme</label>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      ${THEME_LABELS.map(([t,label])=>`<button class="chip ${S.theme===t?"on":""}" data-th="${t}">${label}</button>`).join("")}
+    </div>
+    <label class="fl">Text size — ${S.fs}%</label>
+    <input type="range" class="fi" id="fsRange" min="85" max="145" step="5" value="${S.fs}" style="padding:6px 0">
+  </div>
+
+  <h2 class="sec">Units</h2>
+  <div class="card card-pad">
+    <div style="display:flex;gap:6px">
+      <button class="chip ${S.units==="conv"?"on":""}" data-un="conv">Conventional (mg/dL)</button>
+      <button class="chip ${S.units==="si"?"on":""}" data-un="si">SI (mmol/L)</button>
+    </div>
+    <p class="muted" style="margin-top:10px">Conventional units match how most Indian laboratory reports print. Both are stored for every test.</p>
+  </div>
+
+  <h2 class="sec">Data</h2>
+  <div class="card card-pad">
+    <div class="btnrow"><button class="btn" id="bkExp">Backup everything</button>
+    <button class="btn sec" id="bkImp">Restore</button></div>
+    <input type="file" id="bkFile" accept=".json" style="display:none">
+    <button class="btn dgr wide" id="bkReset">Reset all settings and local values</button>
+  </div>
+
+  <h2 class="sec">About</h2>
+  <div class="card card-pad">
+    <div class="kv"><span class="k">Version</span><span class="v">LabRef v${LABREF_VERSION} — prototype</span></div>
+    <div class="kv"><span class="k">Records</span><span class="v">${TESTS.length} tests · ${TUBES.length} tube types · ${CATS.length} categories</span></div>
+    <div class="kv"><span class="k">Connectivity</span><span class="v">Fully offline. No network access, no permissions, no data leaves this device.</span></div>
+    <div class="alert warn" style="margin-top:12px"><b>For use by qualified clinicians.</b>
+    Reference intervals depend on method, analyser and population. Always defer to the interval printed on your own
+    laboratory's report, and to your hospital's own critical value policy. This app supports clinical judgement; it does not replace it.</div>
+  </div>`;
+  $$("[data-th]").forEach(b=> b.onclick=()=>{ S.theme=b.dataset.th; save(); applyTheme(); renderMore(); });
+  $$("[data-un]").forEach(b=> b.onclick=()=>{ S.units=b.dataset.un; save(); renderMode(); renderMore(); });
+  $("#fsRange").oninput = e=>{ S.fs=+e.target.value; save(); applyTheme();
+    e.target.previousElementSibling.textContent = "Text size — "+S.fs+"%"; };
+  $("#bkExp").onclick = ()=> download("labref-backup.json", JSON.stringify(Object.assign({type:"labref-backup",version:LABREF_VERSION},S),null,2));
+  $("#bkImp").onclick = ()=> $("#bkFile").click();
+  $("#bkFile").onchange = e=>{
+    const f=e.target.files[0]; if(!f) return; const r=new FileReader();
+    r.onload=()=>{ try{ const d=JSON.parse(r.result);
+      /* accept backups written by the pre-rename MedRef builds too */
+      if(d.type!=="labref-backup" && d.type!=="medref-backup") throw 0;
+      S=Object.assign({},defaults,d); save(); applyTheme(); renderMode(); render(); alert("Backup restored.");
+    }catch(err){ alert("That file is not a LabRef backup."); } };
+    r.readAsText(f); e.target.value="";
+  };
+  $("#bkReset").onclick = ()=>{ if(confirm("Erase all settings, favourites, notes and local lab values?")){
+    S=Object.assign({},defaults); save(); applyTheme(); renderMode(); render(); } };
+}
+
+function download(name,txt){
+  const b=new Blob([txt],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=name;
+  document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500);
+}
+
+/* ---------------------------------------------------------------- MODE BAR */
+function renderMode(){
+  const b = $$("#modebar .chip");
+  b[0].textContent = "Units: " + (S.units==="si"?"SI":"Conventional"); b[0].classList.add("on");
+  b[1].textContent = S.sex==="M"?"Male":"Female"; b[1].classList.toggle("on", true);
+  const ages = {neonate:"Neonate",infant:"Infant",child:"Child",adolescent:"Adolescent",adult:"Adult"};
+  b[2].textContent = ages[S.age]; b[2].classList.toggle("on", S.age!=="adult");
+  const pg = {none:"Not pregnant",T1:"Pregnant T1",T2:"Pregnant T2",T3:"Pregnant T3"};
+  b[3].textContent = pg[S.preg]; b[3].classList.toggle("on", S.preg!=="none");
+  b[3].style.display = S.sex==="F" ? "" : "none";
+}
+$$("#modebar .chip").forEach(c=> c.onclick = ()=>{
+  const m=c.dataset.mode;
+  if(m==="units") S.units = S.units==="conv"?"si":"conv";
+  if(m==="sex"){ S.sex = S.sex==="M"?"F":"M"; if(S.sex==="M") S.preg="none"; }
+  if(m==="age"){ const o=["adult","neonate","infant","child","adolescent"];
+    S.age = o[(o.indexOf(S.age)+1)%o.length]; if(S.age!=="adult") S.preg="none"; }
+  if(m==="preg"){ const o=["none","T1","T2","T3"]; S.preg = o[(o.indexOf(S.preg)+1)%o.length];
+    if(S.preg!=="none"){ S.sex="F"; S.age="adult"; } }
+  save(); renderMode(); render();
+});
+
+/* ---------------------------------------------------------------- SEARCH BAR */
+$("#searchToggle").onclick = ()=>{
+  const w=$("#searchWrap");
+  const show = w.style.display==="none";
+  w.style.display = show?"block":"none";
+  if(show){ navStack=[]; activeCat=null; go("tests"); $("#searchBox").focus(); }
+  else { $("#searchBox").value=""; }
+  render();
+};
+let st=null;
+$("#searchBox").oninput = ()=>{ clearTimeout(st); st=setTimeout(()=>{ activeCat=null; renderTests(); },120); };
+
+/* ---------------------------------------------------------------- THEME */
+function applyTheme(){
+  document.body.dataset.theme = S.theme;
+  /* Scale the root element's real font-size (not a custom property) so every
+     rem-sized element in the app — headings, rows, badges, buttons, not just
+     inputs — resizes together. */
+  document.documentElement.style.fontSize = S.fs + "%";
+  const tc = {light:"#0f766e",dark:"#161e26",sepia:"#8a6d3b",pista:"#577a30",beige:"#7c6a42",steel:"#3f5b68"}[S.theme];
+  const m = document.querySelector('meta[name="theme-color"]'); if(m) m.content = tc;
+}
+
+/* ---------------------------------------------------------------- BOOT */
+function render(){
+  if(current==="tests")  renderTests();
+  if(current==="tools")  renderTools();
+  if(current==="tubes")  renderTubes();
+  if(current==="mylab")  renderMyLab();
+  if(current==="more")   renderMore();
+  if(current==="detail") renderDetail();
+}
+/* version label in the app bar, written from the data module so the number
+   has exactly one source of truth (LABREF_VERSION) */
+(()=>{ const v = $("#appVer"); if(v) v.textContent = "v " + LABREF_VERSION; })();
+applyTheme(); renderMode(); go("tests"); render();
+
+})();
+</script>
+</body>
+</html>

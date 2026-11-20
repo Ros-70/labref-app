@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+      THERE IS DELIBERATELY NO <uses-permission android:name="android.permission.INTERNET" />
+
+      LabRef is a fully offline clinical reference. Its content is served from
+      inside the APK by WebViewAssetLoader, so no network permission is needed.
+      Omitting it turns "works offline" into a property the operating system
+      enforces, which can be stated on the Play listing and cannot be broken by
+      a later code change without someone deliberately adding this line back.
+
+      If a future feature appears to need the network, treat that as a design
+      question to escalate, not a permission to add.
+    -->
+
+    <application
+        android:name=".LabRefApplication"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.LabRef"
+        tools:targetApi="34">
+
+        <!--
+          allowBackup is false by intent. The My Lab feature stores a department's
+          own reference ranges and critical values in localStorage. With backup
+          enabled those would be copied to the user's Google account, which is a
+          decision a hospital should make knowingly rather than inherit from a
+          framework default. To enable it instead, set this true and keep
+          backup_rules.xml, which already scopes what would be included.
+        -->
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

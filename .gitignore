@@ -1,0 +1,34 @@
+# Playwright scripts write diagnostic screenshots into the working directory
+# when run. They are disposable, not deliverables. Scoped to the repo root and
+# qa/ so that icons/**.png — which ARE deliverables — stay tracked.
+/*.png
+qa/*.png
+
+# Python / tooling noise
+__pycache__/
+*.pyc
+.DS_Store
+
+# ---------------------------------------------------------------------------
+# Build output. The single-file HTML is NOT committed on purpose: the one
+# source of truth for clinical content is app/labref_data_v1.10.js, and a
+# committed build artifact would eventually drift from it. Build it with
+#   cd app && python3 -I build.py
+# ---------------------------------------------------------------------------
+app/LabRef_v1.10.html
+android/app/src/main/assets/index.html
+
+# Android / Gradle
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+android/*.iml
+android/captures/
+android/.cxx/
+
+# Never commit signing material. CI supplies it from repository secrets.
+*.jks
+*.keystore
+keystore.properties
