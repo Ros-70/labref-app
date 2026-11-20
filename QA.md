@@ -16,8 +16,8 @@ cd handover/app && python3 -I build.py && cd .. && bash qa/run_all.sh
 ## Method 1 — behaviour in a real browser (Playwright)
 
 `qa/test_v11_features.py` and the companion suites
-(`test_panel.py`, `test5.py`, `test3.py`, `test6.py`, `checkbc.py`,
-`fstest.py`, `test_themes.py`).
+(`test_panel.py`, `test_override_sweep.py`, `test5.py`, `test3.py`,
+`test6.py`, `checkbc.py`, `fstest.py`, `test_themes.py`).
 
 **What it does:** drives the shipped HTML in headless Chrome at a 390×844
 phone viewport, using real clicks, real typing and real page reloads — never
@@ -46,7 +46,12 @@ is surfaced as an orphan rather than silently becoming the active range; that
 a locked row (`dx`/`target`, or a `cutoff` row on an assayDep:false test)
 renders no input and shows the lock message; that an assayDep:true cutoff
 row (troponin) does render an input and that a saved critical value there
-feeds the Result Interpreter.
+feeds the Result Interpreter; (Stage 4, `test_override_sweep.py`) the same
+isolation property swept across every overridable row in the entire
+corpus (not one hand-picked example), plus the original defect scenario
+reproduced and refuted live — save Haemoglobin's Adult male row, switch
+to Newborn, confirm the textbook newborn range is shown rather than the
+saved adult value.
 
 ---
 
@@ -266,9 +271,11 @@ METHOD 2  validate_data.js   ERRORS: none   (180 tests, 26 categories, 11 tubes,
 METHOD 5  validate_rids.js   ERRORS: none   (759 rids verified unchanged in meaning)
 METHOD 5b test_rid_guard.js  ERRORS: none   (12 guard behaviours verified)
 METHOD 6  validate_ties.js   ERRORS: none   (22 ref/method ties, 8 ladder-fallback groups, all reviewed)
-METHOD 3  audit_build.js     ERRORS: none   (734 KB, self-contained, 6 themes, cite tags: 0)
+METHOD 3  audit_build.js     ERRORS: none   (742 KB, self-contained, 6 themes, cite tags: 0)
 METHOD 1  test_v11_features   PASS          (feature regression, console errors: none)
 METHOD 4  test_all_tests      PASS          (180 pages, 243 interpreter combinations, errors: none)
+METHOD 1  test_override_sweep PASS          (444 overridable rows across 132 tests, isolation + the
+                                              original defect scenario, both clean)
 ```
 
 Remaining validator output is **warnings only**, and each is a deliberate
@@ -298,8 +305,12 @@ asserting exactly one build exists so a stale artifact is a hard error, so
 One more check runs on-device rather than here: `android/app/src/androidTest`
 asserts that the APK actually contains all 180 tests, that the version matches,
 that localStorage works at the pinned origin, and that the JavaScript bridge
-survived R8. Those are host failures this suite structurally cannot see — see
-ANDROID_PACKAGING.md §5.
+survived R8. As of Stage 4 it also writes a My Lab override in the real
+Stage 3 shape, forces a genuine reload, and confirms the WebView's own
+localStorage/JSON implementation gives it back unchanged — the desktop
+Playwright suite runs in Chromium and structurally cannot see a WebView-
+specific round-trip defect. Those are all host failures this suite
+structurally cannot see — see ANDROID_PACKAGING.md §5.
 
 ## Extending the suites
 

@@ -25,7 +25,7 @@ hr "METHOD 3 — built-artifact structural audit (static analysis)"
 node qa/audit_build.js              || fail=1
 
 hr "METHOD 1 & 4 — behaviour in a real browser + full 180-test corpus sweep"
-for t in test_v11_features test_all_tests test_panel test5 test3 test6 checkbc fstest test_themes; do
+for t in test_v11_features test_all_tests test_panel test_override_sweep test5 test3 test6 checkbc fstest test_themes; do
   printf '  %-20s ' "$t"
   if out=$(timeout 300 python3 -I "qa/$t.py" 2>&1); then
     if echo "$out" | grep -qiE "^FAIL|FAILURES|ERRORS: \[|Traceback"; then

@@ -40,6 +40,9 @@
       "r2": { "kind": "dx", "_why": "Severity band (moderate elevation), not a reference range." },
       "r3": { "kind": "dx", "_why": "Severity band (intermediate), not a reference range." }
     },
+    "metanephrines": {
+      "r5": { "kind": "note", "_why": "Was mis-tagged 'cutoff' originally, but it carries no numeric bounds at all (conv.lo/hi both null) -- it's a relative multiplier rule ('3-4x the upper limit') applied to whichever analyte's own result, not a fixed assay-specific threshold a lab's own analyser could shift. Found by Stage 4's full-corpus My Lab sweep: 'cutoff'+assayDep made it claim to be overridable, but myLabBlockHtml() only ever visits a test's declared analyte components, never the no-analyte bucket when a test HAS components (unlike rangeSectionHtml's separate 'Also note' handling for exactly this case) -- so the row was structurally unreachable in My Lab regardless. Reclassifying to 'note' is the correct fix on its own clinical merits (it matches the 'note' definition in SCHEMA.md exactly: narrative, info-only, never matched or ranked) and happens to resolve the UI gap as a side effect, rather than papering over it by teaching myLabBlockHtml to render an input for a row with nothing to type a number into." }
+    },
     "ckmb": {
       "r2": { "kind": "dx", "_why": "The CK-MB/total-CK relative index is a diagnostic index with its own interpretive cutoff for cardiac origin, not a reference range." }
     },

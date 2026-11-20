@@ -234,11 +234,59 @@ whether the user had actually entered anything — fixed by dropping `unit`
 from the "is this meaningful" check everywhere it's made (only `method`/`crit`
 count).
 
-### Still to come
+### Stage 4 — combinatorial sweep, on-device round-trip, merge
 
-- Stage 4 — combinatorial QA over every (test, analyte, sex, age, pregnancy)
-  combination; provenance display checks; updated on-device smoke test; merge
-  of `v2-data-model` to `main`.
+Every prior stage verified its fix on one or a handful of hand-picked
+examples: Stage 2b's tie/ladder fix on the tests that happened to surface it,
+Stage 3's override scoping on HDL alone. Stage 4 doesn't change the fix —
+it sweeps the properties those stages established across the full corpus,
+on the assumption that a defect class this severe deserves more than a
+sample.
+
+**`qa/test_override_sweep.py` (added to the Method 1 family).** Two checks:
+
+1. *Full-corpus isolation & coverage.* Every row `overridableKind()` says
+   should be editable, on all 180 tests, gets its own distinct sentinel
+   value, written once before a single page load. The My Lab block is then
+   opened for every test and each row's rendered value is checked against
+   its own sentinel — proving nothing is missing (every overridable row got
+   an input) and nothing bled (no row shows a value that belongs to another
+   row), corpus-wide rather than on the one example a human happened to
+   pick.
+2. *The original defect, reproduced and refuted live.* Save Haemoglobin's
+   "Adult male" row, switch the active patient profile to Newborn, and
+   confirm the detail page shows the textbook newborn range — not the saved
+   adult value. This is the exact scenario this CHANGELOG's "The defect"
+   section describes, run against the shipped build instead of only
+   asserted against stored JSON.
+
+**One real gap found by the sweep, not invented to exercise it.**
+`metanephrines`' row `r5` ("Above 3–4× the upper limit — phaeochromocytoma
+very likely") was tagged `kind:"cutoff"` on an `assayDep:true` test, so
+`overridableKind()` correctly said it should be editable — but it was never
+rendered: `myLabBlockHtml()` only ever visits a test's declared analyte
+components, and `r5` has no `analyte` at all, so on a panel test (unlike a
+single-analyte one) it fell through every iteration. The deeper problem
+was the classification, not the renderer: `r5` carries no numeric bounds at
+all (`conv.lo`/`hi` both `null`) — it's a relative-multiplier rule applied
+to whichever analyte's own result, not a fixed assay-specific threshold a
+lab's own analyser could shift, so "cutoff" never fit it. Reclassified to
+`kind:"note"` (narrative, info-only — exactly SCHEMA.md's definition),
+which resolves the gap as a side effect of the correct content fix rather
+than teaching the renderer to offer an input with nothing to type a number
+into. Documented in `app/row_kinds_overrides.json` with full reasoning,
+same as every other Stage 2a/2b reclassification.
+
+**`SmokeTest.kt`'s `myLabOverrideRoundTripsThroughStage3Shape()`.** The
+desktop QA suite runs in Chromium; the thing it structurally cannot verify
+is whether Stage 3's nested shape (`assay`/`byRid`) round-trips through the
+*real device's* WebView localStorage/JSON implementation at the fixed
+asset origin. This test writes that exact shape, forces a real reload (not
+the same in-memory page the write ran against), and confirms the UI reads
+the saved value back unchanged.
+
+Merged `v2-data-model` into `main` once all of the above was CI-green —
+closing out the rebuild this CHANGELOG opens with.
 
 Because the v1.10 store held only test data, v2.0 resets it on upgrade rather
 than carrying migration code that would run once and never be exercised again.

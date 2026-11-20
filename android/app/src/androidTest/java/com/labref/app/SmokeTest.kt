@@ -40,6 +40,37 @@ class SmokeTest {
         return result
     }
 
+    /**
+     * Like evaluate(), but runs a sequence of scripts against the SAME
+     * activity/WebView, sleeping between them. Needed for anything that
+     * depends on a debounced JS callback (e.g. the 120ms search filter)
+     * firing before the next step runs: a single evaluateJavascript call is
+     * synchronous, so a debounced effect triggered inside it is never ready
+     * by the time that call returns. The sleep happens on the instrumentation
+     * thread, not inside onActivity's main-thread block, so it doesn't freeze
+     * the WebView's own Looper and starve the timer it's waiting on. Returns
+     * the last step's result.
+     */
+    private fun runSteps(steps: List<Pair<String, Long>>): String {
+        var result = "<none>"
+        ActivityScenario.launch(MainActivity::class.java).use { scenario ->
+            Thread.sleep(3000)
+            for ((script, waitAfterMs) in steps) {
+                val latch = CountDownLatch(1)
+                scenario.onActivity { activity ->
+                    val webView = activity.findViewById<android.webkit.WebView>(R.id.webview)
+                    webView.evaluateJavascript(script) { value ->
+                        result = value ?: "<null>"
+                        latch.countDown()
+                    }
+                }
+                latch.await(15, TimeUnit.SECONDS)
+                if (waitAfterMs > 0) Thread.sleep(waitAfterMs)
+            }
+        }
+        return result
+    }
+
     @Test
     fun clinicalContentIsPresentAndComplete() {
         // 180 is the frozen corpus size. If the asset were missing or stale this
@@ -87,6 +118,64 @@ class SmokeTest {
     @Test
     fun printAndDownloadHooksWereInjected() {
         assertEquals("true", evaluate("window.__labrefNativeReady === true"))
+    }
+
+    @Test
+    fun myLabOverrideRoundTripsThroughStage3Shape() {
+        // v2.0 Stage 3 re-keyed My Lab overrides to (test id, rid) --
+        // assay:{key:{unit,method,crit}} plus byRid:{rid:{lo,hi}} -- replacing
+        // a flat per-component shape with no demographic scope. This is the
+        // one thing the desktop QA suite structurally cannot verify: whether
+        // that nested shape actually round-trips through THIS WebView's own
+        // localStorage/JSON implementation at the fixed asset origin, and
+        // whether the UI reads it back correctly on a real reload rather
+        // than the in-memory page the first write ran against. Haemoglobin's
+        // r1 ("Adult male") is used only because it's a stable, ordinary
+        // (non-panel) ref row -- any overridable row would do.
+        val writeScript =
+            "(function(){" +
+                "var o=JSON.parse(localStorage.getItem('labref_v1')||'{}');" +
+                "o.local=o.local||{};" +
+                "o.local.hb={note:'',assay:{},byRid:{r1:{lo:'13.9',hi:'17.2'}}};" +
+                "localStorage.setItem('labref_v1',JSON.stringify(o));" +
+                "return 'written';" +
+            "})()"
+        val reloadScript = "(function(){location.reload();return 'reloading';})()"
+        val searchScript =
+            "(function(){" +
+                "document.querySelector(\"[data-nav='tests']\").click();" +
+                "if(!document.getElementById('searchBox').offsetParent){" +
+                "  document.getElementById('searchToggle').click();" +
+                "}" +
+                "var box=document.getElementById('searchBox');" +
+                "box.value='Haemoglobin';" +
+                "box.dispatchEvent(new Event('input'));" +
+                "return 'typed';" +
+            "})()"
+        val readScript =
+            "(function(){" +
+                "var row=document.querySelector(\"[data-test='hb']\");" +
+                "if(!row) return 'ROW_NOT_FOUND';" +
+                "row.click();" +
+                "var blk=document.querySelector(\"[data-blk='loc'] .bh\");" +
+                "if(!blk) return 'BLOCK_NOT_FOUND';" +
+                "blk.click();" +
+                "var input=document.querySelector(\".mylab-rid[data-rid='r1'] .lc-lo\");" +
+                "return input?input.value:'INPUT_NOT_FOUND';" +
+            "})()"
+
+        val value = runSteps(listOf(
+            writeScript to 200L,
+            reloadScript to 3000L,   // full reinit, same as a fresh app open
+            searchScript to 400L,    // clears the 120ms debounce window
+            readScript to 0L
+        )).trim('"')
+
+        assertEquals(
+            "My Lab override written in the Stage 3 shape should read back " +
+                "unchanged after a real reload at the fixed origin",
+            "13.9", value
+        )
     }
 
     @Test
