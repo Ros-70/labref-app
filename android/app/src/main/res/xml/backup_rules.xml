@@ -6,6 +6,6 @@
   values, so that is the only thing worth including.
 -->
 <full-backup-content>
-    <include domain="database" path="app_webview/" />
-    <exclude domain="database" path="app_webview/Default/GPUCache/" />
+    <include domain="root" path="app_webview/" />
+    <exclude domain="root" path="app_webview/Default/GPUCache/" />
 </full-backup-content>
