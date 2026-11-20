@@ -149,12 +149,69 @@ if the suite is extended.
 
 ---
 
+## Method 5 — stable row identity (new in v2.0)
+
+`qa/validate_rids.js` — Node, no browser.
+
+**Why it exists:** a user's own lab values are stored against individual
+reference rows, in localStorage on their own device, and must survive every
+future content update. The failure this guards is silent and the worst the
+app could have: a saved override that comes to refer to a *different
+population* — a clinician's adult-female haemoglobin range quietly becoming
+the newborn range, with nothing on screen to say so. Careful editing does
+not prevent that reliably, so it is checked mechanically on every build.
+
+**What it enforces:**
+
+1. Every range row has a well-formed `rid`, unique within its test.
+2. No published rid has changed meaning — its `sex`/`age`/`preg`/analyte
+   dimensions are compared against `qa/rid_baseline.json` and frozen.
+   Correcting an interval's **numbers** is explicitly allowed; that is
+   content maintenance. Re-pointing a rid at another population is an error.
+3. rids are append-only: a row may only disappear if listed under `retired`
+   in the baseline, a retired rid is never revived, and a new row may not
+   take a number at or below the highest ever published for that test.
+
+A reworded `grp` label with unchanged dimensions is reported as a notice,
+not an error — it is cosmetic, and failing it would tempt someone to "fix"
+the baseline the lazy way.
+
+Regenerate the baseline deliberately, and commit the diff, with
+`node qa/validate_rids.js --update`. The update path runs the same checks
+first and refuses to write if any invariant is violated.
+
+## Method 5b — self-test of the identity guard
+
+`qa/test_rid_guard.js` — Node, no browser.
+
+**Why it exists:** method 5 is the only thing protecting saved clinical
+values from silent re-pointing, and a guard that has never been *observed
+to fail* is not evidence of anything. This drives it through each violation
+it claims to catch, against a small synthetic corpus in a temp directory
+(never the real data), and asserts it rejects them — and, just as
+importantly, that it still *accepts* the legitimate edits:
+
+```
+rejected: missing rid · duplicate rid · malformed rid · rid repointed to
+          another sex · rid repointed across age bands · row deleted
+          silently · new row reusing a low number · retired rid revived
+accepted: interval numbers corrected · label reworded (reported as a
+          notice) · row appended above the ceiling · removal declared
+          under "retired"
+```
+
+12 behaviours, all verified.
+
+---
+
 ## Current status
 
-All four methods pass against `LabRef_v1.10.html`:
+All five methods pass against the built `LabRef_v*.html`:
 
 ```
 METHOD 2  validate_data.js   ERRORS: none   (180 tests, 26 categories, 11 tubes, 759 range rows)
+METHOD 5  validate_rids.js   ERRORS: none   (759 rids verified unchanged in meaning)
+METHOD 5b test_rid_guard.js  ERRORS: none   (12 guard behaviours verified)
 METHOD 3  audit_build.js     ERRORS: none   (703 KB, self-contained, 6 themes, cite tags: 0)
 METHOD 1  test_v11_features   PASS          (feature regression, console errors: none)
 METHOD 4  test_all_tests      PASS          (180 pages, 243 interpreter combinations, errors: none)
@@ -173,14 +230,15 @@ design choice rather than a defect — see KNOWN_GAPS.md:
 ## Running in CI
 
 `.github/workflows/build.yml` runs this suite as **job 1**, and the Android
-build depends on it. Nothing is packaged unless all four methods pass, so a
+build depends on it. Nothing is packaged unless all five methods pass, so a
 clinical data error cannot reach an installable artifact. For a clinical
 reference app that ordering matters more than build speed.
 
 The Playwright suites resolve Chrome from `CHROME_PATH`, then from the usual
 system locations, and finally fall back to Playwright's own bundled Chromium —
 which is what happens on a GitHub runner. The Node validators and the Python
-suites also resolve the built HTML in either layout (repo root or `app/`), so
+suites also resolve the built HTML by glob in either layout (repo root or `app/`),
+asserting exactly one build exists so a stale artifact is a hard error, so
 `bash qa/run_all.sh` works unchanged from inside this package.
 
 A fifth check runs on-device rather than here: `android/app/src/androidTest`

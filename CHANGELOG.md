@@ -1,5 +1,78 @@
 # Changelog
 
+## v2.0 — IN DEVELOPMENT (branch `v2-data-model`)
+
+v1.10 remains the shipped, frozen release on `main`. v2.0 exists to fix a
+defect found in hands-on use of the v1.10 APK, and is staged so each step is
+CI-verified before the next begins.
+
+### The defect
+
+My Lab overrides were stored per analyte with **no demographic scope**, and
+`activeRange()` consulted the override *before* the stratum matcher. So one
+saved value won in every context: enter your lab's adult haemoglobin range,
+switch the age chip to Newborn, and the app displayed your adult range as the
+active one and the Result Interpreter graded against it. A newborn Hb of 18
+would read as "high" when newborn normal runs to about 24. Silent clinical
+misread — the same class of failure as the localStorage origin and dark-mode
+hazards guarded in v1.10, and it reaches 169 of the 180 tests, which have at
+least one stratified analyte.
+
+### The approach
+
+The override layer is the symptom; the cause is that `ranges[]` holds two
+different kinds of row — demographic reference intervals (479 rows) and
+interpretive guideline/assay bands (280 rows, e.g. HbA1c normal/prediabetes/
+diabetes). Their `sex|age|preg` triples collide on 138 rows, and "your lab's
+value" means something different for each: a lab publishes its own reference
+interval, but does not get to redefine a diagnostic cut-off. So the data model
+is being split rather than patched around.
+
+### Stage 1 (this stage) — identity
+
+**Every version removed from every path.** A version baked into a path goes
+stale silently, and already did once here: `test_v11_features.py` and the two
+JS validators pointed at v1.1 filenames and kept passing while the v1.10 data
+they were meant to check went unverified. All paths are now glob-resolved with
+a strict "exactly one" rule, so a leftover build is a hard error naming both
+files. Verified by planting a decoy. The Android `versionName` is now read out
+of the data module rather than hand-copied beside it, and both on-device
+version assertions compare against `BuildConfig.VERSION_NAME`, so an APK can
+always be traced to the dataset inside it.
+
+**Stable row ids.** All 759 range rows now carry a permanent `rid`, unique
+within their test. My Lab overrides will key on `(test id, rid)` — deliberately
+not including the analyte key, so there is one less identifier that can shift
+under a saved value. The corpus was verified byte-identical once `rid` is
+stripped, proving the change was purely additive.
+
+**The guard that makes them trustworthy.** `qa/validate_rids.js` (method 5)
+enforces on every build that a published rid never changes meaning: its
+`sex`/`age`/`preg`/analyte dimensions are frozen against
+`qa/rid_baseline.json`, while correcting an interval's *numbers* stays freely
+allowed. rids are append-only; removal requires an explicit `retired` entry and
+a retired number is never reused. `qa/test_rid_guard.js` (method 5b) then
+drives the guard through all 12 violations and legitimate edits it claims to
+distinguish, because a guard never observed to fail is not evidence of
+anything.
+
+No clinical content changed in this stage.
+
+### Still to come
+
+- Stage 2 — split `ranges[]` into demographic intervals and bands; classify
+  and source all 280 band rows; teach the interpreter to report both a
+  reference comparison and a band placement.
+- Stage 3 — scoped override store and My Lab UI: per-stratum entry,
+  assay-level unit/method, locked guideline bands, orphaned overrides surfaced.
+- Stage 4 — combinatorial QA over every (test, analyte, sex, age, pregnancy)
+  combination; provenance display checks; updated on-device smoke test.
+
+Because the v1.10 store held only test data, v2.0 resets it on upgrade rather
+than carrying migration code that would run once and never be exercised again.
+
+---
+
 ## v1.10 — FINAL FREEZE
 
 The prototype is frozen here. This entry covers both the content completion

@@ -1,0 +1,5680 @@
+{
+ "_comment": "Published row identities. A rid here must never change meaning or be reused — see qa/validate_rids.js. Regenerate with: node qa/validate_rids.js --update",
+ "generated_for_version": "2.0-dev",
+ "retired": {},
+ "tests": {
+  "hb": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Pregnancy T1",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T1",
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Pregnancy T2",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T2",
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Pregnancy T3",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T3",
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Newborn (0–3 d)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r7": {
+    "grp": "Infant (2–6 mo)",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r8": {
+    "grp": "Child (2–12 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   },
+   "r9": {
+    "grp": "Adolescent (12–18)",
+    "sex": "any",
+    "age": "adolescent",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "mcv": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Infant (6–24 mo)",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Child (2–12 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "tlc": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Infant (1 y)",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Child (4–10 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ptinr": {
+   "r1": {
+    "grp": "PT — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "pt"
+   },
+   "r2": {
+    "grp": "INR — not on warfarin",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "inr"
+   },
+   "r3": {
+    "grp": "INR — therapeutic (AF, VTE, tissue valve)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "inr"
+   },
+   "r4": {
+    "grp": "INR — mechanical mitral valve",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "inr"
+   },
+   "r5": {
+    "grp": "Newborn (PT)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": "pt"
+   }
+  },
+  "aptt": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Therapeutic UFH (1.5–2.5×)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ddimer": {
+   "r1": {
+    "grp": "Adult (<50 y) exclusion cutoff",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Age-adjusted (>50 y) = age × 10",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Pregnancy T1",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T1",
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Pregnancy T2",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T2",
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Pregnancy T3",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T3",
+    "analyte": null
+   }
+  },
+  "platelet": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "sodium": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "potassium": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "creatinine": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Pregnancy",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Child (1–12 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "glucosef": {
+   "r1": {
+    "grp": "Normal fasting",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Impaired fasting glucose",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Diabetes (fasting)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "GDM (DIPSI, 2 h post 75 g, non-fasting)",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "hba1c": {
+   "r1": {
+    "grp": "Normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Prediabetes",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Diabetes",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "General treatment target",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "calcium": {
+   "r1": {
+    "grp": "Total — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "total"
+   },
+   "r2": {
+    "grp": "Ionised — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ionised"
+   },
+   "r3": {
+    "grp": "Newborn (total)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": "total"
+   },
+   "r4": {
+    "grp": "Child (total)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": "total"
+   }
+  },
+  "lactate": {
+   "r1": {
+    "grp": "Venous — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Arterial — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Sepsis threshold",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "abgpanel": {
+   "r1": {
+    "grp": "pH",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ph"
+   },
+   "r2": {
+    "grp": "PaCO₂",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "paco2"
+   },
+   "r3": {
+    "grp": "PaO₂ (room air)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "pao2"
+   },
+   "r4": {
+    "grp": "HCO₃⁻",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "hco3"
+   },
+   "r5": {
+    "grp": "Base excess",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "be"
+   },
+   "r6": {
+    "grp": "SaO₂",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "sao2"
+   },
+   "r7": {
+    "grp": "Anion gap",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ag"
+   },
+   "r8": {
+    "grp": "Pregnancy (compensated resp alkalosis)",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   }
+  },
+  "alt": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "alp": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy T3",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T3",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Infant",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Child (2–9 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Adolescent male (10–15 y)",
+    "sex": "M",
+    "age": "adolescent",
+    "preg": null,
+    "analyte": null
+   },
+   "r7": {
+    "grp": "Adolescent female (10–15 y)",
+    "sex": "F",
+    "age": "adolescent",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "albumin": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy T3",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T3",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "troponin": {
+   "r1": {
+    "grp": "hs-cTnI (Abbott) — overall 99th centile",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "tni"
+   },
+   "r2": {
+    "grp": "hs-cTnI — male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": "tni"
+   },
+   "r3": {
+    "grp": "hs-cTnI — female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": "tni"
+   },
+   "r4": {
+    "grp": "hs-cTnT — overall (guideline / non-US label)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "tnt"
+   },
+   "r5": {
+    "grp": "hs-cTnT — male / female (US FDA)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "tnt"
+   }
+  },
+  "ntprobnp": {
+   "r1": {
+    "grp": "Heart failure unlikely (any age, non-acute)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Acute setting, age <50 — rule in",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Acute setting, age 50–75 — rule in",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Acute setting, age >75 — rule in",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Acute rule-out (any age)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "pct": {
+   "r1": {
+    "grp": "Healthy adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Bacterial infection unlikely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Grey zone",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Bacterial infection likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "High risk of sepsis",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Severe sepsis / septic shock likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r7": {
+    "grp": "Neonate 0–48 h (physiological surge)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "crp": {
+   "r1": {
+    "grp": "Normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Mild rise",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Marked rise (bacterial infection likely)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "hs-CRP — low CV risk",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "hs-CRP — average CV risk",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "hs-CRP — high CV risk",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "bloodculture": {
+   "r1": {
+    "grp": "Expected result",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Time to positivity",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "bilirubin": {
+   "r1": {
+    "grp": "Total — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "total"
+   },
+   "r2": {
+    "grp": "Direct — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "direct"
+   },
+   "r3": {
+    "grp": "Newborn 24 h (total)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": "total"
+   },
+   "r4": {
+    "grp": "Newborn 48 h (total)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": "total"
+   },
+   "r5": {
+    "grp": "Newborn 3–5 d (total)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": "total"
+   }
+  },
+  "lipid": {
+   "r1": {
+    "grp": "Total cholesterol — desirable",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "totalchol"
+   },
+   "r2": {
+    "grp": "LDL-C — optimal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ldl"
+   },
+   "r3": {
+    "grp": "LDL-C — high CV risk target",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ldl"
+   },
+   "r4": {
+    "grp": "LDL-C — very high CV risk target",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ldl"
+   },
+   "r5": {
+    "grp": "HDL-C — male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": "hdl"
+   },
+   "r6": {
+    "grp": "HDL-C — female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": "hdl"
+   },
+   "r7": {
+    "grp": "Triglycerides — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "trig"
+   },
+   "r8": {
+    "grp": "Non-HDL-C — target",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "nonhdl"
+   }
+  },
+  "tsh": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy T1",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T1",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Pregnancy T2",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T2",
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Pregnancy T3",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T3",
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Newborn (0–4 d)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Child (1–12 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ft4": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy T1",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T1",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Pregnancy T2",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T2",
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Pregnancy T3",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T3",
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "vitd": {
+   "r1": {
+    "grp": "Deficient",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Insufficient",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Sufficient",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Potential toxicity",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ferritin": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Iron deficiency (no inflammation)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Iron deficiency (with inflammation or CKD)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Pregnancy",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r7": {
+    "grp": "Child (1–10 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "b12": {
+   "r1": {
+    "grp": "Normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Borderline",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Deficient",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ana": {
+   "r1": {
+    "grp": "Negative",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Low positive",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Moderate positive",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "High positive",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "phenytoin": {
+   "r1": {
+    "grp": "Therapeutic (total)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Therapeutic (free)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "urineacr": {
+   "r1": {
+    "grp": "A1 — normal to mildly increased",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "A2 — moderately increased (formerly microalbuminuria)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "A3 — severely increased (formerly macroalbuminuria)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "saag": {
+   "r1": {
+    "grp": "SAAG ≥1.1 — portal hypertension",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "SAAG <1.1 — non-portal cause",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "SBP threshold (fluid neutrophils)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "urea": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Infant",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Child (1–16 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "chloride": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "bicarbonate": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Child (all ages)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "magnesium": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "phosphate": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Infant",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Child (1–16 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "uricacid": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Gout treatment target",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "osmolality": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Osmolal gap (normal)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "totalprotein": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy T3",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T3",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ast": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ggt": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Child (1–16 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ldh": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ck": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "amylase": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Acute pancreatitis (diagnostic)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "lipase": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Acute pancreatitis (diagnostic)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ammonia": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Preterm or sick neonate",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Infant to 16 y",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "cystatin": {
+   "r1": {
+    "grp": "Adult (20–59 y)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult (≥60 y)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Child (1–16 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ketones": {
+   "r1": {
+    "grp": "Normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Hyperketonaemia — recheck / act",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "High risk of DKA",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "DKA likely (with acidosis)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "glucosepp": {
+   "r1": {
+    "grp": "Random — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "2-h post-prandial / OGTT — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "2-h OGTT — impaired glucose tolerance",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "2-h OGTT — diabetes",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Random — diabetes (with symptoms)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "GDM — DIPSI 2 h, non-fasting 75 g",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r7": {
+    "grp": "GDM — IADPSG 1 h after 75 g",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r8": {
+    "grp": "GDM — IADPSG 2 h after 75 g",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   }
+  },
+  "rbccount": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Pregnancy",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "hct": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Pregnancy",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Infant (2–6 mo)",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Child (2–12 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "mch": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "mchc": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "rdw": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "retic": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Newborn (term)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Infant (after 1 mo)",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "dlc": {
+   "r1": {
+    "grp": "Neutrophils — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "neut"
+   },
+   "r2": {
+    "grp": "Neutrophils — pregnancy",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": "neut"
+   },
+   "r3": {
+    "grp": "Neutrophils — newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": "neut"
+   },
+   "r4": {
+    "grp": "Neutrophils — child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": "neut"
+   },
+   "r5": {
+    "grp": "Lymphocytes — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "lymph"
+   },
+   "r6": {
+    "grp": "Lymphocytes — newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": "lymph"
+   },
+   "r7": {
+    "grp": "Lymphocytes — child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": "lymph"
+   },
+   "r8": {
+    "grp": "Monocytes — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "mono"
+   },
+   "r9": {
+    "grp": "Monocytes — child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": "mono"
+   },
+   "r10": {
+    "grp": "Eosinophils — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "eos"
+   },
+   "r11": {
+    "grp": "Eosinophils — child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": "eos"
+   },
+   "r12": {
+    "grp": "Basophils — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "baso"
+   },
+   "r13": {
+    "grp": "Basophils — child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": "baso"
+   }
+  },
+  "esr": {
+   "r1": {
+    "grp": "Adult male (<50 y)",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult male (≥50 y)",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Adult female (<50 y)",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Adult female (≥50 y)",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Pregnancy",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "peripheralsmear": {
+   "r1": {
+    "grp": "Normal film",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "haptoglobin": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "g6pd": {
+   "r1": {
+    "grp": "Adult — normal activity",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Deficient",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Intermediate (often female heterozygote)",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "hbelectrophoresis": {
+   "r1": {
+    "grp": "HbA — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "HbA2 — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "HbA2 — borderline",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "HbA2 — β-thalassaemia trait",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "HbF — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "HbF — newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "fibrinogen": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy T3",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T3",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "thrombintime": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "mixingstudy": {
+   "r1": {
+    "grp": "Full correction",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "No / partial correction",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Correction then prolongation on incubation",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "factor8": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Mild haemophilia A",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Moderate haemophilia A",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Severe haemophilia A",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "vwf": {
+   "r1": {
+    "grp": "Adult — non-O blood group",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult — blood group O",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Low VWF (possible type 1)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Type 1 VWD (significant)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Pregnancy T3",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T3",
+    "analyte": null
+   }
+  },
+  "proteinc": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Newborn (physiologically low)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Child (1–16 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "proteins": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Pregnancy (physiologically low)",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Newborn (physiologically low)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "antithrombin": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Newborn (physiologically low)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Child (1–16 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "lupusanticoag": {
+   "r1": {
+    "grp": "Lupus anticoagulant",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Anticardiolipin IgG/IgM",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Anti-β2-glycoprotein I IgG/IgM",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "antixa": {
+   "r1": {
+    "grp": "LMWH prophylaxis (4 h peak)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "LMWH treatment, once daily (4 h peak)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "LMWH treatment, twice daily (4 h peak)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Unfractionated heparin (therapeutic)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ft3": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy T1",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T1",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Pregnancy T2–T3",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "t4total": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy (T2–T3, ~1.5× non-pregnant)",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "t3total": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pregnancy (T2–T3)",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Newborn",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "tpoab": {
+   "r1": {
+    "grp": "TPO antibody — negative",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Thyroglobulin antibody — negative",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "cortisol": {
+   "r1": {
+    "grp": "9 am baseline",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "9 am — adrenal insufficiency unlikely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "9 am — adrenal insufficiency likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Post-Synacthen (30/60 min) — adequate",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "4 pm",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Midnight (asleep)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "acth": {
+   "r1": {
+    "grp": "9 am",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Midnight",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "prolactin": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female (non-pregnant)",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Pregnancy T3",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T3",
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Prolactinoma likely (microadenoma)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Macroadenoma likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "gh": {
+   "r1": {
+    "grp": "Random (adult, fasting)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Acromegaly excluded — nadir after 75 g OGTT",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "GH deficiency (adult, stimulated peak)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "GH deficiency (child, stimulated peak)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "igf1": {
+   "r1": {
+    "grp": "Adult 21–40 y",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult 41–60 y",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Adult >60 y",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Puberty (peak)",
+    "sex": "any",
+    "age": "adolescent",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Child (prepubertal)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "lh": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Female — follicular",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Female — mid-cycle peak",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Female — luteal",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Post-menopausal",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Prepubertal child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "fsh": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Female — follicular (day 2–5)",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Female — mid-cycle",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Female — luteal",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Post-menopausal",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Prepubertal child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "estradiol": {
+   "r1": {
+    "grp": "Female — follicular",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Female — mid-cycle peak",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Female — luteal",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Post-menopausal",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Prepubertal child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "progesterone": {
+   "r1": {
+    "grp": "Female — follicular",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Mid-luteal — ovulation confirmed",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Mid-luteal — equivocal",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Mid-luteal — anovulatory",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Post-menopausal",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "testosterone": {
+   "r1": {
+    "grp": "Adult male (20–49 y)",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult male (≥50 y)",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Male hypogonadism (repeat to confirm)",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Female — androgen tumour / CAH likely",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Prepubertal child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "dheas": {
+   "r1": {
+    "grp": "Adult male (20–40 y)",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female (20–40 y)",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Adult (>60 y)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Adrenal tumour likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Prepubertal child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "17ohp": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Female — follicular",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Female — luteal",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Classic CAH likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Child (prepubertal)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Newborn (term, after 48 h)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "insulin": {
+   "r1": {
+    "grp": "Fasting adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Insulin resistance suggested (fasting)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "During hypoglycaemia (<55 mg/dL) — inappropriate",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "cpeptide": {
+   "r1": {
+    "grp": "Fasting adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Type 1 diabetes (absolute deficiency)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Preserved beta-cell function",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "During hypoglycaemia — inappropriate",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "pth": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "CKD stage 3–4 target",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "CKD stage 5 / dialysis target (2–9× ULN)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "amh": {
+   "r1": {
+    "grp": "Satisfactory ovarian reserve",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Reduced ovarian reserve",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Very low / near-menopausal",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "High — suggests PCOS or high response risk",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "iron": {
+   "r1": {
+    "grp": "Serum iron — adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": "fe"
+   },
+   "r2": {
+    "grp": "Serum iron — adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": "fe"
+   },
+   "r3": {
+    "grp": "Serum iron — child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": "fe"
+   },
+   "r4": {
+    "grp": "TIBC — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "tibc"
+   },
+   "r5": {
+    "grp": "Transferrin — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "transferrin"
+   },
+   "r6": {
+    "grp": "Transferrin saturation — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "tsat"
+   },
+   "r7": {
+    "grp": "Transferrin saturation — iron deficiency",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "tsat"
+   },
+   "r8": {
+    "grp": "Transferrin saturation — iron overload likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "tsat"
+   }
+  },
+  "folate": {
+   "r1": {
+    "grp": "Serum folate — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Serum folate — deficient",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Serum folate — borderline",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Red cell folate — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "homocysteine": {
+   "r1": {
+    "grp": "Adult — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Moderate elevation",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Intermediate",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Severe (suspect homocystinuria)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "bnp": {
+   "r1": {
+    "grp": "Heart failure unlikely (non-acute)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Heart failure unlikely (acute presentation)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Refer / echocardiography indicated",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Heart failure likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ckmb": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Relative index (CK-MB/total CK ×100) — cardiac",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "lpa": {
+   "r1": {
+    "grp": "Low risk",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Intermediate risk",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "High risk",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "apob": {
+   "r1": {
+    "grp": "ApoB — optimal (primary prevention)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "apob"
+   },
+   "r2": {
+    "grp": "ApoB — high-risk target",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "apob"
+   },
+   "r3": {
+    "grp": "ApoB — very-high-risk target",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "apob"
+   },
+   "r4": {
+    "grp": "ApoA1 — adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": "apoa1"
+   },
+   "r5": {
+    "grp": "ApoA1 — adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": "apoa1"
+   }
+  },
+  "malaria": {
+   "r1": {
+    "grp": "Microscopy",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Rapid antigen test (HRP2 / pLDH)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Severe falciparum — parasite density",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "dengue": {
+   "r1": {
+    "grp": "NS1 antigen (day 1–5)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Dengue IgM (from day 5)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Dengue IgG",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "widal": {
+   "r1": {
+    "grp": "TO (somatic O) antigen",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "TH (flagellar H) antigen",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "hiv": {
+   "r1": {
+    "grp": "4th-generation HIV Ag/Ab screen",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Window period (4th generation)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Infant <18 months",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "hbsag": {
+   "r1": {
+    "grp": "HBsAg",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Anti-HBs (protective antibody)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Anti-HBc total",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "IgM anti-HBc",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "HBeAg",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "antihcv": {
+   "r1": {
+    "grp": "Anti-HCV antibody",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "HCV RNA (confirmatory)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Sustained virological response (cure)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "vdrl": {
+   "r1": {
+    "grp": "VDRL / RPR (non-treponemal)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "TPHA / TPPA / treponemal EIA",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Adequate treatment response",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "scrubtyphus": {
+   "r1": {
+    "grp": "Scrub typhus IgM ELISA",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Indirect immunofluorescence (reference standard)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Weil-Felix (OX-K)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "leptospira": {
+   "r1": {
+    "grp": "Leptospira IgM ELISA",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "MAT (reference standard)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "chikungunya": {
+   "r1": {
+    "grp": "Chikungunya RT-PCR (day 1–7)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Chikungunya IgM (from day 5)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Chikungunya IgG",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "cd4": {
+   "r1": {
+    "grp": "Adult — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Moderate immunosuppression",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Advanced HIV / AIDS-defining threshold",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "High risk of CMV and MAC disease",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Infant (use CD4 PERCENTAGE, not absolute count)",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "tbcbnaat": {
+   "r1": {
+    "grp": "CBNAAT / Xpert MTB/RIF",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Rifampicin resistance",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "AFB smear (Ziehl-Neelsen / fluorescence)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Mycobacterial culture",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "valproate": {
+   "r1": {
+    "grp": "Usual therapeutic range (epilepsy)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Toxicity increasingly likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "carbamazepine": {
+   "r1": {
+    "grp": "Therapeutic range",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Toxicity increasingly likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "lithium": {
+   "r1": {
+    "grp": "Therapeutic (12-h post-dose)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Acute mania / maintenance upper target",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Elderly — preferred range",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Toxic",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "digoxin": {
+   "r1": {
+    "grp": "Heart failure — target",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Atrial fibrillation — usual range",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Toxicity increasingly likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "vancomycin": {
+   "r1": {
+    "grp": "Trough — standard infection",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Trough — serious MRSA infection",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "AUC₂₄/MIC target (preferred method)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Nephrotoxicity risk rises",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "paracetamol": {
+   "r1": {
+    "grp": "Treatment line at 4 h post-ingestion",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Treatment line at 8 h",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Treatment line at 12 h",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Therapeutic (analgesic) concentration",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "salicylate": {
+   "r1": {
+    "grp": "Therapeutic (anti-inflammatory)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Mild toxicity",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Moderate toxicity",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Severe — consider haemodialysis",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "cholinesterase": {
+   "r1": {
+    "grp": "Plasma (butyryl)cholinesterase — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Mild OP poisoning (20–50% of baseline)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Severe OP poisoning (<20% of baseline)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "alcohol": {
+   "r1": {
+    "grp": "Not detected",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Legal driving limit (India, 30 mg/100 mL)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Obvious intoxication in a non-tolerant adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Stupor / coma risk (non-tolerant)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "leadlevel": {
+   "r1": {
+    "grp": "Child — reference value (action threshold)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Child — chelation usually considered",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Adult — background",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Adult — occupational action level",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Adult — remove from exposure",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "psa": {
+   "r1": {
+    "grp": "Age <50 y",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Age 50–59 y",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Age 60–69 y",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Age ≥70 y",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Free:total PSA ratio — higher cancer risk",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Post-radical prostatectomy — biochemical recurrence",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "cea": {
+   "r1": {
+    "grp": "Non-smoker",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Smoker",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Post-operative surveillance — concerning rise",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ca125": {
+   "r1": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Post-menopausal (lower threshold often used)",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ca199": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Markedly raised — malignancy more likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "afp": {
+   "r1": {
+    "grp": "Adult (non-pregnant)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "HCC — highly suggestive in cirrhosis",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Newborn (physiologically very high)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Infant (falls to adult level by ~1 year)",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Antenatal screening (reported as MoM)",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   }
+  },
+  "bhcg": {
+   "r1": {
+    "grp": "Non-pregnant",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult male / post-menopausal baseline",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Discriminatory zone (IUP should be visible on TVS)",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T1",
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Expected 48-h rise in viable IUP",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T1",
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Peak (8–11 weeks)",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T1",
+    "analyte": null
+   }
+  },
+  "rf": {
+   "r1": {
+    "grp": "Rheumatoid factor — negative",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "rf"
+   },
+   "r2": {
+    "grp": "RF — high titre (≥3× upper limit)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "rf"
+   },
+   "r3": {
+    "grp": "Anti-CCP — negative",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ccp"
+   },
+   "r4": {
+    "grp": "Anti-CCP — high titre (≥3× upper limit)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ccp"
+   }
+  },
+  "anadsdna": {
+   "r1": {
+    "grp": "Anti-dsDNA — negative",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Anti-dsDNA — positive (SLE-specific)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "ENA panel (Sm, RNP, Ro/SSA, La/SSB, Scl-70, Jo-1)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "anca": {
+   "r1": {
+    "grp": "Indirect immunofluorescence pattern",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Anti-PR3 (usually c-ANCA)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Anti-MPO (usually p-ANCA)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "complement": {
+   "r1": {
+    "grp": "C3 — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "c3"
+   },
+   "r2": {
+    "grp": "C4 — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "c4"
+   }
+  },
+  "immunoglobulins": {
+   "r1": {
+    "grp": "IgG — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "igg"
+   },
+   "r2": {
+    "grp": "IgA — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "iga"
+   },
+   "r3": {
+    "grp": "IgM — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "igm"
+   },
+   "r4": {
+    "grp": "IgG — infant (physiological nadir 3–6 mo)",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": "igg"
+   },
+   "r5": {
+    "grp": "Serum protein electrophoresis",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "spep"
+   }
+  },
+  "urineroutine": {
+   "r1": {
+    "grp": "Appearance",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "pH",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Specific gravity",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Protein",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Glucose / ketones / nitrite / bilirubin",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Red cells (microscopy)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r7": {
+    "grp": "White cells / pus cells (microscopy)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r8": {
+    "grp": "Casts",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "urineculture": {
+   "r1": {
+    "grp": "No significant growth",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Significant bacteriuria — midstream",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Significant — symptomatic woman (lower threshold)",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Significant — suprapubic aspirate",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "urineprotein": {
+   "r1": {
+    "grp": "24-h protein — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "p24"
+   },
+   "r2": {
+    "grp": "24-h protein — significant proteinuria",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "p24"
+   },
+   "r3": {
+    "grp": "24-h protein — nephrotic range",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "p24"
+   },
+   "r4": {
+    "grp": "24-h protein — pre-eclampsia threshold",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": "p24"
+   },
+   "r5": {
+    "grp": "Protein:creatinine ratio — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "pcr"
+   },
+   "r6": {
+    "grp": "PCR — pre-eclampsia threshold",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": "pcr"
+   },
+   "r7": {
+    "grp": "PCR — nephrotic range",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "pcr"
+   }
+  },
+  "urineosmolality": {
+   "r1": {
+    "grp": "Urine osmolality — random",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "uosm"
+   },
+   "r2": {
+    "grp": "Maximally concentrated (after water deprivation)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "uosm"
+   },
+   "r3": {
+    "grp": "Urine sodium — pre-renal / hypovolaemia",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "una"
+   },
+   "r4": {
+    "grp": "Urine sodium — SIADH or intrinsic renal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "una"
+   },
+   "r5": {
+    "grp": "Fractional excretion of sodium — pre-renal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "fena"
+   },
+   "r6": {
+    "grp": "Fractional excretion of sodium — intrinsic (ATN)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "fena"
+   }
+  },
+  "csfanalysis": {
+   "r1": {
+    "grp": "Opening pressure (adult, lateral decubitus)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Appearance",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "White cells (adult)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "White cells (neonate)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Protein (adult)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Protein (neonate)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r7": {
+    "grp": "Glucose (CSF:plasma ratio)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "csfada": {
+   "r1": {
+    "grp": "CSF — TB meningitis suggested",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Pleural fluid — TB pleuritis suggested",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Ascitic fluid — TB peritonitis suggested",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Pericardial fluid — TB pericarditis suggested",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "pleuralfluid": {
+   "r1": {
+    "grp": "Light's criteria — EXUDATE if any one is met",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Transudate",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Complicated effusion / empyema — drain",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Chylothorax",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "synovialfluid": {
+   "r1": {
+    "grp": "Normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Non-inflammatory (e.g. osteoarthritis)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Inflammatory (gout, RA, reactive)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Septic arthritis likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Crystals",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "stoolroutine": {
+   "r1": {
+    "grp": "Appearance",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Microscopy",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Pus cells",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Reducing substances (infants)",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "stoolculture": {
+   "r1": {
+    "grp": "Routine stool culture",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "C. difficile two-step algorithm",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "C. difficile infection",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "occultblood": {
+   "r1": {
+    "grp": "FIT — negative (symptomatic referral threshold)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "FIT — positive, refer for colonoscopy",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "FIT — population screening threshold (varies)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "calprotectin": {
+   "r1": {
+    "grp": "Normal — IBD unlikely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Borderline — repeat in 4–6 weeks",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Raised — organic inflammation likely; refer",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "bloodgrouping": {
+   "r1": {
+    "grp": "ABO group",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Rh D type",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Antibody screen",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "crossmatch": {
+   "r1": {
+    "grp": "Crossmatch result",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Antibody screen",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Emergency release options",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "coombsdirect": {
+   "r1": {
+    "grp": "Direct antiglobulin test (DAT)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Indirect antiglobulin test (IAT)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Neonatal DAT (HDN)",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "totalige": {
+   "r1": {
+    "grp": "Total IgE — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Total IgE — child (1–5 y)",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Total IgE — infant",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Specific IgE — negative",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "ABPA — total IgE threshold",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "boneturnover": {
+   "r1": {
+    "grp": "CTX — premenopausal female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ctx"
+   },
+   "r2": {
+    "grp": "CTX — postmenopausal female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ctx"
+   },
+   "r3": {
+    "grp": "CTX — adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ctx"
+   },
+   "r4": {
+    "grp": "P1NP — premenopausal female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": "p1np"
+   },
+   "r5": {
+    "grp": "P1NP — postmenopausal female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": "p1np"
+   },
+   "r6": {
+    "grp": "P1NP — adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": "p1np"
+   }
+  },
+  "theophylline": {
+   "r1": {
+    "grp": "Therapeutic (asthma/COPD)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Neonatal apnoea target",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Toxicity increasingly likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "phenobarbitone": {
+   "r1": {
+    "grp": "Therapeutic (adult)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Neonatal seizures target",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Sedation / toxicity likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "aminoglycoside": {
+   "r1": {
+    "grp": "Gentamicin trough — multiple daily dosing",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "genttrough"
+   },
+   "r2": {
+    "grp": "Gentamicin peak — multiple daily dosing",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "gentpeak"
+   },
+   "r3": {
+    "grp": "Gentamicin trough — once daily",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "genttrough"
+   },
+   "r4": {
+    "grp": "Amikacin trough",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "amiktrough"
+   },
+   "r5": {
+    "grp": "Amikacin peak",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "amikpeak"
+   }
+  },
+  "tacrolimus": {
+   "r1": {
+    "grp": "Tacrolimus — early post-transplant (0–3 mo)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "tac"
+   },
+   "r2": {
+    "grp": "Tacrolimus — maintenance (>6 mo)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "tac"
+   },
+   "r3": {
+    "grp": "Ciclosporin — early post-transplant C0",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "csa"
+   },
+   "r4": {
+    "grp": "Ciclosporin — maintenance C0",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "csa"
+   }
+  },
+  "methotrexate": {
+   "r1": {
+    "grp": "24 h post high-dose infusion",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "48 h post infusion",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "72 h post infusion — rescue may stop below this",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "aldosterone": {
+   "r1": {
+    "grp": "Aldosterone — upright, mid-morning",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "aldo"
+   },
+   "r2": {
+    "grp": "Plasma renin activity",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "renin"
+   },
+   "r3": {
+    "grp": "ARR — screen positive for primary aldosteronism",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "arr"
+   }
+  },
+  "thyroglobulin": {
+   "r1": {
+    "grp": "Post-total thyroidectomy and ablation — excellent response",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Post-ablation, on suppression — indeterminate",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Post-ablation — biochemical incomplete response",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Intact thyroid (not a cancer marker in this setting)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "calcitonin": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Medullary thyroid carcinoma highly likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "beta2m": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Myeloma ISS stage I",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Myeloma ISS stage III",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "ca153": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "spep": {
+   "r1": {
+    "grp": "Albumin fraction",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "alb"
+   },
+   "r2": {
+    "grp": "Alpha-1 globulin",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "a1"
+   },
+   "r3": {
+    "grp": "Alpha-2 globulin",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "a2"
+   },
+   "r4": {
+    "grp": "Beta globulin",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "beta"
+   },
+   "r5": {
+    "grp": "Gamma globulin",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "gamma"
+   },
+   "r6": {
+    "grp": "M-protein — any discrete band is abnormal and requires immunofixation",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "bencejones": {
+   "r1": {
+    "grp": "Serum free kappa",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "kappa"
+   },
+   "r2": {
+    "grp": "Serum free lambda",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "lambda"
+   },
+   "r3": {
+    "grp": "Kappa:lambda ratio — normal renal function",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ratio"
+   },
+   "r4": {
+    "grp": "Kappa:lambda ratio — renal impairment",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ratio"
+   },
+   "r5": {
+    "grp": "Urine Bence Jones protein — normal result is NOT DETECTED",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Involved FLC ≥100 mg/L with ratio ≥100 — a myeloma-defining event",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ratio"
+   }
+  },
+  "metanephrines": {
+   "r1": {
+    "grp": "Plasma free metanephrine",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "pmn"
+   },
+   "r2": {
+    "grp": "Plasma free normetanephrine",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "pnmn"
+   },
+   "r3": {
+    "grp": "24-h urine metanephrine",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "umn"
+   },
+   "r4": {
+    "grp": "24-h urine normetanephrine",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "unmn"
+   },
+   "r5": {
+    "grp": "Above 3–4× the upper limit — phaeochromocytoma very likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "copperceruloplasmin": {
+   "r1": {
+    "grp": "Serum copper — adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": "cu"
+   },
+   "r2": {
+    "grp": "Serum copper — adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": "cu"
+   },
+   "r3": {
+    "grp": "Caeruloplasmin",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "cp"
+   },
+   "r4": {
+    "grp": "Caeruloplasmin — supportive of Wilson disease",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "cp"
+   },
+   "r5": {
+    "grp": "24-h urinary copper — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ucu"
+   },
+   "r6": {
+    "grp": "24-h urinary copper — diagnostic threshold for Wilson disease",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ucu"
+   }
+  },
+  "zinc": {
+   "r1": {
+    "grp": "Adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Child",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Deficiency likely",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "vitamina": {
+   "r1": {
+    "grp": "Adult — adequate",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Child — adequate",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Marginal status",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Deficiency (WHO: <0.70 µmol/L)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Severe deficiency — ocular risk",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "thiamine": {
+   "r1": {
+    "grp": "Whole blood thiamine diphosphate — adult",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Deficiency",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "myoglobin": {
+   "r1": {
+    "grp": "Adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Rhabdomyolysis — markedly raised",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "hepatitisae": {
+   "r1": {
+    "grp": "IgM anti-HAV — normal result is NON-REACTIVE",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "igmhav"
+   },
+   "r2": {
+    "grp": "Total/IgG anti-HAV — reactive indicates past infection or vaccination (immune)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "igghav"
+   },
+   "r3": {
+    "grp": "IgM anti-HEV — normal result is NON-REACTIVE",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "igmhev"
+   },
+   "r4": {
+    "grp": "IgG anti-HEV — reactive indicates past exposure",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "igghev"
+   }
+  },
+  "torch": {
+   "r1": {
+    "grp": "Toxoplasma IgM — normal result is NON-REACTIVE",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "toxoigm"
+   },
+   "r2": {
+    "grp": "Rubella IgG — immune threshold",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "rubigg"
+   },
+   "r3": {
+    "grp": "Rubella IgM — normal result is NON-REACTIVE",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "rubigm"
+   },
+   "r4": {
+    "grp": "CMV IgM — normal result is NON-REACTIVE",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "cmvigm"
+   },
+   "r5": {
+    "grp": "IgG avidity — HIGH avidity excludes infection within the last 3–4 months",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "avidity"
+   },
+   "r6": {
+    "grp": "Congenital CMV — PCR on neonatal urine/saliva within 3 weeks of birth",
+    "sex": "any",
+    "age": "neonate",
+    "preg": null,
+    "analyte": "cmvpcr"
+   }
+  },
+  "antenatalscreen": {
+   "r1": {
+    "grp": "Each marker is reported as a multiple of the median (MoM); ~1.0 is average",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Trisomy 21 risk — screen negative (low risk)",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": "t21"
+   },
+   "r3": {
+    "grp": "Trisomy 21 risk — screen positive (high risk)",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": "t21"
+   },
+   "r4": {
+    "grp": "AFP — raised (≥2.0–2.5 MoM) suggests a neural tube or abdominal wall defect",
+    "sex": "F",
+    "age": "adult",
+    "preg": "T2",
+    "analyte": "afp"
+   },
+   "r5": {
+    "grp": "NIPT (cell-free DNA) — detection rate for trisomy 21",
+    "sex": "F",
+    "age": "adult",
+    "preg": "any",
+    "analyte": "nipt"
+   }
+  },
+  "osmoticfragility": {
+   "r1": {
+    "grp": "EMA binding — reduced mean fluorescence vs control suggests hereditary spherocytosis",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ema"
+   },
+   "r2": {
+    "grp": "Classical osmotic fragility — 50% haemolysis (MCF)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "mcf"
+   },
+   "r3": {
+    "grp": "Increased fragility (haemolysis at higher saline concentration)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "mcf"
+   },
+   "r4": {
+    "grp": "Decreased fragility",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "mcf"
+   }
+  },
+  "pericardialfluid": {
+   "r1": {
+    "grp": "Normal pericardial fluid volume",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Fluid:serum protein ratio — exudate",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "protratio"
+   },
+   "r3": {
+    "grp": "Fluid:serum LDH ratio — exudate",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ldhratio"
+   },
+   "r4": {
+    "grp": "Adenosine deaminase — supports tuberculous pericarditis",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ada"
+   },
+   "r5": {
+    "grp": "Lymphocyte predominance — tuberculous or malignant",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "lymph"
+   }
+  },
+  "urinecalcium": {
+   "r1": {
+    "grp": "Urine volume — target for stone prevention",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "vol"
+   },
+   "r2": {
+    "grp": "Calcium — adult male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ca"
+   },
+   "r3": {
+    "grp": "Calcium — adult female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ca"
+   },
+   "r4": {
+    "grp": "Oxalate",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ox"
+   },
+   "r5": {
+    "grp": "Citrate — low citrate promotes stones",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "cit"
+   },
+   "r6": {
+    "grp": "Uric acid",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ua"
+   },
+   "r7": {
+    "grp": "Sodium — a surrogate for salt intake, which drives calcium excretion",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "na"
+   },
+   "r8": {
+    "grp": "Creatinine — completeness check, male",
+    "sex": "M",
+    "age": "adult",
+    "preg": null,
+    "analyte": "cr"
+   },
+   "r9": {
+    "grp": "Creatinine — completeness check, female",
+    "sex": "F",
+    "age": "adult",
+    "preg": null,
+    "analyte": "cr"
+   }
+  },
+  "flowcytometry": {
+   "r1": {
+    "grp": "Normal peripheral blood — no aberrant population",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Blasts (CD34+/CD117+) in marrow — acute leukaemia threshold",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "blast"
+   },
+   "r3": {
+    "grp": "Kappa:lambda ratio on B cells — polyclonal (normal)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "klratio"
+   },
+   "r4": {
+    "grp": "Minimal residual disease — commonly reported threshold",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "mrd"
+   },
+   "r5": {
+    "grp": "PNH clone — granulocyte GPI-deficient population",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "pnh"
+   }
+  },
+  "csfoligoclonal": {
+   "r1": {
+    "grp": "Oligoclonal bands — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ocb"
+   },
+   "r2": {
+    "grp": "Positive — ≥2 bands in CSF and absent from paired serum",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ocb"
+   },
+   "r3": {
+    "grp": "IgG index — normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "iggindex"
+   },
+   "r4": {
+    "grp": "IgG index — raised, indicating intrathecal IgG synthesis",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "iggindex"
+   },
+   "r5": {
+    "grp": "CSF kappa free light chain index — quantitative alternative",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "kfl"
+   }
+  },
+  "sweatchloride": {
+   "r1": {
+    "grp": "Normal — cystic fibrosis unlikely (infants ≤6 months)",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r2": {
+    "grp": "Intermediate — repeat and proceed to CFTR genetics",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r3": {
+    "grp": "Positive — consistent with cystic fibrosis",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": null
+   },
+   "r4": {
+    "grp": "Normal — children and adults",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r5": {
+    "grp": "Intermediate — children and adults",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   },
+   "r6": {
+    "grp": "Positive — children and adults",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  },
+  "hpylori": {
+   "r1": {
+    "grp": "Urea breath test — negative",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ubt"
+   },
+   "r2": {
+    "grp": "Urea breath test — positive (kit-specific cut-off)",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "ubt"
+   },
+   "r3": {
+    "grp": "Stool antigen — normal result is NEGATIVE",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "hpsa"
+   },
+   "r4": {
+    "grp": "Rapid urease test on biopsy — normal result is NEGATIVE",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "rut"
+   },
+   "r5": {
+    "grp": "Serum IgG antibody — cannot distinguish current from past infection",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "igg"
+   }
+  },
+  "aso": {
+   "r1": {
+    "grp": "ASO — adult upper limit of normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "aso"
+   },
+   "r2": {
+    "grp": "ASO — school-age child (5–15 y) upper limit of normal",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": "aso"
+   },
+   "r3": {
+    "grp": "ASO — preschool child upper limit of normal",
+    "sex": "any",
+    "age": "infant",
+    "preg": null,
+    "analyte": "aso"
+   },
+   "r4": {
+    "grp": "Anti-DNase B — adult upper limit of normal",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": "dnase"
+   },
+   "r5": {
+    "grp": "Anti-DNase B — school-age child upper limit of normal",
+    "sex": "any",
+    "age": "child",
+    "preg": null,
+    "analyte": "dnase"
+   },
+   "r6": {
+    "grp": "A two-fold or greater rise between paired sera is the significant result",
+    "sex": "any",
+    "age": "adult",
+    "preg": null,
+    "analyte": null
+   }
+  }
+ }
+}

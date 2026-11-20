@@ -3,7 +3,7 @@ name: LabRef — verify and build
 # The ordering here is the whole point of this file.
 #
 # The clinical QA suite runs FIRST and is a hard gate. Nothing is packaged
-# unless all four verification methods pass, so a data error can never reach an
+# unless all five verification methods pass, so a data error can never reach an
 # APK. For a clinical reference app that ordering matters more than build speed.
 
 on:
@@ -49,7 +49,7 @@ jobs:
       # Methods 1 and 4 launch a browser. The suite honours CHROME_PATH and
       # otherwise falls back to Playwright's bundled Chromium, which is what
       # happens here.
-      - name: Run all four verification methods
+      - name: Run all five verification methods
         run: bash qa/run_all.sh
 
       - name: Upload the verified build

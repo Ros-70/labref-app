@@ -89,11 +89,11 @@ physical tube — do not add one per test.
   assayDep:true,
   units:{ conv:"mg/dL", si:"µmol/L", factor:88.4 },
   ranges:[
-    { grp:"Adult male",   sex:"M", age:"adult",   preg:null,  conv:{lo:0.70,hi:1.30}, si:{lo:62,hi:115} },
-    { grp:"Adult female", sex:"F", age:"adult",   preg:null,  conv:{lo:0.55,hi:1.10}, si:{lo:49,hi:97} },
-    { grp:"Pregnancy",    sex:"F", age:"adult",   preg:"any", conv:{lo:0.40,hi:0.80}, si:{lo:35,hi:71} },
-    { grp:"Newborn",      sex:"any",age:"neonate",preg:null,  conv:{lo:0.30,hi:1.00}, si:{lo:27,hi:88} },
-    { grp:"Child (1–12 y)",sex:"any",age:"child", preg:null,  conv:{lo:0.30,hi:0.70}, si:{lo:27,hi:62} }
+    { rid:"r1", grp:"Adult male",   sex:"M", age:"adult",   preg:null,  conv:{lo:0.70,hi:1.30}, si:{lo:62,hi:115} },
+    { rid:"r2", grp:"Adult female", sex:"F", age:"adult",   preg:null,  conv:{lo:0.55,hi:1.10}, si:{lo:49,hi:97} },
+    { rid:"r3", grp:"Pregnancy",    sex:"F", age:"adult",   preg:"any", conv:{lo:0.40,hi:0.80}, si:{lo:35,hi:71} },
+    { rid:"r4", grp:"Newborn",      sex:"any",age:"neonate",preg:null,  conv:{lo:0.30,hi:1.00}, si:{lo:27,hi:88} },
+    { rid:"r5", grp:"Child (1–12 y)",sex:"any",age:"child", preg:null,  conv:{lo:0.30,hi:0.70}, si:{lo:27,hi:62} }
   ],
   critical:{ txt:">4.0 mg/dL, or a rise >0.3 mg/dL in 48 h (AKI)", lo:null, hi:4.0 },
   inc:["Acute kidney injury...", "..."],
@@ -118,7 +118,7 @@ physical tube — do not add one per test.
 | `prep`      | `{fasting, items[], patient[]}` | see below |
 | `assayDep`  | boolean             | `true` when the cutoff is analyser/method-specific — shows a warning badge pointing to My Lab |
 | `units`     | `{conv, si, factor}` | `si_value = conv_value * factor`. For a panel test this is a **default only** — see §2b |
-| `ranges[]`  | array               | see below |
+| `ranges[]`  | array               | see below. Every row carries a permanent `rid` — see below |
 | `critical`  | `{txt, lo, hi, analyte?}` or `null` | see below |
 | `inc[]`     | string[]            | causes of a raised value |
 | `dec[]`     | string[]            | causes of a low value |
@@ -135,6 +135,30 @@ must contain only plain language the patient should actually be told —
 never mention it unless the test genuinely needs patient action (fasting,
 a drug hold, timing). Omit `patient[]` entirely when there's nothing to
 tell the patient.
+
+**`ranges[].rid`** is the row's **permanent identity**, unique within its test
+(`"r1"`, `"r2"`, …). Added in v2.0. A user's own lab values are stored against
+`(test id, rid)`, in localStorage on their own device, so a rid is a contract
+with every installed copy of the app:
+
+- **It never changes meaning.** Its stratum dimensions (`sex`, `age`, `preg`,
+  and the analyte for a panel row) are frozen once published. Correcting an
+  interval's numbers is fine and expected — that is ordinary content
+  maintenance and does not disturb anyone's override. Re-pointing a rid at a
+  different population is forbidden: give the new stratum a new rid and retire
+  the old one.
+- **rids are append-only.** Removing a row requires an explicit entry under
+  `retired` in `qa/rid_baseline.json`, and a retired number is never reused —
+  not even by backfilling the gap it left.
+- **Never renumber.** Do not tidy, re-sort, or compact rids. Row order in the
+  array carries no meaning; the rid does.
+
+Assign them with `cd app && python3 -I assign_rids.py`, which is idempotent and
+only ever adds. All of the above is enforced on every build by
+`qa/validate_rids.js` (method 5), which is itself tested by
+`qa/test_rid_guard.js` (method 5b). Those two exist because the failure they
+prevent is silent: a clinician's adult-female range quietly becoming the
+newborn range, with nothing on screen to show it.
 
 **`ranges[].grp`** is the human-readable row label shown in the UI and used
 as the row-match fallback ordering tiebreaker; keep it short and specific
