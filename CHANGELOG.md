@@ -58,13 +58,66 @@ anything.
 
 No clinical content changed in this stage.
 
+### Stage 2a — row kind, and a second tie-break bug it found
+
+Every range row now carries a `kind`: `ref` (demographic reference interval),
+`method` (assay/specimen variant), `dx` (diagnostic/classification band),
+`target` (treatment target), `cutoff` (decision threshold), or `note`
+(narrative/different-measurand). This is what will let Stage 3 restrict My
+Lab overrides to `ref`/`method` rows only — a lab can publish its own
+reference interval, but should never be able to silently redefine a
+diagnostic threshold.
+
+Classification was heuristic (`app/classify_rows.py`) plus ~56 hand-reviewed
+corrections (`app/row_kinds_overrides.json`), each with a clinical rationale.
+The check for "do any two `ref`/`method` rows share the same (analyte, sex,
+age, preg) key" — the actual invariant the original My Lab bug violated —
+surfaced two distinct problems, not classification noise:
+
+- **15 rows were bundling different measurands under one blank analyte key**
+  (osmolality vs. its osmolal gap, HbA/HbA2/HbF, CSF panel components,
+  urinalysis components, serum vs. red-cell folate). Given their own
+  `analyte.key` — pure data correction. This changed what 27 already-identified
+  rows meant, which the Stage 1 identity guard correctly flagged; those rids
+  were retired and reassigned fresh numbers above each test's ceiling, exactly
+  as the guard prescribes.
+- **34 rows (22 groups) are genuine clinical sub-populations the sex/age/preg
+  chips can't distinguish** — ESR/PSA/testosterone/IGF-1 by age band,
+  LH/FSH/estradiol/progesterone/17-OHP by menstrual-cycle phase, cortisol/ACTH
+  by time of day, lactate/vWF/CEA/Bence Jones by a one-off covariate (specimen
+  type, blood group, smoking status, renal function). `bestRange()` was
+  breaking these ties silently, by array order — the same class of
+  silent-wrong-value risk as the original bug, just in the interpreter's
+  row-picker instead of the override store, and never caught by 759 rows of
+  prior QA because nothing had tested what happens when more than one row
+  legitimately ties.
+
+**Fix:** `bestRange()`/`activeRange()` now detect a genuine tie instead of
+guessing. The Result Interpreter requires the user to pick which group
+applies, by its own label, before grading a value; the test detail page
+highlights every tied row instead of just the first. `qa/known_tie_groups.json`
+records every expected tie as a reviewed baseline, so a future content change
+that introduces an unreviewed new one fails the build rather than guessing
+silently — the same append-only-review discipline as the rid guard. The fix
+caught a 23rd tie outside the original ref/method scan (D-dimer's two cutoff
+rows, by age), confirming it isn't scoped to one `kind`.
+
+A wider, unscoped scan found roughly 130 further same-key groups, almost all
+genuine value-ordered severity ladders (vitamin D deficient → insufficient →
+sufficient → toxic, D-dimer's age-adjusted cutoff, CRP's inflammation ladder,
+etc.) rather than picker ties. Those need the interpreter to walk a ladder by
+the *entered value*, not ask the user to pre-pick a row by label — a different
+fix, left for Stage 2b/the interpreter rework below rather than solved here.
+
 ### Still to come
 
-- Stage 2 — split `ranges[]` into demographic intervals and bands; classify
-  and source all 280 band rows; teach the interpreter to report both a
-  reference comparison and a band placement.
-- Stage 3 — scoped override store and My Lab UI: per-stratum entry,
-  assay-level unit/method, locked guideline bands, orphaned overrides surfaced.
+- Stage 2b — teach the interpreter to grade `dx`/`cutoff`/`target` rows by
+  walking their value-ordered ladder (not demographic matching), and to show
+  that alongside, not instead of, the `ref` comparison; source and classify
+  the ~130-group severity-ladder set found above.
+- Stage 3 — scoped override store and My Lab UI: per-stratum entry restricted
+  to `ref`/`method` rows, assay-level unit/method, locked guideline bands,
+  orphaned overrides surfaced.
 - Stage 4 — combinatorial QA over every (test, analyte, sex, age, pregnancy)
   combination; provenance display checks; updated on-device smoke test.
 
