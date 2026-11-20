@@ -26,13 +26,25 @@ def _chrome_path():
     return found  # None -> Playwright falls back to its own bundled browser
 
 def _labref_html():
-    """Resolve the built app in either layout: repo root (dev) or app/ (handover)."""
+    """Resolve the built app by glob, in either layout: repo root or app/.
+
+    The version is NOT hardcoded here on purpose. It used to be, and that let
+    this suite pass against a stale build from an earlier version while the
+    current data sat unverified. Globbing with a strict "exactly one" rule
+    turns a leftover build into a hard error instead of a silent fallback."""
+    import glob as _glob
     here = _os.path.dirname(_os.path.abspath(__file__))
-    for rel in ("../LabRef_v1.10.html", "../app/LabRef_v1.10.html"):
-        p = _os.path.normpath(_os.path.join(here, rel))
-        if _os.path.exists(p):
-            return "file://" + p
-    raise SystemExit("LabRef_v1.10.html not found — run build.py first")
+    hits = []
+    for rel in ("../LabRef_v*.html", "../app/LabRef_v*.html"):
+        hits += _glob.glob(_os.path.normpath(_os.path.join(here, rel)))
+    hits = sorted(set(hits))
+    if not hits:
+        raise SystemExit("No LabRef_v*.html found — run build.py first")
+    if len(hits) > 1:
+        raise SystemExit(
+            "%d builds found (%s) — remove stale versions so the suite cannot "
+            "verify the wrong one" % (len(hits), ", ".join(_os.path.basename(h) for h in hits)))
+    return "file://" + hits[0]
 
 URL = _labref_html()
 errors, failures = [], []
@@ -53,9 +65,13 @@ with sync_playwright() as p:
     print("\n-- rename --")
     bar = pg.inner_text("#appbar .title").strip()
     check("app bar shows LabRef", bar.startswith("LabRef"), bar)
+    # Compared against the app's own LABREF_VERSION rather than a literal, so
+    # the guard keeps working across version bumps with nothing to hand-edit —
+    # and it still catches the real risk, an app bar out of step with the data.
+    _ver = pg.evaluate("() => window.LABREF_VERSION")
     check("app bar shows the version next to the name",
-          pg.inner_text("#appbar .ver").strip() == "v 1.10",
-          pg.inner_text("#appbar .ver").strip())
+          pg.inner_text("#appbar .ver").strip() == "v " + _ver,
+          pg.inner_text("#appbar .ver").strip() + " vs LABREF_VERSION=" + str(_ver))
     check("version label is smaller than the app name",
           pg.evaluate("""()=>{const t=getComputedStyle(document.querySelector('#appbar .title')).fontSize,
               v=getComputedStyle(document.querySelector('#appbar .ver')).fontSize;
@@ -64,7 +80,8 @@ with sync_playwright() as p:
     check("no MedRef string anywhere in rendered body",
           "MedRef" not in pg.inner_text("body"))
     pg.click("[data-nav='more']"); pg.wait_for_timeout(200)
-    check("About shows LabRef version", "LabRef v1.10" in pg.inner_text("#v-more"))
+    check("About shows LabRef version", ("LabRef v" + _ver) in pg.inner_text("#v-more"),
+          "expected 'LabRef v" + str(_ver) + "'")
 
     # ---------- 2. detail-page block defaults ----------
     print("\n-- detail block defaults --")
@@ -88,8 +105,18 @@ with sync_playwright() as p:
     pg.click("[data-test='creatinine']"); pg.wait_for_timeout(300)
     loc_open = pg.evaluate("()=>document.querySelector(\"[data-blk='loc']\").classList.contains('open')")
     check("My Lab block stays collapsed even with a saved value", loc_open is False)
-    check("but the saved value still shows as the active range",
-          "Your lab" in pg.inner_text("[data-blk='rng']"))
+    # Stage 3: a value saved under the pre-rid-scoped shape (no record of
+    # WHICH demographic stratum it was for) is exactly the defect this
+    # rebuild exists to fix -- it must never silently reapply as if it were
+    # a resolved row's range. It shows as an orphaned/no-longer-applies
+    # notice in the My Lab editor instead, and the reference-range table
+    # shows the textbook value, not a "Your lab" badge, until the clinician
+    # re-enters it against the specific row it belongs to.
+    check("a pre-Stage-3 saved value does NOT silently become the active range",
+          "Your lab" not in pg.inner_text("[data-blk='rng']"))
+    pg.click("[data-blk='loc'] .bh"); pg.wait_for_timeout(200)
+    check("the orphaned pre-Stage-3 value is surfaced for review instead",
+          "no longer" in pg.inner_text("[data-blk='loc']").lower())
     pg.evaluate("()=>localStorage.clear()"); pg.reload(); pg.wait_for_timeout(400)
 
     # ---------- 3. breadcrumb ----------

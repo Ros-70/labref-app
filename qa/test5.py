@@ -14,13 +14,25 @@ def _chrome_path():
     return found  # None -> Playwright falls back to its own bundled browser
 
 def _labref_html():
-    """Resolve the built app in either layout: repo root (dev) or app/ (handover)."""
+    """Resolve the built app by glob, in either layout: repo root or app/.
+
+    The version is NOT hardcoded here on purpose. It used to be, and that let
+    this suite pass against a stale build from an earlier version while the
+    current data sat unverified. Globbing with a strict "exactly one" rule
+    turns a leftover build into a hard error instead of a silent fallback."""
+    import glob as _glob
     here = _os.path.dirname(_os.path.abspath(__file__))
-    for rel in ("../LabRef_v1.10.html", "../app/LabRef_v1.10.html"):
-        p = _os.path.normpath(_os.path.join(here, rel))
-        if _os.path.exists(p):
-            return "file://" + p
-    raise SystemExit("LabRef_v1.10.html not found — run build.py first")
+    hits = []
+    for rel in ("../LabRef_v*.html", "../app/LabRef_v*.html"):
+        hits += _glob.glob(_os.path.normpath(_os.path.join(here, rel)))
+    hits = sorted(set(hits))
+    if not hits:
+        raise SystemExit("No LabRef_v*.html found — run build.py first")
+    if len(hits) > 1:
+        raise SystemExit(
+            "%d builds found (%s) — remove stale versions so the suite cannot "
+            "verify the wrong one" % (len(hits), ", ".join(_os.path.basename(h) for h in hits)))
+    return "file://" + hits[0]
 
 PATH=_labref_html()
 errors=[]
@@ -61,6 +73,13 @@ with sync_playwright() as p:
     # longer 1 for these. For a panel test, scope the lookup to the specific
     # component sub-table (".rng-sub") that contains the expected group label.
     panel_tests = {"lipid","abgpanel","ptinr","troponin","bilirubin","calcium"}
+    # Rows the interpreter now correctly refuses to silently pick between
+    # (see qa/known_tie_groups.json) highlight as MULTIPLE "match" rows on
+    # the detail page on purpose — ddimer's <50y exclusion cutoff and the
+    # age-adjusted (>50y) cutoff both match "adult, any sex" alone, and only
+    # the clinician knows which one actually fits. Exempt these from the
+    # n==1 assumption the same way panel tests already are.
+    tie_tests = {"ddimer"}
     ok=True
     for tid,cat,sex,preg,age,expect in cases:
         pg.evaluate("""([s,p,a])=>{const k='labref_v1';const o=JSON.parse(localStorage.getItem(k)||'{}');
@@ -84,7 +103,7 @@ with sync_playwright() as p:
         else:
             n=pg.locator("#v-detail tr.match").count()
             got=pg.locator("#v-detail tr.match .grp").first.inner_text() if n else "NONE"
-        good=(got==expect and (n==1 if tid not in panel_tests else got==expect)); ok=ok and good
+        good=(got==expect and (n==1 if tid not in panel_tests and tid not in tie_tests else got==expect)); ok=ok and good
         print(("PASS " if good else "FAIL "),f"{tid:11s} {sex} {preg:4s} {age:11s} -> {got!r} rows={n}")
         if not good: print("        expected:",repr(expect))
     print("\nRANGE SELECTION:", "ALL PASS" if ok else "FAILURES ABOVE")

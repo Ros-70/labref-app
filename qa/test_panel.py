@@ -16,13 +16,25 @@ def _chrome_path():
     return found  # None -> Playwright falls back to its own bundled browser
 
 def _labref_html():
-    """Resolve the built app in either layout: repo root (dev) or app/ (handover)."""
+    """Resolve the built app by glob, in either layout: repo root or app/.
+
+    The version is NOT hardcoded here on purpose. It used to be, and that let
+    this suite pass against a stale build from an earlier version while the
+    current data sat unverified. Globbing with a strict "exactly one" rule
+    turns a leftover build into a hard error instead of a silent fallback."""
+    import glob as _glob
     here = _os.path.dirname(_os.path.abspath(__file__))
-    for rel in ("../LabRef_v1.10.html", "../app/LabRef_v1.10.html"):
-        p = _os.path.normpath(_os.path.join(here, rel))
-        if _os.path.exists(p):
-            return "file://" + p
-    raise SystemExit("LabRef_v1.10.html not found — run build.py first")
+    hits = []
+    for rel in ("../LabRef_v*.html", "../app/LabRef_v*.html"):
+        hits += _glob.glob(_os.path.normpath(_os.path.join(here, rel)))
+    hits = sorted(set(hits))
+    if not hits:
+        raise SystemExit("No LabRef_v*.html found — run build.py first")
+    if len(hits) > 1:
+        raise SystemExit(
+            "%d builds found (%s) — remove stale versions so the suite cannot "
+            "verify the wrong one" % (len(hits), ", ".join(_os.path.basename(h) for h in hits)))
+    return "file://" + hits[0]
 
 URL = _labref_html()
 
@@ -81,19 +93,39 @@ def run():
         assert len(mylab_comps) == 5, f"expected 5 mylab sub-forms, got {mylab_comps}"
         page.screenshot(path="qa/panel_02_lipid_mylab.png", full_page=True)
 
-        # ---- 3. Save an override for LDL only, verify others unaffected ----
-        # find the LDL component block and fill its lo/hi
-        ldl_idx = None
+        # ---- 3. Save an override for one HDL stratum only, verify the other
+        # stratum AND the other components are unaffected. HDL is the right
+        # component to exercise this with: its two rows (male/female) are
+        # kind "ref", and are the actual defect Stage 3 fixes -- LDL/total
+        # cholesterol/non-HDL are guideline targets (kind dx/target) on a
+        # non-assayDep test and are correctly NOT locally overridable at all
+        # (see overridableKind() in shell.html), so they carry no lo/hi
+        # inputs any more to fill.
+        hdl_idx = None
         blocks = page.query_selector_all(".mylab-comp")
         for i, b in enumerate(blocks):
             txt = b.query_selector(".comp-h").text_content()
-            if "LDL" in txt:
-                ldl_idx = i
+            if "HDL" in txt and "Non" not in txt:
+                hdl_idx = i
                 break
-        assert ldl_idx is not None, "LDL block not found"
-        ldl_block = blocks[ldl_idx]
-        ldl_block.query_selector(".lc-lo").fill("50")
-        ldl_block.query_selector(".lc-hi").fill("110")
+        assert hdl_idx is not None, "HDL block not found"
+        hdl_block = blocks[hdl_idx]
+        rid_blocks = hdl_block.query_selector_all(".mylab-rid")
+        assert len(rid_blocks) == 2, f"expected 2 editable HDL rows (male/female), got {len(rid_blocks)}"
+        male_rid_block = None
+        for rb in rid_blocks:
+            label = rb.query_selector(".fl").text_content()
+            if "male" in label.lower() and "female" not in label.lower():
+                male_rid_block = rb
+                break
+        assert male_rid_block is not None, "HDL male row not found"
+        male_rid = male_rid_block.get_attribute("data-rid")
+        male_rid_block.query_selector(".lc-lo").fill("50")
+        male_rid_block.query_selector(".lc-hi").fill("110")
+        # LDL has nothing editable -- confirm the lock message instead of a crash
+        ldl_block = next(b for b in blocks if "LDL" in b.query_selector(".comp-h").text_content())
+        assert ldl_block.query_selector(".lc-lo") is None, "LDL should have no lo/hi input (guideline band, locked)"
+        assert "guideline band" in ldl_block.inner_text().lower()
         page.click("#lcSave")
         page.wait_for_timeout(200)
         page.screenshot(path="qa/panel_03_lipid_after_save.png", full_page=True)
@@ -101,13 +133,15 @@ def run():
         local_storage = page.evaluate("localStorage.getItem('labref_v1')")
         state = json.loads(local_storage)
         lipid_local = state.get("local", {}).get("lipid")
-        print("lipid local state after LDL save:", lipid_local)
+        print("lipid local state after HDL-male save:", lipid_local)
         assert lipid_local is not None
-        assert "ldl" in lipid_local.get("comp", {})
-        assert lipid_local["comp"]["ldl"]["lo"] == "50"
-        other_keys = [k for k in lipid_local.get("comp", {}).keys() if k != "ldl"]
-        print("other comp keys present (should be empty):", other_keys)
-        assert other_keys == [], f"saving LDL leaked into other components: {other_keys}"
+        assert male_rid in lipid_local.get("byRid", {})
+        assert lipid_local["byRid"][male_rid]["lo"] == "50"
+        other_rids = [k for k in lipid_local.get("byRid", {}).keys() if k != male_rid]
+        print("other overridden rids present (should be empty):", other_rids)
+        assert other_rids == [], f"saving HDL-male leaked into other rows: {other_rids}"
+        assert lipid_local.get("assay", {}) == {}, \
+            f"saving a lo/hi value should not write any assay-level entry: {lipid_local.get('assay')}"
 
         # dot indicator should show on the lipid row in the list
         open_test("lipid", "Lipid")  # reopen to re-render after save, idempotent

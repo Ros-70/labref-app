@@ -16,7 +16,7 @@ __pycache__/
 # committed build artifact would eventually drift from it. Build it with
 #   cd app && python3 -I build.py
 # ---------------------------------------------------------------------------
-app/LabRef_v1.10.html
+app/LabRef_v*.html
 android/app/src/main/assets/index.html
 
 # Android / Gradle

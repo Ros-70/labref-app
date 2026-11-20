@@ -1,5 +1,334 @@
 # Changelog
 
+## v2.0 — IN DEVELOPMENT (branch `v2-data-model`)
+
+v1.10 remains the shipped, frozen release on `main`. v2.0 exists to fix a
+defect found in hands-on use of the v1.10 APK, and is staged so each step is
+CI-verified before the next begins.
+
+### The defect
+
+My Lab overrides were stored per analyte with **no demographic scope**, and
+`activeRange()` consulted the override *before* the stratum matcher. So one
+saved value won in every context: enter your lab's adult haemoglobin range,
+switch the age chip to Newborn, and the app displayed your adult range as the
+active one and the Result Interpreter graded against it. A newborn Hb of 18
+would read as "high" when newborn normal runs to about 24. Silent clinical
+misread — the same class of failure as the localStorage origin and dark-mode
+hazards guarded in v1.10, and it reaches 169 of the 180 tests, which have at
+least one stratified analyte.
+
+### The approach
+
+The override layer is the symptom; the cause is that `ranges[]` holds two
+different kinds of row — demographic reference intervals (479 rows) and
+interpretive guideline/assay bands (280 rows, e.g. HbA1c normal/prediabetes/
+diabetes). Their `sex|age|preg` triples collide on 138 rows, and "your lab's
+value" means something different for each: a lab publishes its own reference
+interval, but does not get to redefine a diagnostic cut-off. So the data model
+is being split rather than patched around.
+
+### Stage 1 (this stage) — identity
+
+**Every version removed from every path.** A version baked into a path goes
+stale silently, and already did once here: `test_v11_features.py` and the two
+JS validators pointed at v1.1 filenames and kept passing while the v1.10 data
+they were meant to check went unverified. All paths are now glob-resolved with
+a strict "exactly one" rule, so a leftover build is a hard error naming both
+files. Verified by planting a decoy. The Android `versionName` is now read out
+of the data module rather than hand-copied beside it, and both on-device
+version assertions compare against `BuildConfig.VERSION_NAME`, so an APK can
+always be traced to the dataset inside it.
+
+**Stable row ids.** All 759 range rows now carry a permanent `rid`, unique
+within their test. My Lab overrides will key on `(test id, rid)` — deliberately
+not including the analyte key, so there is one less identifier that can shift
+under a saved value. The corpus was verified byte-identical once `rid` is
+stripped, proving the change was purely additive.
+
+**The guard that makes them trustworthy.** `qa/validate_rids.js` (method 5)
+enforces on every build that a published rid never changes meaning: its
+`sex`/`age`/`preg`/analyte dimensions are frozen against
+`qa/rid_baseline.json`, while correcting an interval's *numbers* stays freely
+allowed. rids are append-only; removal requires an explicit `retired` entry and
+a retired number is never reused. `qa/test_rid_guard.js` (method 5b) then
+drives the guard through all 12 violations and legitimate edits it claims to
+distinguish, because a guard never observed to fail is not evidence of
+anything.
+
+No clinical content changed in this stage.
+
+### Stage 2a — row kind, and a second tie-break bug it found
+
+Every range row now carries a `kind`: `ref` (demographic reference interval),
+`method` (assay/specimen variant), `dx` (diagnostic/classification band),
+`target` (treatment target), `cutoff` (decision threshold), or `note`
+(narrative/different-measurand). This is what will let Stage 3 restrict My
+Lab overrides to `ref`/`method` rows only — a lab can publish its own
+reference interval, but should never be able to silently redefine a
+diagnostic threshold.
+
+Classification was heuristic (`app/classify_rows.py`) plus ~56 hand-reviewed
+corrections (`app/row_kinds_overrides.json`), each with a clinical rationale.
+The check for "do any two `ref`/`method` rows share the same (analyte, sex,
+age, preg) key" — the actual invariant the original My Lab bug violated —
+surfaced two distinct problems, not classification noise:
+
+- **15 rows were bundling different measurands under one blank analyte key**
+  (osmolality vs. its osmolal gap, HbA/HbA2/HbF, CSF panel components,
+  urinalysis components, serum vs. red-cell folate). Given their own
+  `analyte.key` — pure data correction. This changed what 27 already-identified
+  rows meant, which the Stage 1 identity guard correctly flagged; those rids
+  were retired and reassigned fresh numbers above each test's ceiling, exactly
+  as the guard prescribes.
+- **34 rows (22 groups) are genuine clinical sub-populations the sex/age/preg
+  chips can't distinguish** — ESR/PSA/testosterone/IGF-1 by age band,
+  LH/FSH/estradiol/progesterone/17-OHP by menstrual-cycle phase, cortisol/ACTH
+  by time of day, lactate/vWF/CEA/Bence Jones by a one-off covariate (specimen
+  type, blood group, smoking status, renal function). `bestRange()` was
+  breaking these ties silently, by array order — the same class of
+  silent-wrong-value risk as the original bug, just in the interpreter's
+  row-picker instead of the override store, and never caught by 759 rows of
+  prior QA because nothing had tested what happens when more than one row
+  legitimately ties.
+
+**Fix:** `bestRange()`/`activeRange()` now detect a genuine tie instead of
+guessing. The Result Interpreter requires the user to pick which group
+applies, by its own label, before grading a value; the test detail page
+highlights every tied row instead of just the first. `qa/known_tie_groups.json`
+records every expected tie as a reviewed baseline, so a future content change
+that introduces an unreviewed new one fails the build rather than guessing
+silently — the same append-only-review discipline as the rid guard. The fix
+caught a 23rd tie outside the original ref/method scan (D-dimer's two cutoff
+rows, by age), confirming it isn't scoped to one `kind`.
+
+A wider, unscoped scan found roughly 130 further same-key groups, almost all
+genuine value-ordered severity ladders (vitamin D deficient → insufficient →
+sufficient → toxic, D-dimer's age-adjusted cutoff, CRP's inflammation ladder,
+etc.) rather than picker ties. Those need the interpreter to walk a ladder by
+the *entered value*, not ask the user to pre-pick a row by label — a different
+fix, left for Stage 2b below.
+
+### Stage 2b — value-ordered ladder classification
+
+`bestRange()`'s ref/method tie-chooser (Stage 2a) was built for *demographic*
+ties, and wrongly fired for tests like vitamin D, whose four `dx` rows
+(deficient/insufficient/sufficient/toxic) all apply to the same "any adult" —
+the real distinguishing factor is the entered *value*, not the patient. Fix:
+`scoredCandidates()` is now scoped to `ref`/`method` rows only, so a
+dx/cutoff/target row never enters the demographic tie check; a separate
+`classifyAgainstLadder()` walks `dx`/`cutoff`/`target` rows by the number the
+user actually enters, picking the one band whose interval contains it (or the
+nearest band, labelled "above"/"below", when the value falls outside every
+defined band).
+
+Not every same-key `dx`/`cutoff`/`target` group is a clean ladder. A group
+counts as one only if every row carries numeric bounds and every pair of
+intervals is either disjoint or one fully nests inside the other (a severity
+refinement, e.g. "severely deficient <10" nesting inside "deficient <20") —
+`isValueLadder()`. A handful of groups fail that test on purpose: ptinr and
+anti-Xa's targets depend on the indication/drug, not the number; digoxin's two
+targets overlap; D-dimer's age-adjusted cutoff has no fixed bound at all, only
+a formula; a few more (HbA1c's individualised treatment target, NT-proBNP's
+mixed age-bands-plus-rule-out set, ANA's and the Down-syndrome screen's
+titre/risk-ratio results, which were never numeric to begin with) likewise
+can't be placed on one axis. For these the interpreter shows the entered value
+plus an informational note naming the candidates, rather than blocking —
+unlike a ref/method tie, there is no single verdict being silently guessed at
+here, so a hard block would be over-caution, not safety.
+
+The wider scan (qa/validate_ties.js, method 6, below) also caught three
+genuine bundled-measurand bugs this pass of classification surfaced: SAAG's
+"SBP threshold" row is a different measurement entirely (ascitic fluid
+neutrophil count, not SAAG) and PSA's free:total ratio and post-prostatectomy
+rows are a different assay and a different clinical context respectively —
+all three were sharing a blank analyte key with rows they don't belong with,
+the same bundled-measurand pattern as Stage 2a's 15 rows. Given their own
+`analyte.key`, same fix, same rid-retirement mechanics. Hb electrophoresis's
+"HbA2 — β-thalassaemia trait" row was also reclassified from `ref` to `dx`: a
+carrier-status finding is a diagnostic band, not a population reference
+range, and the misclassification was creating a false ref/method tie against
+the genuine HbA2 reference interval.
+
+Fixing the false positive exposed one more real bug while fixing it, same
+shape as Stage 2a's: `bestRange()`'s last-resort fallback (`rows[0]`) used to
+assume `rows` always held at least one row generically applicable to any
+patient — true when `rows` was every range on the test, false now that it's
+kind-restricted to ref/method only. D-dimer's general-population content is
+entirely `kind:"cutoff"` with no separate `ref` row, so for a non-pregnant
+patient `rows` held only its three pregnancy-only ref rows — none of which
+match — and the old fallback silently returned "Pregnancy T1" as if it were
+the active range for a male patient. Fixed to never return a row that fails
+`rangeMatches()`; the test detail page falls back separately to highlighting
+whichever dx/cutoff/target rows do match demographically (restoring the
+"pick by eye" display for cases like D-dimer without reopening the ref/method
+false-positive this stage exists to close).
+
+**Method 6 — `qa/validate_ties.js`.** Recomputes both tie categories (every
+ref/method collision, and every dx/cutoff/target group that is *not* a clean
+ladder) from the live data on every build and fails if a new or changed one
+isn't in `qa/known_tie_groups.json`'s reviewed baseline — the same
+append-only-review discipline as the rid guard, now covering both the Stage 2a
+picker-tie class and this stage's ladder-fallback class in one pass.
+
+### Stage 3 — scoped override store and My Lab UI
+
+This is the stage that actually closes the original defect. Stage 1 built the
+`rid` system specifically to make it possible; Stages 2a/2b classified rows by
+`kind` so the restriction below has something to key on; neither stage touched
+the override store itself, so until now a saved value was still demographically
+blind the moment it was written.
+
+**`overridableKind(r, t)`** decides which rows may ever carry a saved value:
+`ref` and `method` rows always; `cutoff` rows only when the test itself is
+flagged `assayDep:true` (D-dimer, NT-proBNP, drug levels, serology index
+cutoffs — the threshold is an assay artifact, not a literature constant); `dx`,
+`target`, and `note` rows never, on any test. SAAG's cutoff row stays locked
+(assayDep:false — the gradient cut-off is a published constant, not something
+a local assay shifts); D-dimer's and NT-proBNP's stay editable. This carve-out
+was an explicit decision, not a default: a strict ref/method-only rule would
+have left 35 assay-dependent tests with no editable row at all.
+
+**Storage re-keyed to `(test id, rid)`.** The old shape stored one value per
+*component*, with no demographic scope — the exact defect. The new shape is
+`{ note, assay:{[key]:{unit,method,crit}}, byRid:{[rid]:{lo,hi}} }`: `assay`
+holds unit/method/critical-value at the component level (these aren't
+demographic — a lab's analyser doesn't change by patient sex), `byRid` holds
+one lo/hi pair per overridable *row*, keyed by that row's permanent `rid`. A
+saved adult-male haemoglobin range can no longer apply itself to a newborn,
+because it is no longer stored as "haemoglobin" — it's stored as "row r3."
+
+**One shared lookup, both consumers.** `effectiveBounds(t, r)` checks for a rid
+override before falling back to the textbook interval, and is now the only
+place either the ref/method comparison (`activeRange`) or the ladder
+classifier (`classifyAgainstLadder` → `bandBounds`) reads a range's numbers
+from — so a saved override on an assayDep cutoff row is honoured wherever that
+row's numbers are used, without a second copy of the lookup to fall out of
+sync.
+
+**Orphaned overrides are surfaced, never silently dropped or silently
+misapplied.** A value saved before this stage (the old flat/per-component
+shape), or against a row later retired or reclassified, no longer maps onto
+anything the UI will read — `orphanedOverrides(t)` lists each one in plain
+language ("'Pregnancy T1' is no longer an editable row (reclassified as a
+guideline band) — your saved value (…) no longer applies") so the user can
+re-enter it against the right row or clear it, rather than it vanishing
+unexplained or, worse, re-attaching itself to the wrong row by coincidence of
+storage key.
+
+**My Lab UI** now shows one Unit/Method/Critical-value set per component
+(always present, since those are component-level), followed by one lo/hi
+input pair per overridable row with its own demographic label and a
+"(textbook: …)" hint, followed by a note naming any locked rows and why
+("… is a fixed guideline band, not a lab reference range, and can't be
+overridden here"). The test detail page's range table shows the override badge
+on the specific row it applies to — "HDL-C — male YOUR LAB" — not a single
+undifferentiated "Your lab" line standing in for the whole component.
+
+No clinical content changed in this stage; it is purely a storage and UI fix.
+Caught in self-testing before any commit: an inline style referenced an
+undefined CSS variable (`--line`, should be `--border`); and the unit field,
+which is always pre-filled with a default and therefore never blank, was
+making every save write an `assay` entry for every component regardless of
+whether the user had actually entered anything — fixed by dropping `unit`
+from the "is this meaningful" check everywhere it's made (only `method`/`crit`
+count).
+
+### Stage 4 — combinatorial sweep, on-device round-trip, merge
+
+Every prior stage verified its fix on one or a handful of hand-picked
+examples: Stage 2b's tie/ladder fix on the tests that happened to surface it,
+Stage 3's override scoping on HDL alone. Stage 4 doesn't change the fix —
+it sweeps the properties those stages established across the full corpus,
+on the assumption that a defect class this severe deserves more than a
+sample.
+
+**`qa/test_override_sweep.py` (added to the Method 1 family).** Two checks:
+
+1. *Full-corpus isolation & coverage.* Every row `overridableKind()` says
+   should be editable, on all 180 tests, gets its own distinct sentinel
+   value, written once before a single page load. The My Lab block is then
+   opened for every test and each row's rendered value is checked against
+   its own sentinel — proving nothing is missing (every overridable row got
+   an input) and nothing bled (no row shows a value that belongs to another
+   row), corpus-wide rather than on the one example a human happened to
+   pick.
+2. *The original defect, reproduced and refuted live.* Save Haemoglobin's
+   "Adult male" row, switch the active patient profile to Newborn, and
+   confirm the detail page shows the textbook newborn range — not the saved
+   adult value. This is the exact scenario this CHANGELOG's "The defect"
+   section describes, run against the shipped build instead of only
+   asserted against stored JSON.
+
+**One real gap found by the sweep, not invented to exercise it.**
+`metanephrines`' row `r5` ("Above 3–4× the upper limit — phaeochromocytoma
+very likely") was tagged `kind:"cutoff"` on an `assayDep:true` test, so
+`overridableKind()` correctly said it should be editable — but it was never
+rendered: `myLabBlockHtml()` only ever visits a test's declared analyte
+components, and `r5` has no `analyte` at all, so on a panel test (unlike a
+single-analyte one) it fell through every iteration. The deeper problem
+was the classification, not the renderer: `r5` carries no numeric bounds at
+all (`conv.lo`/`hi` both `null`) — it's a relative-multiplier rule applied
+to whichever analyte's own result, not a fixed assay-specific threshold a
+lab's own analyser could shift, so "cutoff" never fit it. Reclassified to
+`kind:"note"` (narrative, info-only — exactly SCHEMA.md's definition),
+which resolves the gap as a side effect of the correct content fix rather
+than teaching the renderer to offer an input with nothing to type a number
+into. Documented in `app/row_kinds_overrides.json` with full reasoning,
+same as every other Stage 2a/2b reclassification.
+
+**`SmokeTest.kt`'s `myLabOverrideRoundTripsThroughStage3Shape()`.** The
+desktop QA suite runs in Chromium; the thing it structurally cannot verify
+is whether Stage 3's nested shape (`assay`/`byRid`) round-trips through the
+*real device's* WebView localStorage/JSON implementation at the fixed
+asset origin. This test writes that exact shape, forces a real reload (not
+the same in-memory page the write ran against), and confirms the UI reads
+the saved value back unchanged.
+
+**A second real gap, more serious than the first, found by actually running
+this job instead of trusting it.** `.github/workflows/build.yml` gates the
+instrumented-smoke job behind `pull_request`/`workflow_dispatch` on purpose
+(an emulator is slow and occasionally flaky, so it shouldn't block every
+push) — but that also meant a plain push never compiles the `androidTest`
+source set at all (`assembleDebug`/`lintDebug`/`testDebugUnitTest` all skip
+it). Manually dispatching the full workflow to actually exercise the new
+round-trip test above found that `SmokeTest.kt` had never successfully
+compiled: `android/app/build.gradle.kts` had `buildConfig = false`, so
+every reference to `BuildConfig.VERSION_NAME` — in the pre-existing
+`versionMatchesTheShippedDataset`/`appRendersItsOwnUi` tests, not just the
+new one — was a compile error nobody had ever seen, because nothing had
+exercised `compileDebugAndroidTestKotlin` before. The smoke test existed
+specifically to catch host failures that ship "broken and silent"; it was
+itself broken and silent in exactly that way. Fixed by flipping
+`buildConfig` to `true` (the versionName it needs is already set in
+`defaultConfig`, so no further wiring).
+
+Fixing the compile uncovered a second, independent latent bug behind it,
+on the very next run: with compilation fixed, `versionMatchesTheShippedDataset`
+and `appRendersItsOwnUi` both failed for real —
+`expected:<2.0-dev-debug> but was:<2.0-dev>`. `build.gradle.kts`'s debug
+build type appends `-debug` to `versionName` (`versionNameSuffix`), a
+cosmetic marker so a debug APK is never mistaken for a release one; the
+web asset's own `LABREF_VERSION` is build-type-agnostic and never carries
+it. Since this instrumented test only ever runs against
+`connectedDebugAndroidTest`, comparing the two directly could never have
+passed, by construction, regardless of whether the content actually
+matched — a second bug that had been sitting in the same always-skipped
+test the whole time. Fixed by stripping the known debug suffix
+(`baseVersion()`) before either comparison. A standing reminder for
+future stages: a CI job that's gated off the default path needs to
+actually be run, not just read, before trusting what it would have said
+— and fixing the first thing that blocks it doesn't mean the next run is
+clean either.
+
+Merged `v2-data-model` into `main` once all of the above was CI-green —
+closing out the rebuild this CHANGELOG opens with.
+
+Because the v1.10 store held only test data, v2.0 resets it on upgrade rather
+than carrying migration code that would run once and never be exercised again.
+
+---
+
 ## v1.10 — FINAL FREEZE
 
 The prototype is frozen here. This entry covers both the content completion

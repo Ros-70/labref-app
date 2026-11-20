@@ -45,6 +45,22 @@ because v1.10 closed the content gap that dominated it.
   values.** This is inherent to the product, not a defect — the My Lab
   feature exists precisely so a department overrides them. Worth stating
   plainly in any user-facing release notes.
+- **My Lab overrides have no demographic scope — a real defect, found in
+  hands-on use of the v1.10 APK, not by this suite.** An override is stored
+  per analyte only, and `activeRange()` consults it *before* the stratum
+  matcher, so one saved value wins in every context: a lab's adult
+  haemoglobin range also replaces the newborn and pregnancy rows, and the
+  Result Interpreter grades against it. A newborn Hb of 18 reads as "high"
+  when newborn normal runs to about 24. This affects 169 of the 180 tests.
+  **Being fixed in v2.0** (branch `v2-data-model`) by splitting demographic
+  reference intervals from interpretive bands and keying overrides to
+  individual rows; see CHANGELOG.md. It is recorded here because v1.10 is
+  what ships today, and anyone using its My Lab feature should enter values
+  only for the adult rows until v2.0 lands.
+  It is also a lesson about this suite's blind spot: five methods and 759
+  verified rows did not catch it, because every check asked whether the
+  *textbook* data was right, and none asked what happens once a user's own
+  value sits on top of it. Stage 4 of v2.0 adds that dimension.
 - **Assay-dependent tests.** 60-odd records are flagged `assayDep:true`,
   meaning the quoted interval is platform-specific (most immunoassays,
   tumour markers, free hormones, drug levels by immunoassay). The app shows

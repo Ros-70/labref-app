@@ -16,8 +16,8 @@ cd handover/app && python3 -I build.py && cd .. && bash qa/run_all.sh
 ## Method 1 — behaviour in a real browser (Playwright)
 
 `qa/test_v11_features.py` and the companion suites
-(`test_panel.py`, `test5.py`, `test3.py`, `test6.py`, `checkbc.py`,
-`fstest.py`, `test_themes.py`).
+(`test_panel.py`, `test_override_sweep.py`, `test5.py`, `test3.py`,
+`test6.py`, `checkbc.py`, `fstest.py`, `test_themes.py`).
 
 **What it does:** drives the shipped HTML in headless Chrome at a 390×844
 phone viewport, using real clicks, real typing and real page reloads — never
@@ -38,7 +38,20 @@ state and persisted collapse; the app-bar version label and that it renders
 smaller than the app name; patient-mode range matching across a 24-case
 specificity matrix; all six themes; the blood-culture tube's
 brand-specific-caps handling; the clinician/patient split in the prep
-handout.
+handout; (Stage 3, new) that a My Lab override saved against one
+demographic row never bleeds into another row on the same component (saved
+against HDL's male row, confirmed absent from HDL's female row and from
+every other test's `byRid` store); that a legacy-shaped pre-Stage-3 override
+is surfaced as an orphan rather than silently becoming the active range; that
+a locked row (`dx`/`target`, or a `cutoff` row on an assayDep:false test)
+renders no input and shows the lock message; that an assayDep:true cutoff
+row (troponin) does render an input and that a saved critical value there
+feeds the Result Interpreter; (Stage 4, `test_override_sweep.py`) the same
+isolation property swept across every overridable row in the entire
+corpus (not one hand-picked example), plus the original defect scenario
+reproduced and refuted live — save Haemoglobin's Adult male row, switch
+to Newborn, confirm the textbook newborn range is shown rather than the
+saved adult value.
 
 ---
 
@@ -149,15 +162,120 @@ if the suite is extended.
 
 ---
 
+## Method 5 — stable row identity (new in v2.0)
+
+`qa/validate_rids.js` — Node, no browser.
+
+**Why it exists:** a user's own lab values are stored against individual
+reference rows, in localStorage on their own device, and must survive every
+future content update. The failure this guards is silent and the worst the
+app could have: a saved override that comes to refer to a *different
+population* — a clinician's adult-female haemoglobin range quietly becoming
+the newborn range, with nothing on screen to say so. Careful editing does
+not prevent that reliably, so it is checked mechanically on every build.
+
+**What it enforces:**
+
+1. Every range row has a well-formed `rid`, unique within its test.
+2. No published rid has changed meaning — its `sex`/`age`/`preg`/analyte
+   dimensions are compared against `qa/rid_baseline.json` and frozen.
+   Correcting an interval's **numbers** is explicitly allowed; that is
+   content maintenance. Re-pointing a rid at another population is an error.
+3. rids are append-only: a row may only disappear if listed under `retired`
+   in the baseline, a retired rid is never revived, and a new row may not
+   take a number at or below the highest ever published for that test.
+
+A reworded `grp` label with unchanged dimensions is reported as a notice,
+not an error — it is cosmetic, and failing it would tempt someone to "fix"
+the baseline the lazy way.
+
+Regenerate the baseline deliberately, and commit the diff, with
+`node qa/validate_rids.js --update`. The update path runs the same checks
+first and refuses to write if any invariant is violated.
+
+## Method 5b — self-test of the identity guard
+
+`qa/test_rid_guard.js` — Node, no browser.
+
+**Why it exists:** method 5 is the only thing protecting saved clinical
+values from silent re-pointing, and a guard that has never been *observed
+to fail* is not evidence of anything. This drives it through each violation
+it claims to catch, against a small synthetic corpus in a temp directory
+(never the real data), and asserts it rejects them — and, just as
+importantly, that it still *accepts* the legitimate edits:
+
+```
+rejected: missing rid · duplicate rid · malformed rid · rid repointed to
+          another sex · rid repointed across age bands · row deleted
+          silently · new row reusing a low number · retired rid revived
+accepted: interval numbers corrected · label reworded (reported as a
+          notice) · row appended above the ceiling · removal declared
+          under "retired"
+```
+
+12 behaviours, all verified.
+
+## Method 6 — row-selection tie-break guard (new in v2.0, Stage 2b)
+
+`qa/validate_ties.js` — Node, no browser.
+
+**Why it exists:** two distinct silent-wrong-value bugs, both in the
+interpreter's row-picker rather than the override store (see CHANGELOG's
+Stage 2a/2b): `bestRange()` used to break a genuine *demographic* tie
+(ESR "male <50y" vs "male ≥50y" both just matching sex=male, age=adult) by
+array order, and the ref/method tie-chooser built to fix that in turn
+wrongly fired on `dx`/`cutoff`/`target` rows that form a clean
+*value*-ordered ladder (Vitamin D's four bands all apply to "any adult" —
+the entered number picks the band, not a demographic guess). Both classes
+need a human review gate the same way the rid guard does, because a
+future content change (a new age-banded row, a new diagnostic threshold
+sharing a key with an existing one) can silently reintroduce either failure
+mode.
+
+**What it enforces:**
+
+1. Recomputes every `ref`/`method` collision (same `(analyte, sex, age,
+   preg)` key, two or more rows) and checks each against
+   `qa/known_tie_groups.json`'s `groups` array. A new or changed one fails
+   the build.
+2. Recomputes every `dx`/`cutoff`/`target` group sharing a key and runs the
+   same `isValueLadder()` nesting-aware disjoint-interval check `shell.html`
+   uses (every row has numeric bounds, every pair of intervals disjoint or
+   nested) to tell a clean ladder (needs no review — the interpreter
+   resolves it from the entered value) from a genuine ladder-fallback
+   (needs clinical context a number can't supply). Checks every
+   ladder-fallback group against `known_tie_groups.json`'s
+   `ladder_fallback_groups` array; a new or changed one fails the build.
+
+A reviewed entry that no longer reproduces (because a later content fix
+resolved it, e.g. splitting a bundled measurand into its own analyte key)
+is reported as a non-fatal **notice**, so stale baseline rows surface for
+cleanup without blocking a build that made things strictly better.
+
+Regenerating the baseline is manual and deliberate: add or edit the
+relevant entry in `qa/known_tie_groups.json` directly, with a `_why`
+explaining the clinical reasoning, rather than an `--update` flag — unlike
+the rid guard, a tie's correctness can't be verified mechanically from the
+data alone; it needs a human judgment call about whether the group is a
+genuine ladder, a genuine ambiguity, or a bundled-measurand bug in
+disguise.
+
+---
+
 ## Current status
 
-All four methods pass against `LabRef_v1.10.html`:
+All six methods pass against the built `LabRef_v*.html`:
 
 ```
 METHOD 2  validate_data.js   ERRORS: none   (180 tests, 26 categories, 11 tubes, 759 range rows)
-METHOD 3  audit_build.js     ERRORS: none   (703 KB, self-contained, 6 themes, cite tags: 0)
+METHOD 5  validate_rids.js   ERRORS: none   (759 rids verified unchanged in meaning)
+METHOD 5b test_rid_guard.js  ERRORS: none   (12 guard behaviours verified)
+METHOD 6  validate_ties.js   ERRORS: none   (22 ref/method ties, 8 ladder-fallback groups, all reviewed)
+METHOD 3  audit_build.js     ERRORS: none   (742 KB, self-contained, 6 themes, cite tags: 0)
 METHOD 1  test_v11_features   PASS          (feature regression, console errors: none)
 METHOD 4  test_all_tests      PASS          (180 pages, 243 interpreter combinations, errors: none)
+METHOD 1  test_override_sweep PASS          (444 overridable rows across 132 tests, isolation + the
+                                              original defect scenario, both clean)
 ```
 
 Remaining validator output is **warnings only**, and each is a deliberate
@@ -173,21 +291,26 @@ design choice rather than a defect — see KNOWN_GAPS.md:
 ## Running in CI
 
 `.github/workflows/build.yml` runs this suite as **job 1**, and the Android
-build depends on it. Nothing is packaged unless all four methods pass, so a
+build depends on it. Nothing is packaged unless all six methods pass, so a
 clinical data error cannot reach an installable artifact. For a clinical
 reference app that ordering matters more than build speed.
 
 The Playwright suites resolve Chrome from `CHROME_PATH`, then from the usual
 system locations, and finally fall back to Playwright's own bundled Chromium —
 which is what happens on a GitHub runner. The Node validators and the Python
-suites also resolve the built HTML in either layout (repo root or `app/`), so
+suites also resolve the built HTML by glob in either layout (repo root or `app/`),
+asserting exactly one build exists so a stale artifact is a hard error, so
 `bash qa/run_all.sh` works unchanged from inside this package.
 
-A fifth check runs on-device rather than here: `android/app/src/androidTest`
+One more check runs on-device rather than here: `android/app/src/androidTest`
 asserts that the APK actually contains all 180 tests, that the version matches,
 that localStorage works at the pinned origin, and that the JavaScript bridge
-survived R8. Those are host failures this suite structurally cannot see — see
-ANDROID_PACKAGING.md §5.
+survived R8. As of Stage 4 it also writes a My Lab override in the real
+Stage 3 shape, forces a genuine reload, and confirms the WebView's own
+localStorage/JSON implementation gives it back unchanged — the desktop
+Playwright suite runs in Chromium and structurally cannot see a WebView-
+specific round-trip defect. Those are all host failures this suite
+structurally cannot see — see ANDROID_PACKAGING.md §5.
 
 ## Extending the suites
 

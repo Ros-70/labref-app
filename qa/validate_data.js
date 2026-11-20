@@ -9,8 +9,25 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA = process.argv[2] || ['labref_data_v1.10.js', 'app/labref_data_v1.10.js']
-  .map(r=>path.join(__dirname,'..',r)).find(p=>fs.existsSync(p));
+/* Resolved by glob, never by a hardcoded version. A hardcoded version here
+   once let this validator check a stale data module while the current one went
+   unverified; "exactly one" makes a leftover file a hard error instead. */
+function sole(patterns, what){
+  const hits = [];
+  for(const dir of ['', 'app']){
+    const d = path.join(__dirname, '..', dir);
+    if(!fs.existsSync(d)) continue;
+    for(const f of fs.readdirSync(d)) if(patterns.test(f)) hits.push(path.join(d, f));
+  }
+  if(!hits.length){ console.error(`FAIL: no ${what} found — run build.py first`); process.exit(1); }
+  if(hits.length > 1){
+    console.error(`FAIL: ${hits.length} ${what} files found (${hits.map(h=>path.basename(h)).join(', ')})`
+      + ` — remove stale versions so the suite cannot verify the wrong one`);
+    process.exit(1);
+  }
+  return hits[0];
+}
+const DATA = process.argv[2] || sole(/^labref_data_v.+\.js$/, 'data module');
 let code = fs.readFileSync(DATA, 'utf8')
   .replace(/<cite[^>]*>/g, '').replace(/<\/cite>/g, '');
 code += '\nmodule.exports={LABREF_VERSION,LABREF_CATEGORIES,LABREF_TUBES,LABREF_TESTS};';

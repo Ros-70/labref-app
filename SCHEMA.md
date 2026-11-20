@@ -89,11 +89,11 @@ physical tube — do not add one per test.
   assayDep:true,
   units:{ conv:"mg/dL", si:"µmol/L", factor:88.4 },
   ranges:[
-    { grp:"Adult male",   sex:"M", age:"adult",   preg:null,  conv:{lo:0.70,hi:1.30}, si:{lo:62,hi:115} },
-    { grp:"Adult female", sex:"F", age:"adult",   preg:null,  conv:{lo:0.55,hi:1.10}, si:{lo:49,hi:97} },
-    { grp:"Pregnancy",    sex:"F", age:"adult",   preg:"any", conv:{lo:0.40,hi:0.80}, si:{lo:35,hi:71} },
-    { grp:"Newborn",      sex:"any",age:"neonate",preg:null,  conv:{lo:0.30,hi:1.00}, si:{lo:27,hi:88} },
-    { grp:"Child (1–12 y)",sex:"any",age:"child", preg:null,  conv:{lo:0.30,hi:0.70}, si:{lo:27,hi:62} }
+    { rid:"r1", grp:"Adult male",   sex:"M", age:"adult",   preg:null,  conv:{lo:0.70,hi:1.30}, si:{lo:62,hi:115} },
+    { rid:"r2", grp:"Adult female", sex:"F", age:"adult",   preg:null,  conv:{lo:0.55,hi:1.10}, si:{lo:49,hi:97} },
+    { rid:"r3", grp:"Pregnancy",    sex:"F", age:"adult",   preg:"any", conv:{lo:0.40,hi:0.80}, si:{lo:35,hi:71} },
+    { rid:"r4", grp:"Newborn",      sex:"any",age:"neonate",preg:null,  conv:{lo:0.30,hi:1.00}, si:{lo:27,hi:88} },
+    { rid:"r5", grp:"Child (1–12 y)",sex:"any",age:"child", preg:null,  conv:{lo:0.30,hi:0.70}, si:{lo:27,hi:62} }
   ],
   critical:{ txt:">4.0 mg/dL, or a rise >0.3 mg/dL in 48 h (AKI)", lo:null, hi:4.0 },
   inc:["Acute kidney injury...", "..."],
@@ -118,7 +118,7 @@ physical tube — do not add one per test.
 | `prep`      | `{fasting, items[], patient[]}` | see below |
 | `assayDep`  | boolean             | `true` when the cutoff is analyser/method-specific — shows a warning badge pointing to My Lab |
 | `units`     | `{conv, si, factor}` | `si_value = conv_value * factor`. For a panel test this is a **default only** — see §2b |
-| `ranges[]`  | array               | see below |
+| `ranges[]`  | array               | see below. Every row carries a permanent `rid` and a `kind` — see below |
 | `critical`  | `{txt, lo, hi, analyte?}` or `null` | see below |
 | `inc[]`     | string[]            | causes of a raised value |
 | `dec[]`     | string[]            | causes of a low value |
@@ -136,12 +136,96 @@ never mention it unless the test genuinely needs patient action (fasting,
 a drug hold, timing). Omit `patient[]` entirely when there's nothing to
 tell the patient.
 
+**`ranges[].rid`** is the row's **permanent identity**, unique within its test
+(`"r1"`, `"r2"`, …). Added in v2.0. A user's own lab values are stored against
+`(test id, rid)`, in localStorage on their own device, so a rid is a contract
+with every installed copy of the app:
+
+- **It never changes meaning.** Its stratum dimensions (`sex`, `age`, `preg`,
+  and the analyte for a panel row) are frozen once published. Correcting an
+  interval's numbers is fine and expected — that is ordinary content
+  maintenance and does not disturb anyone's override. Re-pointing a rid at a
+  different population is forbidden: give the new stratum a new rid and retire
+  the old one.
+- **rids are append-only.** Removing a row requires an explicit entry under
+  `retired` in `qa/rid_baseline.json`, and a retired number is never reused —
+  not even by backfilling the gap it left.
+- **Never renumber.** Do not tidy, re-sort, or compact rids. Row order in the
+  array carries no meaning; the rid does.
+
+Assign them with `cd app && python3 -I assign_rids.py`, which is idempotent and
+only ever adds. All of the above is enforced on every build by
+`qa/validate_rids.js` (method 5), which is itself tested by
+`qa/test_rid_guard.js` (method 5b). Those two exist because the failure they
+prevent is silent: a clinician's adult-female range quietly becoming the
+newborn range, with nothing on screen to show it.
+
 **`ranges[].grp`** is the human-readable row label shown in the UI and used
 as the row-match fallback ordering tiebreaker; keep it short and specific
 ("Pregnancy T3", not "Third trimester of pregnancy"). **`sex`** is `"M"`,
 `"F"`, or `"any"`. **`age`** is one of `"neonate"`, `"infant"`, `"child"`,
 `"adolescent"`, `"adult"`. **`preg`** is `null` (not pregnancy-specific),
 `"any"` (applies across all trimesters), or `"T1"`/`"T2"`/`"T3"`.
+
+**`ranges[].kind`** classifies what a row actually *is*, added in Stage 2 of
+v2.0. One of:
+
+| kind       | meaning |
+|------------|---------|
+| `ref`      | a population reference interval — what a healthy member of this demographic group looks like |
+| `method`   | an assay/specimen variant of a reference interval (not a different population) |
+| `dx`       | a diagnostic/classification band (e.g. Vitamin D deficient/insufficient/sufficient/toxic) |
+| `target`   | a treatment target for someone already diagnosed (e.g. HbA1c's "<7.0, individualise") |
+| `cutoff`   | a decision threshold not tied to one diagnosis (e.g. D-dimer's exclusion cutoff) |
+| `note`     | narrative/different-measurand row — info-only, never matched or ranked |
+
+This exists because `ranges[]` mixes two fundamentally different things a lab
+value can be compared against, and conflating them was the root cause of two
+separate bugs (see CHANGELOG's Stage 2a/2b). **It is why My Lab overrides are
+restricted to `ref`/`method` rows (plus `cutoff` rows on assayDep tests —
+see §3), as of Stage 3** — a lab can publish its own reference interval, but
+should never be able to silently redefine a diagnostic threshold or
+treatment target.
+
+`kind` is deliberately **not** part of a rid's frozen identity fingerprint
+(unlike `sex`/`age`/`preg`/analyte) — it is pure, correctable content
+metadata, so reclassifying a row (e.g. hb electrophoresis's "HbA2 —
+β-thalassaemia trait" from `ref` to `dx`, Stage 2b) never triggers the rid
+guard or disturbs a saved override.
+
+Classify with `cd app && python3 -I classify_rows.py` (heuristic first pass)
+plus hand-reviewed corrections in `app/row_kinds_overrides.json`, each with a
+`_why`; write the result into the data module with
+`cd app && python3 -I write_kinds.py`.
+
+**How `kind` drives row selection** — two independent mechanisms, both in
+`shell.html`:
+
+- **Demographic matching** (`scoredCandidates()`/`bestRange()`/
+  `tiedCandidates()`) is scoped to `kind:"ref"`/`"method"` rows only (plus
+  rows with no `kind` at all, from before this field existed). When two or
+  more score identically for the current patient mode, that is a genuine
+  *demographic* tie (ESR by age band, LH by cycle phase) and the Result
+  Interpreter requires the user to pick which group applies, rather than
+  guessing. `qa/known_tie_groups.json`'s `groups` array is the reviewed
+  baseline of every expected tie; `qa/validate_ties.js` (method 6) fails the
+  build on an unreviewed new one.
+- **Value-ladder classification** (`classifyAgainstLadder()`/
+  `isValueLadder()`) walks `kind:"dx"`/`"cutoff"`/`"target"` rows that share a
+  key by the number the user actually *enters*, not by demographic matching —
+  picking the one band whose interval contains the value (or flagging
+  "above"/"below" the nearest band when the value falls outside every defined
+  one). A group only counts as a clean ladder if every row has numeric bounds
+  and every pair of intervals is disjoint or nested (a severity refinement).
+  The handful that aren't (ptinr, anti-Xa, digoxin, D-dimer's age-adjusted
+  cutoff, HbA1c's treatment target, NT-proBNP, ANA, the Down-syndrome screen —
+  see CHANGELOG's Stage 2b for why each one fails) show the entered value plus
+  an informational note naming the candidates, never a hard block —
+  `qa/known_tie_groups.json`'s `ladder_fallback_groups` is their reviewed
+  baseline, also enforced by `qa/validate_ties.js`.
+
+Both mechanisms key on `(analyte.key or "_") + sex + age + preg` — a test
+with no `analyte` on any row effectively has one component, keyed `"_"`.
 
 **`critical`** is `null` for a test with no recognised critical/panic value.
 When present, `txt` is the display string, `lo`/`hi` are optional numeric
@@ -242,24 +326,78 @@ one JSON blob, `S`. The fields that matter for content work:
 S.local = {
   "<test-id>": {
     note: "free-text notes (TAT, send-out lab, sample quirks)",
-    comp: {
-      "<component-key-or-_>": {
-        lo: "string", hi: "string", unit: "string",
-        crit: "string", method: "string"
-      }
+    assay: {
+      "<component-key-or-_>": { unit: "string", method: "string", crit: "string" }
+    },
+    byRid: {
+      "<rid>": { lo: "string", hi: "string" }
     }
   }
 }
 ```
 
-For an ordinary (non-panel) test, the single override box is stored under
-the synthetic key `"_"`. For a panel test, each component gets its own
-entry keyed by its `analyte.key`. **Never assume a flat
-`S.local[id].lo`/`.hi`/`.crit` shape** — that was the v1.0-prototype bug;
-everything now goes through `S.local[id].comp[key]`. The helper functions
-`localBlob()`, `compOverride()`, `saveComponent()`, `saveNote()`, and
-`hasLocal()` in `shell.html` are the only sanctioned way to read or write
-this — don't access `S.local` directly from new code.
+**Added in v2.0 Stage 3**, replacing a flat per-component shape
+(`comp:{key:{lo,hi,unit,crit,method}}`) that was itself a replacement for the
+original v1.0-prototype shape (`S.local[id].lo`/`.hi`/`.crit` directly) — see
+CHANGELOG's Stage 3 for why: a per-component override carries no demographic
+scope, so one saved value silently applied to every stratum of that
+component, including ones it was never measured against (a saved adult-male
+haemoglobin range displayed, and graded against, as the newborn range too).
+
+The split is deliberate and the two halves are **not** interchangeable:
+
+- **`assay`** holds what genuinely is component-level, not row-level — the
+  unit your lab reports in, the analyser/method name, and your lab's
+  critical/panic value. These don't vary by patient, so they're keyed by
+  `analyte.key` (or `"_"` for a non-panel test), the same key used throughout
+  §2b. An entry only persists once `method` or `crit` is actually filled in —
+  the unit field is always pre-filled with a textbook default and therefore
+  never meaningfully blank, so `unit` alone is deliberately excluded from
+  the "is this worth saving" check; saving one without touching it would
+  otherwise write a phantom entry for every component on every save.
+- **`byRid`** holds the actual lo/hi numbers, one entry per **row**, keyed by
+  that row's permanent `rid` (§2a) — never by component, sex, age, or preg
+  individually; the rid already encodes the full stratum. Only rows where
+  `overridableKind(r, t)` is true may ever get an entry here:
+
+  ```js
+  function overridableKind(r, t){
+    return r.kind==="ref" || r.kind==="method" || r.kind==null
+         || (r.kind==="cutoff" && !!t.assayDep);
+  }
+  ```
+
+  `ref`/`method` rows (and legacy rows with no `kind` at all) are always
+  overridable — a lab publishing its own reference interval is exactly what
+  My Lab exists for. `cutoff` rows are overridable **only** when the test
+  carries `assayDep:true` (D-dimer, NT-proBNP, drug levels, serology index
+  cutoffs — the threshold shifts with the assay, so "your lab's cutoff" is a
+  real thing). SAAG's cutoff stays locked: its test is `assayDep:false`, so
+  the threshold is a published constant, not something the local analyser
+  changes. `dx`, `target`, and `note` rows are **never** overridable, on any
+  test — a lab doesn't get to redefine a diagnostic band or a treatment
+  target, only report its own measurement against one.
+
+**A saved value whose rid no longer maps onto an overridable row** — the row
+was retired, reclassified to a locked `kind`, or the value predates Stage 3
+and is still in the old `comp` shape — is never silently applied and never
+silently dropped. `orphanedOverrides(t)` lists each one in plain language so
+the My Lab screen can surface it for the user to re-enter or clear; see
+`myLabBlockHtml()` in `shell.html`.
+
+**`effectiveBounds(t, r)`** is the single function that decides a row's
+active numbers — a saved `byRid` override if one exists and the row is
+overridable, otherwise the textbook `conv`/`si` bounds. Both the ref/method
+comparison (`activeRange()`) and the value-ladder classifier
+(`classifyAgainstLadder()` → `bandBounds()`) read through this one function,
+so an override on an assayDep cutoff row feeds both without a second,
+independently-maintained copy of the same lookup.
+
+The helper functions `localBlob()`, `overridableKind()`, `assayOverride()`,
+`ridOverride()`, `saveAssay()`, `saveRid()`, `saveNote()`, `hasLocal()`,
+`orphanedOverrides()`, and `effectiveBounds()` in `shell.html` are the only
+sanctioned way to read or write this — don't access `S.local` directly from
+new code.
 
 ### Collapse state (`S.panels`)
 

@@ -1,0 +1,52 @@
+{
+  "_comment": "Every group of 2+ ref/method rows that legitimately share the exact same (analyte, sex, age, preg) key — found by Stage 2a's collision check. These are NOT classification errors: each row genuinely applies to the same coarse demographic bucket, distinguished only by a clinical condition the sex/age/preg chips don't express (a finer age band, menstrual-cycle phase, time of draw, specimen type, or another one-off covariate). bestRange() in shell.html used to pick one of these silently, by array order, whenever none scored higher than the others — the same class of silent-wrong-value risk as the original My Lab bug, just in the interpreter's row-picker instead of the override store. The fix: the Result Interpreter now detects a tie against this list and makes the user pick which row applies, by its own grp label, instead of guessing (see activeRange()/bestRange() and renderInterp() in shell.html). qa/validate_ties.js fails the build if a NEW, unlisted tie shows up among ref/method rows for any test — the same append-only-review discipline as qa/validate_rids.js, so a future content update can't silently reintroduce a guessed pick without a human looking at it first.",
+  "_dimension_summary": {
+    "age-subband": "A single age bucket (adult, neonate) is too coarse — the real reference interval changes within it (ESR by decade, IGF-1 by decade, testosterone by decade, PSA by decade, cystatin ≥60y, bilirubin by hours-of-life, ammonia preterm/sick-neonate).",
+    "cycle-phase": "Reproductive hormones vary by menstrual-cycle phase or menopausal status, which the sex/age/preg chips don't capture (LH, FSH, estradiol, progesterone, 17-OHP, and bone turnover markers by meno status).",
+    "timing": "Same analyte, same patient, different expected value depending on WHEN or under what test condition it's drawn (cortisol/ACTH by time of day, glucose random vs post-prandial).",
+    "one_off_covariate": "A single extra covariate with no other home in the schema (lactate venous vs arterial specimen, vWF by ABO blood group, CEA by smoking status, Bence Jones ratio by renal function)."
+  },
+  "groups": [
+    { "test": "lactate", "key": "_|any|adult|none", "dimension": "one_off_covariate", "rids": ["r1","r2"] },
+    { "test": "bilirubin", "key": "total|any|neonate|none", "dimension": "age-subband", "rids": ["r3","r4","r5"] },
+    { "test": "ammonia", "key": "_|any|neonate|none", "dimension": "age-subband", "rids": ["r2","r3"] },
+    { "test": "cystatin", "key": "_|any|adult|none", "dimension": "age-subband", "rids": ["r1","r2"] },
+    { "test": "glucosepp", "key": "_|any|adult|none", "dimension": "timing", "rids": ["r1","r2"] },
+    { "test": "esr", "key": "_|M|adult|none", "dimension": "age-subband", "rids": ["r1","r2"] },
+    { "test": "esr", "key": "_|F|adult|none", "dimension": "age-subband", "rids": ["r3","r4"] },
+    { "test": "vwf", "key": "_|any|adult|none", "dimension": "one_off_covariate", "rids": ["r1","r2"] },
+    { "test": "cortisol", "key": "_|any|adult|none", "dimension": "timing", "rids": ["r1","r5","r6"] },
+    { "test": "acth", "key": "_|any|adult|none", "dimension": "timing", "rids": ["r1","r2"] },
+    { "test": "igf1", "key": "_|any|adult|none", "dimension": "age-subband", "rids": ["r1","r2","r3"] },
+    { "test": "lh", "key": "_|F|adult|none", "dimension": "cycle-phase", "rids": ["r2","r4","r5"] },
+    { "test": "fsh", "key": "_|F|adult|none", "dimension": "cycle-phase", "rids": ["r2","r3","r4","r5"] },
+    { "test": "estradiol", "key": "_|F|adult|none", "dimension": "cycle-phase", "rids": ["r1","r3","r4"] },
+    { "test": "progesterone", "key": "_|F|adult|none", "dimension": "cycle-phase", "rids": ["r1","r2","r3","r4","r5"] },
+    { "test": "testosterone", "key": "_|M|adult|none", "dimension": "age-subband", "rids": ["r1","r2"] },
+    { "test": "17ohp", "key": "_|F|adult|none", "dimension": "cycle-phase", "rids": ["r2","r3"] },
+    { "test": "psa", "key": "total|M|adult|none", "dimension": "age-subband", "rids": ["r7","r8","r9","r10"], "_why": "Same already-reviewed age-subband tie as before (PSA reference range changes by decade) — key and rids changed only because assign_analyte_keys.py/retire_and_reassign.py gave every PSA row an explicit analyte.key to split off the free:total ratio (r11) and biochemical-recurrence threshold (r12), which were bundled under the old blank key." },
+    { "test": "cea", "key": "_|any|adult|none", "dimension": "one_off_covariate", "rids": ["r1","r2"] },
+    { "test": "boneturnover", "key": "ctx|F|adult|none", "dimension": "cycle-phase", "rids": ["r1","r2"] },
+    { "test": "boneturnover", "key": "p1np|F|adult|none", "dimension": "cycle-phase", "rids": ["r4","r5"] },
+    { "test": "bencejones", "key": "ratio|any|adult|none", "dimension": "one_off_covariate", "rids": ["r3","r4"] }
+  ],
+  "_ladder_fallback_comment": "Stage 2b gave every dx/cutoff/target row a `kind` and taught the interpreter to classify a value against them automatically when they form a clean, value-ordered ladder (classifyAgainstLadder()/isValueLadder() in shell.html) — e.g. Vitamin D's deficient/insufficient/sufficient/toxic bands need no prompt, the entered number picks one. A SMALL number of same-key dx/cutoff/target groups aren't a value ladder at all: picking between them needs clinical context a number can't supply (which drug, which indication, which dosing schedule). Those are listed here so a future content change that creates an unreviewed new one gets a human look, exactly like the ref/method list above — but unlike that list, the interpreter does NOT block on these: it shows the raw value plus an informational note naming the candidates, because none of them can be silently mis-picked (there is no single verdict being guessed at) — it simply can't go further without the clinician's own judgement.",
+  "ladder_fallback_groups": [
+    { "test": "ptinr", "key": "inr|any|adult|none", "rids": ["r3","r4"],
+      "_why": "INR therapeutic target depends on WHY the patient is anticoagulated (AF/VTE/tissue valve vs. a mechanical mitral valve), not on the INR number itself." },
+    { "test": "antixa", "key": "_|any|adult|none", "rids": ["r1","r2","r3","r4"],
+      "_why": "Anti-Xa target depends on the drug/regimen (LMWH prophylaxis vs. treatment once- or twice-daily vs. unfractionated heparin), not on the level itself." },
+    { "test": "digoxin", "key": "_|any|adult|none", "rids": ["r1","r2","r3"],
+      "_why": "Digoxin's target band depends on the indication (heart failure vs. atrial fibrillation) as well as the level; the two targets overlap rather than forming a clean ladder." },
+    { "test": "ddimer", "key": "_|any|adult|none", "rids": ["r1","r2"],
+      "_why": "Found by qa/test5.py — the age-adjusted cutoff (r2, 'age × 10') has no fixed numeric bound at all, only a formula, so it can never be placed on a value ladder; the interpreter correctly falls back to naming both cutoffs rather than silently applying the <50y one to an older patient." },
+    { "test": "hba1c", "key": "_|any|adult|none", "rids": ["r2","r3","r4"],
+      "_why": "r2 (Prediabetes 5.7-6.4) and r3 (Diabetes >=6.5) alone would form a clean 2-band ladder for classifying a fresh reading, but r4 ('General treatment target', <7.0, individualise) is a different axis entirely — a treatment goal for someone already diagnosed, not a diagnostic band for a fresh number — and has no fixed numeric bound (text-only), so it can't be placed on the same ladder. Correctly falls back rather than silently grading an already-diagnosed patient's treatment-target check against the diagnostic bands." },
+    { "test": "ntprobnp", "key": "_|any|adult|none", "rids": ["r1","r2","r3","r4","r5"],
+      "_why": "r2/r3/r4 are age-banded acute 'rule in' cutoffs (needs the patient's age, like ESR's age-subband pattern) and r5 (acute rule-out, <300 pg/mL) is text-only with no fixed numeric bound, while r1 is a separate non-acute 'unlikely' cutoff — the group mixes an age dimension with a non-numeric row and can never form one clean value ladder. Correctly falls back to naming the candidates; picking the right one needs the patient's age and whether the presentation is acute, not just the number." },
+    { "test": "ana", "key": "_|any|adult|none", "rids": ["r1","r2","r3","r4"],
+      "_why": "ANA is reported as a titre (<1:80, 1:80, 1:160, >=1:320), not a plain number, so none of its rows carry a numeric lo/hi at all — they can never form a value ladder. The Result Interpreter's numeric-value entry isn't the right tool for a titre test in the first place; this is a harmless, inherent mismatch rather than a data error." },
+    { "test": "antenatalscreen", "key": "t21|F|adult|any", "rids": ["r2","r3"],
+      "_why": "Trisomy 21 screen-negative/positive results are reported as a risk ratio ('1 in 250'), not a plain number, so neither row carries a numeric lo/hi — they can never form a value ladder. Same inherent text-only mismatch as ANA's titre rows." }
+  ]
+}

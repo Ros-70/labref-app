@@ -1,0 +1,128 @@
+{
+  "_comment": "Hand-reviewed corrections to classify_rows.py's heuristic proposals. Every entry here was a case where the heuristic's label-pattern match either missed a row or (more importantly) would have left it defaulting to the overridable kinds (ref/method) when clinical judgement says it should be locked (dx/target/cutoff/note). Each entry carries the reasoning in _why so a later reviewer can check it, not just trust it. Applied by classify_rows.py on top of the heuristics; see app/classify_rows.py and SCHEMA.md.",
+
+  "rows": {
+    "ptinr": {
+      "r4": { "kind": "target", "_why": "INR target for a mechanical mitral valve (typically 2.5-3.5) is a treatment target, not the population's normal INR." }
+    },
+    "saag": {
+      "r1": { "kind": "cutoff", "_why": "SAAG 1.1 is a single diagnostic split point (portal vs non-portal cause of ascites), not a population reference interval." },
+      "r2": { "kind": "cutoff", "_why": "Same cutoff, the other side of the same split." }
+    },
+    "ketones": {
+      "r2": { "kind": "cutoff", "_why": "Hyperketonaemia describes the abnormal/action state, not a population's normal range." }
+    },
+    "g6pd": {
+      "r3": { "kind": "dx", "_why": "Intermediate enzyme activity is a carrier-state diagnostic category, not a reference interval." }
+    },
+    "hbelectrophoresis": {
+      "r4": { "kind": "dx", "_why": "Beta-thalassaemia trait is a diagnostic finding, not the normal HbA2 reference range." }
+    },
+    "factor8": {
+      "r2": { "kind": "dx", "_why": "Severity bands of a diagnosed disease (haemophilia A), not reference ranges for an undiagnosed population." },
+      "r3": { "kind": "dx", "_why": "Same — moderate haemophilia A severity band." },
+      "r4": { "kind": "dx", "_why": "Same — severe haemophilia A severity band." }
+    },
+    "vwf": {
+      "r3": { "kind": "dx", "_why": "Diagnostic classification (possible type 1 VWD), not a reference interval." },
+      "r4": { "kind": "dx", "_why": "Diagnostic classification (significant type 1 VWD)." }
+    },
+    "cortisol": {
+      "r4": { "kind": "dx", "_why": "Adequacy criterion for a dynamic stimulation test (Synacthen) is a diagnostic judgement, not a baseline diurnal reference value." }
+    },
+    "cpeptide": {
+      "r3": { "kind": "dx", "_why": "\"Preserved beta-cell function\" is an interpretive diagnostic category, not a reference range." }
+    },
+    "amh": {
+      "r3": { "kind": "dx", "_why": "Ovarian-reserve classification band, not a reference interval for a demographic population." }
+    },
+    "homocysteine": {
+      "r2": { "kind": "dx", "_why": "Severity band (moderate elevation), not a reference range." },
+      "r3": { "kind": "dx", "_why": "Severity band (intermediate), not a reference range." }
+    },
+    "metanephrines": {
+      "r5": { "kind": "note", "_why": "Was mis-tagged 'cutoff' originally, but it carries no numeric bounds at all (conv.lo/hi both null) -- it's a relative multiplier rule ('3-4x the upper limit') applied to whichever analyte's own result, not a fixed assay-specific threshold a lab's own analyser could shift. Found by Stage 4's full-corpus My Lab sweep: 'cutoff'+assayDep made it claim to be overridable, but myLabBlockHtml() only ever visits a test's declared analyte components, never the no-analyte bucket when a test HAS components (unlike rangeSectionHtml's separate 'Also note' handling for exactly this case) -- so the row was structurally unreachable in My Lab regardless. Reclassifying to 'note' is the correct fix on its own clinical merits (it matches the 'note' definition in SCHEMA.md exactly: narrative, info-only, never matched or ranked) and happens to resolve the UI gap as a side effect, rather than papering over it by teaching myLabBlockHtml to render an input for a row with nothing to type a number into." }
+    },
+    "ckmb": {
+      "r2": { "kind": "dx", "_why": "The CK-MB/total-CK relative index is a diagnostic index with its own interpretive cutoff for cardiac origin, not a reference range." }
+    },
+    "lithium": {
+      "r3": { "kind": "target", "_why": "TDM test: there is no 'normal' lithium level in an unmedicated person. The elderly-preferred value is a dosing target, same as the adult rows." },
+      "r4": { "kind": "cutoff", "_why": "Toxicity threshold, not a treatment target." }
+    },
+    "digoxin": {
+      "r2": { "kind": "target", "_why": "TDM test — the AF 'usual range' is a dosing target, same reasoning as the heart-failure row (already auto-classified target)." }
+    },
+    "alcohol": {
+      "r3": { "kind": "cutoff", "_why": "Describes an abnormal clinical state (obvious intoxication) tied to a level, not a population reference range." }
+    },
+    "tacrolimus": {
+      "r1": { "kind": "target", "_why": "TDM test — transplant immunosuppressant trough target, not a population reference range (there is no normal tacrolimus level in an untreated person)." },
+      "r2": { "kind": "target", "_why": "Same — maintenance-phase target." },
+      "r3": { "kind": "target", "_why": "Same — ciclosporin early post-transplant target." },
+      "r4": { "kind": "target", "_why": "Same — ciclosporin maintenance target." }
+    },
+    "methotrexate": {
+      "r1": { "kind": "cutoff", "_why": "A timepoint decision threshold for leucovorin rescue after high-dose methotrexate, not a reference range or an aspirational target." },
+      "r2": { "kind": "cutoff", "_why": "Same — 48h rescue decision point." },
+      "r3": { "kind": "cutoff", "_why": "Same — 72h rescue decision point." }
+    },
+    "aldosterone": {
+      "r3": { "kind": "dx", "_why": "Aldosterone:renin ratio screen-positive threshold for primary aldosteronism is a diagnostic cutoff, not a reference range." }
+    },
+    "thyroglobulin": {
+      "r1": { "kind": "dx", "_why": "Post-treatment response category (excellent response), a diagnostic classification specific to a treated cancer patient, not a reference interval." },
+      "r2": { "kind": "dx", "_why": "Same — indeterminate response category." },
+      "r3": { "kind": "dx", "_why": "Same — biochemical incomplete response category." },
+      "r4": { "kind": "note", "_why": "Caveat explaining the marker is not interpretable in this setting, not a numeric range of any kind." }
+    },
+    "beta2m": {
+      "r3": { "kind": "dx", "_why": "Myeloma ISS staging criterion, not a reference range." }
+    },
+    "bencejones": {
+      "r6": { "kind": "dx", "_why": "The IMWG myeloma-defining event criterion is a diagnostic threshold, not a reference range." }
+    },
+    "copperceruloplasmin": {
+      "r4": { "kind": "dx", "_why": "A level 'supportive of Wilson disease' is a diagnostic threshold, not the population reference range (already given separately as r3)." }
+    },
+    "vitamina": {
+      "r3": { "kind": "dx", "_why": "Marginal status is a deficiency classification band, not a reference range." }
+    },
+    "myoglobin": {
+      "r3": { "kind": "cutoff", "_why": "A level 'markedly raised' consistent with rhabdomyolysis is a diagnostic threshold, not a reference range." }
+    },
+    "osmoticfragility": {
+      "r3": { "kind": "dx", "_why": "Increased fragility is an abnormal diagnostic finding (e.g. hereditary spherocytosis), not a reference range." },
+      "r4": { "kind": "dx", "_why": "Decreased fragility is likewise an abnormal diagnostic finding (e.g. thalassaemia trait)." }
+    },
+    "pericardialfluid": {
+      "r2": { "kind": "dx", "_why": "Light's-criteria-style exudate threshold is a diagnostic classification of the fluid, not a reference range." },
+      "r3": { "kind": "dx", "_why": "Same — LDH ratio exudate threshold." },
+      "r4": { "kind": "dx", "_why": "ADA level supporting tuberculous pericarditis is a diagnostic threshold." },
+      "r5": { "kind": "dx", "_why": "Lymphocyte predominance pointing to TB/malignancy is a diagnostic interpretation, not a reference range." }
+    },
+    "csfoligoclonal": {
+      "r2": { "kind": "dx", "_why": "The ≥2-bands criterion for a positive result (supporting MS) is a diagnostic threshold, not a reference range." },
+      "r4": { "kind": "dx", "_why": "Raised IgG index indicating intrathecal synthesis is a diagnostic finding, not a reference range." }
+    },
+    "sweatchloride": {
+      "r2": { "kind": "dx", "_why": "CFTR-genetics-referral band is a diagnostic classification from the CF sweat-test algorithm, not a reference range." },
+      "r3": { "kind": "dx", "_why": "Positive result consistent with CF is a diagnostic classification." },
+      "r5": { "kind": "dx", "_why": "Same algorithm, children/adults — intermediate band." },
+      "r6": { "kind": "dx", "_why": "Same algorithm, children/adults — positive band." }
+    },
+
+    "urineprotein": {
+      "r2": { "kind": "dx", "_why": "'Significant proteinuria' is a diagnostic severity band on 24-h protein, not the population reference range (r1 is)." },
+      "r3": { "kind": "dx", "_why": "'Nephrotic range' is a diagnostic severity band on 24-h protein, not a reference range." },
+      "r7": { "kind": "dx", "_why": "'Nephrotic range' on PCR is the same diagnostic severity band restated for the ratio, not a reference range." }
+    },
+    "urineosmolality": {
+      "r2": { "kind": "cutoff", "_why": "The expected response after a water-deprivation challenge is a provocative-test pass/fail threshold (DI workup), not a baseline population reference range." },
+      "r3": { "kind": "dx", "_why": "'Pre-renal / hypovolaemia' is a diagnostic classification of urine sodium in the AKI work-up, not a reference range." },
+      "r4": { "kind": "dx", "_why": "'SIADH or intrinsic renal' is the other side of the same AKI-aetiology classification by urine sodium." },
+      "r5": { "kind": "dx", "_why": "'Pre-renal' FENa is a diagnostic classification threshold (<1%), not a reference range." },
+      "r6": { "kind": "dx", "_why": "'Intrinsic (ATN)' FENa is the other side of the same AKI-aetiology FENa classification." }
+    }
+  }
+}
