@@ -30,7 +30,9 @@ with sync_playwright() as p:
     pg.on("console",lambda m: errors.append(m.text) if m.type=="error" else None)
     pg.on("pageerror",lambda e: errors.append("PAGEERROR: "+str(e)))
     pg.goto(PATH); pg.wait_for_timeout(700)
-    def shot(n): pg.screenshot(path=f"/home/claude/qa/{n}.png")
+    _shotdir = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "_shots")
+    _os.makedirs(_shotdir, exist_ok=True)
+    def shot(n): pg.screenshot(path=_os.path.join(_shotdir, f"{n}.png"))
 
     # local override on troponin first
     pg.locator("[data-cat='cardiac']").click(); pg.wait_for_timeout(200)

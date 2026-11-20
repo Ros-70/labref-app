@@ -3,6 +3,7 @@
 # qa/ so that icons/**.png — which ARE deliverables — stay tracked.
 /*.png
 qa/*.png
+qa/_shots/
 
 # Python / tooling noise
 __pycache__/

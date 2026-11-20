@@ -33,8 +33,10 @@ with sync_playwright() as p:
     pg.on("console", lambda m: (errors.append(m.text) if m.type=="error" else logs.append(m.text)))
     pg.on("pageerror", lambda e: errors.append("PAGEERROR: "+str(e)))
     pg.goto(PATH); pg.wait_for_timeout(800)
+    _shotdir = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "_shots")
+    _os.makedirs(_shotdir, exist_ok=True)
 
-    def shot(n): pg.screenshot(path=f"/home/claude/qa/{n}.png", full_page=False)
+    def shot(n): pg.screenshot(path=_os.path.join(_shotdir, f"{n}.png"), full_page=False)
 
     # 1. home
     shot("01_home")

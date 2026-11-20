@@ -62,9 +62,11 @@ with sync_playwright() as p:
 
     # visual re-check of fixed rows
     pg.goto(PATH); pg.wait_for_timeout(450)
-    pg.screenshot(path="/home/claude/qa/A_home.png")
+    _shotdir = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "_shots")
+    _os.makedirs(_shotdir, exist_ok=True)
+    pg.screenshot(path=_os.path.join(_shotdir, "A_home.png"))
     pg.locator("[data-nav='tools']").click(); pg.wait_for_timeout(250)
     pg.locator("[data-tool='picker']").click(); pg.wait_for_timeout(300)
-    pg.screenshot(path="/home/claude/qa/B_picker.png")
+    pg.screenshot(path=_os.path.join(_shotdir, "B_picker.png"))
     b.close()
 print("ERRORS:", errors if errors else "none")
