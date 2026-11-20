@@ -118,7 +118,7 @@ physical tube — do not add one per test.
 | `prep`      | `{fasting, items[], patient[]}` | see below |
 | `assayDep`  | boolean             | `true` when the cutoff is analyser/method-specific — shows a warning badge pointing to My Lab |
 | `units`     | `{conv, si, factor}` | `si_value = conv_value * factor`. For a panel test this is a **default only** — see §2b |
-| `ranges[]`  | array               | see below. Every row carries a permanent `rid` — see below |
+| `ranges[]`  | array               | see below. Every row carries a permanent `rid` and a `kind` — see below |
 | `critical`  | `{txt, lo, hi, analyte?}` or `null` | see below |
 | `inc[]`     | string[]            | causes of a raised value |
 | `dec[]`     | string[]            | causes of a low value |
@@ -166,6 +166,65 @@ as the row-match fallback ordering tiebreaker; keep it short and specific
 `"F"`, or `"any"`. **`age`** is one of `"neonate"`, `"infant"`, `"child"`,
 `"adolescent"`, `"adult"`. **`preg`** is `null` (not pregnancy-specific),
 `"any"` (applies across all trimesters), or `"T1"`/`"T2"`/`"T3"`.
+
+**`ranges[].kind`** classifies what a row actually *is*, added in Stage 2 of
+v2.0. One of:
+
+| kind       | meaning |
+|------------|---------|
+| `ref`      | a population reference interval — what a healthy member of this demographic group looks like |
+| `method`   | an assay/specimen variant of a reference interval (not a different population) |
+| `dx`       | a diagnostic/classification band (e.g. Vitamin D deficient/insufficient/sufficient/toxic) |
+| `target`   | a treatment target for someone already diagnosed (e.g. HbA1c's "<7.0, individualise") |
+| `cutoff`   | a decision threshold not tied to one diagnosis (e.g. D-dimer's exclusion cutoff) |
+| `note`     | narrative/different-measurand row — info-only, never matched or ranked |
+
+This exists because `ranges[]` mixes two fundamentally different things a lab
+value can be compared against, and conflating them was the root cause of two
+separate bugs (see CHANGELOG's Stage 2a/2b). **It is why My Lab overrides will
+be restricted to `ref`/`method` rows in Stage 3** — a lab can publish its own
+reference interval, but should never be able to silently redefine a
+diagnostic threshold or treatment target.
+
+`kind` is deliberately **not** part of a rid's frozen identity fingerprint
+(unlike `sex`/`age`/`preg`/analyte) — it is pure, correctable content
+metadata, so reclassifying a row (e.g. hb electrophoresis's "HbA2 —
+β-thalassaemia trait" from `ref` to `dx`, Stage 2b) never triggers the rid
+guard or disturbs a saved override.
+
+Classify with `cd app && python3 -I classify_rows.py` (heuristic first pass)
+plus hand-reviewed corrections in `app/row_kinds_overrides.json`, each with a
+`_why`; write the result into the data module with
+`cd app && python3 -I write_kinds.py`.
+
+**How `kind` drives row selection** — two independent mechanisms, both in
+`shell.html`:
+
+- **Demographic matching** (`scoredCandidates()`/`bestRange()`/
+  `tiedCandidates()`) is scoped to `kind:"ref"`/`"method"` rows only (plus
+  rows with no `kind` at all, from before this field existed). When two or
+  more score identically for the current patient mode, that is a genuine
+  *demographic* tie (ESR by age band, LH by cycle phase) and the Result
+  Interpreter requires the user to pick which group applies, rather than
+  guessing. `qa/known_tie_groups.json`'s `groups` array is the reviewed
+  baseline of every expected tie; `qa/validate_ties.js` (method 6) fails the
+  build on an unreviewed new one.
+- **Value-ladder classification** (`classifyAgainstLadder()`/
+  `isValueLadder()`) walks `kind:"dx"`/`"cutoff"`/`"target"` rows that share a
+  key by the number the user actually *enters*, not by demographic matching —
+  picking the one band whose interval contains the value (or flagging
+  "above"/"below" the nearest band when the value falls outside every defined
+  one). A group only counts as a clean ladder if every row has numeric bounds
+  and every pair of intervals is disjoint or nested (a severity refinement).
+  The handful that aren't (ptinr, anti-Xa, digoxin, D-dimer's age-adjusted
+  cutoff, HbA1c's treatment target, NT-proBNP, ANA, the Down-syndrome screen —
+  see CHANGELOG's Stage 2b for why each one fails) show the entered value plus
+  an informational note naming the candidates, never a hard block —
+  `qa/known_tie_groups.json`'s `ladder_fallback_groups` is their reviewed
+  baseline, also enforced by `qa/validate_ties.js`.
+
+Both mechanisms key on `(analyte.key or "_") + sex + age + preg` — a test
+with no `analyte` on any row effectively has one component, keyed `"_"`.
 
 **`critical`** is `null` for a test with no recognised critical/panic value.
 When present, `txt` is the display string, `lo`/`hi` are optional numeric

@@ -107,14 +107,72 @@ genuine value-ordered severity ladders (vitamin D deficient → insufficient →
 sufficient → toxic, D-dimer's age-adjusted cutoff, CRP's inflammation ladder,
 etc.) rather than picker ties. Those need the interpreter to walk a ladder by
 the *entered value*, not ask the user to pre-pick a row by label — a different
-fix, left for Stage 2b/the interpreter rework below rather than solved here.
+fix, left for Stage 2b below.
+
+### Stage 2b — value-ordered ladder classification
+
+`bestRange()`'s ref/method tie-chooser (Stage 2a) was built for *demographic*
+ties, and wrongly fired for tests like vitamin D, whose four `dx` rows
+(deficient/insufficient/sufficient/toxic) all apply to the same "any adult" —
+the real distinguishing factor is the entered *value*, not the patient. Fix:
+`scoredCandidates()` is now scoped to `ref`/`method` rows only, so a
+dx/cutoff/target row never enters the demographic tie check; a separate
+`classifyAgainstLadder()` walks `dx`/`cutoff`/`target` rows by the number the
+user actually enters, picking the one band whose interval contains it (or the
+nearest band, labelled "above"/"below", when the value falls outside every
+defined band).
+
+Not every same-key `dx`/`cutoff`/`target` group is a clean ladder. A group
+counts as one only if every row carries numeric bounds and every pair of
+intervals is either disjoint or one fully nests inside the other (a severity
+refinement, e.g. "severely deficient <10" nesting inside "deficient <20") —
+`isValueLadder()`. A handful of groups fail that test on purpose: ptinr and
+anti-Xa's targets depend on the indication/drug, not the number; digoxin's two
+targets overlap; D-dimer's age-adjusted cutoff has no fixed bound at all, only
+a formula; a few more (HbA1c's individualised treatment target, NT-proBNP's
+mixed age-bands-plus-rule-out set, ANA's and the Down-syndrome screen's
+titre/risk-ratio results, which were never numeric to begin with) likewise
+can't be placed on one axis. For these the interpreter shows the entered value
+plus an informational note naming the candidates, rather than blocking —
+unlike a ref/method tie, there is no single verdict being silently guessed at
+here, so a hard block would be over-caution, not safety.
+
+The wider scan (qa/validate_ties.js, method 6, below) also caught three
+genuine bundled-measurand bugs this pass of classification surfaced: SAAG's
+"SBP threshold" row is a different measurement entirely (ascitic fluid
+neutrophil count, not SAAG) and PSA's free:total ratio and post-prostatectomy
+rows are a different assay and a different clinical context respectively —
+all three were sharing a blank analyte key with rows they don't belong with,
+the same bundled-measurand pattern as Stage 2a's 15 rows. Given their own
+`analyte.key`, same fix, same rid-retirement mechanics. Hb electrophoresis's
+"HbA2 — β-thalassaemia trait" row was also reclassified from `ref` to `dx`: a
+carrier-status finding is a diagnostic band, not a population reference
+range, and the misclassification was creating a false ref/method tie against
+the genuine HbA2 reference interval.
+
+Fixing the false positive exposed one more real bug while fixing it, same
+shape as Stage 2a's: `bestRange()`'s last-resort fallback (`rows[0]`) used to
+assume `rows` always held at least one row generically applicable to any
+patient — true when `rows` was every range on the test, false now that it's
+kind-restricted to ref/method only. D-dimer's general-population content is
+entirely `kind:"cutoff"` with no separate `ref` row, so for a non-pregnant
+patient `rows` held only its three pregnancy-only ref rows — none of which
+match — and the old fallback silently returned "Pregnancy T1" as if it were
+the active range for a male patient. Fixed to never return a row that fails
+`rangeMatches()`; the test detail page falls back separately to highlighting
+whichever dx/cutoff/target rows do match demographically (restoring the
+"pick by eye" display for cases like D-dimer without reopening the ref/method
+false-positive this stage exists to close).
+
+**Method 6 — `qa/validate_ties.js`.** Recomputes both tie categories (every
+ref/method collision, and every dx/cutoff/target group that is *not* a clean
+ladder) from the live data on every build and fails if a new or changed one
+isn't in `qa/known_tie_groups.json`'s reviewed baseline — the same
+append-only-review discipline as the rid guard, now covering both the Stage 2a
+picker-tie class and this stage's ladder-fallback class in one pass.
 
 ### Still to come
 
-- Stage 2b — teach the interpreter to grade `dx`/`cutoff`/`target` rows by
-  walking their value-ordered ladder (not demographic matching), and to show
-  that alongside, not instead of, the `ref` comparison; source and classify
-  the ~130-group severity-ladder set found above.
 - Stage 3 — scoped override store and My Lab UI: per-stratum entry restricted
   to `ref`/`method` rows, assay-level unit/method, locked guideline bands,
   orphaned overrides surfaced.

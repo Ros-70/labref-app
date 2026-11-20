@@ -59,6 +59,51 @@ TARGETS = {
         "r3": ("serum", "Serum Folate"),
         "r4": ("rbc", "Red Cell Folate"),
     },
+    # Found by the Stage 2b severity-ladder scan: these aren't value ladders
+    # at all, they're two or more genuinely different assays/specimens
+    # bundled under one blank analyte key, same as the Stage 2a batch above.
+    "crp": {
+        "r1": ("crp", "CRP"),
+        "r2": ("crp", "CRP"),
+        "r3": ("crp", "CRP"),
+        "r4": ("hscrp", "hs-CRP"),
+        "r5": ("hscrp", "hs-CRP"),
+        "r6": ("hscrp", "hs-CRP"),
+    },
+    "tpoab": {
+        "r1": ("tpo", "TPO Antibody"),
+        "r2": ("tgab", "Thyroglobulin Antibody"),
+    },
+    "csfada": {
+        "r1": ("csf", "CSF ADA"),
+        "r2": ("pleural", "Pleural Fluid ADA"),
+        "r3": ("ascitic", "Ascitic Fluid ADA"),
+        "r4": ("pericardial", "Pericardial Fluid ADA"),
+    },
+    # Found by qa/validate_ties.js: SAAG's r3 is a completely different
+    # measurement (ascitic fluid absolute neutrophil count, used to
+    # diagnose spontaneous bacterial peritonitis) bundled under the same
+    # blank analyte slot as the SAAG value itself (r1/r2). Splitting it
+    # off also lets r1/r2 stand alone as the clean 2-band SAAG ladder
+    # they already are.
+    "saag": {
+        "r1": ("saag", "SAAG"),
+        "r2": ("saag", "SAAG"),
+        "r3": ("sbpneut", "Ascitic Fluid Neutrophil Count"),
+    },
+    # Found by qa/validate_ties.js: PSA's r5 (free:total PSA ratio — a
+    # different assay entirely) and r6 (post-prostatectomy biochemical
+    # recurrence threshold — a different clinical context, not an
+    # age-banded reference range) were bundled under the same blank
+    # analyte slot as the age-banded total-PSA ref rows (r1-r4).
+    "psa": {
+        "r1": ("total", "Total PSA"),
+        "r2": ("total", "Total PSA"),
+        "r3": ("total", "Total PSA"),
+        "r4": ("total", "Total PSA"),
+        "r5": ("ratio", "Free:Total PSA Ratio"),
+        "r6": ("total", "Total PSA"),
+    },
 }
 
 

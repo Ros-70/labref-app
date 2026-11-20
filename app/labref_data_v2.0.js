@@ -174,15 +174,15 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"g/dL", si:"g/L", factor:10 },
   ranges:[
-    { rid:"r1", grp:"Adult male",        sex:"M", age:"adult",      preg:null, conv:{lo:13.0,hi:17.0}, si:{lo:130,hi:170} },
-    { rid:"r2", grp:"Adult female",      sex:"F", age:"adult",      preg:null, conv:{lo:12.0,hi:15.0}, si:{lo:120,hi:150} },
-    { rid:"r3", grp:"Pregnancy T1",      sex:"F", age:"adult",      preg:"T1", conv:{lo:11.0,hi:14.0}, si:{lo:110,hi:140} },
-    { rid:"r4", grp:"Pregnancy T2",      sex:"F", age:"adult",      preg:"T2", conv:{lo:10.5,hi:14.0}, si:{lo:105,hi:140} },
-    { rid:"r5", grp:"Pregnancy T3",      sex:"F", age:"adult",      preg:"T3", conv:{lo:11.0,hi:14.0}, si:{lo:110,hi:140} },
-    { rid:"r6", grp:"Newborn (0–3 d)",   sex:"any",age:"neonate",   preg:null, conv:{lo:14.5,hi:22.5}, si:{lo:145,hi:225} },
-    { rid:"r7", grp:"Infant (2–6 mo)",   sex:"any",age:"infant",    preg:null, conv:{lo:9.5,hi:13.5},  si:{lo:95,hi:135} },
-    { rid:"r8", grp:"Child (2–12 y)",    sex:"any",age:"child",     preg:null, conv:{lo:11.5,hi:15.5}, si:{lo:115,hi:155} },
-    { rid:"r9", grp:"Adolescent (12–18)",sex:"any",age:"adolescent",preg:null, conv:{lo:12.0,hi:16.0}, si:{lo:120,hi:160} }
+    { rid:"r1", kind:"ref", grp:"Adult male",        sex:"M", age:"adult",      preg:null, conv:{lo:13.0,hi:17.0}, si:{lo:130,hi:170} },
+    { rid:"r2", kind:"ref", grp:"Adult female",      sex:"F", age:"adult",      preg:null, conv:{lo:12.0,hi:15.0}, si:{lo:120,hi:150} },
+    { rid:"r3", kind:"ref", grp:"Pregnancy T1",      sex:"F", age:"adult",      preg:"T1", conv:{lo:11.0,hi:14.0}, si:{lo:110,hi:140} },
+    { rid:"r4", kind:"ref", grp:"Pregnancy T2",      sex:"F", age:"adult",      preg:"T2", conv:{lo:10.5,hi:14.0}, si:{lo:105,hi:140} },
+    { rid:"r5", kind:"ref", grp:"Pregnancy T3",      sex:"F", age:"adult",      preg:"T3", conv:{lo:11.0,hi:14.0}, si:{lo:110,hi:140} },
+    { rid:"r6", kind:"ref", grp:"Newborn (0–3 d)",   sex:"any",age:"neonate",   preg:null, conv:{lo:14.5,hi:22.5}, si:{lo:145,hi:225} },
+    { rid:"r7", kind:"ref", grp:"Infant (2–6 mo)",   sex:"any",age:"infant",    preg:null, conv:{lo:9.5,hi:13.5},  si:{lo:95,hi:135} },
+    { rid:"r8", kind:"ref", grp:"Child (2–12 y)",    sex:"any",age:"child",     preg:null, conv:{lo:11.5,hi:15.5}, si:{lo:115,hi:155} },
+    { rid:"r9", kind:"ref", grp:"Adolescent (12–18)",sex:"any",age:"adolescent",preg:null, conv:{lo:12.0,hi:16.0}, si:{lo:120,hi:160} }
   ],
   critical:{ txt:"<7.0 g/dL or >20.0 g/dL", lo:7.0, hi:20.0 },
   inc:["Polycythaemia vera (JAK2 V617F positive)","Secondary polycythaemia — chronic hypoxia, COPD, OSA, high altitude, cyanotic heart disease","Dehydration / haemoconcentration (spurious)","Erythropoietin abuse, testosterone therapy","Renal cell carcinoma, hepatocellular carcinoma (EPO-secreting)"],
@@ -200,10 +200,10 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"fL", si:"fL", factor:1 },
   ranges:[
-    { rid:"r1", grp:"Adult",          sex:"any",age:"adult",   preg:null, conv:{lo:80,hi:100}, si:{lo:80,hi:100} },
-    { rid:"r2", grp:"Newborn",        sex:"any",age:"neonate", preg:null, conv:{lo:98,hi:118}, si:{lo:98,hi:118} },
-    { rid:"r3", grp:"Infant (6–24 mo)",sex:"any",age:"infant", preg:null, conv:{lo:70,hi:86},  si:{lo:70,hi:86} },
-    { rid:"r4", grp:"Child (2–12 y)", sex:"any",age:"child",   preg:null, conv:{lo:77,hi:95},  si:{lo:77,hi:95} }
+    { rid:"r1", kind:"ref", grp:"Adult",          sex:"any",age:"adult",   preg:null, conv:{lo:80,hi:100}, si:{lo:80,hi:100} },
+    { rid:"r2", kind:"ref", grp:"Newborn",        sex:"any",age:"neonate", preg:null, conv:{lo:98,hi:118}, si:{lo:98,hi:118} },
+    { rid:"r3", kind:"ref", grp:"Infant (6–24 mo)",sex:"any",age:"infant", preg:null, conv:{lo:70,hi:86},  si:{lo:70,hi:86} },
+    { rid:"r4", kind:"ref", grp:"Child (2–12 y)", sex:"any",age:"child",   preg:null, conv:{lo:77,hi:95},  si:{lo:77,hi:95} }
   ],
   critical:null,
   inc:["B12 or folate deficiency (megaloblastic)","Alcohol excess — commonest cause of mild macrocytosis","Hypothyroidism","Liver disease","Reticulocytosis (young cells are large)","Myelodysplastic syndrome","Drugs — hydroxyurea, methotrexate, zidovudine, phenytoin, azathioprine"],
@@ -223,11 +223,11 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"cells/µL", si:"×10⁹/L", factor:0.001 },
   ranges:[
-    { rid:"r1", grp:"Adult",        sex:"any",age:"adult",   preg:null, conv:{lo:4000,hi:11000},  si:{lo:4.0,hi:11.0} },
-    { rid:"r2", grp:"Pregnancy",    sex:"F", age:"adult",    preg:"any",conv:{lo:6000,hi:16000},  si:{lo:6.0,hi:16.0} },
-    { rid:"r3", grp:"Newborn",      sex:"any",age:"neonate", preg:null, conv:{lo:9000,hi:30000},  si:{lo:9.0,hi:30.0} },
-    { rid:"r4", grp:"Infant (1 y)", sex:"any",age:"infant",  preg:null, conv:{lo:6000,hi:17500},  si:{lo:6.0,hi:17.5} },
-    { rid:"r5", grp:"Child (4–10 y)",sex:"any",age:"child",  preg:null, conv:{lo:4500,hi:13500},  si:{lo:4.5,hi:13.5} }
+    { rid:"r1", kind:"ref", grp:"Adult",        sex:"any",age:"adult",   preg:null, conv:{lo:4000,hi:11000},  si:{lo:4.0,hi:11.0} },
+    { rid:"r2", kind:"ref", grp:"Pregnancy",    sex:"F", age:"adult",    preg:"any",conv:{lo:6000,hi:16000},  si:{lo:6.0,hi:16.0} },
+    { rid:"r3", kind:"ref", grp:"Newborn",      sex:"any",age:"neonate", preg:null, conv:{lo:9000,hi:30000},  si:{lo:9.0,hi:30.0} },
+    { rid:"r4", kind:"ref", grp:"Infant (1 y)", sex:"any",age:"infant",  preg:null, conv:{lo:6000,hi:17500},  si:{lo:6.0,hi:17.5} },
+    { rid:"r5", kind:"ref", grp:"Child (4–10 y)",sex:"any",age:"child",  preg:null, conv:{lo:4500,hi:13500},  si:{lo:4.5,hi:13.5} }
   ],
   critical:{ txt:"<2,000/µL or >30,000/µL (or ANC <500/µL)", lo:2000, hi:30000 },
   inc:["Bacterial infection — neutrophilia with left shift","Corticosteroids (demargination), adrenaline, stress, post-ictal","Leukaemia, myeloproliferative neoplasm","Tissue necrosis — infarction, burns, trauma, pancreatitis","Smoking, pregnancy, labour, strenuous exercise","Post-splenectomy","G-CSF therapy"],
@@ -248,11 +248,11 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"seconds (PT); INR ratio", si:"seconds; INR ratio", factor:1 },
   ranges:[
-    { rid:"r1", grp:"PT — adult",          analyte:{key:"pt",label:"PT",convUnit:"seconds",siUnit:"seconds",noConvert:true}, sex:"any",age:"adult",  preg:null, conv:{lo:11,hi:14},   si:{lo:11,hi:14} },
-    { rid:"r2", grp:"INR — not on warfarin",analyte:{key:"inr",label:"INR",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any",age:"adult", preg:null, conv:{lo:0.8,hi:1.2}, si:{lo:0.8,hi:1.2} },
-    { rid:"r3", grp:"INR — therapeutic (AF, VTE, tissue valve)",analyte:{key:"inr",label:"INR",convUnit:"ratio",siUnit:"ratio",noConvert:true},sex:"any",age:"adult",preg:null, conv:{lo:2.0,hi:3.0}, si:{lo:2.0,hi:3.0} },
-    { rid:"r4", grp:"INR — mechanical mitral valve",analyte:{key:"inr",label:"INR",convUnit:"ratio",siUnit:"ratio",noConvert:true},sex:"any",age:"adult",preg:null, conv:{lo:2.5,hi:3.5}, si:{lo:2.5,hi:3.5} },
-    { rid:"r5", grp:"Newborn (PT)",        analyte:{key:"pt",label:"PT",convUnit:"seconds",siUnit:"seconds",noConvert:true}, sex:"any",age:"neonate",preg:null, conv:{lo:13,hi:20},   si:{lo:13,hi:20} }
+    { rid:"r1", kind:"ref", grp:"PT — adult",          analyte:{key:"pt",label:"PT",convUnit:"seconds",siUnit:"seconds",noConvert:true}, sex:"any",age:"adult",  preg:null, conv:{lo:11,hi:14},   si:{lo:11,hi:14} },
+    { rid:"r2", kind:"ref", grp:"INR — not on warfarin",analyte:{key:"inr",label:"INR",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any",age:"adult", preg:null, conv:{lo:0.8,hi:1.2}, si:{lo:0.8,hi:1.2} },
+    { rid:"r3", kind:"target", grp:"INR — therapeutic (AF, VTE, tissue valve)",analyte:{key:"inr",label:"INR",convUnit:"ratio",siUnit:"ratio",noConvert:true},sex:"any",age:"adult",preg:null, conv:{lo:2.0,hi:3.0}, si:{lo:2.0,hi:3.0} },
+    { rid:"r4", kind:"target", grp:"INR — mechanical mitral valve",analyte:{key:"inr",label:"INR",convUnit:"ratio",siUnit:"ratio",noConvert:true},sex:"any",age:"adult",preg:null, conv:{lo:2.5,hi:3.5}, si:{lo:2.5,hi:3.5} },
+    { rid:"r5", kind:"ref", grp:"Newborn (PT)",        analyte:{key:"pt",label:"PT",convUnit:"seconds",siUnit:"seconds",noConvert:true}, sex:"any",age:"neonate",preg:null, conv:{lo:13,hi:20},   si:{lo:13,hi:20} }
   ],
   critical:{ txt:"INR >5.0 (or >8.0 in some policies); PT >30 s", lo:null, hi:5.0 },
   inc:["Warfarin / vitamin K antagonist therapy","Vitamin K deficiency — malabsorption, biliary obstruction, prolonged antibiotics, newborn","Liver disease — PT is the most sensitive single marker of synthetic function","DIC (with low platelets, low fibrinogen, raised D-dimer)","Factor VII, X, V, II or fibrinogen deficiency","Massive transfusion, dilutional coagulopathy","Under-filled citrate tube (pre-analytical, very common)","DOACs — rivaroxaban and edoxaban prolong PT variably; INR is not a valid monitor"],
@@ -270,9 +270,9 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"seconds", si:"seconds", factor:1 },
   ranges:[
-    { rid:"r1", grp:"Adult",                    sex:"any",age:"adult",  preg:null, conv:{lo:25,hi:35}, si:{lo:25,hi:35} },
-    { rid:"r2", grp:"Therapeutic UFH (1.5–2.5×)",sex:"any",age:"adult", preg:null, conv:{lo:60,hi:85}, si:{lo:60,hi:85} },
-    { rid:"r3", grp:"Newborn",                  sex:"any",age:"neonate",preg:null, conv:{lo:31,hi:55}, si:{lo:31,hi:55} }
+    { rid:"r1", kind:"ref", grp:"Adult",                    sex:"any",age:"adult",  preg:null, conv:{lo:25,hi:35}, si:{lo:25,hi:35} },
+    { rid:"r2", kind:"target", grp:"Therapeutic UFH (1.5–2.5×)",sex:"any",age:"adult", preg:null, conv:{lo:60,hi:85}, si:{lo:60,hi:85} },
+    { rid:"r3", kind:"ref", grp:"Newborn",                  sex:"any",age:"neonate",preg:null, conv:{lo:31,hi:55}, si:{lo:31,hi:55} }
   ],
   critical:{ txt:">100 s (unexplained, or with bleeding)", lo:null, hi:100 },
   inc:["Unfractionated heparin","Haemophilia A (VIII) or B (IX), von Willebrand disease","Lupus anticoagulant / antiphospholipid syndrome — prolonged aPTT but a thrombotic, not bleeding, tendency","DIC, liver disease, vitamin K deficiency","Factor XI or XII deficiency (XII deficiency does not bleed)","Specific factor inhibitors — acquired haemophilia"],
@@ -290,11 +290,11 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"ng/mL FEU", si:"mg/L FEU", factor:0.001 },
   ranges:[
-    { rid:"r1", grp:"Adult (<50 y) exclusion cutoff", sex:"any",age:"adult", preg:null, conv:{lo:null,hi:500},  si:{lo:null,hi:0.5} },
-    { rid:"r2", grp:"Age-adjusted (>50 y) = age × 10",sex:"any",age:"adult", preg:null, conv:{txt:"age × 10 ng/mL (e.g. 70 y → 700)"}, si:{txt:"age × 0.01 mg/L"} },
-    { rid:"r3", grp:"Pregnancy T1",  sex:"F", age:"adult", preg:"T1", conv:{lo:110,hi:400},  si:{lo:0.11,hi:0.40} },
-    { rid:"r4", grp:"Pregnancy T2",  sex:"F", age:"adult", preg:"T2", conv:{lo:140,hi:750},  si:{lo:0.14,hi:0.75} },
-    { rid:"r5", grp:"Pregnancy T3",  sex:"F", age:"adult", preg:"T3", conv:{lo:160,hi:1300}, si:{lo:0.16,hi:1.30} }
+    { rid:"r1", kind:"cutoff", grp:"Adult (<50 y) exclusion cutoff", sex:"any",age:"adult", preg:null, conv:{lo:null,hi:500},  si:{lo:null,hi:0.5} },
+    { rid:"r2", kind:"cutoff", grp:"Age-adjusted (>50 y) = age × 10",sex:"any",age:"adult", preg:null, conv:{txt:"age × 10 ng/mL (e.g. 70 y → 700)"}, si:{txt:"age × 0.01 mg/L"} },
+    { rid:"r3", kind:"ref", grp:"Pregnancy T1",  sex:"F", age:"adult", preg:"T1", conv:{lo:110,hi:400},  si:{lo:0.11,hi:0.40} },
+    { rid:"r4", kind:"ref", grp:"Pregnancy T2",  sex:"F", age:"adult", preg:"T2", conv:{lo:140,hi:750},  si:{lo:0.14,hi:0.75} },
+    { rid:"r5", kind:"ref", grp:"Pregnancy T3",  sex:"F", age:"adult", preg:"T3", conv:{lo:160,hi:1300}, si:{lo:0.16,hi:1.30} }
   ],
   critical:null,
   inc:["Venous thromboembolism — DVT, pulmonary embolism","DIC","Pregnancy, especially third trimester","Recent surgery, trauma, burns","Sepsis and any severe inflammatory state","Malignancy","Advancing age (hence the age-adjusted cutoff)","Liver disease, renal failure","Atrial fibrillation, heart failure, stroke","Aortic dissection"],
@@ -312,9 +312,9 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"cells/µL", si:"×10⁹/L", factor:0.001 },
   ranges:[
-    { rid:"r1", grp:"Adult",     sex:"any",age:"adult",   preg:null, conv:{lo:150000,hi:410000}, si:{lo:150,hi:410} },
-    { rid:"r2", grp:"Pregnancy", sex:"F", age:"adult",    preg:"any",conv:{lo:115000,hi:400000}, si:{lo:115,hi:400} },
-    { rid:"r3", grp:"Newborn",   sex:"any",age:"neonate", preg:null, conv:{lo:150000,hi:450000}, si:{lo:150,hi:450} }
+    { rid:"r1", kind:"ref", grp:"Adult",     sex:"any",age:"adult",   preg:null, conv:{lo:150000,hi:410000}, si:{lo:150,hi:410} },
+    { rid:"r2", kind:"ref", grp:"Pregnancy", sex:"F", age:"adult",    preg:"any",conv:{lo:115000,hi:400000}, si:{lo:115,hi:400} },
+    { rid:"r3", kind:"ref", grp:"Newborn",   sex:"any",age:"neonate", preg:null, conv:{lo:150000,hi:450000}, si:{lo:150,hi:450} }
   ],
   critical:{ txt:"<20,000/µL or >1,000,000/µL", lo:20000, hi:1000000 },
   inc:["Reactive (commonest) — infection, inflammation, iron deficiency, post-splenectomy, malignancy","Essential thrombocythaemia, other myeloproliferative neoplasms","Post-haemorrhage, post-surgery","Rebound after alcohol withdrawal or B12 replacement"],
@@ -334,8 +334,8 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"mEq/L", si:"mmol/L", factor:1 },
   ranges:[
-    { rid:"r1", grp:"Adult",   sex:"any",age:"adult",   preg:null, conv:{lo:135,hi:145}, si:{lo:135,hi:145} },
-    { rid:"r2", grp:"Newborn", sex:"any",age:"neonate", preg:null, conv:{lo:133,hi:146}, si:{lo:133,hi:146} }
+    { rid:"r1", kind:"ref", grp:"Adult",   sex:"any",age:"adult",   preg:null, conv:{lo:135,hi:145}, si:{lo:135,hi:145} },
+    { rid:"r2", kind:"ref", grp:"Newborn", sex:"any",age:"neonate", preg:null, conv:{lo:133,hi:146}, si:{lo:133,hi:146} }
   ],
   critical:{ txt:"<120 or >160 mEq/L", lo:120, hi:160 },
   inc:["Dehydration — reduced intake, fever, heat (relevant in Indian summer)","Diabetes insipidus — central or nephrogenic (lithium, hypercalcaemia)","Osmotic diuresis — hyperglycaemia, mannitol","Excess hypertonic saline or sodium bicarbonate","Cushing syndrome, primary hyperaldosteronism","Impaired thirst or restricted access to water — elderly, ventilated, bedbound"],
@@ -353,9 +353,9 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"mEq/L", si:"mmol/L", factor:1 },
   ranges:[
-    { rid:"r1", grp:"Adult",   sex:"any",age:"adult",   preg:null, conv:{lo:3.5,hi:5.1}, si:{lo:3.5,hi:5.1} },
-    { rid:"r2", grp:"Newborn", sex:"any",age:"neonate", preg:null, conv:{lo:3.7,hi:5.9}, si:{lo:3.7,hi:5.9} },
-    { rid:"r3", grp:"Child",   sex:"any",age:"child",   preg:null, conv:{lo:3.4,hi:4.7}, si:{lo:3.4,hi:4.7} }
+    { rid:"r1", kind:"ref", grp:"Adult",   sex:"any",age:"adult",   preg:null, conv:{lo:3.5,hi:5.1}, si:{lo:3.5,hi:5.1} },
+    { rid:"r2", kind:"ref", grp:"Newborn", sex:"any",age:"neonate", preg:null, conv:{lo:3.7,hi:5.9}, si:{lo:3.7,hi:5.9} },
+    { rid:"r3", kind:"ref", grp:"Child",   sex:"any",age:"child",   preg:null, conv:{lo:3.4,hi:4.7}, si:{lo:3.4,hi:4.7} }
   ],
   critical:{ txt:"<2.5 or >6.5 mEq/L", lo:2.5, hi:6.5 },
   inc:["Renal failure — acute or chronic, the commonest cause","Drugs — ACE inhibitors, ARBs, spironolactone, NSAIDs, trimethoprim, heparin","Acidosis (shifts potassium out of cells)","Tissue breakdown — rhabdomyolysis, tumour lysis, haemolysis, burns","Adrenal insufficiency, type 4 renal tubular acidosis","Excess supplementation, massive transfusion of stored blood","Pseudohyperkalaemia — haemolysis, thrombocytosis, leucocytosis, fist clenching, EDTA carryover"],
@@ -374,11 +374,11 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"mg/dL", si:"µmol/L", factor:88.4 },
   ranges:[
-    { rid:"r1", grp:"Adult male",   sex:"M", age:"adult",   preg:null, conv:{lo:0.70,hi:1.30}, si:{lo:62,hi:115} },
-    { rid:"r2", grp:"Adult female", sex:"F", age:"adult",   preg:null, conv:{lo:0.55,hi:1.10}, si:{lo:49,hi:97} },
-    { rid:"r3", grp:"Pregnancy",    sex:"F", age:"adult",   preg:"any",conv:{lo:0.40,hi:0.80}, si:{lo:35,hi:71} },
-    { rid:"r4", grp:"Newborn",      sex:"any",age:"neonate",preg:null, conv:{lo:0.30,hi:1.00}, si:{lo:27,hi:88} },
-    { rid:"r5", grp:"Child (1–12 y)",sex:"any",age:"child", preg:null, conv:{lo:0.30,hi:0.70}, si:{lo:27,hi:62} }
+    { rid:"r1", kind:"ref", grp:"Adult male",   sex:"M", age:"adult",   preg:null, conv:{lo:0.70,hi:1.30}, si:{lo:62,hi:115} },
+    { rid:"r2", kind:"ref", grp:"Adult female", sex:"F", age:"adult",   preg:null, conv:{lo:0.55,hi:1.10}, si:{lo:49,hi:97} },
+    { rid:"r3", kind:"ref", grp:"Pregnancy",    sex:"F", age:"adult",   preg:"any",conv:{lo:0.40,hi:0.80}, si:{lo:35,hi:71} },
+    { rid:"r4", kind:"ref", grp:"Newborn",      sex:"any",age:"neonate",preg:null, conv:{lo:0.30,hi:1.00}, si:{lo:27,hi:88} },
+    { rid:"r5", kind:"ref", grp:"Child (1–12 y)",sex:"any",age:"child", preg:null, conv:{lo:0.30,hi:0.70}, si:{lo:27,hi:62} }
   ],
   critical:{ txt:">4.0 mg/dL, or a rise >0.3 mg/dL in 48 h (AKI)", lo:null, hi:4.0 },
   inc:["Acute kidney injury — prerenal, renal or postrenal","Chronic kidney disease","Dehydration, hypovolaemia, sepsis","Nephrotoxins — NSAIDs, aminoglycosides, contrast, vancomycin, amphotericin","Obstructive uropathy","Rhabdomyolysis","Drugs blocking tubular secretion without reducing GFR — trimethoprim, cimetidine, dolutegravir, ranolazine","High muscle mass, high protein intake, creatine supplements"],
@@ -397,11 +397,11 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"mg/dL", si:"mmol/L", factor:0.0555 },
   ranges:[
-    { rid:"r1", grp:"Normal fasting",       sex:"any",age:"adult",  preg:null, conv:{lo:70,hi:99},   si:{lo:3.9,hi:5.5} },
-    { rid:"r2", grp:"Impaired fasting glucose",sex:"any",age:"adult",preg:null,conv:{lo:100,hi:125}, si:{lo:5.6,hi:6.9} },
-    { rid:"r3", grp:"Diabetes (fasting)",   sex:"any",age:"adult",  preg:null, conv:{lo:126,hi:null},si:{lo:7.0,hi:null} },
-    { rid:"r4", grp:"GDM (DIPSI, 2 h post 75 g, non-fasting)",sex:"F",age:"adult",preg:"any",conv:{txt:"≥140 = GDM"},si:{txt:"≥7.8 = GDM"} },
-    { rid:"r5", grp:"Newborn",              sex:"any",age:"neonate",preg:null, conv:{lo:40,hi:90},   si:{lo:2.2,hi:5.0} }
+    { rid:"r1", kind:"ref", grp:"Normal fasting",       sex:"any",age:"adult",  preg:null, conv:{lo:70,hi:99},   si:{lo:3.9,hi:5.5} },
+    { rid:"r2", kind:"dx", grp:"Impaired fasting glucose",sex:"any",age:"adult",preg:null,conv:{lo:100,hi:125}, si:{lo:5.6,hi:6.9} },
+    { rid:"r3", kind:"dx", grp:"Diabetes (fasting)",   sex:"any",age:"adult",  preg:null, conv:{lo:126,hi:null},si:{lo:7.0,hi:null} },
+    { rid:"r4", kind:"dx", grp:"GDM (DIPSI, 2 h post 75 g, non-fasting)",sex:"F",age:"adult",preg:"any",conv:{txt:"≥140 = GDM"},si:{txt:"≥7.8 = GDM"} },
+    { rid:"r5", kind:"ref", grp:"Newborn",              sex:"any",age:"neonate",preg:null, conv:{lo:40,hi:90},   si:{lo:2.2,hi:5.0} }
   ],
   critical:{ txt:"<50 or >400 mg/dL", lo:50, hi:400 },
   inc:["Diabetes mellitus type 1 and 2","Stress hyperglycaemia — sepsis, MI, stroke, surgery, burns","Corticosteroids, thiazides, atypical antipsychotics, tacrolimus","Cushing syndrome, acromegaly, phaeochromocytoma, glucagonoma","Pancreatitis, pancreatic surgery, haemochromatosis","Non-fasting sample (the commonest reason for an unexpectedly high 'fasting' result)"],
@@ -420,10 +420,10 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"%", si:"mmol/mol (IFCC)", factor:null },
   ranges:[
-    { rid:"r1", grp:"Normal",      sex:"any",age:"adult",preg:null, conv:{lo:null,hi:5.6},  si:{lo:null,hi:38} },
-    { rid:"r2", grp:"Prediabetes", sex:"any",age:"adult",preg:null, conv:{lo:5.7,hi:6.4},   si:{lo:39,hi:46} },
-    { rid:"r3", grp:"Diabetes",    sex:"any",age:"adult",preg:null, conv:{lo:6.5,hi:null},  si:{lo:48,hi:null} },
-    { rid:"r4", grp:"General treatment target",sex:"any",age:"adult",preg:null, conv:{txt:"<7.0 (individualise)"}, si:{txt:"<53"} }
+    { rid:"r1", kind:"ref", grp:"Normal",      sex:"any",age:"adult",preg:null, conv:{lo:null,hi:5.6},  si:{lo:null,hi:38} },
+    { rid:"r2", kind:"dx", grp:"Prediabetes", sex:"any",age:"adult",preg:null, conv:{lo:5.7,hi:6.4},   si:{lo:39,hi:46} },
+    { rid:"r3", kind:"dx", grp:"Diabetes",    sex:"any",age:"adult",preg:null, conv:{lo:6.5,hi:null},  si:{lo:48,hi:null} },
+    { rid:"r4", kind:"target", grp:"General treatment target",sex:"any",age:"adult",preg:null, conv:{txt:"<7.0 (individualise)"}, si:{txt:"<53"} }
   ],
   critical:null,
   inc:["Diabetes mellitus, poor glycaemic control","Iron deficiency anaemia — falsely raises HbA1c (important in India, where it is widespread)","B12 or folate deficiency","Asplenia, reduced red cell turnover","Chronic alcohol use, chronic salicylate or opioid use","Uraemia (carbamylated Hb interferes with some methods)"],
@@ -442,10 +442,10 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"mg/dL", si:"mmol/L", factor:0.25 },
   ranges:[
-    { rid:"r1", grp:"Total — adult",    analyte:{key:"total",label:"Total Calcium"}, sex:"any",age:"adult",   preg:null, conv:{lo:8.6,hi:10.2}, si:{lo:2.15,hi:2.55} },
-    { rid:"r2", grp:"Ionised — adult",  analyte:{key:"ionised",label:"Ionised Calcium",factor:0.25}, sex:"any",age:"adult",   preg:null, conv:{lo:4.6,hi:5.3},  si:{lo:1.15,hi:1.33} },
-    { rid:"r3", grp:"Newborn (total)",  analyte:{key:"total",label:"Total Calcium"}, sex:"any",age:"neonate", preg:null, conv:{lo:7.6,hi:10.4}, si:{lo:1.90,hi:2.60} },
-    { rid:"r4", grp:"Child (total)",    analyte:{key:"total",label:"Total Calcium"}, sex:"any",age:"child",   preg:null, conv:{lo:8.8,hi:10.8}, si:{lo:2.20,hi:2.70} }
+    { rid:"r1", kind:"ref", grp:"Total — adult",    analyte:{key:"total",label:"Total Calcium"}, sex:"any",age:"adult",   preg:null, conv:{lo:8.6,hi:10.2}, si:{lo:2.15,hi:2.55} },
+    { rid:"r2", kind:"ref", grp:"Ionised — adult",  analyte:{key:"ionised",label:"Ionised Calcium",factor:0.25}, sex:"any",age:"adult",   preg:null, conv:{lo:4.6,hi:5.3},  si:{lo:1.15,hi:1.33} },
+    { rid:"r3", kind:"method", grp:"Newborn (total)",  analyte:{key:"total",label:"Total Calcium"}, sex:"any",age:"neonate", preg:null, conv:{lo:7.6,hi:10.4}, si:{lo:1.90,hi:2.60} },
+    { rid:"r4", kind:"method", grp:"Child (total)",    analyte:{key:"total",label:"Total Calcium"}, sex:"any",age:"child",   preg:null, conv:{lo:8.8,hi:10.8}, si:{lo:2.20,hi:2.70} }
   ],
   critical:{ txt:"<6.5 or >13.0 mg/dL", lo:6.5, hi:13.0, analyte:["total"] },
   inc:["Primary hyperparathyroidism — commonest in outpatients","Malignancy — bone metastases, PTHrP, myeloma (commonest in inpatients)","Vitamin D or calcium excess, milk-alkali syndrome","Granulomatous disease — sarcoidosis, tuberculosis (relevant in India)","Thiazides, lithium","Thyrotoxicosis, immobilisation, Addison disease","Familial hypocalciuric hypercalcaemia"],
@@ -463,9 +463,9 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"mg/dL", si:"mmol/L", factor:0.111 },
   ranges:[
-    { rid:"r1", grp:"Venous — adult",   sex:"any",age:"adult",preg:null, conv:{lo:4.5,hi:19.8}, si:{lo:0.5,hi:2.2} },
-    { rid:"r2", grp:"Arterial — adult", sex:"any",age:"adult",preg:null, conv:{lo:4.5,hi:14.4}, si:{lo:0.5,hi:1.6} },
-    { rid:"r3", grp:"Sepsis threshold", sex:"any",age:"adult",preg:null, conv:{txt:">18 mg/dL (>2 mmol/L) marks tissue hypoperfusion"}, si:{txt:">2.0"} }
+    { rid:"r1", kind:"method", grp:"Venous — adult",   sex:"any",age:"adult",preg:null, conv:{lo:4.5,hi:19.8}, si:{lo:0.5,hi:2.2} },
+    { rid:"r2", kind:"method", grp:"Arterial — adult", sex:"any",age:"adult",preg:null, conv:{lo:4.5,hi:14.4}, si:{lo:0.5,hi:1.6} },
+    { rid:"r3", kind:"cutoff", grp:"Sepsis threshold", sex:"any",age:"adult",preg:null, conv:{txt:">18 mg/dL (>2 mmol/L) marks tissue hypoperfusion"}, si:{txt:">2.0"} }
   ],
   critical:{ txt:">4.0 mmol/L (36 mg/dL)", lo:null, hi:4.0 },
   inc:["Type A (hypoxic) — septic shock, cardiogenic shock, hypovolaemia, severe hypoxaemia, mesenteric ischaemia, severe anaemia","Type B — metformin accumulation (especially with AKI), liver failure, malignancy, thiamine deficiency, HIV antiretrovirals","Seizures, strenuous exercise (transient, resolves quickly)","Severe malaria, dengue shock syndrome","Carbon monoxide or cyanide poisoning","Tourniquet or delayed sample processing (artefactual)"],
@@ -490,14 +490,14 @@ const LABREF_TESTS = [
      see each row's analyte.factor / analyte.noConvert. */
   units:{ conv:"mmHg / mEq/L", si:"kPa / mmol/L", factor:0.1333 },
   ranges:[
-    { rid:"r1", grp:"pH",            analyte:{key:"ph",label:"pH",convUnit:"",siUnit:"",noConvert:true}, sex:"any",age:"adult",preg:null, conv:{lo:7.35,hi:7.45},  si:{lo:7.35,hi:7.45} },
-    { rid:"r2", grp:"PaCO₂",         analyte:{key:"paco2",label:"PaCO₂",convUnit:"mmHg",siUnit:"kPa",factor:0.1333}, sex:"any",age:"adult",preg:null, conv:{lo:35,hi:45},      si:{lo:4.7,hi:6.0} },
-    { rid:"r3", grp:"PaO₂ (room air)",analyte:{key:"pao2",label:"PaO₂",convUnit:"mmHg",siUnit:"kPa",factor:0.1333}, sex:"any",age:"adult",preg:null,conv:{lo:80,hi:100},     si:{lo:10.6,hi:13.3} },
-    { rid:"r4", grp:"HCO₃⁻",         analyte:{key:"hco3",label:"HCO₃⁻",convUnit:"mEq/L",siUnit:"mmol/L",factor:1}, sex:"any",age:"adult",preg:null, conv:{lo:22,hi:26},      si:{lo:22,hi:26} },
-    { rid:"r5", grp:"Base excess",   analyte:{key:"be",label:"Base Excess",convUnit:"mEq/L",siUnit:"mmol/L",factor:1}, sex:"any",age:"adult",preg:null, conv:{lo:-2,hi:2},       si:{lo:-2,hi:2} },
-    { rid:"r6", grp:"SaO₂",          analyte:{key:"sao2",label:"SaO₂",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any",age:"adult",preg:null, conv:{lo:95,hi:100},     si:{lo:95,hi:100} },
-    { rid:"r7", grp:"Anion gap",     analyte:{key:"ag",label:"Anion Gap",convUnit:"mEq/L",siUnit:"mmol/L",factor:1}, sex:"any",age:"adult",preg:null, conv:{lo:8,hi:12},       si:{lo:8,hi:12} },
-    { rid:"r8", grp:"Pregnancy (compensated resp alkalosis)",sex:"F",age:"adult",preg:"any",conv:{txt:"pH 7.40–7.46, PaCO₂ 28–32, HCO₃ 18–22"},si:{txt:"PaCO₂ 3.7–4.3 kPa"} }
+    { rid:"r1", kind:"ref", grp:"pH",            analyte:{key:"ph",label:"pH",convUnit:"",siUnit:"",noConvert:true}, sex:"any",age:"adult",preg:null, conv:{lo:7.35,hi:7.45},  si:{lo:7.35,hi:7.45} },
+    { rid:"r2", kind:"ref", grp:"PaCO₂",         analyte:{key:"paco2",label:"PaCO₂",convUnit:"mmHg",siUnit:"kPa",factor:0.1333}, sex:"any",age:"adult",preg:null, conv:{lo:35,hi:45},      si:{lo:4.7,hi:6.0} },
+    { rid:"r3", kind:"ref", grp:"PaO₂ (room air)",analyte:{key:"pao2",label:"PaO₂",convUnit:"mmHg",siUnit:"kPa",factor:0.1333}, sex:"any",age:"adult",preg:null,conv:{lo:80,hi:100},     si:{lo:10.6,hi:13.3} },
+    { rid:"r4", kind:"ref", grp:"HCO₃⁻",         analyte:{key:"hco3",label:"HCO₃⁻",convUnit:"mEq/L",siUnit:"mmol/L",factor:1}, sex:"any",age:"adult",preg:null, conv:{lo:22,hi:26},      si:{lo:22,hi:26} },
+    { rid:"r5", kind:"ref", grp:"Base excess",   analyte:{key:"be",label:"Base Excess",convUnit:"mEq/L",siUnit:"mmol/L",factor:1}, sex:"any",age:"adult",preg:null, conv:{lo:-2,hi:2},       si:{lo:-2,hi:2} },
+    { rid:"r6", kind:"ref", grp:"SaO₂",          analyte:{key:"sao2",label:"SaO₂",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any",age:"adult",preg:null, conv:{lo:95,hi:100},     si:{lo:95,hi:100} },
+    { rid:"r7", kind:"ref", grp:"Anion gap",     analyte:{key:"ag",label:"Anion Gap",convUnit:"mEq/L",siUnit:"mmol/L",factor:1}, sex:"any",age:"adult",preg:null, conv:{lo:8,hi:12},       si:{lo:8,hi:12} },
+    { rid:"r8", kind:"note", grp:"Pregnancy (compensated resp alkalosis)",sex:"F",age:"adult",preg:"any",conv:{txt:"pH 7.40–7.46, PaCO₂ 28–32, HCO₃ 18–22"},si:{txt:"PaCO₂ 3.7–4.3 kPa"} }
   ],
   critical:{ txt:"pH <7.20 or >7.60; PaO₂ <50 mmHg; PaCO₂ >70 mmHg", lo:null, hi:null },
   inc:["Respiratory acidosis (high PaCO₂) — COPD, hypoventilation, sedation, neuromuscular weakness, airway obstruction","Metabolic alkalosis (high HCO₃) — vomiting, nasogastric suction, diuretics, hypokalaemia, steroid excess"],
@@ -518,10 +518,10 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"U/L", si:"U/L", factor:1 },
   ranges:[
-    { rid:"r1", grp:"Adult male",   sex:"M", age:"adult",   preg:null, conv:{lo:7,hi:55}, si:{lo:7,hi:55} },
-    { rid:"r2", grp:"Adult female", sex:"F", age:"adult",   preg:null, conv:{lo:7,hi:45}, si:{lo:7,hi:45} },
-    { rid:"r3", grp:"Newborn",      sex:"any",age:"neonate",preg:null, conv:{lo:5,hi:50}, si:{lo:5,hi:50} },
-    { rid:"r4", grp:"Child",        sex:"any",age:"child",  preg:null, conv:{lo:5,hi:45}, si:{lo:5,hi:45} }
+    { rid:"r1", kind:"ref", grp:"Adult male",   sex:"M", age:"adult",   preg:null, conv:{lo:7,hi:55}, si:{lo:7,hi:55} },
+    { rid:"r2", kind:"ref", grp:"Adult female", sex:"F", age:"adult",   preg:null, conv:{lo:7,hi:45}, si:{lo:7,hi:45} },
+    { rid:"r3", kind:"ref", grp:"Newborn",      sex:"any",age:"neonate",preg:null, conv:{lo:5,hi:50}, si:{lo:5,hi:50} },
+    { rid:"r4", kind:"ref", grp:"Child",        sex:"any",age:"child",  preg:null, conv:{lo:5,hi:45}, si:{lo:5,hi:45} }
   ],
   critical:{ txt:">1000 U/L (consider acute hepatitis, ischaemia or paracetamol toxicity)", lo:null, hi:1000 },
   inc:["Viral hepatitis A, B, C, E — hepatitis A and E are major causes of acute hepatitis in India","Drug-induced liver injury — anti-tubercular therapy, paracetamol, statins, methotrexate, herbal and ayurvedic preparations","Non-alcoholic fatty liver disease — the commonest cause of a mild chronic rise","Alcoholic liver disease (AST:ALT usually >2:1)","Ischaemic hepatitis / shock liver — values in the thousands, falling rapidly","Autoimmune hepatitis, Wilson disease, haemochromatosis","Coeliac disease, thyroid disease","Muscle injury and strenuous exercise (ALT is present in muscle too)"],
@@ -540,13 +540,13 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"U/L", si:"U/L", factor:1 },
   ranges:[
-    { rid:"r1", grp:"Adult",            sex:"any",age:"adult",     preg:null, conv:{lo:40,hi:129},  si:{lo:40,hi:129} },
-    { rid:"r2", grp:"Pregnancy T3",     sex:"F", age:"adult",      preg:"T3", conv:{lo:38,hi:229},  si:{lo:38,hi:229} },
-    { rid:"r3", grp:"Newborn",          sex:"any",age:"neonate",   preg:null, conv:{lo:75,hi:316},  si:{lo:75,hi:316} },
-    { rid:"r4", grp:"Infant",           sex:"any",age:"infant",    preg:null, conv:{lo:82,hi:383},  si:{lo:82,hi:383} },
-    { rid:"r5", grp:"Child (2–9 y)",    sex:"any",age:"child",     preg:null, conv:{lo:142,hi:335}, si:{lo:142,hi:335} },
-    { rid:"r6", grp:"Adolescent male (10–15 y)",sex:"M",age:"adolescent",preg:null,conv:{lo:130,hi:525},si:{lo:130,hi:525} },
-    { rid:"r7", grp:"Adolescent female (10–15 y)",sex:"F",age:"adolescent",preg:null,conv:{lo:117,hi:460},si:{lo:117,hi:460} }
+    { rid:"r1", kind:"ref", grp:"Adult",            sex:"any",age:"adult",     preg:null, conv:{lo:40,hi:129},  si:{lo:40,hi:129} },
+    { rid:"r2", kind:"ref", grp:"Pregnancy T3",     sex:"F", age:"adult",      preg:"T3", conv:{lo:38,hi:229},  si:{lo:38,hi:229} },
+    { rid:"r3", kind:"ref", grp:"Newborn",          sex:"any",age:"neonate",   preg:null, conv:{lo:75,hi:316},  si:{lo:75,hi:316} },
+    { rid:"r4", kind:"ref", grp:"Infant",           sex:"any",age:"infant",    preg:null, conv:{lo:82,hi:383},  si:{lo:82,hi:383} },
+    { rid:"r5", kind:"ref", grp:"Child (2–9 y)",    sex:"any",age:"child",     preg:null, conv:{lo:142,hi:335}, si:{lo:142,hi:335} },
+    { rid:"r6", kind:"ref", grp:"Adolescent male (10–15 y)",sex:"M",age:"adolescent",preg:null,conv:{lo:130,hi:525},si:{lo:130,hi:525} },
+    { rid:"r7", kind:"ref", grp:"Adolescent female (10–15 y)",sex:"F",age:"adolescent",preg:null,conv:{lo:117,hi:460},si:{lo:117,hi:460} }
   ],
   critical:null,
   inc:["Cholestasis — biliary obstruction, stones, stricture, primary biliary cholangitis, drug cholestasis","Bone — Paget disease, osteomalacia (common in India), healing fracture, bone metastases, hyperparathyroidism, osteosarcoma","Physiological — childhood growth, third-trimester pregnancy, post-fatty meal","Infiltrative liver disease — tuberculosis, sarcoidosis, lymphoma, abscess, metastases","Hyperthyroidism","Drugs — phenytoin, carbamazepine, oestrogens, erythromycin"],
@@ -564,10 +564,10 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"g/dL", si:"g/L", factor:10 },
   ranges:[
-    { rid:"r1", grp:"Adult",     sex:"any",age:"adult",   preg:null, conv:{lo:3.5,hi:5.2}, si:{lo:35,hi:52} },
-    { rid:"r2", grp:"Pregnancy T3",sex:"F",age:"adult",   preg:"T3", conv:{lo:2.3,hi:4.2}, si:{lo:23,hi:42} },
-    { rid:"r3", grp:"Newborn",   sex:"any",age:"neonate", preg:null, conv:{lo:2.8,hi:4.4}, si:{lo:28,hi:44} },
-    { rid:"r4", grp:"Child",     sex:"any",age:"child",   preg:null, conv:{lo:3.8,hi:5.4}, si:{lo:38,hi:54} }
+    { rid:"r1", kind:"ref", grp:"Adult",     sex:"any",age:"adult",   preg:null, conv:{lo:3.5,hi:5.2}, si:{lo:35,hi:52} },
+    { rid:"r2", kind:"ref", grp:"Pregnancy T3",sex:"F",age:"adult",   preg:"T3", conv:{lo:2.3,hi:4.2}, si:{lo:23,hi:42} },
+    { rid:"r3", kind:"ref", grp:"Newborn",   sex:"any",age:"neonate", preg:null, conv:{lo:2.8,hi:4.4}, si:{lo:28,hi:44} },
+    { rid:"r4", kind:"ref", grp:"Child",     sex:"any",age:"child",   preg:null, conv:{lo:3.8,hi:5.4}, si:{lo:38,hi:54} }
   ],
   critical:{ txt:"<2.0 g/dL", lo:2.0, hi:null },
   inc:["Dehydration (the only meaningful cause)","Prolonged tourniquet or upright posture (artefactual)"],
@@ -588,11 +588,11 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"ng/L", si:"ng/L", factor:1 },
   ranges:[
-    { rid:"r1", grp:"hs-cTnI (Abbott) — overall 99th centile",analyte:{key:"tni",label:"hs-cTnI (Abbott assay)"},sex:"any",age:"adult",preg:null,conv:{lo:null,hi:26},si:{lo:null,hi:26} },
-    { rid:"r2", grp:"hs-cTnI — male",   analyte:{key:"tni",label:"hs-cTnI (Abbott assay)"}, sex:"M", age:"adult",preg:null, conv:{lo:null,hi:34}, si:{lo:null,hi:34} },
-    { rid:"r3", grp:"hs-cTnI — female", analyte:{key:"tni",label:"hs-cTnI (Abbott assay)"}, sex:"F", age:"adult",preg:null, conv:{lo:null,hi:16}, si:{lo:null,hi:16} },
-    { rid:"r4", grp:"hs-cTnT — overall (guideline / non-US label)",analyte:{key:"tnt",label:"hs-cTnT (Roche assay)"},sex:"any",age:"adult",preg:null,conv:{lo:null,hi:14},si:{lo:null,hi:14} },
-    { rid:"r5", grp:"hs-cTnT — male / female (US FDA)",analyte:{key:"tnt",label:"hs-cTnT (Roche assay)"},sex:"any",age:"adult",preg:null,conv:{txt:"22 (M) / 14 (F) ng/L"},si:{txt:"22 / 14"} }
+    { rid:"r1", kind:"method", grp:"hs-cTnI (Abbott) — overall 99th centile",analyte:{key:"tni",label:"hs-cTnI (Abbott assay)"},sex:"any",age:"adult",preg:null,conv:{lo:null,hi:26},si:{lo:null,hi:26} },
+    { rid:"r2", kind:"ref", grp:"hs-cTnI — male",   analyte:{key:"tni",label:"hs-cTnI (Abbott assay)"}, sex:"M", age:"adult",preg:null, conv:{lo:null,hi:34}, si:{lo:null,hi:34} },
+    { rid:"r3", kind:"ref", grp:"hs-cTnI — female", analyte:{key:"tni",label:"hs-cTnI (Abbott assay)"}, sex:"F", age:"adult",preg:null, conv:{lo:null,hi:16}, si:{lo:null,hi:16} },
+    { rid:"r4", kind:"method", grp:"hs-cTnT — overall (guideline / non-US label)",analyte:{key:"tnt",label:"hs-cTnT (Roche assay)"},sex:"any",age:"adult",preg:null,conv:{lo:null,hi:14},si:{lo:null,hi:14} },
+    { rid:"r5", kind:"note", grp:"hs-cTnT — male / female (US FDA)",analyte:{key:"tnt",label:"hs-cTnT (Roche assay)"},sex:"any",age:"adult",preg:null,conv:{txt:"22 (M) / 14 (F) ng/L"},si:{txt:"22 / 14"} }
   ],
   critical:{ txt:"Any value above the 99th percentile with a rising or falling pattern", lo:null, hi:null },
   inc:["Type 1 MI — plaque rupture with thrombus","Type 2 MI — supply-demand mismatch: sepsis, tachyarrhythmia, anaemia, hypotension, hypertensive crisis","Myocarditis, pericarditis, Takotsubo cardiomyopathy","Pulmonary embolism, severe pulmonary hypertension","Heart failure, acute decompensation","Chronic kidney disease — chronically raised baseline","Cardiac contusion, cardioversion, ablation, cardiac surgery","Sepsis, critical illness","Rhabdomyolysis with cardiac involvement, strenuous endurance exercise","Infiltrative disease — amyloid, sarcoid, haemochromatosis"],
@@ -611,11 +611,11 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"pg/mL", si:"ng/L", factor:1 },
   ranges:[
-    { rid:"r1", grp:"Heart failure unlikely (any age, non-acute)",sex:"any",age:"adult",preg:null,conv:{lo:null,hi:125},si:{lo:null,hi:125} },
-    { rid:"r2", grp:"Acute setting, age <50 — rule in",sex:"any",age:"adult",preg:null,conv:{lo:450,hi:null},si:{lo:450,hi:null} },
-    { rid:"r3", grp:"Acute setting, age 50–75 — rule in",sex:"any",age:"adult",preg:null,conv:{lo:900,hi:null},si:{lo:900,hi:null} },
-    { rid:"r4", grp:"Acute setting, age >75 — rule in",sex:"any",age:"adult",preg:null,conv:{lo:1800,hi:null},si:{lo:1800,hi:null} },
-    { rid:"r5", grp:"Acute rule-out (any age)",sex:"any",age:"adult",preg:null,conv:{txt:"<300 pg/mL makes acute heart failure very unlikely"},si:{txt:"<300"} }
+    { rid:"r1", kind:"cutoff", grp:"Heart failure unlikely (any age, non-acute)",sex:"any",age:"adult",preg:null,conv:{lo:null,hi:125},si:{lo:null,hi:125} },
+    { rid:"r2", kind:"cutoff", grp:"Acute setting, age <50 — rule in",sex:"any",age:"adult",preg:null,conv:{lo:450,hi:null},si:{lo:450,hi:null} },
+    { rid:"r3", kind:"cutoff", grp:"Acute setting, age 50–75 — rule in",sex:"any",age:"adult",preg:null,conv:{lo:900,hi:null},si:{lo:900,hi:null} },
+    { rid:"r4", kind:"cutoff", grp:"Acute setting, age >75 — rule in",sex:"any",age:"adult",preg:null,conv:{lo:1800,hi:null},si:{lo:1800,hi:null} },
+    { rid:"r5", kind:"cutoff", grp:"Acute rule-out (any age)",sex:"any",age:"adult",preg:null,conv:{txt:"<300 pg/mL makes acute heart failure very unlikely"},si:{txt:"<300"} }
   ],
   critical:null,
   inc:["Heart failure — systolic or diastolic","Atrial fibrillation (raises it substantially, independent of heart failure)","Chronic kidney disease — reduced clearance","Advancing age","Pulmonary embolism, pulmonary hypertension, cor pulmonale","Sepsis, critical illness","Valvular heart disease, myocarditis","Anaemia, thyrotoxicosis","Right ventricular strain of any cause"],
@@ -635,13 +635,13 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"ng/mL", si:"µg/L", factor:1 },
   ranges:[
-    { rid:"r1", grp:"Healthy adult",        sex:"any",age:"adult",preg:null, conv:{lo:null,hi:0.05}, si:{lo:null,hi:0.05} },
-    { rid:"r2", grp:"Bacterial infection unlikely",sex:"any",age:"adult",preg:null,conv:{lo:null,hi:0.25},si:{lo:null,hi:0.25} },
-    { rid:"r3", grp:"Grey zone",            sex:"any",age:"adult",preg:null, conv:{lo:0.25,hi:0.5},  si:{lo:0.25,hi:0.5} },
-    { rid:"r4", grp:"Bacterial infection likely",sex:"any",age:"adult",preg:null,conv:{lo:0.5,hi:2.0},si:{lo:0.5,hi:2.0} },
-    { rid:"r5", grp:"High risk of sepsis",  sex:"any",age:"adult",preg:null, conv:{lo:2.0,hi:10.0},  si:{lo:2.0,hi:10.0} },
-    { rid:"r6", grp:"Severe sepsis / septic shock likely",sex:"any",age:"adult",preg:null,conv:{lo:10.0,hi:null},si:{lo:10.0,hi:null} },
-    { rid:"r7", grp:"Neonate 0–48 h (physiological surge)",sex:"any",age:"neonate",preg:null,conv:{txt:"Use hour-specific nomogram; may reach 20 ng/mL normally"},si:{txt:"Hour-specific nomogram"} }
+    { rid:"r1", kind:"ref", grp:"Healthy adult",        sex:"any",age:"adult",preg:null, conv:{lo:null,hi:0.05}, si:{lo:null,hi:0.05} },
+    { rid:"r2", kind:"cutoff", grp:"Bacterial infection unlikely",sex:"any",age:"adult",preg:null,conv:{lo:null,hi:0.25},si:{lo:null,hi:0.25} },
+    { rid:"r3", kind:"cutoff", grp:"Grey zone",            sex:"any",age:"adult",preg:null, conv:{lo:0.25,hi:0.5},  si:{lo:0.25,hi:0.5} },
+    { rid:"r4", kind:"cutoff", grp:"Bacterial infection likely",sex:"any",age:"adult",preg:null,conv:{lo:0.5,hi:2.0},si:{lo:0.5,hi:2.0} },
+    { rid:"r5", kind:"cutoff", grp:"High risk of sepsis",  sex:"any",age:"adult",preg:null, conv:{lo:2.0,hi:10.0},  si:{lo:2.0,hi:10.0} },
+    { rid:"r6", kind:"cutoff", grp:"Severe sepsis / septic shock likely",sex:"any",age:"adult",preg:null,conv:{lo:10.0,hi:null},si:{lo:10.0,hi:null} },
+    { rid:"r7", kind:"note", grp:"Neonate 0–48 h (physiological surge)",sex:"any",age:"neonate",preg:null,conv:{txt:"Use hour-specific nomogram; may reach 20 ng/mL normally"},si:{txt:"Hour-specific nomogram"} }
   ],
   critical:null,
   inc:["Bacterial sepsis and septic shock","Severe bacterial infection — pneumonia, pyelonephritis, meningitis, intra-abdominal sepsis","Major surgery, trauma, burns (peaks day 1–2, then falls)","Cardiogenic shock, prolonged severe shock of any cause","First 48 hours of life (physiological)","Medullary thyroid carcinoma, small cell lung carcinoma","Severe malaria","End-stage renal disease and dialysis","Anti-thymocyte globulin, OKT3, IL-2 and other cytokine-stimulating agents","Acute graft-versus-host disease"],
@@ -659,12 +659,12 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"mg/L", si:"mg/L", factor:1 },
   ranges:[
-    { rid:"r1", grp:"Normal",                 sex:"any",age:"adult",preg:null, conv:{lo:null,hi:5},  si:{lo:null,hi:5} },
-    { rid:"r2", grp:"Mild rise",              sex:"any",age:"adult",preg:null, conv:{lo:5,hi:50},    si:{lo:5,hi:50} },
-    { rid:"r3", grp:"Marked rise (bacterial infection likely)",sex:"any",age:"adult",preg:null,conv:{lo:100,hi:null},si:{lo:100,hi:null} },
-    { rid:"r4", grp:"hs-CRP — low CV risk",   sex:"any",age:"adult",preg:null, conv:{lo:null,hi:1},  si:{lo:null,hi:1} },
-    { rid:"r5", grp:"hs-CRP — average CV risk",sex:"any",age:"adult",preg:null,conv:{lo:1,hi:3},     si:{lo:1,hi:3} },
-    { rid:"r6", grp:"hs-CRP — high CV risk",  sex:"any",age:"adult",preg:null, conv:{lo:3,hi:10},    si:{lo:3,hi:10} }
+    { rid:"r7", analyte:{key:"crp",label:"CRP"}, kind:"ref", grp:"Normal",                 sex:"any",age:"adult",preg:null, conv:{lo:null,hi:5},  si:{lo:null,hi:5} },
+    { rid:"r8", analyte:{key:"crp",label:"CRP"}, kind:"dx", grp:"Mild rise",              sex:"any",age:"adult",preg:null, conv:{lo:5,hi:50},    si:{lo:5,hi:50} },
+    { rid:"r9", analyte:{key:"crp",label:"CRP"}, kind:"dx", grp:"Marked rise (bacterial infection likely)",sex:"any",age:"adult",preg:null,conv:{lo:100,hi:null},si:{lo:100,hi:null} },
+    { rid:"r10", analyte:{key:"hscrp",label:"hs-CRP"}, kind:"cutoff", grp:"hs-CRP — low CV risk",   sex:"any",age:"adult",preg:null, conv:{lo:null,hi:1},  si:{lo:null,hi:1} },
+    { rid:"r11", analyte:{key:"hscrp",label:"hs-CRP"}, kind:"cutoff", grp:"hs-CRP — average CV risk",sex:"any",age:"adult",preg:null,conv:{lo:1,hi:3},     si:{lo:1,hi:3} },
+    { rid:"r12", analyte:{key:"hscrp",label:"hs-CRP"}, kind:"cutoff", grp:"hs-CRP — high CV risk",  sex:"any",age:"adult",preg:null, conv:{lo:3,hi:10},    si:{lo:3,hi:10} }
   ],
   critical:null,
   inc:["Bacterial infection — typically >100 mg/L","Tissue injury — surgery, trauma, burns, infarction","Rheumatoid arthritis and other inflammatory arthritides, vasculitis","Inflammatory bowel disease","Malignancy","Tuberculosis and other chronic infections","Pregnancy, obesity, smoking (modest rises)"],
@@ -682,8 +682,8 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"Qualitative", si:"Qualitative", factor:null },
   ranges:[
-    { rid:"r1", grp:"Expected result", sex:"any",age:"adult",preg:null, conv:{txt:"No growth after 5 days of incubation"}, si:{txt:"No growth after 5 days"} },
-    { rid:"r2", grp:"Time to positivity",sex:"any",age:"adult",preg:null, conv:{txt:"Most true pathogens flag within 24–48 h"}, si:{txt:"24–48 h"} }
+    { rid:"r1", kind:"note", grp:"Expected result", sex:"any",age:"adult",preg:null, conv:{txt:"No growth after 5 days of incubation"}, si:{txt:"No growth after 5 days"} },
+    { rid:"r2", kind:"note", grp:"Time to positivity",sex:"any",age:"adult",preg:null, conv:{txt:"Most true pathogens flag within 24–48 h"}, si:{txt:"24–48 h"} }
   ],
   critical:{ txt:"Any positive result — a Gram stain result is a critical value requiring immediate notification", lo:null, hi:null },
   inc:["True bacteraemia — Staphylococcus aureus, Streptococcus pneumoniae, Enterobacterales, Pseudomonas","Enteric fever — Salmonella Typhi and Paratyphi (yield highest in the first week of illness)","Infective endocarditis — persistent bacteraemia across multiple sets","Candidaemia, especially with central lines, TPN or broad-spectrum antibiotics","Catheter-related bloodstream infection"],
@@ -704,11 +704,11 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"mg/dL", si:"µmol/L", factor:17.1 },
   ranges:[
-    { rid:"r1", grp:"Total — adult",    analyte:{key:"total",label:"Total Bilirubin"}, sex:"any",age:"adult",   preg:null, conv:{lo:0.2,hi:1.2},  si:{lo:3,hi:21} },
-    { rid:"r2", grp:"Direct — adult",   analyte:{key:"direct",label:"Direct (Conjugated) Bilirubin"}, sex:"any",age:"adult",   preg:null, conv:{lo:0.0,hi:0.3},  si:{lo:0,hi:5} },
-    { rid:"r3", grp:"Newborn 24 h (total)",analyte:{key:"total",label:"Total Bilirubin"}, sex:"any",age:"neonate", preg:null, conv:{lo:null,hi:8.7}, si:{lo:null,hi:149} },
-    { rid:"r4", grp:"Newborn 48 h (total)",analyte:{key:"total",label:"Total Bilirubin"}, sex:"any",age:"neonate", preg:null, conv:{lo:null,hi:11.5},si:{lo:null,hi:197} },
-    { rid:"r5", grp:"Newborn 3–5 d (total)",analyte:{key:"total",label:"Total Bilirubin"}, sex:"any",age:"neonate", preg:null, conv:{lo:null,hi:12.0},si:{lo:null,hi:205} }
+    { rid:"r1", kind:"ref", grp:"Total — adult",    analyte:{key:"total",label:"Total Bilirubin"}, sex:"any",age:"adult",   preg:null, conv:{lo:0.2,hi:1.2},  si:{lo:3,hi:21} },
+    { rid:"r2", kind:"ref", grp:"Direct — adult",   analyte:{key:"direct",label:"Direct (Conjugated) Bilirubin"}, sex:"any",age:"adult",   preg:null, conv:{lo:0.0,hi:0.3},  si:{lo:0,hi:5} },
+    { rid:"r3", kind:"method", grp:"Newborn 24 h (total)",analyte:{key:"total",label:"Total Bilirubin"}, sex:"any",age:"neonate", preg:null, conv:{lo:null,hi:8.7}, si:{lo:null,hi:149} },
+    { rid:"r4", kind:"method", grp:"Newborn 48 h (total)",analyte:{key:"total",label:"Total Bilirubin"}, sex:"any",age:"neonate", preg:null, conv:{lo:null,hi:11.5},si:{lo:null,hi:197} },
+    { rid:"r5", kind:"method", grp:"Newborn 3–5 d (total)",analyte:{key:"total",label:"Total Bilirubin"}, sex:"any",age:"neonate", preg:null, conv:{lo:null,hi:12.0},si:{lo:null,hi:205} }
   ],
   critical:{ txt:"Neonate >15 mg/dL (or per hour-specific nomogram); adult >15 mg/dL with encephalopathy", lo:null, hi:15.0, analyte:["total"] },
   inc:["Unconjugated (indirect) — haemolysis, ineffective erythropoiesis, Gilbert syndrome, Crigler-Najjar, resorbing haematoma, neonatal physiological jaundice","Conjugated (direct) — biliary obstruction by stone, stricture or tumour; hepatitis; drug cholestasis; primary biliary cholangitis; sepsis-associated cholestasis","Mixed — cirrhosis, severe hepatitis, Dubin-Johnson, Rotor syndrome","Malaria and dengue with haemolysis (frequent in Indian practice)","G6PD deficiency with an oxidant trigger"],
@@ -731,14 +731,14 @@ const LABREF_TESTS = [
      apply it blindly: triglycerides converts at 0.0113, a different substance entirely. */
   units:{ conv:"mg/dL", si:"mmol/L", factor:0.0259 },
   ranges:[
-    { rid:"r1", grp:"Total cholesterol — desirable",analyte:{key:"totalchol",label:"Total Cholesterol"},sex:"any",age:"adult",preg:null,conv:{lo:null,hi:200},si:{lo:null,hi:5.18} },
-    { rid:"r2", grp:"LDL-C — optimal",        analyte:{key:"ldl",label:"LDL-C"}, sex:"any",age:"adult",preg:null, conv:{lo:null,hi:100}, si:{lo:null,hi:2.59} },
-    { rid:"r3", grp:"LDL-C — high CV risk target",analyte:{key:"ldl",label:"LDL-C"},sex:"any",age:"adult",preg:null,conv:{lo:null,hi:70},si:{lo:null,hi:1.8} },
-    { rid:"r4", grp:"LDL-C — very high CV risk target",analyte:{key:"ldl",label:"LDL-C"},sex:"any",age:"adult",preg:null,conv:{lo:null,hi:55},si:{lo:null,hi:1.4} },
-    { rid:"r5", grp:"HDL-C — male",           analyte:{key:"hdl",label:"HDL-C"}, sex:"M", age:"adult",preg:null, conv:{lo:40,hi:null},  si:{lo:1.03,hi:null} },
-    { rid:"r6", grp:"HDL-C — female",         analyte:{key:"hdl",label:"HDL-C"}, sex:"F", age:"adult",preg:null, conv:{lo:50,hi:null},  si:{lo:1.29,hi:null} },
-    { rid:"r7", grp:"Triglycerides — normal", analyte:{key:"trig",label:"Triglycerides",factor:0.0113}, sex:"any",age:"adult",preg:null, conv:{lo:null,hi:150}, si:{lo:null,hi:1.69} },
-    { rid:"r8", grp:"Non-HDL-C — target",     analyte:{key:"nonhdl",label:"Non-HDL-C"}, sex:"any",age:"adult",preg:null, conv:{lo:null,hi:130}, si:{lo:null,hi:3.37} }
+    { rid:"r1", kind:"dx", grp:"Total cholesterol — desirable",analyte:{key:"totalchol",label:"Total Cholesterol"},sex:"any",age:"adult",preg:null,conv:{lo:null,hi:200},si:{lo:null,hi:5.18} },
+    { rid:"r2", kind:"dx", grp:"LDL-C — optimal",        analyte:{key:"ldl",label:"LDL-C"}, sex:"any",age:"adult",preg:null, conv:{lo:null,hi:100}, si:{lo:null,hi:2.59} },
+    { rid:"r3", kind:"target", grp:"LDL-C — high CV risk target",analyte:{key:"ldl",label:"LDL-C"},sex:"any",age:"adult",preg:null,conv:{lo:null,hi:70},si:{lo:null,hi:1.8} },
+    { rid:"r4", kind:"target", grp:"LDL-C — very high CV risk target",analyte:{key:"ldl",label:"LDL-C"},sex:"any",age:"adult",preg:null,conv:{lo:null,hi:55},si:{lo:null,hi:1.4} },
+    { rid:"r5", kind:"ref", grp:"HDL-C — male",           analyte:{key:"hdl",label:"HDL-C"}, sex:"M", age:"adult",preg:null, conv:{lo:40,hi:null},  si:{lo:1.03,hi:null} },
+    { rid:"r6", kind:"ref", grp:"HDL-C — female",         analyte:{key:"hdl",label:"HDL-C"}, sex:"F", age:"adult",preg:null, conv:{lo:50,hi:null},  si:{lo:1.29,hi:null} },
+    { rid:"r7", kind:"ref", grp:"Triglycerides — normal", analyte:{key:"trig",label:"Triglycerides",factor:0.0113}, sex:"any",age:"adult",preg:null, conv:{lo:null,hi:150}, si:{lo:null,hi:1.69} },
+    { rid:"r8", kind:"target", grp:"Non-HDL-C — target",     analyte:{key:"nonhdl",label:"Non-HDL-C"}, sex:"any",age:"adult",preg:null, conv:{lo:null,hi:130}, si:{lo:null,hi:3.37} }
   ],
   critical:{ txt:"Triglycerides >1000 mg/dL (pancreatitis risk)", lo:null, hi:1000, analyte:["trig"] },
   inc:["Familial hypercholesterolaemia, familial combined hyperlipidaemia","Diabetes mellitus and metabolic syndrome — the typical Indian pattern is high triglycerides with low HDL","Hypothyroidism, nephrotic syndrome, cholestasis","Obesity, alcohol excess, high refined-carbohydrate diet","Drugs — thiazides, corticosteroids, oestrogens, protease inhibitors, isotretinoin, tacrolimus","Pregnancy (physiological rise, peaks in the third trimester)","Non-fasting sample (raises triglycerides)"],
@@ -759,12 +759,12 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"µIU/mL", si:"mIU/L", factor:1 },
   ranges:[
-    { rid:"r1", grp:"Adult",        sex:"any",age:"adult",   preg:null, conv:{lo:0.4,hi:4.0},  si:{lo:0.4,hi:4.0} },
-    { rid:"r2", grp:"Pregnancy T1", sex:"F", age:"adult",    preg:"T1", conv:{lo:0.1,hi:4.0},  si:{lo:0.1,hi:4.0} },
-    { rid:"r3", grp:"Pregnancy T2", sex:"F", age:"adult",    preg:"T2", conv:{lo:0.2,hi:4.0},  si:{lo:0.2,hi:4.0} },
-    { rid:"r4", grp:"Pregnancy T3", sex:"F", age:"adult",    preg:"T3", conv:{lo:0.3,hi:4.0},  si:{lo:0.3,hi:4.0} },
-    { rid:"r5", grp:"Newborn (0–4 d)",sex:"any",age:"neonate",preg:null,conv:{lo:1.0,hi:39.0}, si:{lo:1.0,hi:39.0} },
-    { rid:"r6", grp:"Child (1–12 y)",sex:"any",age:"child",  preg:null, conv:{lo:0.7,hi:5.7},  si:{lo:0.7,hi:5.7} }
+    { rid:"r1", kind:"ref", grp:"Adult",        sex:"any",age:"adult",   preg:null, conv:{lo:0.4,hi:4.0},  si:{lo:0.4,hi:4.0} },
+    { rid:"r2", kind:"ref", grp:"Pregnancy T1", sex:"F", age:"adult",    preg:"T1", conv:{lo:0.1,hi:4.0},  si:{lo:0.1,hi:4.0} },
+    { rid:"r3", kind:"ref", grp:"Pregnancy T2", sex:"F", age:"adult",    preg:"T2", conv:{lo:0.2,hi:4.0},  si:{lo:0.2,hi:4.0} },
+    { rid:"r4", kind:"ref", grp:"Pregnancy T3", sex:"F", age:"adult",    preg:"T3", conv:{lo:0.3,hi:4.0},  si:{lo:0.3,hi:4.0} },
+    { rid:"r5", kind:"ref", grp:"Newborn (0–4 d)",sex:"any",age:"neonate",preg:null,conv:{lo:1.0,hi:39.0}, si:{lo:1.0,hi:39.0} },
+    { rid:"r6", kind:"ref", grp:"Child (1–12 y)",sex:"any",age:"child",  preg:null, conv:{lo:0.7,hi:5.7},  si:{lo:0.7,hi:5.7} }
   ],
   critical:{ txt:"TSH >100 µIU/mL, or <0.01 with symptoms (myxoedema coma / thyroid storm)", lo:0.01, hi:100 },
   inc:["Primary hypothyroidism — autoimmune (Hashimoto), post-surgical, post-radioiodine, iodine deficiency","Subclinical hypothyroidism (raised TSH, normal free T4)","Recovery phase of non-thyroidal illness","Drugs — amiodarone, lithium, interferon, tyrosine kinase inhibitors","Inadequate levothyroxine dose or poor adherence","TSH-secreting pituitary adenoma, thyroid hormone resistance (rare, with raised free T4)","Untreated adrenal insufficiency","Assay interference — heterophile or anti-TSH antibodies"],
@@ -783,11 +783,11 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"ng/dL", si:"pmol/L", factor:12.87 },
   ranges:[
-    { rid:"r1", grp:"Adult",        sex:"any",age:"adult",   preg:null, conv:{lo:0.8,hi:1.8},  si:{lo:10.3,hi:23.2} },
-    { rid:"r2", grp:"Pregnancy T1", sex:"F", age:"adult",    preg:"T1", conv:{lo:0.8,hi:1.3},  si:{lo:10.3,hi:16.7} },
-    { rid:"r3", grp:"Pregnancy T2", sex:"F", age:"adult",    preg:"T2", conv:{lo:0.7,hi:1.2},  si:{lo:9.0,hi:15.4} },
-    { rid:"r4", grp:"Pregnancy T3", sex:"F", age:"adult",    preg:"T3", conv:{lo:0.7,hi:1.2},  si:{lo:9.0,hi:15.4} },
-    { rid:"r5", grp:"Newborn",      sex:"any",age:"neonate", preg:null, conv:{lo:0.9,hi:2.2},  si:{lo:11.6,hi:28.3} }
+    { rid:"r1", kind:"ref", grp:"Adult",        sex:"any",age:"adult",   preg:null, conv:{lo:0.8,hi:1.8},  si:{lo:10.3,hi:23.2} },
+    { rid:"r2", kind:"ref", grp:"Pregnancy T1", sex:"F", age:"adult",    preg:"T1", conv:{lo:0.8,hi:1.3},  si:{lo:10.3,hi:16.7} },
+    { rid:"r3", kind:"ref", grp:"Pregnancy T2", sex:"F", age:"adult",    preg:"T2", conv:{lo:0.7,hi:1.2},  si:{lo:9.0,hi:15.4} },
+    { rid:"r4", kind:"ref", grp:"Pregnancy T3", sex:"F", age:"adult",    preg:"T3", conv:{lo:0.7,hi:1.2},  si:{lo:9.0,hi:15.4} },
+    { rid:"r5", kind:"ref", grp:"Newborn",      sex:"any",age:"neonate", preg:null, conv:{lo:0.9,hi:2.2},  si:{lo:11.6,hi:28.3} }
   ],
   critical:null,
   inc:["Hyperthyroidism — Graves, toxic nodule, thyroiditis","Excess levothyroxine or thyroid hormone misuse for weight loss","Amiodarone-induced thyrotoxicosis","Biotin interference (falsely high)","Acute psychiatric illness (transient)","Thyroid hormone resistance, TSH-secreting adenoma","Heparin — displaces T4 from binding proteins in vitro, falsely raising free T4"],
@@ -806,10 +806,10 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"ng/mL", si:"nmol/L", factor:2.496 },
   ranges:[
-    { rid:"r1", grp:"Deficient",    sex:"any",age:"adult",preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:50} },
-    { rid:"r2", grp:"Insufficient", sex:"any",age:"adult",preg:null, conv:{lo:20,hi:29},   si:{lo:50,hi:74} },
-    { rid:"r3", grp:"Sufficient",   sex:"any",age:"adult",preg:null, conv:{lo:30,hi:100},  si:{lo:75,hi:250} },
-    { rid:"r4", grp:"Potential toxicity",sex:"any",age:"adult",preg:null,conv:{lo:150,hi:null},si:{lo:374,hi:null} }
+    { rid:"r1", kind:"dx", grp:"Deficient",    sex:"any",age:"adult",preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:50} },
+    { rid:"r2", kind:"dx", grp:"Insufficient", sex:"any",age:"adult",preg:null, conv:{lo:20,hi:29},   si:{lo:50,hi:74} },
+    { rid:"r3", kind:"dx", grp:"Sufficient",   sex:"any",age:"adult",preg:null, conv:{lo:30,hi:100},  si:{lo:75,hi:250} },
+    { rid:"r4", kind:"dx", grp:"Potential toxicity",sex:"any",age:"adult",preg:null,conv:{lo:150,hi:null},si:{lo:374,hi:null} }
   ],
   critical:{ txt:">150 ng/mL with hypercalcaemia", lo:null, hi:150 },
   inc:["Supplementation, particularly high-dose weekly or monthly sachets","Excessive intake — vitamin D toxicity causes hypercalcaemia, nephrocalcinosis and renal failure"],
@@ -830,13 +830,13 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"ng/mL", si:"µg/L", factor:1 },
   ranges:[
-    { rid:"r1", grp:"Adult male",    sex:"M", age:"adult",   preg:null, conv:{lo:24,hi:336},  si:{lo:24,hi:336} },
-    { rid:"r2", grp:"Adult female",  sex:"F", age:"adult",   preg:null, conv:{lo:11,hi:307},  si:{lo:11,hi:307} },
-    { rid:"r3", grp:"Iron deficiency (no inflammation)",sex:"any",age:"adult",preg:null,conv:{lo:null,hi:30},si:{lo:null,hi:30} },
-    { rid:"r4", grp:"Iron deficiency (with inflammation or CKD)",sex:"any",age:"adult",preg:null,conv:{lo:null,hi:100},si:{lo:null,hi:100} },
-    { rid:"r5", grp:"Pregnancy",     sex:"F", age:"adult",   preg:"any",conv:{lo:10,hi:150},  si:{lo:10,hi:150} },
-    { rid:"r6", grp:"Newborn",       sex:"any",age:"neonate",preg:null, conv:{lo:25,hi:200},  si:{lo:25,hi:200} },
-    { rid:"r7", grp:"Child (1–10 y)",sex:"any",age:"child",  preg:null, conv:{lo:7,hi:140},   si:{lo:7,hi:140} }
+    { rid:"r1", kind:"ref", grp:"Adult male",    sex:"M", age:"adult",   preg:null, conv:{lo:24,hi:336},  si:{lo:24,hi:336} },
+    { rid:"r2", kind:"ref", grp:"Adult female",  sex:"F", age:"adult",   preg:null, conv:{lo:11,hi:307},  si:{lo:11,hi:307} },
+    { rid:"r3", kind:"dx", grp:"Iron deficiency (no inflammation)",sex:"any",age:"adult",preg:null,conv:{lo:null,hi:30},si:{lo:null,hi:30} },
+    { rid:"r4", kind:"dx", grp:"Iron deficiency (with inflammation or CKD)",sex:"any",age:"adult",preg:null,conv:{lo:null,hi:100},si:{lo:null,hi:100} },
+    { rid:"r5", kind:"ref", grp:"Pregnancy",     sex:"F", age:"adult",   preg:"any",conv:{lo:10,hi:150},  si:{lo:10,hi:150} },
+    { rid:"r6", kind:"ref", grp:"Newborn",       sex:"any",age:"neonate",preg:null, conv:{lo:25,hi:200},  si:{lo:25,hi:200} },
+    { rid:"r7", kind:"ref", grp:"Child (1–10 y)",sex:"any",age:"child",  preg:null, conv:{lo:7,hi:140},   si:{lo:7,hi:140} }
   ],
   critical:null,
   inc:["Acute phase response — infection, inflammation, surgery, trauma (the commonest reason for a misleading result)","Iron overload — hereditary haemochromatosis, transfusional overload in thalassaemia (important in India)","Chronic liver disease, alcohol excess","Malignancy, lymphoma","Haemophagocytic lymphohistiocytosis — ferritin often >10,000, a key diagnostic clue","Still disease, adult-onset","Chronic kidney disease","Recent iron therapy, especially intravenous"],
@@ -855,9 +855,9 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"pg/mL", si:"pmol/L", factor:0.738 },
   ranges:[
-    { rid:"r1", grp:"Normal",      sex:"any",age:"adult",preg:null, conv:{lo:200,hi:900}, si:{lo:148,hi:664} },
-    { rid:"r2", grp:"Borderline",  sex:"any",age:"adult",preg:null, conv:{lo:150,hi:199}, si:{lo:111,hi:147} },
-    { rid:"r3", grp:"Deficient",   sex:"any",age:"adult",preg:null, conv:{lo:null,hi:150},si:{lo:null,hi:111} }
+    { rid:"r1", kind:"ref", grp:"Normal",      sex:"any",age:"adult",preg:null, conv:{lo:200,hi:900}, si:{lo:148,hi:664} },
+    { rid:"r2", kind:"dx", grp:"Borderline",  sex:"any",age:"adult",preg:null, conv:{lo:150,hi:199}, si:{lo:111,hi:147} },
+    { rid:"r3", kind:"dx", grp:"Deficient",   sex:"any",age:"adult",preg:null, conv:{lo:null,hi:150},si:{lo:null,hi:111} }
   ],
   critical:null,
   inc:["Supplementation or recent injection","Liver disease — release from hepatic stores","Myeloproliferative neoplasms, chronic myeloid leukaemia","Renal failure","Rarely clinically meaningful on its own"],
@@ -877,10 +877,10 @@ const LABREF_TESTS = [
   assayDep:true,
   units:{ conv:"Titre + pattern", si:"Titre + pattern", factor:null },
   ranges:[
-    { rid:"r1", grp:"Negative",            sex:"any",age:"adult",preg:null, conv:{txt:"<1:80 by indirect immunofluorescence on HEp-2"}, si:{txt:"<1:80"} },
-    { rid:"r2", grp:"Low positive",        sex:"any",age:"adult",preg:null, conv:{txt:"1:80 — often non-specific, present in up to 15% of healthy adults"}, si:{txt:"1:80"} },
-    { rid:"r3", grp:"Moderate positive",   sex:"any",age:"adult",preg:null, conv:{txt:"1:160 — clinically relevant in the right context"}, si:{txt:"1:160"} },
-    { rid:"r4", grp:"High positive",       sex:"any",age:"adult",preg:null, conv:{txt:"≥1:320 — strongly suggests autoimmune disease"}, si:{txt:"≥1:320"} }
+    { rid:"r1", kind:"dx", grp:"Negative",            sex:"any",age:"adult",preg:null, conv:{txt:"<1:80 by indirect immunofluorescence on HEp-2"}, si:{txt:"<1:80"} },
+    { rid:"r2", kind:"dx", grp:"Low positive",        sex:"any",age:"adult",preg:null, conv:{txt:"1:80 — often non-specific, present in up to 15% of healthy adults"}, si:{txt:"1:80"} },
+    { rid:"r3", kind:"dx", grp:"Moderate positive",   sex:"any",age:"adult",preg:null, conv:{txt:"1:160 — clinically relevant in the right context"}, si:{txt:"1:160"} },
+    { rid:"r4", kind:"dx", grp:"High positive",       sex:"any",age:"adult",preg:null, conv:{txt:"≥1:320 — strongly suggests autoimmune disease"}, si:{txt:"≥1:320"} }
   ],
   critical:null,
   inc:["Systemic lupus erythematosus — positive in over 95%, so a negative ANA makes SLE very unlikely","Systemic sclerosis, Sjögren syndrome, mixed connective tissue disease, polymyositis","Autoimmune hepatitis, primary biliary cholangitis","Drug-induced lupus — anti-histone antibodies, typically homogeneous pattern","Rheumatoid arthritis (30–40%)","Juvenile idiopathic arthritis with uveitis","Healthy individuals, particularly women and with increasing age — up to 15% at 1:80","Chronic infection — tuberculosis, hepatitis C, HIV, infective endocarditis","Malignancy, especially lymphoproliferative disease"],
@@ -901,9 +901,9 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"µg/mL", si:"µmol/L", factor:3.96 },
   ranges:[
-    { rid:"r1", grp:"Therapeutic (total)",   sex:"any",age:"adult",preg:null, conv:{lo:10,hi:20},  si:{lo:40,hi:79} },
-    { rid:"r2", grp:"Therapeutic (free)",    sex:"any",age:"adult",preg:null, conv:{lo:1.0,hi:2.0},si:{lo:4.0,hi:7.9} },
-    { rid:"r3", grp:"Neonate",               sex:"any",age:"neonate",preg:null,conv:{lo:8,hi:15},  si:{lo:32,hi:59} }
+    { rid:"r1", kind:"target", grp:"Therapeutic (total)",   sex:"any",age:"adult",preg:null, conv:{lo:10,hi:20},  si:{lo:40,hi:79} },
+    { rid:"r2", kind:"target", grp:"Therapeutic (free)",    sex:"any",age:"adult",preg:null, conv:{lo:1.0,hi:2.0},si:{lo:4.0,hi:7.9} },
+    { rid:"r3", kind:"ref", grp:"Neonate",               sex:"any",age:"neonate",preg:null,conv:{lo:8,hi:15},  si:{lo:32,hi:59} }
   ],
   critical:{ txt:">30 µg/mL (toxicity)", lo:null, hi:30 },
   inc:["Dose increase — phenytoin shows saturable (zero-order) kinetics, so a small dose rise can produce a disproportionate jump in level","Hepatic impairment","Drug interactions — isoniazid, fluconazole, cimetidine, amiodarone, valproate (displaces from protein)","Hypoalbuminaemia raises the free fraction without raising the total level","Reduced metabolism in slow hydroxylators (CYP2C9 variants)"],
@@ -924,9 +924,9 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"mg/g creatinine", si:"mg/mmol creatinine", factor:0.113 },
   ranges:[
-    { rid:"r1", grp:"A1 — normal to mildly increased",sex:"any",age:"adult",preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:3.4} },
-    { rid:"r2", grp:"A2 — moderately increased (formerly microalbuminuria)",sex:"any",age:"adult",preg:null,conv:{lo:30,hi:300},si:{lo:3.4,hi:33.9} },
-    { rid:"r3", grp:"A3 — severely increased (formerly macroalbuminuria)",sex:"any",age:"adult",preg:null,conv:{lo:300,hi:null},si:{lo:33.9,hi:null} }
+    { rid:"r1", kind:"dx", grp:"A1 — normal to mildly increased",sex:"any",age:"adult",preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:3.4} },
+    { rid:"r2", kind:"dx", grp:"A2 — moderately increased (formerly microalbuminuria)",sex:"any",age:"adult",preg:null,conv:{lo:30,hi:300},si:{lo:3.4,hi:33.9} },
+    { rid:"r3", kind:"dx", grp:"A3 — severely increased (formerly macroalbuminuria)",sex:"any",age:"adult",preg:null,conv:{lo:300,hi:null},si:{lo:33.9,hi:null} }
   ],
   critical:null,
   inc:["Diabetic kidney disease — the earliest detectable marker, and the reason for annual screening","Hypertensive nephrosclerosis","Glomerulonephritis of any cause","Pre-eclampsia","Heart failure","Urinary tract infection, fever, vigorous exercise (transient)","Obesity, smoking","Nephrotoxic drugs, contrast nephropathy"],
@@ -946,9 +946,9 @@ const LABREF_TESTS = [
   assayDep:false,
   units:{ conv:"g/dL", si:"g/L", factor:10 },
   ranges:[
-    { rid:"r1", grp:"SAAG ≥1.1 — portal hypertension",sex:"any",age:"adult",preg:null,conv:{lo:1.1,hi:null},si:{lo:11,hi:null} },
-    { rid:"r2", grp:"SAAG <1.1 — non-portal cause",   sex:"any",age:"adult",preg:null,conv:{lo:null,hi:1.1},si:{lo:null,hi:11} },
-    { rid:"r3", grp:"SBP threshold (fluid neutrophils)",sex:"any",age:"adult",preg:null,conv:{txt:"≥250 cells/µL diagnoses spontaneous bacterial peritonitis"},si:{txt:"≥0.25 ×10⁹/L"} }
+    { rid:"r4", analyte:{key:"saag",label:"SAAG"}, kind:"cutoff", grp:"SAAG ≥1.1 — portal hypertension",sex:"any",age:"adult",preg:null,conv:{lo:1.1,hi:null},si:{lo:11,hi:null} },
+    { rid:"r5", analyte:{key:"saag",label:"SAAG"}, kind:"cutoff", grp:"SAAG <1.1 — non-portal cause",   sex:"any",age:"adult",preg:null,conv:{lo:null,hi:1.1},si:{lo:null,hi:11} },
+    { rid:"r6", analyte:{key:"sbpneut",label:"Ascitic Fluid Neutrophil Count"}, kind:"cutoff", grp:"SBP threshold (fluid neutrophils)",sex:"any",age:"adult",preg:null,conv:{txt:"≥250 cells/µL diagnoses spontaneous bacterial peritonitis"},si:{txt:"≥0.25 ×10⁹/L"} }
   ],
   critical:{ txt:"Ascitic neutrophils ≥250/µL — start antibiotics immediately", lo:null, hi:null },
   inc:["SAAG ≥1.1 (portal hypertension) — cirrhosis, alcoholic hepatitis, heart failure, constrictive pericarditis, Budd-Chiari, massive liver metastases, portal vein thrombosis"],
@@ -970,11 +970,11 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/dL", si:"mmol/L", factor:0.1665 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:45}, si:{lo:2.5,hi:7.5} },
-      { rid:"r2", grp:"Pregnancy", sex:"F", age:"adult", preg:"any", conv:{lo:6,hi:24}, si:{lo:1.0,hi:4.0} },
-      { rid:"r3", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:5,hi:33}, si:{lo:0.8,hi:5.5} },
-      { rid:"r4", grp:"Infant", sex:"any", age:"infant", preg:null, conv:{lo:6,hi:33}, si:{lo:1.0,hi:5.5} },
-      { rid:"r5", grp:"Child (1–16 y)", sex:"any", age:"child", preg:null, conv:{lo:15,hi:39}, si:{lo:2.5,hi:6.5} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:45}, si:{lo:2.5,hi:7.5} },
+      { rid:"r2", kind:"ref", grp:"Pregnancy", sex:"F", age:"adult", preg:"any", conv:{lo:6,hi:24}, si:{lo:1.0,hi:4.0} },
+      { rid:"r3", kind:"ref", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:5,hi:33}, si:{lo:0.8,hi:5.5} },
+      { rid:"r4", kind:"ref", grp:"Infant", sex:"any", age:"infant", preg:null, conv:{lo:6,hi:33}, si:{lo:1.0,hi:5.5} },
+      { rid:"r5", kind:"ref", grp:"Child (1–16 y)", sex:"any", age:"child", preg:null, conv:{lo:15,hi:39}, si:{lo:2.5,hi:6.5} }
     ],
     critical:{ txt:">100 mg/dL (uraemia — consider dialysis assessment)", lo:null, hi:100 },
     inc:["Pre-renal: dehydration, hypovolaemia, shock, heart failure, diuretics","Intrinsic renal disease and acute kidney injury","Post-renal obstruction (stones, prostate, cervical malignancy)","Upper GI bleed — digested blood is a protein load","High-protein diet or catabolic state (sepsis, burns, steroids, trauma)","Tetracyclines and corticosteroids increase protein catabolism"],
@@ -993,9 +993,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mEq/L", si:"mmol/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:98,hi:107}, si:{lo:98,hi:107} },
-      { rid:"r2", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:98,hi:113}, si:{lo:98,hi:113} },
-      { rid:"r3", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:98,hi:107}, si:{lo:98,hi:107} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:98,hi:107}, si:{lo:98,hi:107} },
+      { rid:"r2", kind:"ref", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:98,hi:113}, si:{lo:98,hi:113} },
+      { rid:"r3", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:98,hi:107}, si:{lo:98,hi:107} }
     ],
     critical:{ txt:"<80 or >115 mEq/L", lo:80, hi:115 },
     inc:["Normal anion gap (hyperchloraemic) metabolic acidosis — diarrhoea, renal tubular acidosis","Large-volume 0.9% saline resuscitation","Dehydration with water loss exceeding salt loss","Respiratory alkalosis (compensatory)","Acetazolamide, and ureteric diversion into bowel"],
@@ -1014,10 +1014,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mEq/L", si:"mmol/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:22,hi:29}, si:{lo:22,hi:29} },
-      { rid:"r2", grp:"Pregnancy", sex:"F", age:"adult", preg:"any", conv:{lo:18,hi:24}, si:{lo:18,hi:24} },
-      { rid:"r3", grp:"Child (all ages)", sex:"any", age:"child", preg:null, conv:{lo:19,hi:28}, si:{lo:19,hi:28} },
-      { rid:"r4", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:19,hi:28}, si:{lo:19,hi:28} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:22,hi:29}, si:{lo:22,hi:29} },
+      { rid:"r2", kind:"ref", grp:"Pregnancy", sex:"F", age:"adult", preg:"any", conv:{lo:18,hi:24}, si:{lo:18,hi:24} },
+      { rid:"r3", kind:"ref", grp:"Child (all ages)", sex:"any", age:"child", preg:null, conv:{lo:19,hi:28}, si:{lo:19,hi:28} },
+      { rid:"r4", kind:"ref", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:19,hi:28}, si:{lo:19,hi:28} }
     ],
     critical:{ txt:"<10 or >40 mEq/L", lo:10, hi:40 },
     inc:["Metabolic alkalosis — vomiting, nasogastric suction, diuretics, hypokalaemia","Compensation for chronic respiratory acidosis (COPD)","Mineralocorticoid excess, Conn syndrome","Excess alkali or massive citrate load from transfusion"],
@@ -1037,9 +1037,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/dL", si:"mmol/L", factor:0.4114 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:1.7,hi:2.4}, si:{lo:0.70,hi:1.00} },
-      { rid:"r2", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:1.5,hi:2.4}, si:{lo:0.60,hi:1.00} },
-      { rid:"r3", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:1.7,hi:2.4}, si:{lo:0.70,hi:1.00} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:1.7,hi:2.4}, si:{lo:0.70,hi:1.00} },
+      { rid:"r2", kind:"ref", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:1.5,hi:2.4}, si:{lo:0.60,hi:1.00} },
+      { rid:"r3", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:1.7,hi:2.4}, si:{lo:0.70,hi:1.00} }
     ],
     critical:{ txt:"<1.0 or >4.7 mg/dL", lo:1.0, hi:4.7 },
     inc:["Renal failure (the usual cause)","Magnesium-containing antacids and laxatives, especially with CKD","Magnesium sulphate therapy in eclampsia — monitor clinically","Tumour lysis, adrenal insufficiency, lithium"],
@@ -1060,10 +1060,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/dL", si:"mmol/L", factor:0.3229 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:2.5,hi:4.6}, si:{lo:0.80,hi:1.50} },
-      { rid:"r2", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:4.0,hi:8.0}, si:{lo:1.30,hi:2.60} },
-      { rid:"r3", grp:"Infant", sex:"any", age:"infant", preg:null, conv:{lo:4.0,hi:7.4}, si:{lo:1.30,hi:2.40} },
-      { rid:"r4", grp:"Child (1–16 y)", sex:"any", age:"child", preg:null, conv:{lo:2.8,hi:5.6}, si:{lo:0.90,hi:1.80} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:2.5,hi:4.6}, si:{lo:0.80,hi:1.50} },
+      { rid:"r2", kind:"ref", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:4.0,hi:8.0}, si:{lo:1.30,hi:2.60} },
+      { rid:"r3", kind:"ref", grp:"Infant", sex:"any", age:"infant", preg:null, conv:{lo:4.0,hi:7.4}, si:{lo:1.30,hi:2.40} },
+      { rid:"r4", kind:"ref", grp:"Child (1–16 y)", sex:"any", age:"child", preg:null, conv:{lo:2.8,hi:5.6}, si:{lo:0.90,hi:1.80} }
     ],
     critical:{ txt:"<1.0 mg/dL (respiratory muscle weakness, haemolysis)", lo:1.0, hi:null },
     inc:["Chronic kidney disease (the commonest cause)","Hypoparathyroidism and pseudohypoparathyroidism","Tumour lysis syndrome and rhabdomyolysis","Vitamin D toxicity","Acromegaly; and physiologically in children (growth)"],
@@ -1084,10 +1084,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/dL", si:"µmol/L", factor:59.48 },
     ranges:[
-      { rid:"r1", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:3.4,hi:7.2}, si:{lo:200,hi:430} },
-      { rid:"r2", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:2.4,hi:6.1}, si:{lo:140,hi:360} },
-      { rid:"r3", grp:"Gout treatment target", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:6.0}, si:{lo:null,hi:360} },
-      { rid:"r4", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:2.0,hi:5.5}, si:{lo:119,hi:327} }
+      { rid:"r1", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:3.4,hi:7.2}, si:{lo:200,hi:430} },
+      { rid:"r2", kind:"ref", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:2.4,hi:6.1}, si:{lo:140,hi:360} },
+      { rid:"r3", kind:"target", grp:"Gout treatment target", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:6.0}, si:{lo:null,hi:360} },
+      { rid:"r4", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:2.0,hi:5.5}, si:{lo:119,hi:327} }
     ],
     critical:null,
     inc:["Gout and tumour lysis syndrome","Chronic kidney disease (reduced excretion)","Thiazide and loop diuretics, low-dose aspirin, ciclosporin","Psoriasis, myeloproliferative disease, haemolysis","Pre-eclampsia — a rising urate is a recognised marker of severity","Alcohol (especially beer), fructose-rich drinks, purine-rich diet"],
@@ -1107,8 +1107,8 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mOsm/kg", si:"mmol/kg", factor:1 },
     ranges:[
-      { rid:"r3", analyte:{key:"osm",label:"Osmolality"}, grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:275,hi:295}, si:{lo:275,hi:295} },
-      { rid:"r4", analyte:{key:"gap",label:"Osmolal Gap"}, grp:"Osmolal gap (normal)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} }
+      { rid:"r3", kind:"ref", analyte:{key:"osm",label:"Osmolality"}, grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:275,hi:295}, si:{lo:275,hi:295} },
+      { rid:"r4", kind:"ref", analyte:{key:"gap",label:"Osmolal Gap"}, grp:"Osmolal gap (normal)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} }
     ],
     critical:{ txt:"<265 or >320 mOsm/kg", lo:265, hi:320 },
     inc:["Dehydration and hypernatraemia","Hyperglycaemia and uraemia","Ethanol, methanol, ethylene glycol, isopropanol, mannitol","Diabetes insipidus"],
@@ -1128,10 +1128,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"g/dL", si:"g/L", factor:10 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:6.0,hi:8.0}, si:{lo:60,hi:80} },
-      { rid:"r2", grp:"Pregnancy T3", sex:"F", age:"adult", preg:"T3", conv:{lo:5.5,hi:7.0}, si:{lo:55,hi:70} },
-      { rid:"r3", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:4.6,hi:7.0}, si:{lo:46,hi:70} },
-      { rid:"r4", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:5.7,hi:8.0}, si:{lo:57,hi:80} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:6.0,hi:8.0}, si:{lo:60,hi:80} },
+      { rid:"r2", kind:"ref", grp:"Pregnancy T3", sex:"F", age:"adult", preg:"T3", conv:{lo:5.5,hi:7.0}, si:{lo:55,hi:70} },
+      { rid:"r3", kind:"ref", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:4.6,hi:7.0}, si:{lo:46,hi:70} },
+      { rid:"r4", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:5.7,hi:8.0}, si:{lo:57,hi:80} }
     ],
     critical:null,
     inc:["Dehydration (the commonest cause — a relative rise)","Multiple myeloma and other paraproteinaemias","Chronic infection, chronic liver disease, autoimmune disease (polyclonal globulin rise)","Prolonged tourniquet or upright posture (artefact)"],
@@ -1152,9 +1152,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"U/L", si:"U/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:8,hi:48}, si:{lo:8,hi:48} },
-      { rid:"r2", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:25,hi:75}, si:{lo:25,hi:75} },
-      { rid:"r3", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:15,hi:60}, si:{lo:15,hi:60} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:8,hi:48}, si:{lo:8,hi:48} },
+      { rid:"r2", kind:"ref", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:25,hi:75}, si:{lo:25,hi:75} },
+      { rid:"r3", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:15,hi:60}, si:{lo:15,hi:60} }
     ],
     critical:{ txt:">1000 U/L (severe hepatocellular injury)", lo:null, hi:1000 },
     inc:["Hepatocellular injury — viral hepatitis, drugs, ischaemic hepatitis, autoimmune hepatitis","Alcoholic liver disease (AST:ALT typically >2)","Muscle injury: rhabdomyolysis, myositis, intramuscular injection, heavy exercise, seizures","Myocardial infarction (historical use; troponin has replaced it)","Haemolysis — in vivo or in the tube"],
@@ -1175,10 +1175,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"U/L", si:"U/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:8,hi:61}, si:{lo:8,hi:61} },
-      { rid:"r2", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:5,hi:36}, si:{lo:5,hi:36} },
-      { rid:"r3", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:25,hi:168}, si:{lo:25,hi:168} },
-      { rid:"r4", grp:"Child (1–16 y)", sex:"any", age:"child", preg:null, conv:{lo:5,hi:32}, si:{lo:5,hi:32} }
+      { rid:"r1", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:8,hi:61}, si:{lo:8,hi:61} },
+      { rid:"r2", kind:"ref", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:5,hi:36}, si:{lo:5,hi:36} },
+      { rid:"r3", kind:"ref", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:25,hi:168}, si:{lo:25,hi:168} },
+      { rid:"r4", kind:"ref", grp:"Child (1–16 y)", sex:"any", age:"child", preg:null, conv:{lo:5,hi:32}, si:{lo:5,hi:32} }
     ],
     critical:null,
     inc:["Alcohol excess","Cholestasis of any cause — stones, stricture, tumour, drugs","Enzyme-inducing drugs: phenytoin, carbamazepine, phenobarbitone, rifampicin","Non-alcoholic fatty liver disease","Heart failure with hepatic congestion","Obesity, diabetes and metabolic syndrome"],
@@ -1198,9 +1198,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"U/L", si:"U/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:122,hi:222}, si:{lo:122,hi:222} },
-      { rid:"r2", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:290,hi:775}, si:{lo:290,hi:775} },
-      { rid:"r3", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:180,hi:360}, si:{lo:180,hi:360} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:122,hi:222}, si:{lo:122,hi:222} },
+      { rid:"r2", kind:"ref", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:290,hi:775}, si:{lo:290,hi:775} },
+      { rid:"r3", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:180,hi:360}, si:{lo:180,hi:360} }
     ],
     critical:null,
     inc:["Haemolysis — in vivo (haemolytic anaemia, TTP, malaria) or in the tube (artefact)","Tumour lysis syndrome; high-grade lymphoma and other malignancy (also a prognostic marker)","Myocardial, hepatic, renal or pulmonary infarction","Megaloblastic anaemia — characteristically a very high LDH","Muscle injury and rhabdomyolysis","Pneumocystis jirovecii pneumonia — a classically raised LDH"],
@@ -1221,9 +1221,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"U/L", si:"U/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:40,hi:320}, si:{lo:40,hi:320} },
-      { rid:"r2", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:25,hi:200}, si:{lo:25,hi:200} },
-      { rid:"r3", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:70,hi:380}, si:{lo:70,hi:380} }
+      { rid:"r1", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:40,hi:320}, si:{lo:40,hi:320} },
+      { rid:"r2", kind:"ref", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:25,hi:200}, si:{lo:25,hi:200} },
+      { rid:"r3", kind:"ref", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:70,hi:380}, si:{lo:70,hi:380} }
     ],
     critical:{ txt:">5000 U/L — risk of myoglobinuric acute kidney injury; start fluids", lo:null, hi:5000 },
     inc:["Rhabdomyolysis — crush injury, prolonged immobility, compartment syndrome, severe exertion","Statin and fibrate myopathy","Inflammatory myositis (polymyositis, dermatomyositis)","Muscular dystrophies, hypothyroidism, malignant hyperthermia","Intramuscular injection, seizures, surgery, heavy exercise","Myocardial infarction (CK-MB fraction; troponin is now preferred)"],
@@ -1243,8 +1243,8 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"U/L", si:"U/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:28,hi:100}, si:{lo:28,hi:100} },
-      { rid:"r2", grp:"Acute pancreatitis (diagnostic)", sex:"any", age:"adult", preg:null, conv:{lo:300,hi:null}, si:{lo:300,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:28,hi:100}, si:{lo:28,hi:100} },
+      { rid:"r2", kind:"cutoff", grp:"Acute pancreatitis (diagnostic)", sex:"any", age:"adult", preg:null, conv:{lo:300,hi:null}, si:{lo:300,hi:null} }
     ],
     critical:null,
     inc:["Acute pancreatitis (three times the upper limit is the usual diagnostic threshold)","Perforated or ischaemic bowel, intestinal obstruction","Ectopic pregnancy and ovarian pathology","Salivary gland disease — mumps, calculi, after head and neck surgery","Renal failure (reduced clearance)","Macroamylasaemia — a benign persistent rise","Diabetic ketoacidosis"],
@@ -1264,8 +1264,8 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"U/L", si:"U/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:13,hi:60}, si:{lo:13,hi:60} },
-      { rid:"r2", grp:"Acute pancreatitis (diagnostic)", sex:"any", age:"adult", preg:null, conv:{lo:180,hi:null}, si:{lo:180,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:13,hi:60}, si:{lo:13,hi:60} },
+      { rid:"r2", kind:"cutoff", grp:"Acute pancreatitis (diagnostic)", sex:"any", age:"adult", preg:null, conv:{lo:180,hi:null}, si:{lo:180,hi:null} }
     ],
     critical:null,
     inc:["Acute pancreatitis — three times the upper limit of normal is the diagnostic threshold","Pancreatic duct obstruction, pancreatic carcinoma","Renal failure (reduced clearance)","Bowel perforation, obstruction, mesenteric ischaemia","Cholecystitis, and some cases of diabetic ketoacidosis","Drugs: azathioprine, valproate, didanosine, GLP-1 receptor agonists"],
@@ -1286,10 +1286,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/dL", si:"µmol/L", factor:0.5872 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:85}, si:{lo:null,hi:50} },
-      { rid:"r2", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:170}, si:{lo:null,hi:100} },
-      { rid:"r3", grp:"Preterm or sick neonate", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:255}, si:{lo:null,hi:150} },
-      { rid:"r4", grp:"Infant to 16 y", sex:"any", age:"child", preg:null, conv:{lo:null,hi:85}, si:{lo:null,hi:50} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:85}, si:{lo:null,hi:50} },
+      { rid:"r2", kind:"ref", grp:"Neonate", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:170}, si:{lo:null,hi:100} },
+      { rid:"r3", kind:"ref", grp:"Preterm or sick neonate", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:255}, si:{lo:null,hi:150} },
+      { rid:"r4", kind:"ref", grp:"Infant to 16 y", sex:"any", age:"child", preg:null, conv:{lo:null,hi:85}, si:{lo:null,hi:50} }
     ],
     critical:{ txt:">200 µmol/L in a neonate — urgent metabolic emergency; discuss immediately", lo:null, hi:200 },
     inc:["Hepatic encephalopathy in acute liver failure or cirrhosis","Portosystemic shunting, including TIPSS","Inborn errors of the urea cycle — the key neonatal cause","Valproate therapy (may cause hyperammonaemia with a normal liver)","Gastrointestinal bleeding, high protein load, constipation","Urease-producing urinary tract infection with urinary stasis","Delayed or warm sample transport — the commonest cause of a spuriously high result"],
@@ -1309,9 +1309,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"mg/L", si:"mg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult (20–59 y)", sex:"any", age:"adult", preg:null, conv:{lo:0.62,hi:1.15}, si:{lo:0.62,hi:1.15} },
-      { rid:"r2", grp:"Adult (≥60 y)", sex:"any", age:"adult", preg:null, conv:{lo:0.63,hi:1.44}, si:{lo:0.63,hi:1.44} },
-      { rid:"r3", grp:"Child (1–16 y)", sex:"any", age:"child", preg:null, conv:{lo:0.56,hi:1.08}, si:{lo:0.56,hi:1.08} }
+      { rid:"r1", kind:"ref", grp:"Adult (20–59 y)", sex:"any", age:"adult", preg:null, conv:{lo:0.62,hi:1.15}, si:{lo:0.62,hi:1.15} },
+      { rid:"r2", kind:"ref", grp:"Adult (≥60 y)", sex:"any", age:"adult", preg:null, conv:{lo:0.63,hi:1.44}, si:{lo:0.63,hi:1.44} },
+      { rid:"r3", kind:"ref", grp:"Child (1–16 y)", sex:"any", age:"child", preg:null, conv:{lo:0.56,hi:1.08}, si:{lo:0.56,hi:1.08} }
     ],
     critical:null,
     inc:["Reduced GFR of any cause","Corticosteroid therapy (raises cystatin C independently of GFR)","Hyperthyroidism, obesity, smoking","Systemic inflammation and some malignancies"],
@@ -1332,10 +1332,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mmol/L", si:"mmol/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Normal", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.6}, si:{lo:null,hi:0.6} },
-      { rid:"r2", grp:"Hyperketonaemia — recheck / act", sex:"any", age:"adult", preg:null, conv:{lo:0.6,hi:1.5}, si:{lo:0.6,hi:1.5} },
-      { rid:"r3", grp:"High risk of DKA", sex:"any", age:"adult", preg:null, conv:{lo:1.5,hi:3.0}, si:{lo:1.5,hi:3.0} },
-      { rid:"r4", grp:"DKA likely (with acidosis)", sex:"any", age:"adult", preg:null, conv:{lo:3.0,hi:null}, si:{lo:3.0,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Normal", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.6}, si:{lo:null,hi:0.6} },
+      { rid:"r2", kind:"cutoff", grp:"Hyperketonaemia — recheck / act", sex:"any", age:"adult", preg:null, conv:{lo:0.6,hi:1.5}, si:{lo:0.6,hi:1.5} },
+      { rid:"r3", kind:"cutoff", grp:"High risk of DKA", sex:"any", age:"adult", preg:null, conv:{lo:1.5,hi:3.0}, si:{lo:1.5,hi:3.0} },
+      { rid:"r4", kind:"cutoff", grp:"DKA likely (with acidosis)", sex:"any", age:"adult", preg:null, conv:{lo:3.0,hi:null}, si:{lo:3.0,hi:null} }
     ],
     critical:{ txt:"≥3.0 mmol/L with acidosis — treat as DKA", lo:null, hi:3.0 },
     inc:["Diabetic ketoacidosis","Euglycaemic DKA on SGLT2 inhibitors — ketones high with near-normal glucose","Starvation and prolonged fasting, ketogenic diet","Alcoholic ketoacidosis","Prolonged vomiting in pregnancy; and in children, any intercurrent illness"],
@@ -1356,14 +1356,14 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/dL", si:"mmol/L", factor:0.0555 },
     ranges:[
-      { rid:"r1", grp:"Random — normal", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:140}, si:{lo:null,hi:7.8} },
-      { rid:"r2", grp:"2-h post-prandial / OGTT — normal", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:140}, si:{lo:null,hi:7.8} },
-      { rid:"r3", grp:"2-h OGTT — impaired glucose tolerance", sex:"any", age:"adult", preg:null, conv:{lo:140,hi:199}, si:{lo:7.8,hi:11.0} },
-      { rid:"r4", grp:"2-h OGTT — diabetes", sex:"any", age:"adult", preg:null, conv:{lo:200,hi:null}, si:{lo:11.1,hi:null} },
-      { rid:"r5", grp:"Random — diabetes (with symptoms)", sex:"any", age:"adult", preg:null, conv:{lo:200,hi:null}, si:{lo:11.1,hi:null} },
-      { rid:"r6", grp:"GDM — DIPSI 2 h, non-fasting 75 g", sex:"F", age:"adult", preg:"any", conv:{lo:140,hi:null}, si:{lo:7.8,hi:null} },
-      { rid:"r7", grp:"GDM — IADPSG 1 h after 75 g", sex:"F", age:"adult", preg:"any", conv:{lo:180,hi:null}, si:{lo:10.0,hi:null} },
-      { rid:"r8", grp:"GDM — IADPSG 2 h after 75 g", sex:"F", age:"adult", preg:"any", conv:{lo:153,hi:null}, si:{lo:8.5,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Random — normal", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:140}, si:{lo:null,hi:7.8} },
+      { rid:"r2", kind:"ref", grp:"2-h post-prandial / OGTT — normal", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:140}, si:{lo:null,hi:7.8} },
+      { rid:"r3", kind:"dx", grp:"2-h OGTT — impaired glucose tolerance", sex:"any", age:"adult", preg:null, conv:{lo:140,hi:199}, si:{lo:7.8,hi:11.0} },
+      { rid:"r4", kind:"dx", grp:"2-h OGTT — diabetes", sex:"any", age:"adult", preg:null, conv:{lo:200,hi:null}, si:{lo:11.1,hi:null} },
+      { rid:"r5", kind:"dx", grp:"Random — diabetes (with symptoms)", sex:"any", age:"adult", preg:null, conv:{lo:200,hi:null}, si:{lo:11.1,hi:null} },
+      { rid:"r6", kind:"dx", grp:"GDM — DIPSI 2 h, non-fasting 75 g", sex:"F", age:"adult", preg:"any", conv:{lo:140,hi:null}, si:{lo:7.8,hi:null} },
+      { rid:"r7", kind:"dx", grp:"GDM — IADPSG 1 h after 75 g", sex:"F", age:"adult", preg:"any", conv:{lo:180,hi:null}, si:{lo:10.0,hi:null} },
+      { rid:"r8", kind:"dx", grp:"GDM — IADPSG 2 h after 75 g", sex:"F", age:"adult", preg:"any", conv:{lo:153,hi:null}, si:{lo:8.5,hi:null} }
     ],
     critical:{ txt:"<50 or >400 mg/dL", lo:50, hi:400 },
     inc:["Diabetes mellitus and impaired glucose tolerance","Stress hyperglycaemia — sepsis, myocardial infarction, stroke, trauma","Corticosteroids, thiazides, antipsychotics, tacrolimus","Cushing syndrome, acromegaly, phaeochromocytoma","Pancreatitis and pancreatic destruction"],
@@ -1385,11 +1385,11 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"million/µL", si:"×10¹²/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:4.50,hi:6.50}, si:{lo:4.50,hi:6.50} },
-      { rid:"r2", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:3.80,hi:5.80}, si:{lo:3.80,hi:5.80} },
-      { rid:"r3", grp:"Pregnancy", sex:"F", age:"adult", preg:"any", conv:{lo:3.00,hi:5.00}, si:{lo:3.00,hi:5.00} },
-      { rid:"r4", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:3.70,hi:6.50}, si:{lo:3.70,hi:6.50} },
-      { rid:"r5", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:3.90,hi:5.30}, si:{lo:3.90,hi:5.30} }
+      { rid:"r1", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:4.50,hi:6.50}, si:{lo:4.50,hi:6.50} },
+      { rid:"r2", kind:"ref", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:3.80,hi:5.80}, si:{lo:3.80,hi:5.80} },
+      { rid:"r3", kind:"ref", grp:"Pregnancy", sex:"F", age:"adult", preg:"any", conv:{lo:3.00,hi:5.00}, si:{lo:3.00,hi:5.00} },
+      { rid:"r4", kind:"ref", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:3.70,hi:6.50}, si:{lo:3.70,hi:6.50} },
+      { rid:"r5", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:3.90,hi:5.30}, si:{lo:3.90,hi:5.30} }
     ],
     critical:null,
     inc:["Polycythaemia vera and secondary polycythaemia (chronic hypoxia, high altitude, smoking)","Dehydration — a relative rise","Thalassaemia trait: characteristically a HIGH red cell count with a LOW MCV and only mild anaemia","Erythropoietin misuse, renal cell carcinoma"],
@@ -1410,12 +1410,12 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"%", si:"L/L", factor:0.01 },
     ranges:[
-      { rid:"r1", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:40,hi:54}, si:{lo:0.40,hi:0.54} },
-      { rid:"r2", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:37,hi:47}, si:{lo:0.37,hi:0.47} },
-      { rid:"r3", grp:"Pregnancy", sex:"F", age:"adult", preg:"any", conv:{lo:33,hi:44}, si:{lo:0.33,hi:0.44} },
-      { rid:"r4", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:45,hi:67}, si:{lo:0.45,hi:0.67} },
-      { rid:"r5", grp:"Infant (2–6 mo)", sex:"any", age:"infant", preg:null, conv:{lo:29,hi:41}, si:{lo:0.29,hi:0.41} },
-      { rid:"r6", grp:"Child (2–12 y)", sex:"any", age:"child", preg:null, conv:{lo:35,hi:45}, si:{lo:0.35,hi:0.45} }
+      { rid:"r1", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:40,hi:54}, si:{lo:0.40,hi:0.54} },
+      { rid:"r2", kind:"ref", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:37,hi:47}, si:{lo:0.37,hi:0.47} },
+      { rid:"r3", kind:"ref", grp:"Pregnancy", sex:"F", age:"adult", preg:"any", conv:{lo:33,hi:44}, si:{lo:0.33,hi:0.44} },
+      { rid:"r4", kind:"ref", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:45,hi:67}, si:{lo:0.45,hi:0.67} },
+      { rid:"r5", kind:"ref", grp:"Infant (2–6 mo)", sex:"any", age:"infant", preg:null, conv:{lo:29,hi:41}, si:{lo:0.29,hi:0.41} },
+      { rid:"r6", kind:"ref", grp:"Child (2–12 y)", sex:"any", age:"child", preg:null, conv:{lo:35,hi:45}, si:{lo:0.35,hi:0.45} }
     ],
     critical:{ txt:"<20% or >60%", lo:20, hi:60 },
     inc:["Dehydration and plasma loss (burns, severe diarrhoea) — a relative rise","Polycythaemia vera","Chronic hypoxia: high altitude, COPD, cyanotic heart disease, obstructive sleep apnoea","Smoking; testosterone and erythropoietin therapy","Neonatal polycythaemia — delayed cord clamping, twin-to-twin transfusion, maternal diabetes"],
@@ -1434,9 +1434,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"pg", si:"pg", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:27,hi:32}, si:{lo:27,hi:32} },
-      { rid:"r2", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:31,hi:37}, si:{lo:31,hi:37} },
-      { rid:"r3", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:25,hi:33}, si:{lo:25,hi:33} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:27,hi:32}, si:{lo:27,hi:32} },
+      { rid:"r2", kind:"ref", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:31,hi:37}, si:{lo:31,hi:37} },
+      { rid:"r3", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:25,hi:33}, si:{lo:25,hi:33} }
     ],
     critical:null,
     inc:["Macrocytic anaemia — B12 or folate deficiency","Liver disease and alcohol excess","Hypothyroidism","Myelodysplastic syndrome","Reticulocytosis (reticulocytes are larger and carry more haemoglobin)"],
@@ -1455,9 +1455,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"g/dL", si:"g/L", factor:10 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:32,hi:36}, si:{lo:320,hi:360} },
-      { rid:"r2", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:30,hi:36}, si:{lo:300,hi:360} },
-      { rid:"r3", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:31,hi:37}, si:{lo:310,hi:370} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:32,hi:36}, si:{lo:320,hi:360} },
+      { rid:"r2", kind:"ref", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:30,hi:36}, si:{lo:300,hi:360} },
+      { rid:"r3", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:31,hi:37}, si:{lo:310,hi:370} }
     ],
     critical:null,
     inc:["Hereditary spherocytosis — one of the very few genuine causes of a high MCHC","Cold agglutinin disease (artefactual: red cells clump, the counter under-reads the count)","Severe lipaemia or marked haemolysis in the sample (artefactual)","Severe burns"],
@@ -1476,8 +1476,8 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"%", si:"%", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:11.0,hi:15.0}, si:{lo:11.0,hi:15.0} },
-      { rid:"r2", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:11.0,hi:15.0}, si:{lo:11.0,hi:15.0} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:11.0,hi:15.0}, si:{lo:11.0,hi:15.0} },
+      { rid:"r2", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:11.0,hi:15.0}, si:{lo:11.0,hi:15.0} }
     ],
     critical:null,
     inc:["Iron deficiency anaemia — typically the earliest index to rise","Mixed deficiency (iron plus B12 or folate), where the MCV may be misleadingly normal","B12 and folate deficiency","Recent transfusion (two populations of cells)","Haemolysis with brisk reticulocytosis","Sickle cell disease and other haemoglobinopathies"],
@@ -1498,10 +1498,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"%", si:"×10⁹/L", factor:null },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:0.5,hi:2.0}, si:{lo:20,hi:110} },
-      { rid:"r2", grp:"Newborn (term)", sex:"any", age:"neonate", preg:null, conv:{lo:2.0,hi:6.0}, si:{lo:null,hi:null,txt:"2.0–6.0%"} },
-      { rid:"r3", grp:"Infant (after 1 mo)", sex:"any", age:"infant", preg:null, conv:{lo:0.5,hi:2.0}, si:{lo:null,hi:null,txt:"0.5–2.0%"} },
-      { rid:"r4", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:0.5,hi:2.0}, si:{lo:20,hi:110} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:0.5,hi:2.0}, si:{lo:20,hi:110} },
+      { rid:"r2", kind:"ref", grp:"Newborn (term)", sex:"any", age:"neonate", preg:null, conv:{lo:2.0,hi:6.0}, si:{lo:null,hi:null,txt:"2.0–6.0%"} },
+      { rid:"r3", kind:"ref", grp:"Infant (after 1 mo)", sex:"any", age:"infant", preg:null, conv:{lo:0.5,hi:2.0}, si:{lo:null,hi:null,txt:"0.5–2.0%"} },
+      { rid:"r4", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:0.5,hi:2.0}, si:{lo:20,hi:110} }
     ],
     critical:null,
     inc:["Haemolysis of any cause — the key use of this test","Acute blood loss, 2–3 days after the event","Response to iron, B12 or folate replacement — peaks at 5–10 days and confirms the diagnosis was right","Recovery of marrow after chemotherapy or infection"],
@@ -1522,19 +1522,19 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"cells/µL", si:"×10⁹/L", factor:0.001 },
     ranges:[
-      { rid:"r1", grp:"Neutrophils — adult", analyte:{key:"neut",label:"Neutrophils"}, sex:"any", age:"adult", preg:null, conv:{lo:1800,hi:7500}, si:{lo:1.8,hi:7.5} },
-      { rid:"r2", grp:"Neutrophils — pregnancy", analyte:{key:"neut",label:"Neutrophils"}, sex:"F", age:"adult", preg:"any", conv:{lo:3800,hi:10000}, si:{lo:3.8,hi:10.0} },
-      { rid:"r3", grp:"Neutrophils — newborn", analyte:{key:"neut",label:"Neutrophils"}, sex:"any", age:"neonate", preg:null, conv:{lo:4000,hi:14000}, si:{lo:4.0,hi:14.0} },
-      { rid:"r4", grp:"Neutrophils — child", analyte:{key:"neut",label:"Neutrophils"}, sex:"any", age:"child", preg:null, conv:{lo:1500,hi:6900}, si:{lo:1.5,hi:6.9} },
-      { rid:"r5", grp:"Lymphocytes — adult", analyte:{key:"lymph",label:"Lymphocytes"}, sex:"any", age:"adult", preg:null, conv:{lo:1000,hi:4000}, si:{lo:1.0,hi:4.0} },
-      { rid:"r6", grp:"Lymphocytes — newborn", analyte:{key:"lymph",label:"Lymphocytes"}, sex:"any", age:"neonate", preg:null, conv:{lo:3000,hi:8000}, si:{lo:3.0,hi:8.0} },
-      { rid:"r7", grp:"Lymphocytes — child", analyte:{key:"lymph",label:"Lymphocytes"}, sex:"any", age:"child", preg:null, conv:{lo:3000,hi:9000}, si:{lo:3.0,hi:9.0} },
-      { rid:"r8", grp:"Monocytes — adult", analyte:{key:"mono",label:"Monocytes"}, sex:"any", age:"adult", preg:null, conv:{lo:200,hi:800}, si:{lo:0.2,hi:0.8} },
-      { rid:"r9", grp:"Monocytes — child", analyte:{key:"mono",label:"Monocytes"}, sex:"any", age:"child", preg:null, conv:{lo:100,hi:1700}, si:{lo:0.1,hi:1.7} },
-      { rid:"r10", grp:"Eosinophils — adult", analyte:{key:"eos",label:"Eosinophils"}, sex:"any", age:"adult", preg:null, conv:{lo:100,hi:400}, si:{lo:0.1,hi:0.4} },
-      { rid:"r11", grp:"Eosinophils — child", analyte:{key:"eos",label:"Eosinophils"}, sex:"any", age:"child", preg:null, conv:{lo:0,hi:800}, si:{lo:0,hi:0.8} },
-      { rid:"r12", grp:"Basophils — adult", analyte:{key:"baso",label:"Basophils"}, sex:"any", age:"adult", preg:null, conv:{lo:20,hi:100}, si:{lo:0.02,hi:0.10} },
-      { rid:"r13", grp:"Basophils — child", analyte:{key:"baso",label:"Basophils"}, sex:"any", age:"child", preg:null, conv:{lo:0,hi:100}, si:{lo:0,hi:0.10} }
+      { rid:"r1", kind:"ref", grp:"Neutrophils — adult", analyte:{key:"neut",label:"Neutrophils"}, sex:"any", age:"adult", preg:null, conv:{lo:1800,hi:7500}, si:{lo:1.8,hi:7.5} },
+      { rid:"r2", kind:"ref", grp:"Neutrophils — pregnancy", analyte:{key:"neut",label:"Neutrophils"}, sex:"F", age:"adult", preg:"any", conv:{lo:3800,hi:10000}, si:{lo:3.8,hi:10.0} },
+      { rid:"r3", kind:"ref", grp:"Neutrophils — newborn", analyte:{key:"neut",label:"Neutrophils"}, sex:"any", age:"neonate", preg:null, conv:{lo:4000,hi:14000}, si:{lo:4.0,hi:14.0} },
+      { rid:"r4", kind:"ref", grp:"Neutrophils — child", analyte:{key:"neut",label:"Neutrophils"}, sex:"any", age:"child", preg:null, conv:{lo:1500,hi:6900}, si:{lo:1.5,hi:6.9} },
+      { rid:"r5", kind:"ref", grp:"Lymphocytes — adult", analyte:{key:"lymph",label:"Lymphocytes"}, sex:"any", age:"adult", preg:null, conv:{lo:1000,hi:4000}, si:{lo:1.0,hi:4.0} },
+      { rid:"r6", kind:"ref", grp:"Lymphocytes — newborn", analyte:{key:"lymph",label:"Lymphocytes"}, sex:"any", age:"neonate", preg:null, conv:{lo:3000,hi:8000}, si:{lo:3.0,hi:8.0} },
+      { rid:"r7", kind:"ref", grp:"Lymphocytes — child", analyte:{key:"lymph",label:"Lymphocytes"}, sex:"any", age:"child", preg:null, conv:{lo:3000,hi:9000}, si:{lo:3.0,hi:9.0} },
+      { rid:"r8", kind:"ref", grp:"Monocytes — adult", analyte:{key:"mono",label:"Monocytes"}, sex:"any", age:"adult", preg:null, conv:{lo:200,hi:800}, si:{lo:0.2,hi:0.8} },
+      { rid:"r9", kind:"ref", grp:"Monocytes — child", analyte:{key:"mono",label:"Monocytes"}, sex:"any", age:"child", preg:null, conv:{lo:100,hi:1700}, si:{lo:0.1,hi:1.7} },
+      { rid:"r10", kind:"ref", grp:"Eosinophils — adult", analyte:{key:"eos",label:"Eosinophils"}, sex:"any", age:"adult", preg:null, conv:{lo:100,hi:400}, si:{lo:0.1,hi:0.4} },
+      { rid:"r11", kind:"ref", grp:"Eosinophils — child", analyte:{key:"eos",label:"Eosinophils"}, sex:"any", age:"child", preg:null, conv:{lo:0,hi:800}, si:{lo:0,hi:0.8} },
+      { rid:"r12", kind:"ref", grp:"Basophils — adult", analyte:{key:"baso",label:"Basophils"}, sex:"any", age:"adult", preg:null, conv:{lo:20,hi:100}, si:{lo:0.02,hi:0.10} },
+      { rid:"r13", kind:"ref", grp:"Basophils — child", analyte:{key:"baso",label:"Basophils"}, sex:"any", age:"child", preg:null, conv:{lo:0,hi:100}, si:{lo:0,hi:0.10} }
     ],
     critical:{ txt:"Absolute neutrophil count <500/µL (0.5 ×10⁹/L) — severe neutropenia; neutropenic sepsis risk", lo:500, hi:null, analyte:["neut"] },
     inc:["Neutrophilia: bacterial infection, steroids, stress, trauma, surgery, smoking, G-CSF, myeloproliferative disease","Lymphocytosis: viral infection, pertussis, tuberculosis, CLL (in older adults, a persistent lymphocytosis needs flow cytometry)","Monocytosis: tuberculosis, chronic infection, recovery phase of infection, CMML","Eosinophilia: parasitic infestation (very common in India — hookworm, ascaris, filaria, strongyloides), allergy, asthma, drug reaction, eosinophilic disorders","Basophilia: chronic myeloid leukaemia — uncommon enough that it should prompt a look for CML"],
@@ -1555,12 +1555,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"mm/h", si:"mm/h", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult male (<50 y)", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:15}, si:{lo:null,hi:15} },
-      { rid:"r2", grp:"Adult male (≥50 y)", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
-      { rid:"r3", grp:"Adult female (<50 y)", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
-      { rid:"r4", grp:"Adult female (≥50 y)", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:30} },
-      { rid:"r5", grp:"Pregnancy", sex:"F", age:"adult", preg:"any", conv:{lo:null,hi:70}, si:{lo:null,hi:70} },
-      { rid:"r6", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} }
+      { rid:"r1", kind:"ref", grp:"Adult male (<50 y)", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:15}, si:{lo:null,hi:15} },
+      { rid:"r2", kind:"ref", grp:"Adult male (≥50 y)", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
+      { rid:"r3", kind:"ref", grp:"Adult female (<50 y)", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
+      { rid:"r4", kind:"ref", grp:"Adult female (≥50 y)", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:30} },
+      { rid:"r5", kind:"ref", grp:"Pregnancy", sex:"F", age:"adult", preg:"any", conv:{lo:null,hi:70}, si:{lo:null,hi:70} },
+      { rid:"r6", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} }
     ],
     critical:null,
     inc:["Infection, including tuberculosis — a classically high ESR in India","Any inflammatory or autoimmune disease: rheumatoid arthritis, SLE, vasculitis","Giant cell arteritis and polymyalgia rheumatica — ESR above 50 mm/h is part of the classification criteria","Multiple myeloma and other paraproteinaemias (rouleaux formation)","Malignancy, chronic kidney disease, anaemia, pregnancy, old age, obesity"],
@@ -1581,7 +1581,7 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"Descriptive", si:"Descriptive", factor:null },
     ranges:[
-      { rid:"r1", grp:"Normal film", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Normochromic normocytic red cells; normal white cell morphology and distribution; platelets adequate on film"}, si:{lo:null,hi:null,txt:"Normochromic normocytic red cells; normal white cell morphology and distribution; platelets adequate on film"} }
+      { rid:"r1", kind:"note", grp:"Normal film", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Normochromic normocytic red cells; normal white cell morphology and distribution; platelets adequate on film"}, si:{lo:null,hi:null,txt:"Normochromic normocytic red cells; normal white cell morphology and distribution; platelets adequate on film"} }
     ],
     critical:{ txt:"Blasts, malarial parasites, schistocytes with thrombocytopenia (?TTP), or a leukaemic picture — inform the clinician at once", lo:null, hi:null },
     inc:["Findings that change management: blasts (acute leukaemia), schistocytes (microangiopathy — TTP, HUS, DIC), malarial parasites, sickle cells, spherocytes, target cells, basophilic stippling (lead, thalassaemia), hypersegmented neutrophils (B12/folate deficiency), toxic granulation and left shift (sepsis), rouleaux (myeloma), atypical lymphocytes (viral infection)"],
@@ -1601,9 +1601,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/dL", si:"g/L", factor:0.01 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:200}, si:{lo:0.30,hi:2.00} },
-      { rid:"r2", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:5,hi:48}, si:{lo:0.05,hi:0.48} },
-      { rid:"r3", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:30,hi:200}, si:{lo:0.30,hi:2.00} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:200}, si:{lo:0.30,hi:2.00} },
+      { rid:"r2", kind:"ref", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:5,hi:48}, si:{lo:0.05,hi:0.48} },
+      { rid:"r3", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:30,hi:200}, si:{lo:0.30,hi:2.00} }
     ],
     critical:null,
     inc:["Acute-phase response — infection, inflammation, malignancy, trauma (haptoglobin is an acute-phase protein and can mask haemolysis)","Corticosteroids","Nephrotic syndrome","Biliary obstruction"],
@@ -1624,10 +1624,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"U/g Hb", si:"U/g Hb", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult — normal activity", sex:"any", age:"adult", preg:null, conv:{lo:6.8,hi:13.1}, si:{lo:6.8,hi:13.1} },
-      { rid:"r2", grp:"Deficient", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:2.7}, si:{lo:null,hi:2.7} },
-      { rid:"r3", grp:"Intermediate (often female heterozygote)", sex:"F", age:"adult", preg:null, conv:{lo:2.7,hi:6.8}, si:{lo:2.7,hi:6.8} },
-      { rid:"r4", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:7.8,hi:20.5}, si:{lo:7.8,hi:20.5} }
+      { rid:"r1", kind:"ref", grp:"Adult — normal activity", sex:"any", age:"adult", preg:null, conv:{lo:6.8,hi:13.1}, si:{lo:6.8,hi:13.1} },
+      { rid:"r2", kind:"dx", grp:"Deficient", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:2.7}, si:{lo:null,hi:2.7} },
+      { rid:"r3", kind:"dx", grp:"Intermediate (often female heterozygote)", sex:"F", age:"adult", preg:null, conv:{lo:2.7,hi:6.8}, si:{lo:2.7,hi:6.8} },
+      { rid:"r4", kind:"ref", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:7.8,hi:20.5}, si:{lo:7.8,hi:20.5} }
     ],
     critical:null,
     inc:["Reticulocytosis — young red cells are enzyme-rich and raise measured activity, masking deficiency","Recent transfusion"],
@@ -1648,12 +1648,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"%", si:"%", factor:1 },
     ranges:[
-      { rid:"r7", analyte:{key:"hba",label:"HbA"}, grp:"HbA — adult", sex:"any", age:"adult", preg:null, conv:{lo:96.5,hi:98.5}, si:{lo:96.5,hi:98.5} },
-      { rid:"r8", analyte:{key:"hba2",label:"HbA2"}, grp:"HbA2 — normal", sex:"any", age:"adult", preg:null, conv:{lo:2.0,hi:3.3}, si:{lo:2.0,hi:3.3} },
-      { rid:"r9", analyte:{key:"hba2",label:"HbA2"}, grp:"HbA2 — borderline", sex:"any", age:"adult", preg:null, conv:{lo:3.3,hi:3.9}, si:{lo:3.3,hi:3.9} },
-      { rid:"r10", analyte:{key:"hba2",label:"HbA2"}, grp:"HbA2 — β-thalassaemia trait", sex:"any", age:"adult", preg:null, conv:{lo:4.0,hi:null}, si:{lo:4.0,hi:null} },
-      { rid:"r11", analyte:{key:"hbf",label:"HbF"}, grp:"HbF — adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1.0}, si:{lo:null,hi:1.0} },
-      { rid:"r12", analyte:{key:"hbf",label:"HbF"}, grp:"HbF — newborn", sex:"any", age:"neonate", preg:null, conv:{lo:60,hi:90}, si:{lo:60,hi:90} }
+      { rid:"r7", kind:"ref", analyte:{key:"hba",label:"HbA"}, grp:"HbA — adult", sex:"any", age:"adult", preg:null, conv:{lo:96.5,hi:98.5}, si:{lo:96.5,hi:98.5} },
+      { rid:"r8", kind:"ref", analyte:{key:"hba2",label:"HbA2"}, grp:"HbA2 — normal", sex:"any", age:"adult", preg:null, conv:{lo:2.0,hi:3.3}, si:{lo:2.0,hi:3.3} },
+      { rid:"r9", kind:"dx", analyte:{key:"hba2",label:"HbA2"}, grp:"HbA2 — borderline", sex:"any", age:"adult", preg:null, conv:{lo:3.3,hi:3.9}, si:{lo:3.3,hi:3.9} },
+      { rid:"r10", kind:"dx", analyte:{key:"hba2",label:"HbA2"}, grp:"HbA2 — β-thalassaemia trait", sex:"any", age:"adult", preg:null, conv:{lo:4.0,hi:null}, si:{lo:4.0,hi:null} },
+      { rid:"r11", kind:"ref", analyte:{key:"hbf",label:"HbF"}, grp:"HbF — adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1.0}, si:{lo:null,hi:1.0} },
+      { rid:"r12", kind:"ref", analyte:{key:"hbf",label:"HbF"}, grp:"HbF — newborn", sex:"any", age:"neonate", preg:null, conv:{lo:60,hi:90}, si:{lo:60,hi:90} }
     ],
     critical:{ txt:"Pattern consistent with a major haemoglobinopathy (HbSS, HbE/β-thal, β-thalassaemia major) — arrange counselling and haematology referral", lo:null, hi:null },
     inc:["HbA2 raised: beta-thalassaemia trait (the diagnostic finding, usually >4.0%)","HbF raised: beta-thalassaemia major and intermedia, HPFH, sickle cell disease, some leukaemias, pregnancy","HbS present: sickle cell trait (usually ~40%) or disease (>80% with absent HbA)","HbE: very common in north-east India and Bengal; HbE/β-thalassaemia is a major cause of transfusion-dependent anaemia"],
@@ -1675,10 +1675,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/dL", si:"g/L", factor:0.01 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:200,hi:400}, si:{lo:2.0,hi:4.0} },
-      { rid:"r2", grp:"Pregnancy T3", sex:"F", age:"adult", preg:"T3", conv:{lo:350,hi:650}, si:{lo:3.5,hi:6.5} },
-      { rid:"r3", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:125,hi:300}, si:{lo:1.25,hi:3.00} },
-      { rid:"r4", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:200,hi:400}, si:{lo:2.0,hi:4.0} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:200,hi:400}, si:{lo:2.0,hi:4.0} },
+      { rid:"r2", kind:"ref", grp:"Pregnancy T3", sex:"F", age:"adult", preg:"T3", conv:{lo:350,hi:650}, si:{lo:3.5,hi:6.5} },
+      { rid:"r3", kind:"ref", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:125,hi:300}, si:{lo:1.25,hi:3.00} },
+      { rid:"r4", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:200,hi:400}, si:{lo:2.0,hi:4.0} }
     ],
     critical:{ txt:"<100 mg/dL (1.0 g/L) — bleeding risk; <200 mg/dL (2.0 g/L) in postpartum haemorrhage", lo:100, hi:null },
     inc:["Acute-phase response — infection, inflammation, trauma, malignancy","Pregnancy (physiological, rising through gestation)","Nephrotic syndrome","Smoking, diabetes, oestrogen therapy"],
@@ -1698,8 +1698,8 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"seconds", si:"seconds", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:14,hi:21}, si:{lo:14,hi:21} },
-      { rid:"r2", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:19,hi:28}, si:{lo:19,hi:28} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:14,hi:21}, si:{lo:14,hi:21} },
+      { rid:"r2", kind:"ref", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:19,hi:28}, si:{lo:19,hi:28} }
     ],
     critical:null,
     inc:["Heparin, including line contamination — the usual explanation","Direct thrombin inhibitors: dabigatran, argatroban, bivalirudin","Hypofibrinogenaemia and dysfibrinogenaemia","Raised fibrin degradation products — DIC, thrombolysis","Severe liver disease; paraproteinaemia"],
@@ -1720,9 +1720,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Descriptive", si:"Descriptive", factor:null },
     ranges:[
-      { rid:"r1", grp:"Full correction", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Corrects into reference range — indicates factor DEFICIENCY"}, si:{lo:null,hi:null,txt:"Corrects into reference range — indicates factor DEFICIENCY"} },
-      { rid:"r2", grp:"No / partial correction", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Fails to correct — indicates an INHIBITOR (lupus anticoagulant, factor inhibitor, or anticoagulant drug)"}, si:{lo:null,hi:null,txt:"Fails to correct — indicates an INHIBITOR"} },
-      { rid:"r3", grp:"Correction then prolongation on incubation", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Time-dependent inhibitor — classically an acquired factor VIII inhibitor"}, si:{lo:null,hi:null,txt:"Time-dependent inhibitor — classically acquired factor VIII inhibitor"} }
+      { rid:"r1", kind:"note", grp:"Full correction", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Corrects into reference range — indicates factor DEFICIENCY"}, si:{lo:null,hi:null,txt:"Corrects into reference range — indicates factor DEFICIENCY"} },
+      { rid:"r2", kind:"note", grp:"No / partial correction", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Fails to correct — indicates an INHIBITOR (lupus anticoagulant, factor inhibitor, or anticoagulant drug)"}, si:{lo:null,hi:null,txt:"Fails to correct — indicates an INHIBITOR"} },
+      { rid:"r3", kind:"note", grp:"Correction then prolongation on incubation", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Time-dependent inhibitor — classically an acquired factor VIII inhibitor"}, si:{lo:null,hi:null,txt:"Time-dependent inhibitor — classically acquired factor VIII inhibitor"} }
     ],
     critical:{ txt:"Time-dependent inhibitor pattern with bleeding — possible acquired haemophilia; discuss with haematology urgently", lo:null, hi:null },
     inc:["Failure to correct: lupus anticoagulant, specific factor inhibitors, heparin, DOACs","Time-dependent (incubated) failure: acquired factor VIII inhibitor — acquired haemophilia A"],
@@ -1743,11 +1743,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"%", si:"IU/dL", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:50,hi:150}, si:{lo:50,hi:150} },
-      { rid:"r2", grp:"Mild haemophilia A", sex:"any", age:"adult", preg:null, conv:{lo:5,hi:40}, si:{lo:5,hi:40} },
-      { rid:"r3", grp:"Moderate haemophilia A", sex:"any", age:"adult", preg:null, conv:{lo:1,hi:5}, si:{lo:1,hi:5} },
-      { rid:"r4", grp:"Severe haemophilia A", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1}, si:{lo:null,hi:1} },
-      { rid:"r5", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:50,hi:180}, si:{lo:50,hi:180} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:50,hi:150}, si:{lo:50,hi:150} },
+      { rid:"r2", kind:"dx", grp:"Mild haemophilia A", sex:"any", age:"adult", preg:null, conv:{lo:5,hi:40}, si:{lo:5,hi:40} },
+      { rid:"r3", kind:"dx", grp:"Moderate haemophilia A", sex:"any", age:"adult", preg:null, conv:{lo:1,hi:5}, si:{lo:1,hi:5} },
+      { rid:"r4", kind:"dx", grp:"Severe haemophilia A", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1}, si:{lo:null,hi:1} },
+      { rid:"r5", kind:"ref", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:50,hi:180}, si:{lo:50,hi:180} }
     ],
     critical:{ txt:"<1% with bleeding — severe haemophilia A; factor replacement is urgent", lo:1, hi:null },
     inc:["Acute-phase response: infection, inflammation, surgery, trauma, exercise","Pregnancy and oestrogen therapy — factor VIII rises substantially","A persistently high factor VIII is an independent risk factor for venous thrombosis"],
@@ -1768,11 +1768,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"%", si:"IU/dL", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult — non-O blood group", sex:"any", age:"adult", preg:null, conv:{lo:60,hi:200}, si:{lo:60,hi:200} },
-      { rid:"r2", grp:"Adult — blood group O", sex:"any", age:"adult", preg:null, conv:{lo:40,hi:170}, si:{lo:40,hi:170} },
-      { rid:"r3", grp:"Low VWF (possible type 1)", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:50}, si:{lo:30,hi:50} },
-      { rid:"r4", grp:"Type 1 VWD (significant)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:30} },
-      { rid:"r5", grp:"Pregnancy T3", sex:"F", age:"adult", preg:"T3", conv:{lo:100,hi:400}, si:{lo:100,hi:400} }
+      { rid:"r1", kind:"ref", grp:"Adult — non-O blood group", sex:"any", age:"adult", preg:null, conv:{lo:60,hi:200}, si:{lo:60,hi:200} },
+      { rid:"r2", kind:"ref", grp:"Adult — blood group O", sex:"any", age:"adult", preg:null, conv:{lo:40,hi:170}, si:{lo:40,hi:170} },
+      { rid:"r3", kind:"dx", grp:"Low VWF (possible type 1)", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:50}, si:{lo:30,hi:50} },
+      { rid:"r4", kind:"dx", grp:"Type 1 VWD (significant)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:30} },
+      { rid:"r5", kind:"ref", grp:"Pregnancy T3", sex:"F", age:"adult", preg:"T3", conv:{lo:100,hi:400}, si:{lo:100,hi:400} }
     ],
     critical:null,
     inc:["Pregnancy, oestrogen therapy, exercise, stress","Acute-phase response: infection, inflammation, surgery, malignancy","Diabetes and the metabolic syndrome","Endothelial injury"],
@@ -1793,9 +1793,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"%", si:"IU/dL", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:70,hi:140}, si:{lo:70,hi:140} },
-      { rid:"r2", grp:"Newborn (physiologically low)", sex:"any", age:"neonate", preg:null, conv:{lo:17,hi:53}, si:{lo:17,hi:53} },
-      { rid:"r3", grp:"Child (1–16 y)", sex:"any", age:"child", preg:null, conv:{lo:65,hi:130}, si:{lo:65,hi:130} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:70,hi:140}, si:{lo:70,hi:140} },
+      { rid:"r2", kind:"ref", grp:"Newborn (physiologically low)", sex:"any", age:"neonate", preg:null, conv:{lo:17,hi:53}, si:{lo:17,hi:53} },
+      { rid:"r3", kind:"ref", grp:"Child (1–16 y)", sex:"any", age:"child", preg:null, conv:{lo:65,hi:130}, si:{lo:65,hi:130} }
     ],
     critical:{ txt:"Undetectable in a neonate with purpura fulminans — homozygous protein C deficiency; a neonatal emergency", lo:null, hi:null },
     inc:["Not clinically significant."],
@@ -1816,10 +1816,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"%", si:"IU/dL", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:70,hi:140}, si:{lo:70,hi:140} },
-      { rid:"r2", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:60,hi:130}, si:{lo:60,hi:130} },
-      { rid:"r3", grp:"Pregnancy (physiologically low)", sex:"F", age:"adult", preg:"any", conv:{lo:25,hi:90}, si:{lo:25,hi:90} },
-      { rid:"r4", grp:"Newborn (physiologically low)", sex:"any", age:"neonate", preg:null, conv:{lo:12,hi:60}, si:{lo:12,hi:60} }
+      { rid:"r1", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:70,hi:140}, si:{lo:70,hi:140} },
+      { rid:"r2", kind:"ref", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:60,hi:130}, si:{lo:60,hi:130} },
+      { rid:"r3", kind:"ref", grp:"Pregnancy (physiologically low)", sex:"F", age:"adult", preg:"any", conv:{lo:25,hi:90}, si:{lo:25,hi:90} },
+      { rid:"r4", kind:"ref", grp:"Newborn (physiologically low)", sex:"any", age:"neonate", preg:null, conv:{lo:12,hi:60}, si:{lo:12,hi:60} }
     ],
     critical:null,
     inc:["Not clinically significant."],
@@ -1840,9 +1840,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"%", si:"IU/dL", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:80,hi:120}, si:{lo:80,hi:120} },
-      { rid:"r2", grp:"Newborn (physiologically low)", sex:"any", age:"neonate", preg:null, conv:{lo:40,hi:80}, si:{lo:40,hi:80} },
-      { rid:"r3", grp:"Child (1–16 y)", sex:"any", age:"child", preg:null, conv:{lo:80,hi:120}, si:{lo:80,hi:120} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:80,hi:120}, si:{lo:80,hi:120} },
+      { rid:"r2", kind:"ref", grp:"Newborn (physiologically low)", sex:"any", age:"neonate", preg:null, conv:{lo:40,hi:80}, si:{lo:40,hi:80} },
+      { rid:"r3", kind:"ref", grp:"Child (1–16 y)", sex:"any", age:"child", preg:null, conv:{lo:80,hi:120}, si:{lo:80,hi:120} }
     ],
     critical:null,
     inc:["Warfarin therapy (modest rise)","Acute hepatitis; renal transplantation"],
@@ -1863,9 +1863,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Qualitative", si:"Qualitative", factor:null },
     ranges:[
-      { rid:"r1", grp:"Lupus anticoagulant", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (normal dRVVT and sensitive APTT screen/confirm ratios)"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r2", grp:"Anticardiolipin IgG/IgM", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"<40 GPL/MPL units (medium-high titre >40 is a criterion)"}, si:{lo:null,hi:null,txt:"<40 GPL/MPL units"} },
-      { rid:"r3", grp:"Anti-β2-glycoprotein I IgG/IgM", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Below the 99th percentile of the local reference population"}, si:{lo:null,hi:null,txt:"Below the 99th percentile"} }
+      { rid:"r1", kind:"note", grp:"Lupus anticoagulant", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (normal dRVVT and sensitive APTT screen/confirm ratios)"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r2", kind:"note", grp:"Anticardiolipin IgG/IgM", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"<40 GPL/MPL units (medium-high titre >40 is a criterion)"}, si:{lo:null,hi:null,txt:"<40 GPL/MPL units"} },
+      { rid:"r3", kind:"note", grp:"Anti-β2-glycoprotein I IgG/IgM", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Below the 99th percentile of the local reference population"}, si:{lo:null,hi:null,txt:"Below the 99th percentile"} }
     ],
     critical:{ txt:"Triple positivity (LA + anticardiolipin + anti-β2GPI) — highest thrombotic risk; specialist referral", lo:null, hi:null },
     inc:["Antiphospholipid syndrome — primary or secondary to SLE","Transient positivity with infection (including syphilis, HIV, hepatitis C, COVID-19) — usually low titre and not persistent","Drugs: phenothiazines, procainamide, hydralazine, phenytoin","Malignancy and advancing age"],
@@ -1886,10 +1886,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"IU/mL", si:"IU/mL", factor:1 },
     ranges:[
-      { rid:"r1", grp:"LMWH prophylaxis (4 h peak)", sex:"any", age:"adult", preg:null, conv:{lo:0.2,hi:0.5}, si:{lo:0.2,hi:0.5} },
-      { rid:"r2", grp:"LMWH treatment, once daily (4 h peak)", sex:"any", age:"adult", preg:null, conv:{lo:1.0,hi:2.0}, si:{lo:1.0,hi:2.0} },
-      { rid:"r3", grp:"LMWH treatment, twice daily (4 h peak)", sex:"any", age:"adult", preg:null, conv:{lo:0.6,hi:1.0}, si:{lo:0.6,hi:1.0} },
-      { rid:"r4", grp:"Unfractionated heparin (therapeutic)", sex:"any", age:"adult", preg:null, conv:{lo:0.3,hi:0.7}, si:{lo:0.3,hi:0.7} }
+      { rid:"r1", kind:"target", grp:"LMWH prophylaxis (4 h peak)", sex:"any", age:"adult", preg:null, conv:{lo:0.2,hi:0.5}, si:{lo:0.2,hi:0.5} },
+      { rid:"r2", kind:"target", grp:"LMWH treatment, once daily (4 h peak)", sex:"any", age:"adult", preg:null, conv:{lo:1.0,hi:2.0}, si:{lo:1.0,hi:2.0} },
+      { rid:"r3", kind:"target", grp:"LMWH treatment, twice daily (4 h peak)", sex:"any", age:"adult", preg:null, conv:{lo:0.6,hi:1.0}, si:{lo:0.6,hi:1.0} },
+      { rid:"r4", kind:"target", grp:"Unfractionated heparin (therapeutic)", sex:"any", age:"adult", preg:null, conv:{lo:0.3,hi:0.7}, si:{lo:0.3,hi:0.7} }
     ],
     critical:null,
     inc:["Excessive heparin dose","Renal impairment — LMWH accumulates because it is renally cleared","Delayed sampling relative to the dose"],
@@ -1911,11 +1911,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"pg/mL", si:"pmol/L", factor:1.536 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:2.3,hi:4.2}, si:{lo:3.5,hi:6.5} },
-      { rid:"r2", grp:"Pregnancy T1", sex:"F", age:"adult", preg:"T1", conv:{lo:2.4,hi:4.2}, si:{lo:3.7,hi:6.5} },
-      { rid:"r3", grp:"Pregnancy T2–T3", sex:"F", age:"adult", preg:"any", conv:{lo:2.0,hi:3.7}, si:{lo:3.1,hi:5.7} },
-      { rid:"r4", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:1.4,hi:5.4}, si:{lo:2.2,hi:8.3} },
-      { rid:"r5", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:2.5,hi:4.6}, si:{lo:3.8,hi:7.1} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:2.3,hi:4.2}, si:{lo:3.5,hi:6.5} },
+      { rid:"r2", kind:"ref", grp:"Pregnancy T1", sex:"F", age:"adult", preg:"T1", conv:{lo:2.4,hi:4.2}, si:{lo:3.7,hi:6.5} },
+      { rid:"r3", kind:"ref", grp:"Pregnancy T2–T3", sex:"F", age:"adult", preg:"any", conv:{lo:2.0,hi:3.7}, si:{lo:3.1,hi:5.7} },
+      { rid:"r4", kind:"ref", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:1.4,hi:5.4}, si:{lo:2.2,hi:8.3} },
+      { rid:"r5", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:2.5,hi:4.6}, si:{lo:3.8,hi:7.1} }
     ],
     critical:null,
     inc:["Graves disease and toxic nodular goitre","T3 toxicosis — a raised FT3 with a normal FT4 and suppressed TSH, commoner in iodine-deficient areas and early Graves","Excess thyroxine or liothyronine therapy","Biotin interference (artefactual)"],
@@ -1936,10 +1936,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"µg/dL", si:"nmol/L", factor:12.87 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:5.0,hi:12.0}, si:{lo:64,hi:154} },
-      { rid:"r2", grp:"Pregnancy (T2–T3, ~1.5× non-pregnant)", sex:"F", age:"adult", preg:"any", conv:{lo:7.5,hi:18.0}, si:{lo:97,hi:232} },
-      { rid:"r3", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:9.0,hi:18.0}, si:{lo:116,hi:232} },
-      { rid:"r4", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:6.0,hi:13.0}, si:{lo:77,hi:167} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:5.0,hi:12.0}, si:{lo:64,hi:154} },
+      { rid:"r2", kind:"ref", grp:"Pregnancy (T2–T3, ~1.5× non-pregnant)", sex:"F", age:"adult", preg:"any", conv:{lo:7.5,hi:18.0}, si:{lo:97,hi:232} },
+      { rid:"r3", kind:"ref", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:9.0,hi:18.0}, si:{lo:116,hi:232} },
+      { rid:"r4", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:6.0,hi:13.0}, si:{lo:77,hi:167} }
     ],
     critical:null,
     inc:["Hyperthyroidism","Raised thyroxine-binding globulin: pregnancy, oestrogen, the combined pill, tamoxifen, acute hepatitis — the free hormone remains normal","Familial dysalbuminaemic hyperthyroxinaemia","Amiodarone, excess thyroxine"],
@@ -1960,10 +1960,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/dL", si:"nmol/L", factor:0.0154 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:200}, si:{lo:1.5,hi:3.1} },
-      { rid:"r2", grp:"Pregnancy (T2–T3)", sex:"F", age:"adult", preg:"any", conv:{lo:116,hi:247}, si:{lo:1.8,hi:3.8} },
-      { rid:"r3", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:100,hi:380}, si:{lo:1.5,hi:5.9} },
-      { rid:"r4", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:105,hi:245}, si:{lo:1.6,hi:3.8} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:200}, si:{lo:1.5,hi:3.1} },
+      { rid:"r2", kind:"ref", grp:"Pregnancy (T2–T3)", sex:"F", age:"adult", preg:"any", conv:{lo:116,hi:247}, si:{lo:1.8,hi:3.8} },
+      { rid:"r3", kind:"ref", grp:"Newborn", sex:"any", age:"neonate", preg:null, conv:{lo:100,hi:380}, si:{lo:1.5,hi:5.9} },
+      { rid:"r4", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:105,hi:245}, si:{lo:1.6,hi:3.8} }
     ],
     critical:null,
     inc:["Hyperthyroidism, including T3 toxicosis","Raised TBG: pregnancy, oestrogen, the combined oral contraceptive","Liothyronine therapy"],
@@ -1984,8 +1984,8 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"IU/mL", si:"IU/mL", factor:1 },
     ranges:[
-      { rid:"r1", grp:"TPO antibody — negative", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:35}, si:{lo:null,hi:35} },
-      { rid:"r2", grp:"Thyroglobulin antibody — negative", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:40}, si:{lo:null,hi:40} }
+      { rid:"r3", analyte:{key:"tpo",label:"TPO Antibody"}, kind:"dx", grp:"TPO antibody — negative", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:35}, si:{lo:null,hi:35} },
+      { rid:"r4", analyte:{key:"tgab",label:"Thyroglobulin Antibody"}, kind:"dx", grp:"Thyroglobulin antibody — negative", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:40}, si:{lo:null,hi:40} }
     ],
     critical:null,
     inc:["Hashimoto thyroiditis — TPO antibodies positive in about 90%","Graves disease — positive in about 75%","Postpartum thyroiditis","Other autoimmune disease: type 1 diabetes, coeliac disease, pernicious anaemia, Addison disease","Healthy people, especially women and with age — up to 10–15% are positive without thyroid disease"],
@@ -2006,12 +2006,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"µg/dL", si:"nmol/L", factor:27.59 },
     ranges:[
-      { rid:"r1", grp:"9 am baseline", sex:"any", age:"adult", preg:null, conv:{lo:5,hi:23}, si:{lo:138,hi:635} },
-      { rid:"r2", grp:"9 am — adrenal insufficiency unlikely", sex:"any", age:"adult", preg:null, conv:{lo:14.5,hi:null}, si:{lo:400,hi:null} },
-      { rid:"r3", grp:"9 am — adrenal insufficiency likely", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:3.6}, si:{lo:null,hi:100} },
-      { rid:"r4", grp:"Post-Synacthen (30/60 min) — adequate", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:null}, si:{lo:550,hi:null} },
-      { rid:"r5", grp:"4 pm", sex:"any", age:"adult", preg:null, conv:{lo:3,hi:15}, si:{lo:82,hi:413} },
-      { rid:"r6", grp:"Midnight (asleep)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1.8}, si:{lo:null,hi:50} }
+      { rid:"r1", kind:"ref", grp:"9 am baseline", sex:"any", age:"adult", preg:null, conv:{lo:5,hi:23}, si:{lo:138,hi:635} },
+      { rid:"r2", kind:"dx", grp:"9 am — adrenal insufficiency unlikely", sex:"any", age:"adult", preg:null, conv:{lo:14.5,hi:null}, si:{lo:400,hi:null} },
+      { rid:"r3", kind:"dx", grp:"9 am — adrenal insufficiency likely", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:3.6}, si:{lo:null,hi:100} },
+      { rid:"r4", kind:"dx", grp:"Post-Synacthen (30/60 min) — adequate", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:null}, si:{lo:550,hi:null} },
+      { rid:"r5", kind:"ref", grp:"4 pm", sex:"any", age:"adult", preg:null, conv:{lo:3,hi:15}, si:{lo:82,hi:413} },
+      { rid:"r6", kind:"ref", grp:"Midnight (asleep)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1.8}, si:{lo:null,hi:50} }
     ],
     critical:{ txt:"Low cortisol with hypotension, hyponatraemia or hypoglycaemia — treat adrenal crisis immediately; do not wait for the result", lo:null, hi:null },
     inc:["Cushing syndrome — pituitary, adrenal or ectopic ACTH","Exogenous steroid (hydrocortisone and prednisolone cross-react; dexamethasone does not)","Acute stress, severe illness, surgery, depression, alcohol excess","Pregnancy and oestrogen therapy — raised cortisol-binding globulin raises total cortisol"],
@@ -2032,8 +2032,8 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"pg/mL", si:"pmol/L", factor:0.22 },
     ranges:[
-      { rid:"r1", grp:"9 am", sex:"any", age:"adult", preg:null, conv:{lo:7,hi:63}, si:{lo:1.5,hi:13.9} },
-      { rid:"r2", grp:"Midnight", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:50}, si:{lo:null,hi:11.1} }
+      { rid:"r1", kind:"ref", grp:"9 am", sex:"any", age:"adult", preg:null, conv:{lo:7,hi:63}, si:{lo:1.5,hi:13.9} },
+      { rid:"r2", kind:"ref", grp:"Midnight", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:50}, si:{lo:null,hi:11.1} }
     ],
     critical:null,
     inc:["Primary adrenal insufficiency (Addison disease) — high ACTH with low cortisol is the diagnostic pair","Cushing disease (pituitary adenoma) — ACTH inappropriately normal or high with a high cortisol","Ectopic ACTH syndrome — typically very high ACTH, often with hypokalaemia and rapid onset","Congenital adrenal hyperplasia","Stress and acute illness"],
@@ -2054,11 +2054,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"mIU/L", factor:21.2 },
     ranges:[
-      { rid:"r1", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:3,hi:17}, si:{lo:64,hi:360} },
-      { rid:"r2", grp:"Adult female (non-pregnant)", sex:"F", age:"adult", preg:null, conv:{lo:3,hi:25}, si:{lo:64,hi:530} },
-      { rid:"r3", grp:"Pregnancy T3", sex:"F", age:"adult", preg:"T3", conv:{lo:95,hi:473}, si:{lo:2000,hi:10000} },
-      { rid:"r4", grp:"Prolactinoma likely (microadenoma)", sex:"any", age:"adult", preg:null, conv:{lo:95,hi:236}, si:{lo:2000,hi:5000} },
-      { rid:"r5", grp:"Macroadenoma likely", sex:"any", age:"adult", preg:null, conv:{lo:236,hi:null}, si:{lo:5000,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:3,hi:17}, si:{lo:64,hi:360} },
+      { rid:"r2", kind:"ref", grp:"Adult female (non-pregnant)", sex:"F", age:"adult", preg:null, conv:{lo:3,hi:25}, si:{lo:64,hi:530} },
+      { rid:"r3", kind:"ref", grp:"Pregnancy T3", sex:"F", age:"adult", preg:"T3", conv:{lo:95,hi:473}, si:{lo:2000,hi:10000} },
+      { rid:"r4", kind:"cutoff", grp:"Prolactinoma likely (microadenoma)", sex:"any", age:"adult", preg:null, conv:{lo:95,hi:236}, si:{lo:2000,hi:5000} },
+      { rid:"r5", kind:"cutoff", grp:"Macroadenoma likely", sex:"any", age:"adult", preg:null, conv:{lo:236,hi:null}, si:{lo:5000,hi:null} }
     ],
     critical:null,
     inc:["Prolactinoma — micro or macroadenoma","Drugs — the commonest cause overall: antipsychotics, metoclopramide, domperidone, tricyclics, opiates, methyldopa, verapamil","Pregnancy and lactation; nipple stimulation, chest wall injury or herpes zoster","Primary hypothyroidism (raised TRH drives prolactin)","Stalk effect — any pituitary or suprasellar mass interrupting dopamine inhibition","Chronic kidney disease, cirrhosis","Macroprolactin — a biologically inactive complex causing an artefactually high result","Stress, including a difficult venepuncture, and seizures"],
@@ -2079,10 +2079,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"µg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Random (adult, fasting)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
-      { rid:"r2", grp:"Acromegaly excluded — nadir after 75 g OGTT", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1.0}, si:{lo:null,hi:1.0} },
-      { rid:"r3", grp:"GH deficiency (adult, stimulated peak)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:3}, si:{lo:null,hi:3} },
-      { rid:"r4", grp:"GH deficiency (child, stimulated peak)", sex:"any", age:"child", preg:null, conv:{lo:null,hi:7}, si:{lo:null,hi:7} }
+      { rid:"r1", kind:"ref", grp:"Random (adult, fasting)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
+      { rid:"r2", kind:"dx", grp:"Acromegaly excluded — nadir after 75 g OGTT", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1.0}, si:{lo:null,hi:1.0} },
+      { rid:"r3", kind:"target", grp:"GH deficiency (adult, stimulated peak)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:3}, si:{lo:null,hi:3} },
+      { rid:"r4", kind:"target", grp:"GH deficiency (child, stimulated peak)", sex:"any", age:"child", preg:null, conv:{lo:null,hi:7}, si:{lo:null,hi:7} }
     ],
     critical:null,
     inc:["Acromegaly and gigantism (pituitary somatotroph adenoma)","Physiological pulses: sleep, exercise, stress, fasting, puberty","Poorly controlled type 1 diabetes, chronic kidney disease, anorexia nervosa","GH therapy"],
@@ -2103,11 +2103,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"µg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult 21–40 y", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:300}, si:{lo:100,hi:300} },
-      { rid:"r2", grp:"Adult 41–60 y", sex:"any", age:"adult", preg:null, conv:{lo:80,hi:240}, si:{lo:80,hi:240} },
-      { rid:"r3", grp:"Adult >60 y", sex:"any", age:"adult", preg:null, conv:{lo:55,hi:190}, si:{lo:55,hi:190} },
-      { rid:"r4", grp:"Puberty (peak)", sex:"any", age:"adolescent", preg:null, conv:{lo:180,hi:780}, si:{lo:180,hi:780} },
-      { rid:"r5", grp:"Child (prepubertal)", sex:"any", age:"child", preg:null, conv:{lo:50,hi:300}, si:{lo:50,hi:300} }
+      { rid:"r1", kind:"ref", grp:"Adult 21–40 y", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:300}, si:{lo:100,hi:300} },
+      { rid:"r2", kind:"ref", grp:"Adult 41–60 y", sex:"any", age:"adult", preg:null, conv:{lo:80,hi:240}, si:{lo:80,hi:240} },
+      { rid:"r3", kind:"ref", grp:"Adult >60 y", sex:"any", age:"adult", preg:null, conv:{lo:55,hi:190}, si:{lo:55,hi:190} },
+      { rid:"r4", kind:"target", grp:"Puberty (peak)", sex:"any", age:"adolescent", preg:null, conv:{lo:180,hi:780}, si:{lo:180,hi:780} },
+      { rid:"r5", kind:"ref", grp:"Child (prepubertal)", sex:"any", age:"child", preg:null, conv:{lo:50,hi:300}, si:{lo:50,hi:300} }
     ],
     critical:null,
     inc:["Acromegaly and gigantism — the screening test of choice","Puberty (physiological peak)","Pregnancy","Exogenous growth hormone"],
@@ -2129,12 +2129,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"mIU/mL", si:"IU/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:1.7,hi:8.6}, si:{lo:1.7,hi:8.6} },
-      { rid:"r2", grp:"Female — follicular", sex:"F", age:"adult", preg:null, conv:{lo:2.4,hi:12.6}, si:{lo:2.4,hi:12.6} },
-      { rid:"r3", grp:"Female — mid-cycle peak", sex:"F", age:"adult", preg:null, conv:{lo:14.0,hi:95.6}, si:{lo:14.0,hi:95.6} },
-      { rid:"r4", grp:"Female — luteal", sex:"F", age:"adult", preg:null, conv:{lo:1.0,hi:11.4}, si:{lo:1.0,hi:11.4} },
-      { rid:"r5", grp:"Post-menopausal", sex:"F", age:"adult", preg:null, conv:{lo:7.7,hi:58.5}, si:{lo:7.7,hi:58.5} },
-      { rid:"r6", grp:"Prepubertal child", sex:"any", age:"child", preg:null, conv:{lo:null,hi:0.3}, si:{lo:null,hi:0.3} }
+      { rid:"r1", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:1.7,hi:8.6}, si:{lo:1.7,hi:8.6} },
+      { rid:"r2", kind:"ref", grp:"Female — follicular", sex:"F", age:"adult", preg:null, conv:{lo:2.4,hi:12.6}, si:{lo:2.4,hi:12.6} },
+      { rid:"r3", kind:"target", grp:"Female — mid-cycle peak", sex:"F", age:"adult", preg:null, conv:{lo:14.0,hi:95.6}, si:{lo:14.0,hi:95.6} },
+      { rid:"r4", kind:"ref", grp:"Female — luteal", sex:"F", age:"adult", preg:null, conv:{lo:1.0,hi:11.4}, si:{lo:1.0,hi:11.4} },
+      { rid:"r5", kind:"ref", grp:"Post-menopausal", sex:"F", age:"adult", preg:null, conv:{lo:7.7,hi:58.5}, si:{lo:7.7,hi:58.5} },
+      { rid:"r6", kind:"ref", grp:"Prepubertal child", sex:"any", age:"child", preg:null, conv:{lo:null,hi:0.3}, si:{lo:null,hi:0.3} }
     ],
     critical:null,
     inc:["Primary gonadal failure — premature ovarian insufficiency, Klinefelter syndrome, orchitis, chemotherapy","Menopause","Polycystic ovary syndrome — LH often raised with a raised LH:FSH ratio","Mid-cycle physiological surge","Precocious puberty (central)"],
@@ -2155,12 +2155,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"mIU/mL", si:"IU/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:1.5,hi:12.4}, si:{lo:1.5,hi:12.4} },
-      { rid:"r2", grp:"Female — follicular (day 2–5)", sex:"F", age:"adult", preg:null, conv:{lo:3.0,hi:8.1}, si:{lo:3.0,hi:8.1} },
-      { rid:"r3", grp:"Female — mid-cycle", sex:"F", age:"adult", preg:null, conv:{lo:2.6,hi:16.7}, si:{lo:2.6,hi:16.7} },
-      { rid:"r4", grp:"Female — luteal", sex:"F", age:"adult", preg:null, conv:{lo:1.4,hi:5.5}, si:{lo:1.4,hi:5.5} },
-      { rid:"r5", grp:"Post-menopausal", sex:"F", age:"adult", preg:null, conv:{lo:26.7,hi:133.4}, si:{lo:26.7,hi:133.4} },
-      { rid:"r6", grp:"Prepubertal child", sex:"any", age:"child", preg:null, conv:{lo:null,hi:2.0}, si:{lo:null,hi:2.0} }
+      { rid:"r1", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:1.5,hi:12.4}, si:{lo:1.5,hi:12.4} },
+      { rid:"r2", kind:"ref", grp:"Female — follicular (day 2–5)", sex:"F", age:"adult", preg:null, conv:{lo:3.0,hi:8.1}, si:{lo:3.0,hi:8.1} },
+      { rid:"r3", kind:"ref", grp:"Female — mid-cycle", sex:"F", age:"adult", preg:null, conv:{lo:2.6,hi:16.7}, si:{lo:2.6,hi:16.7} },
+      { rid:"r4", kind:"ref", grp:"Female — luteal", sex:"F", age:"adult", preg:null, conv:{lo:1.4,hi:5.5}, si:{lo:1.4,hi:5.5} },
+      { rid:"r5", kind:"ref", grp:"Post-menopausal", sex:"F", age:"adult", preg:null, conv:{lo:26.7,hi:133.4}, si:{lo:26.7,hi:133.4} },
+      { rid:"r6", kind:"ref", grp:"Prepubertal child", sex:"any", age:"child", preg:null, conv:{lo:null,hi:2.0}, si:{lo:null,hi:2.0} }
     ],
     critical:null,
     inc:["Menopause and premature ovarian insufficiency (FSH persistently above about 25 IU/L on two occasions six weeks apart)","Primary gonadal failure: Klinefelter syndrome, Turner syndrome, chemotherapy, radiotherapy","Reduced ovarian reserve — a raised day-3 FSH","Isolated FSH-secreting pituitary adenoma (rare)"],
@@ -2181,12 +2181,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"pg/mL", si:"pmol/L", factor:3.67 },
     ranges:[
-      { rid:"r1", grp:"Female — follicular", sex:"F", age:"adult", preg:null, conv:{lo:20,hi:150}, si:{lo:73,hi:551} },
-      { rid:"r2", grp:"Female — mid-cycle peak", sex:"F", age:"adult", preg:null, conv:{lo:150,hi:500}, si:{lo:551,hi:1835} },
-      { rid:"r3", grp:"Female — luteal", sex:"F", age:"adult", preg:null, conv:{lo:50,hi:250}, si:{lo:184,hi:918} },
-      { rid:"r4", grp:"Post-menopausal", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:110} },
-      { rid:"r5", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:10,hi:40}, si:{lo:37,hi:147} },
-      { rid:"r6", grp:"Prepubertal child", sex:"any", age:"child", preg:null, conv:{lo:null,hi:15}, si:{lo:null,hi:55} }
+      { rid:"r1", kind:"ref", grp:"Female — follicular", sex:"F", age:"adult", preg:null, conv:{lo:20,hi:150}, si:{lo:73,hi:551} },
+      { rid:"r2", kind:"target", grp:"Female — mid-cycle peak", sex:"F", age:"adult", preg:null, conv:{lo:150,hi:500}, si:{lo:551,hi:1835} },
+      { rid:"r3", kind:"ref", grp:"Female — luteal", sex:"F", age:"adult", preg:null, conv:{lo:50,hi:250}, si:{lo:184,hi:918} },
+      { rid:"r4", kind:"ref", grp:"Post-menopausal", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:110} },
+      { rid:"r5", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:10,hi:40}, si:{lo:37,hi:147} },
+      { rid:"r6", kind:"ref", grp:"Prepubertal child", sex:"any", age:"child", preg:null, conv:{lo:null,hi:15}, si:{lo:null,hi:55} }
     ],
     critical:null,
     inc:["Ovarian stimulation during IVF — monitored to avoid ovarian hyperstimulation syndrome","Pregnancy","Oestrogen-secreting tumours (granulosa cell tumour)","Gynaecomastia in men: testicular tumour, liver disease, obesity (peripheral aromatisation)","Exogenous oestrogen, including topical preparations"],
@@ -2207,12 +2207,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"nmol/L", factor:3.18 },
     ranges:[
-      { rid:"r1", grp:"Female — follicular", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:1.0}, si:{lo:null,hi:3.2} },
-      { rid:"r2", grp:"Mid-luteal — ovulation confirmed", sex:"F", age:"adult", preg:null, conv:{lo:9.4,hi:null}, si:{lo:30,hi:null} },
-      { rid:"r3", grp:"Mid-luteal — equivocal", sex:"F", age:"adult", preg:null, conv:{lo:4.7,hi:9.4}, si:{lo:15,hi:30} },
-      { rid:"r4", grp:"Mid-luteal — anovulatory", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:4.7}, si:{lo:null,hi:15} },
-      { rid:"r5", grp:"Post-menopausal", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:0.2}, si:{lo:null,hi:0.6} },
-      { rid:"r6", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:0.5}, si:{lo:null,hi:1.6} }
+      { rid:"r1", kind:"ref", grp:"Female — follicular", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:1.0}, si:{lo:null,hi:3.2} },
+      { rid:"r2", kind:"ref", grp:"Mid-luteal — ovulation confirmed", sex:"F", age:"adult", preg:null, conv:{lo:9.4,hi:null}, si:{lo:30,hi:null} },
+      { rid:"r3", kind:"ref", grp:"Mid-luteal — equivocal", sex:"F", age:"adult", preg:null, conv:{lo:4.7,hi:9.4}, si:{lo:15,hi:30} },
+      { rid:"r4", kind:"ref", grp:"Mid-luteal — anovulatory", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:4.7}, si:{lo:null,hi:15} },
+      { rid:"r5", kind:"ref", grp:"Post-menopausal", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:0.2}, si:{lo:null,hi:0.6} },
+      { rid:"r6", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:0.5}, si:{lo:null,hi:1.6} }
     ],
     critical:null,
     inc:["Ovulation (the physiological mid-luteal rise)","Pregnancy","Congenital adrenal hyperplasia","Progesterone supplementation, including luteal support in IVF","Ovarian cysts and some ovarian tumours"],
@@ -2233,12 +2233,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/dL", si:"nmol/L", factor:0.0347 },
     ranges:[
-      { rid:"r1", grp:"Adult male (20–49 y)", sex:"M", age:"adult", preg:null, conv:{lo:250,hi:836}, si:{lo:8.7,hi:29.0} },
-      { rid:"r2", grp:"Adult male (≥50 y)", sex:"M", age:"adult", preg:null, conv:{lo:193,hi:740}, si:{lo:6.7,hi:25.7} },
-      { rid:"r3", grp:"Male hypogonadism (repeat to confirm)", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:231}, si:{lo:null,hi:8.0} },
-      { rid:"r4", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:9,hi:48}, si:{lo:0.3,hi:1.7} },
-      { rid:"r5", grp:"Female — androgen tumour / CAH likely", sex:"F", age:"adult", preg:null, conv:{lo:159,hi:null}, si:{lo:5.5,hi:null} },
-      { rid:"r6", grp:"Prepubertal child", sex:"any", age:"child", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:0.7} }
+      { rid:"r1", kind:"ref", grp:"Adult male (20–49 y)", sex:"M", age:"adult", preg:null, conv:{lo:250,hi:836}, si:{lo:8.7,hi:29.0} },
+      { rid:"r2", kind:"ref", grp:"Adult male (≥50 y)", sex:"M", age:"adult", preg:null, conv:{lo:193,hi:740}, si:{lo:6.7,hi:25.7} },
+      { rid:"r3", kind:"dx", grp:"Male hypogonadism (repeat to confirm)", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:231}, si:{lo:null,hi:8.0} },
+      { rid:"r4", kind:"ref", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:9,hi:48}, si:{lo:0.3,hi:1.7} },
+      { rid:"r5", kind:"cutoff", grp:"Female — androgen tumour / CAH likely", sex:"F", age:"adult", preg:null, conv:{lo:159,hi:null}, si:{lo:5.5,hi:null} },
+      { rid:"r6", kind:"ref", grp:"Prepubertal child", sex:"any", age:"child", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:0.7} }
     ],
     critical:null,
     inc:["In women: PCOS (usually mild), congenital adrenal hyperplasia, androgen-secreting ovarian or adrenal tumour (usually marked)","Anabolic steroid or testosterone use","Raised SHBG states — hyperthyroidism, oestrogen, cirrhosis (raises TOTAL testosterone with normal free hormone)"],
@@ -2259,11 +2259,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"µg/dL", si:"µmol/L", factor:0.0271 },
     ranges:[
-      { rid:"r1", grp:"Adult male (20–40 y)", sex:"M", age:"adult", preg:null, conv:{lo:160,hi:450}, si:{lo:4.3,hi:12.2} },
-      { rid:"r2", grp:"Adult female (20–40 y)", sex:"F", age:"adult", preg:null, conv:{lo:65,hi:380}, si:{lo:1.8,hi:10.3} },
-      { rid:"r3", grp:"Adult (>60 y)", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:160}, si:{lo:0.5,hi:4.3} },
-      { rid:"r4", grp:"Adrenal tumour likely", sex:"any", age:"adult", preg:null, conv:{lo:700,hi:null}, si:{lo:19.0,hi:null} },
-      { rid:"r5", grp:"Prepubertal child", sex:"any", age:"child", preg:null, conv:{lo:5,hi:90}, si:{lo:0.1,hi:2.4} }
+      { rid:"r1", kind:"ref", grp:"Adult male (20–40 y)", sex:"M", age:"adult", preg:null, conv:{lo:160,hi:450}, si:{lo:4.3,hi:12.2} },
+      { rid:"r2", kind:"ref", grp:"Adult female (20–40 y)", sex:"F", age:"adult", preg:null, conv:{lo:65,hi:380}, si:{lo:1.8,hi:10.3} },
+      { rid:"r3", kind:"ref", grp:"Adult (>60 y)", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:160}, si:{lo:0.5,hi:4.3} },
+      { rid:"r4", kind:"cutoff", grp:"Adrenal tumour likely", sex:"any", age:"adult", preg:null, conv:{lo:700,hi:null}, si:{lo:19.0,hi:null} },
+      { rid:"r5", kind:"ref", grp:"Prepubertal child", sex:"any", age:"child", preg:null, conv:{lo:5,hi:90}, si:{lo:0.1,hi:2.4} }
     ],
     critical:null,
     inc:["Congenital adrenal hyperplasia","Adrenal carcinoma or adenoma — a markedly raised DHEAS points to an adrenal rather than ovarian source","Cushing syndrome (ACTH-dependent)","Premature adrenarche in children","DHEA supplements"],
@@ -2284,12 +2284,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/dL", si:"nmol/L", factor:0.0303 },
     ranges:[
-      { rid:"r1", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:30,hi:200}, si:{lo:0.9,hi:6.1} },
-      { rid:"r2", grp:"Female — follicular", sex:"F", age:"adult", preg:null, conv:{lo:15,hi:70}, si:{lo:0.5,hi:2.1} },
-      { rid:"r3", grp:"Female — luteal", sex:"F", age:"adult", preg:null, conv:{lo:35,hi:290}, si:{lo:1.1,hi:8.8} },
-      { rid:"r4", grp:"Classic CAH likely", sex:"any", age:"adult", preg:null, conv:{lo:1000,hi:null}, si:{lo:30.3,hi:null} },
-      { rid:"r5", grp:"Child (prepubertal)", sex:"any", age:"child", preg:null, conv:{lo:null,hi:100}, si:{lo:null,hi:3.0} },
-      { rid:"r6", grp:"Newborn (term, after 48 h)", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:400}, si:{lo:null,hi:12.1} }
+      { rid:"r1", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:30,hi:200}, si:{lo:0.9,hi:6.1} },
+      { rid:"r2", kind:"ref", grp:"Female — follicular", sex:"F", age:"adult", preg:null, conv:{lo:15,hi:70}, si:{lo:0.5,hi:2.1} },
+      { rid:"r3", kind:"ref", grp:"Female — luteal", sex:"F", age:"adult", preg:null, conv:{lo:35,hi:290}, si:{lo:1.1,hi:8.8} },
+      { rid:"r4", kind:"cutoff", grp:"Classic CAH likely", sex:"any", age:"adult", preg:null, conv:{lo:1000,hi:null}, si:{lo:30.3,hi:null} },
+      { rid:"r5", kind:"ref", grp:"Child (prepubertal)", sex:"any", age:"child", preg:null, conv:{lo:null,hi:100}, si:{lo:null,hi:3.0} },
+      { rid:"r6", kind:"ref", grp:"Newborn (term, after 48 h)", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:400}, si:{lo:null,hi:12.1} }
     ],
     critical:{ txt:"Markedly raised in a neonate with ambiguous genitalia, vomiting, hyponatraemia or hyperkalaemia — salt-wasting CAH is a life-threatening emergency", lo:null, hi:null },
     inc:["Congenital adrenal hyperplasia — 21-hydroxylase deficiency accounts for about 95% of cases","Non-classic (late-onset) CAH presenting with hirsutism and irregular periods in young women","Adrenal and ovarian tumours","Physiologically high in the first 48 h of life, in preterm and in sick neonates (a common cause of false-positive screening)"],
@@ -2310,9 +2310,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"µIU/mL", si:"pmol/L", factor:6.945 },
     ranges:[
-      { rid:"r1", grp:"Fasting adult", sex:"any", age:"adult", preg:null, conv:{lo:2,hi:25}, si:{lo:14,hi:174} },
-      { rid:"r2", grp:"Insulin resistance suggested (fasting)", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:null}, si:{lo:104,hi:null} },
-      { rid:"r3", grp:"During hypoglycaemia (<55 mg/dL) — inappropriate", sex:"any", age:"adult", preg:null, conv:{lo:3,hi:null}, si:{lo:21,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Fasting adult", sex:"any", age:"adult", preg:null, conv:{lo:2,hi:25}, si:{lo:14,hi:174} },
+      { rid:"r2", kind:"dx", grp:"Insulin resistance suggested (fasting)", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:null}, si:{lo:104,hi:null} },
+      { rid:"r3", kind:"dx", grp:"During hypoglycaemia (<55 mg/dL) — inappropriate", sex:"any", age:"adult", preg:null, conv:{lo:3,hi:null}, si:{lo:21,hi:null} }
     ],
     critical:null,
     inc:["Insulin resistance, obesity, metabolic syndrome, PCOS","Type 2 diabetes in its early phase","Insulinoma — inappropriately raised insulin during hypoglycaemia","Exogenous insulin administration (factitious or accidental) — insulin high with C-peptide LOW","Sulphonylurea use — insulin high with C-peptide also high"],
@@ -2333,10 +2333,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"nmol/L", factor:0.331 },
     ranges:[
-      { rid:"r1", grp:"Fasting adult", sex:"any", age:"adult", preg:null, conv:{lo:0.8,hi:3.9}, si:{lo:0.26,hi:1.29} },
-      { rid:"r2", grp:"Type 1 diabetes (absolute deficiency)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.2}, si:{lo:null,hi:0.07} },
-      { rid:"r3", grp:"Preserved beta-cell function", sex:"any", age:"adult", preg:null, conv:{lo:0.6,hi:null}, si:{lo:0.20,hi:null} },
-      { rid:"r4", grp:"During hypoglycaemia — inappropriate", sex:"any", age:"adult", preg:null, conv:{lo:0.6,hi:null}, si:{lo:0.20,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Fasting adult", sex:"any", age:"adult", preg:null, conv:{lo:0.8,hi:3.9}, si:{lo:0.26,hi:1.29} },
+      { rid:"r2", kind:"dx", grp:"Type 1 diabetes (absolute deficiency)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.2}, si:{lo:null,hi:0.07} },
+      { rid:"r3", kind:"dx", grp:"Preserved beta-cell function", sex:"any", age:"adult", preg:null, conv:{lo:0.6,hi:null}, si:{lo:0.20,hi:null} },
+      { rid:"r4", kind:"dx", grp:"During hypoglycaemia — inappropriate", sex:"any", age:"adult", preg:null, conv:{lo:0.6,hi:null}, si:{lo:0.20,hi:null} }
     ],
     critical:null,
     inc:["Insulinoma and nesidioblastosis","Sulphonylurea-induced hypoglycaemia","Insulin resistance and type 2 diabetes","Chronic kidney disease (reduced clearance — a common confounder)"],
@@ -2357,10 +2357,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"pg/mL", si:"pmol/L", factor:0.106 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:65}, si:{lo:1.6,hi:6.9} },
-      { rid:"r2", grp:"CKD stage 3–4 target", sex:"any", age:"adult", preg:null, conv:{lo:35,hi:110}, si:{lo:3.7,hi:11.7} },
-      { rid:"r3", grp:"CKD stage 5 / dialysis target (2–9× ULN)", sex:"any", age:"adult", preg:null, conv:{lo:130,hi:585}, si:{lo:13.8,hi:62.0} },
-      { rid:"r4", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:15,hi:65}, si:{lo:1.6,hi:6.9} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:65}, si:{lo:1.6,hi:6.9} },
+      { rid:"r2", kind:"target", grp:"CKD stage 3–4 target", sex:"any", age:"adult", preg:null, conv:{lo:35,hi:110}, si:{lo:3.7,hi:11.7} },
+      { rid:"r3", kind:"target", grp:"CKD stage 5 / dialysis target (2–9× ULN)", sex:"any", age:"adult", preg:null, conv:{lo:130,hi:585}, si:{lo:13.8,hi:62.0} },
+      { rid:"r4", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:15,hi:65}, si:{lo:1.6,hi:6.9} }
     ],
     critical:null,
     inc:["Primary hyperparathyroidism — raised PTH with raised calcium (or inappropriately normal PTH with raised calcium)","Secondary hyperparathyroidism — raised PTH with LOW or normal calcium: vitamin D deficiency, chronic kidney disease, malabsorption","Tertiary hyperparathyroidism in long-standing CKD","Lithium and thiazide therapy","Pseudohypoparathyroidism — PTH high, calcium low, due to end-organ resistance"],
@@ -2381,10 +2381,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"pmol/L", factor:7.14 },
     ranges:[
-      { rid:"r1", grp:"Satisfactory ovarian reserve", sex:"F", age:"adult", preg:null, conv:{lo:1.0,hi:3.5}, si:{lo:7.1,hi:25.0} },
-      { rid:"r2", grp:"Reduced ovarian reserve", sex:"F", age:"adult", preg:null, conv:{lo:0.3,hi:1.0}, si:{lo:2.1,hi:7.1} },
-      { rid:"r3", grp:"Very low / near-menopausal", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:0.3}, si:{lo:null,hi:2.1} },
-      { rid:"r4", grp:"High — suggests PCOS or high response risk", sex:"F", age:"adult", preg:null, conv:{lo:3.5,hi:null}, si:{lo:25.0,hi:null} }
+      { rid:"r1", kind:"dx", grp:"Satisfactory ovarian reserve", sex:"F", age:"adult", preg:null, conv:{lo:1.0,hi:3.5}, si:{lo:7.1,hi:25.0} },
+      { rid:"r2", kind:"dx", grp:"Reduced ovarian reserve", sex:"F", age:"adult", preg:null, conv:{lo:0.3,hi:1.0}, si:{lo:2.1,hi:7.1} },
+      { rid:"r3", kind:"dx", grp:"Very low / near-menopausal", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:0.3}, si:{lo:null,hi:2.1} },
+      { rid:"r4", kind:"dx", grp:"High — suggests PCOS or high response risk", sex:"F", age:"adult", preg:null, conv:{lo:3.5,hi:null}, si:{lo:25.0,hi:null} }
     ],
     critical:null,
     inc:["Polycystic ovary syndrome — AMH is typically two to three times higher, reflecting the increased antral follicle pool","Granulosa cell tumour","Risk of ovarian hyperstimulation syndrome during IVF"],
@@ -2406,14 +2406,14 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/dL", si:"µmol/L", factor:0.179 },
     ranges:[
-      { rid:"r1", grp:"Serum iron — adult male", analyte:{key:"fe",label:"Serum Iron"}, sex:"M", age:"adult", preg:null, conv:{lo:65,hi:175}, si:{lo:11.6,hi:31.3} },
-      { rid:"r2", grp:"Serum iron — adult female", analyte:{key:"fe",label:"Serum Iron"}, sex:"F", age:"adult", preg:null, conv:{lo:50,hi:170}, si:{lo:9.0,hi:30.4} },
-      { rid:"r3", grp:"Serum iron — child", analyte:{key:"fe",label:"Serum Iron"}, sex:"any", age:"child", preg:null, conv:{lo:50,hi:120}, si:{lo:9.0,hi:21.5} },
-      { rid:"r4", grp:"TIBC — adult", analyte:{key:"tibc",label:"Total Iron Binding Capacity"}, sex:"any", age:"adult", preg:null, conv:{lo:250,hi:400}, si:{lo:44.8,hi:71.6} },
-      { rid:"r5", grp:"Transferrin — adult", analyte:{key:"transferrin",label:"Transferrin",convUnit:"mg/dL",siUnit:"g/L",factor:0.01}, sex:"any", age:"adult", preg:null, conv:{lo:200,hi:360}, si:{lo:2.0,hi:3.6} },
-      { rid:"r6", grp:"Transferrin saturation — normal", analyte:{key:"tsat",label:"Transferrin Saturation",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:20,hi:50}, si:{lo:20,hi:50} },
-      { rid:"r7", grp:"Transferrin saturation — iron deficiency", analyte:{key:"tsat",label:"Transferrin Saturation",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
-      { rid:"r8", grp:"Transferrin saturation — iron overload likely", analyte:{key:"tsat",label:"Transferrin Saturation",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:45,hi:null}, si:{lo:45,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Serum iron — adult male", analyte:{key:"fe",label:"Serum Iron"}, sex:"M", age:"adult", preg:null, conv:{lo:65,hi:175}, si:{lo:11.6,hi:31.3} },
+      { rid:"r2", kind:"ref", grp:"Serum iron — adult female", analyte:{key:"fe",label:"Serum Iron"}, sex:"F", age:"adult", preg:null, conv:{lo:50,hi:170}, si:{lo:9.0,hi:30.4} },
+      { rid:"r3", kind:"ref", grp:"Serum iron — child", analyte:{key:"fe",label:"Serum Iron"}, sex:"any", age:"child", preg:null, conv:{lo:50,hi:120}, si:{lo:9.0,hi:21.5} },
+      { rid:"r4", kind:"ref", grp:"TIBC — adult", analyte:{key:"tibc",label:"Total Iron Binding Capacity"}, sex:"any", age:"adult", preg:null, conv:{lo:250,hi:400}, si:{lo:44.8,hi:71.6} },
+      { rid:"r5", kind:"ref", grp:"Transferrin — adult", analyte:{key:"transferrin",label:"Transferrin",convUnit:"mg/dL",siUnit:"g/L",factor:0.01}, sex:"any", age:"adult", preg:null, conv:{lo:200,hi:360}, si:{lo:2.0,hi:3.6} },
+      { rid:"r6", kind:"ref", grp:"Transferrin saturation — normal", analyte:{key:"tsat",label:"Transferrin Saturation",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:20,hi:50}, si:{lo:20,hi:50} },
+      { rid:"r7", kind:"dx", grp:"Transferrin saturation — iron deficiency", analyte:{key:"tsat",label:"Transferrin Saturation",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
+      { rid:"r8", kind:"cutoff", grp:"Transferrin saturation — iron overload likely", analyte:{key:"tsat",label:"Transferrin Saturation",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:45,hi:null}, si:{lo:45,hi:null} }
     ],
     critical:null,
     inc:["Serum iron high: haemochromatosis, iron overload from repeated transfusion, acute iron poisoning, recent iron tablet or infusion, haemolysis (in vivo or in the tube)","TIBC high: iron deficiency (the body makes more transferrin to scavenge iron), pregnancy, oestrogen","Transferrin saturation above 45%: suspect hereditary haemochromatosis and check ferritin"],
@@ -2434,10 +2434,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"nmol/L", factor:2.266 },
     ranges:[
-      { rid:"r5", analyte:{key:"serum",label:"Serum Folate"}, grp:"Serum folate — normal", sex:"any", age:"adult", preg:null, conv:{lo:4.0,hi:20.0}, si:{lo:9.1,hi:45.3} },
-      { rid:"r6", analyte:{key:"serum",label:"Serum Folate"}, grp:"Serum folate — deficient", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:3.0}, si:{lo:null,hi:6.8} },
-      { rid:"r7", analyte:{key:"serum",label:"Serum Folate"}, grp:"Serum folate — borderline", sex:"any", age:"adult", preg:null, conv:{lo:3.0,hi:4.0}, si:{lo:6.8,hi:9.1} },
-      { rid:"r8", analyte:{key:"rbc",label:"Red Cell Folate"}, grp:"Red cell folate — normal", sex:"any", age:"adult", preg:null, conv:{lo:140,hi:628}, si:{lo:317,hi:1423} }
+      { rid:"r5", kind:"ref", analyte:{key:"serum",label:"Serum Folate"}, grp:"Serum folate — normal", sex:"any", age:"adult", preg:null, conv:{lo:4.0,hi:20.0}, si:{lo:9.1,hi:45.3} },
+      { rid:"r6", kind:"dx", analyte:{key:"serum",label:"Serum Folate"}, grp:"Serum folate — deficient", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:3.0}, si:{lo:null,hi:6.8} },
+      { rid:"r7", kind:"dx", analyte:{key:"serum",label:"Serum Folate"}, grp:"Serum folate — borderline", sex:"any", age:"adult", preg:null, conv:{lo:3.0,hi:4.0}, si:{lo:6.8,hi:9.1} },
+      { rid:"r8", kind:"ref", analyte:{key:"rbc",label:"Red Cell Folate"}, grp:"Red cell folate — normal", sex:"any", age:"adult", preg:null, conv:{lo:140,hi:628}, si:{lo:317,hi:1423} }
     ],
     critical:null,
     inc:["Folic acid supplementation","Recent blood transfusion","Vitamin B12 deficiency — the 'folate trap' raises serum folate while red cell folate falls","Blind loop syndrome (bacterial folate synthesis)"],
@@ -2458,10 +2458,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"µmol/L", si:"µmol/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult — normal", sex:"any", age:"adult", preg:null, conv:{lo:5,hi:15}, si:{lo:5,hi:15} },
-      { rid:"r2", grp:"Moderate elevation", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:30}, si:{lo:15,hi:30} },
-      { rid:"r3", grp:"Intermediate", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:100}, si:{lo:30,hi:100} },
-      { rid:"r4", grp:"Severe (suspect homocystinuria)", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:null}, si:{lo:100,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Adult — normal", sex:"any", age:"adult", preg:null, conv:{lo:5,hi:15}, si:{lo:5,hi:15} },
+      { rid:"r2", kind:"dx", grp:"Moderate elevation", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:30}, si:{lo:15,hi:30} },
+      { rid:"r3", kind:"dx", grp:"Intermediate", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:100}, si:{lo:30,hi:100} },
+      { rid:"r4", kind:"dx", grp:"Severe (suspect homocystinuria)", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:null}, si:{lo:100,hi:null} }
     ],
     critical:null,
     inc:["Vitamin B12 deficiency — homocysteine rises early, often before the B12 falls below the reference range","Folate deficiency and vitamin B6 deficiency","Chronic kidney disease (a common and often overlooked cause)","Homocystinuria (cystathionine beta-synthase deficiency) — marked elevation, with lens dislocation, marfanoid habitus, thrombosis and intellectual disability","MTHFR polymorphisms (modest effect; routine genotyping is not recommended)","Hypothyroidism, smoking, methotrexate, phenytoin"],
@@ -2482,10 +2482,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"pg/mL", si:"ng/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Heart failure unlikely (non-acute)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:35}, si:{lo:null,hi:35} },
-      { rid:"r2", grp:"Heart failure unlikely (acute presentation)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:100}, si:{lo:null,hi:100} },
-      { rid:"r3", grp:"Refer / echocardiography indicated", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:400}, si:{lo:100,hi:400} },
-      { rid:"r4", grp:"Heart failure likely", sex:"any", age:"adult", preg:null, conv:{lo:400,hi:null}, si:{lo:400,hi:null} }
+      { rid:"r1", kind:"cutoff", grp:"Heart failure unlikely (non-acute)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:35}, si:{lo:null,hi:35} },
+      { rid:"r2", kind:"cutoff", grp:"Heart failure unlikely (acute presentation)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:100}, si:{lo:null,hi:100} },
+      { rid:"r3", kind:"cutoff", grp:"Refer / echocardiography indicated", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:400}, si:{lo:100,hi:400} },
+      { rid:"r4", kind:"cutoff", grp:"Heart failure likely", sex:"any", age:"adult", preg:null, conv:{lo:400,hi:null}, si:{lo:400,hi:null} }
     ],
     critical:null,
     inc:["Heart failure (systolic or diastolic)","Atrial fibrillation — raises BNP substantially and reduces its specificity","Pulmonary embolism, pulmonary hypertension, cor pulmonale","Chronic kidney disease (reduced clearance)","Sepsis, acute coronary syndrome, left ventricular hypertrophy","Increasing age; female sex","Sacubitril/valsartan (raises BNP specifically)"],
@@ -2506,8 +2506,8 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"µg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5.0}, si:{lo:null,hi:5.0} },
-      { rid:"r2", grp:"Relative index (CK-MB/total CK ×100) — cardiac", sex:"any", age:"adult", preg:null, conv:{lo:2.5,hi:null}, si:{lo:2.5,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5.0}, si:{lo:null,hi:5.0} },
+      { rid:"r2", kind:"dx", grp:"Relative index (CK-MB/total CK ×100) — cardiac", sex:"any", age:"adult", preg:null, conv:{lo:2.5,hi:null}, si:{lo:2.5,hi:null} }
     ],
     critical:null,
     inc:["Myocardial infarction — rises at 3–6 h, peaks at 12–24 h, returns to normal by 48–72 h","Myocarditis, cardiac contusion, cardioversion, cardiac surgery","Skeletal muscle injury and rhabdomyolysis (raises CK-MB but with a LOW relative index)","Chronic kidney disease, hypothyroidism"],
@@ -2528,9 +2528,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"mg/dL", si:"nmol/L", factor:2.15 },
     ranges:[
-      { rid:"r1", grp:"Low risk", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:65} },
-      { rid:"r2", grp:"Intermediate risk", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:50}, si:{lo:65,hi:105} },
-      { rid:"r3", grp:"High risk", sex:"any", age:"adult", preg:null, conv:{lo:50,hi:null}, si:{lo:105,hi:null} }
+      { rid:"r1", kind:"cutoff", grp:"Low risk", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:65} },
+      { rid:"r2", kind:"cutoff", grp:"Intermediate risk", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:50}, si:{lo:65,hi:105} },
+      { rid:"r3", kind:"cutoff", grp:"High risk", sex:"any", age:"adult", preg:null, conv:{lo:50,hi:null}, si:{lo:105,hi:null} }
     ],
     critical:null,
     inc:["Genetically determined — the dominant factor, largely set by LPA gene variants","Familial hypercholesterolaemia","Chronic kidney disease and nephrotic syndrome","Hypothyroidism","Acute-phase response (modest, transient)","Populations of South Asian and African ancestry tend to have higher levels"],
@@ -2551,11 +2551,11 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/dL", si:"g/L", factor:0.01 },
     ranges:[
-      { rid:"r1", grp:"ApoB — optimal (primary prevention)", analyte:{key:"apob",label:"Apolipoprotein B"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:90}, si:{lo:null,hi:0.90} },
-      { rid:"r2", grp:"ApoB — high-risk target", analyte:{key:"apob",label:"Apolipoprotein B"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:80}, si:{lo:null,hi:0.80} },
-      { rid:"r3", grp:"ApoB — very-high-risk target", analyte:{key:"apob",label:"Apolipoprotein B"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:65}, si:{lo:null,hi:0.65} },
-      { rid:"r4", grp:"ApoA1 — adult male", analyte:{key:"apoa1",label:"Apolipoprotein A1"}, sex:"M", age:"adult", preg:null, conv:{lo:110,hi:180}, si:{lo:1.10,hi:1.80} },
-      { rid:"r5", grp:"ApoA1 — adult female", analyte:{key:"apoa1",label:"Apolipoprotein A1"}, sex:"F", age:"adult", preg:null, conv:{lo:110,hi:205}, si:{lo:1.10,hi:2.05} }
+      { rid:"r1", kind:"dx", grp:"ApoB — optimal (primary prevention)", analyte:{key:"apob",label:"Apolipoprotein B"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:90}, si:{lo:null,hi:0.90} },
+      { rid:"r2", kind:"target", grp:"ApoB — high-risk target", analyte:{key:"apob",label:"Apolipoprotein B"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:80}, si:{lo:null,hi:0.80} },
+      { rid:"r3", kind:"target", grp:"ApoB — very-high-risk target", analyte:{key:"apob",label:"Apolipoprotein B"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:65}, si:{lo:null,hi:0.65} },
+      { rid:"r4", kind:"ref", grp:"ApoA1 — adult male", analyte:{key:"apoa1",label:"Apolipoprotein A1"}, sex:"M", age:"adult", preg:null, conv:{lo:110,hi:180}, si:{lo:1.10,hi:1.80} },
+      { rid:"r5", kind:"ref", grp:"ApoA1 — adult female", analyte:{key:"apoa1",label:"Apolipoprotein A1"}, sex:"F", age:"adult", preg:null, conv:{lo:110,hi:205}, si:{lo:1.10,hi:2.05} }
     ],
     critical:null,
     inc:["ApoB high: familial hypercholesterolaemia, familial combined hyperlipidaemia, metabolic syndrome, type 2 diabetes, nephrotic syndrome, hypothyroidism","ApoA1 high: regular aerobic exercise, moderate alcohol, oestrogen"],
@@ -2577,9 +2577,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Qualitative", si:"Qualitative", factor:null },
     ranges:[
-      { rid:"r1", grp:"Microscopy", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No malarial parasites seen on thick and thin films"}, si:{lo:null,hi:null,txt:"No parasites seen"} },
-      { rid:"r2", grp:"Rapid antigen test (HRP2 / pLDH)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r3", grp:"Severe falciparum — parasite density", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:">2% parasitised red cells (or >100000/µL) indicates severe malaria"}, si:{lo:null,hi:null,txt:">2% parasitised red cells"} }
+      { rid:"r1", kind:"note", grp:"Microscopy", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No malarial parasites seen on thick and thin films"}, si:{lo:null,hi:null,txt:"No parasites seen"} },
+      { rid:"r2", kind:"note", grp:"Rapid antigen test (HRP2 / pLDH)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r3", kind:"note", grp:"Severe falciparum — parasite density", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:">2% parasitised red cells (or >100000/µL) indicates severe malaria"}, si:{lo:null,hi:null,txt:">2% parasitised red cells"} }
     ],
     critical:{ txt:"Plasmodium falciparum detected, or any parasitaemia with impaired consciousness, jaundice, renal failure, acidosis or bleeding — severe malaria is a medical emergency; inform the clinician immediately", lo:null, hi:null },
     inc:["Plasmodium falciparum, P. vivax, P. malariae, P. ovale, P. knowlesi","In India, P. vivax and P. falciparum predominate; mixed infections occur and are easily missed on RDT alone"],
@@ -2600,9 +2600,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Qualitative", si:"Qualitative", factor:null },
     ranges:[
-      { rid:"r1", grp:"NS1 antigen (day 1–5)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r2", grp:"Dengue IgM (from day 5)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r3", grp:"Dengue IgG", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (a positive alone indicates past infection)"}, si:{lo:null,hi:null,txt:"Negative"} }
+      { rid:"r1", kind:"note", grp:"NS1 antigen (day 1–5)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r2", kind:"note", grp:"Dengue IgM (from day 5)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r3", kind:"note", grp:"Dengue IgG", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (a positive alone indicates past infection)"}, si:{lo:null,hi:null,txt:"Negative"} }
     ],
     critical:{ txt:"Warning signs — rising haematocrit with falling platelets, persistent vomiting, abdominal pain, bleeding, lethargy — indicate impending shock; admit", lo:null, hi:null },
     inc:["Acute dengue infection (NS1 or IgM positive)","IgG alone positive: past infection, or secondary infection when paired with a positive IgM","Cross-reaction with other flaviviruses: Zika, Japanese encephalitis, chikungunya co-circulation, and after yellow fever or JE vaccination"],
@@ -2623,8 +2623,8 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Titre", si:"Titre", factor:null },
     ranges:[
-      { rid:"r1", grp:"TO (somatic O) antigen", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Significant only if ≥1:160 in a non-endemic baseline, or a four-fold rise on paired sera"}, si:{lo:null,hi:null,txt:"≥1:160 or four-fold rise"} },
-      { rid:"r2", grp:"TH (flagellar H) antigen", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Rises later and stays raised for months — poor specificity for acute infection"}, si:{lo:null,hi:null,txt:"Poor specificity for acute infection"} }
+      { rid:"r1", kind:"note", grp:"TO (somatic O) antigen", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Significant only if ≥1:160 in a non-endemic baseline, or a four-fold rise on paired sera"}, si:{lo:null,hi:null,txt:"≥1:160 or four-fold rise"} },
+      { rid:"r2", kind:"note", grp:"TH (flagellar H) antigen", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Rises later and stays raised for months — poor specificity for acute infection"}, si:{lo:null,hi:null,txt:"Poor specificity for acute infection"} }
     ],
     critical:null,
     inc:["Enteric fever due to Salmonella Typhi or Paratyphi","Previous typhoid infection or vaccination — H agglutinins persist for months to years","Cross-reaction with other Salmonella species, malaria, dengue, tuberculosis, liver disease and autoimmune conditions","High background titres in endemic populations, including healthy people"],
@@ -2645,9 +2645,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Qualitative", si:"Qualitative", factor:null },
     ranges:[
-      { rid:"r1", grp:"4th-generation HIV Ag/Ab screen", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
-      { rid:"r2", grp:"Window period (4th generation)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Reliable exclusion from about 45 days after exposure"}, si:{lo:null,hi:null,txt:"~45 days"} },
-      { rid:"r3", grp:"Infant <18 months", sex:"any", age:"infant", preg:null, conv:{lo:null,hi:null,txt:"Antibody tests unreliable (maternal IgG) — use HIV DNA/RNA PCR"}, si:{lo:null,hi:null,txt:"Use HIV DNA/RNA PCR"} }
+      { rid:"r1", kind:"note", grp:"4th-generation HIV Ag/Ab screen", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
+      { rid:"r2", kind:"note", grp:"Window period (4th generation)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Reliable exclusion from about 45 days after exposure"}, si:{lo:null,hi:null,txt:"~45 days"} },
+      { rid:"r3", kind:"note", grp:"Infant <18 months", sex:"any", age:"infant", preg:null, conv:{lo:null,hi:null,txt:"Antibody tests unreliable (maternal IgG) — use HIV DNA/RNA PCR"}, si:{lo:null,hi:null,txt:"Use HIV DNA/RNA PCR"} }
     ],
     critical:{ txt:"A reactive screen requires confirmation by the national algorithm, linkage to care and partner notification — never convey a positive result on a single reactive screening test", lo:null, hi:null },
     inc:["HIV-1 or HIV-2 infection","Acute seroconversion illness — p24 antigen is detectable earlier than antibody, which is why the fourth-generation test is preferred","False reactivity: autoimmune disease, pregnancy, recent vaccination, other infections"],
@@ -2668,11 +2668,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Qualitative", si:"Qualitative", factor:null },
     ranges:[
-      { rid:"r1", grp:"HBsAg", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (positive = current infection, acute or chronic)"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r2", grp:"Anti-HBs (protective antibody)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"≥10 mIU/mL indicates immunity (vaccination or past cleared infection)"}, si:{lo:null,hi:null,txt:"≥10 mIU/mL = immune"} },
-      { rid:"r3", grp:"Anti-HBc total", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (positive = past or present natural infection; NOT produced by vaccination)"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r4", grp:"IgM anti-HBc", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (positive = acute infection or reactivation)"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r5", grp:"HBeAg", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (positive = high replication and infectivity)"}, si:{lo:null,hi:null,txt:"Negative"} }
+      { rid:"r1", kind:"note", grp:"HBsAg", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (positive = current infection, acute or chronic)"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r2", kind:"note", grp:"Anti-HBs (protective antibody)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"≥10 mIU/mL indicates immunity (vaccination or past cleared infection)"}, si:{lo:null,hi:null,txt:"≥10 mIU/mL = immune"} },
+      { rid:"r3", kind:"note", grp:"Anti-HBc total", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (positive = past or present natural infection; NOT produced by vaccination)"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r4", kind:"note", grp:"IgM anti-HBc", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (positive = acute infection or reactivation)"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r5", kind:"note", grp:"HBeAg", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (positive = high replication and infectivity)"}, si:{lo:null,hi:null,txt:"Negative"} }
     ],
     critical:{ txt:"HBsAg positive in pregnancy — the neonate needs hepatitis B immunoglobulin and vaccine within 12 hours of birth", lo:null, hi:null },
     inc:["HBsAg positive: current infection. With IgM anti-HBc, acute; persisting beyond 6 months, chronic","Anti-HBs alone: vaccinated and immune","Anti-HBs with anti-HBc: past infection, now resolved and immune","Isolated anti-HBc: window period, resolved infection with waned anti-HBs, or occult HBV — check HBV DNA","HBeAg positive: high viral replication, high infectivity"],
@@ -2693,9 +2693,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Qualitative", si:"Qualitative", factor:null },
     ranges:[
-      { rid:"r1", grp:"Anti-HCV antibody", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
-      { rid:"r2", grp:"HCV RNA (confirmatory)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Not detected"}, si:{lo:null,hi:null,txt:"Not detected"} },
-      { rid:"r3", grp:"Sustained virological response (cure)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"HCV RNA undetectable 12 weeks after completing treatment"}, si:{lo:null,hi:null,txt:"RNA undetectable at 12 weeks post-treatment"} }
+      { rid:"r1", kind:"note", grp:"Anti-HCV antibody", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
+      { rid:"r2", kind:"note", grp:"HCV RNA (confirmatory)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Not detected"}, si:{lo:null,hi:null,txt:"Not detected"} },
+      { rid:"r3", kind:"note", grp:"Sustained virological response (cure)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"HCV RNA undetectable 12 weeks after completing treatment"}, si:{lo:null,hi:null,txt:"RNA undetectable at 12 weeks post-treatment"} }
     ],
     critical:null,
     inc:["Current or past hepatitis C infection","False-positive antibody in autoimmune disease and hypergammaglobulinaemia — RNA resolves the question","Antibody persists for life after spontaneous clearance or cure, so it cannot be used to monitor treatment"],
@@ -2716,9 +2716,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Titre", si:"Titre", factor:null },
     ranges:[
-      { rid:"r1", grp:"VDRL / RPR (non-treponemal)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive; if reactive, report a quantitative titre"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
-      { rid:"r2", grp:"TPHA / TPPA / treponemal EIA", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive (stays positive for life after infection)"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
-      { rid:"r3", grp:"Adequate treatment response", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Four-fold (two-dilution) fall in VDRL/RPR titre by 6–12 months"}, si:{lo:null,hi:null,txt:"Four-fold titre fall"} }
+      { rid:"r1", kind:"note", grp:"VDRL / RPR (non-treponemal)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive; if reactive, report a quantitative titre"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
+      { rid:"r2", kind:"note", grp:"TPHA / TPPA / treponemal EIA", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive (stays positive for life after infection)"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
+      { rid:"r3", kind:"note", grp:"Adequate treatment response", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Four-fold (two-dilution) fall in VDRL/RPR titre by 6–12 months"}, si:{lo:null,hi:null,txt:"Four-fold titre fall"} }
     ],
     critical:{ txt:"Reactive syphilis serology in pregnancy — treat immediately with benzathine penicillin to prevent congenital syphilis", lo:null, hi:null },
     inc:["Syphilis — primary, secondary, latent or tertiary","Biological false-positive non-treponemal test: pregnancy, autoimmune disease (especially SLE and antiphospholipid syndrome), malaria, tuberculosis, viral infection, intravenous drug use, advancing age","Other treponemal diseases: yaws, pinta, bejel"],
@@ -2739,9 +2739,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Qualitative", si:"Qualitative", factor:null },
     ranges:[
-      { rid:"r1", grp:"Scrub typhus IgM ELISA", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (optical density cut-off is laboratory- and region-specific)"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r2", grp:"Indirect immunofluorescence (reference standard)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"IgM titre ≥1:32 to 1:64 depending on local endemicity, or a four-fold rise on paired sera"}, si:{lo:null,hi:null,txt:"≥1:32–1:64 or four-fold rise"} },
-      { rid:"r3", grp:"Weil-Felix (OX-K)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Obsolete — poor sensitivity and specificity; do not rely on it"}, si:{lo:null,hi:null,txt:"Obsolete"} }
+      { rid:"r1", kind:"note", grp:"Scrub typhus IgM ELISA", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (optical density cut-off is laboratory- and region-specific)"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r2", kind:"note", grp:"Indirect immunofluorescence (reference standard)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"IgM titre ≥1:32 to 1:64 depending on local endemicity, or a four-fold rise on paired sera"}, si:{lo:null,hi:null,txt:"≥1:32–1:64 or four-fold rise"} },
+      { rid:"r3", kind:"note", grp:"Weil-Felix (OX-K)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Obsolete — poor sensitivity and specificity; do not rely on it"}, si:{lo:null,hi:null,txt:"Obsolete"} }
     ],
     critical:{ txt:"Scrub typhus with breathlessness, jaundice, oliguria, altered sensorium or thrombocytopenia — risk of ARDS, multi-organ failure and meningoencephalitis; start doxycycline without waiting for serology", lo:null, hi:null },
     inc:["Scrub typhus (Orientia tsutsugamushi) and other rickettsioses","Cross-reactivity between rickettsial species","Background seropositivity in endemic populations, which limits the value of a single IgM in isolation"],
@@ -2762,8 +2762,8 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Qualitative", si:"Qualitative", factor:null },
     ranges:[
-      { rid:"r1", grp:"Leptospira IgM ELISA", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (becomes positive from about day 5–7)"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r2", grp:"MAT (reference standard)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Single titre ≥1:400 in endemic areas, or a four-fold rise on paired sera"}, si:{lo:null,hi:null,txt:"≥1:400 or four-fold rise"} }
+      { rid:"r1", kind:"note", grp:"Leptospira IgM ELISA", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (becomes positive from about day 5–7)"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r2", kind:"note", grp:"MAT (reference standard)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Single titre ≥1:400 in endemic areas, or a four-fold rise on paired sera"}, si:{lo:null,hi:null,txt:"≥1:400 or four-fold rise"} }
     ],
     critical:{ txt:"Jaundice with acute kidney injury and bleeding (Weil disease), or pulmonary haemorrhage — high mortality; treat immediately and escalate care", lo:null, hi:null },
     inc:["Leptospirosis","Cross-reaction with other spirochaetes, including syphilis and Lyme disease","Background seropositivity in endemic and occupationally exposed populations"],
@@ -2784,9 +2784,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Qualitative", si:"Qualitative", factor:null },
     ranges:[
-      { rid:"r1", grp:"Chikungunya RT-PCR (day 1–7)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Not detected"}, si:{lo:null,hi:null,txt:"Not detected"} },
-      { rid:"r2", grp:"Chikungunya IgM (from day 5)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r3", grp:"Chikungunya IgG", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (positive indicates past infection and lasting immunity)"}, si:{lo:null,hi:null,txt:"Negative"} }
+      { rid:"r1", kind:"note", grp:"Chikungunya RT-PCR (day 1–7)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Not detected"}, si:{lo:null,hi:null,txt:"Not detected"} },
+      { rid:"r2", kind:"note", grp:"Chikungunya IgM (from day 5)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r3", kind:"note", grp:"Chikungunya IgG", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (positive indicates past infection and lasting immunity)"}, si:{lo:null,hi:null,txt:"Negative"} }
     ],
     critical:null,
     inc:["Acute chikungunya infection","Cross-reactivity with other alphaviruses (o'nyong-nyong, Mayaro) — rarely relevant in India","IgM may persist for several months after the acute illness"],
@@ -2807,11 +2807,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"cells/µL", si:"×10⁶/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult — normal", sex:"any", age:"adult", preg:null, conv:{lo:500,hi:1500}, si:{lo:500,hi:1500} },
-      { rid:"r2", grp:"Moderate immunosuppression", sex:"any", age:"adult", preg:null, conv:{lo:200,hi:350}, si:{lo:200,hi:350} },
-      { rid:"r3", grp:"Advanced HIV / AIDS-defining threshold", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:200}, si:{lo:null,hi:200} },
-      { rid:"r4", grp:"High risk of CMV and MAC disease", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:50}, si:{lo:null,hi:50} },
-      { rid:"r5", grp:"Infant (use CD4 PERCENTAGE, not absolute count)", sex:"any", age:"infant", preg:null, conv:{lo:null,hi:null,txt:"Normal infant counts are much higher; interpret by CD4% (≥25% normal, <15% severe)"}, si:{lo:null,hi:null,txt:"Interpret by CD4%"} }
+      { rid:"r1", kind:"ref", grp:"Adult — normal", sex:"any", age:"adult", preg:null, conv:{lo:500,hi:1500}, si:{lo:500,hi:1500} },
+      { rid:"r2", kind:"dx", grp:"Moderate immunosuppression", sex:"any", age:"adult", preg:null, conv:{lo:200,hi:350}, si:{lo:200,hi:350} },
+      { rid:"r3", kind:"cutoff", grp:"Advanced HIV / AIDS-defining threshold", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:200}, si:{lo:null,hi:200} },
+      { rid:"r4", kind:"cutoff", grp:"High risk of CMV and MAC disease", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:50}, si:{lo:null,hi:50} },
+      { rid:"r5", kind:"note", grp:"Infant (use CD4 PERCENTAGE, not absolute count)", sex:"any", age:"infant", preg:null, conv:{lo:null,hi:null,txt:"Normal infant counts are much higher; interpret by CD4% (≥25% normal, <15% severe)"}, si:{lo:null,hi:null,txt:"Interpret by CD4%"} }
     ],
     critical:{ txt:"CD4 <200 cells/µL — start opportunistic infection prophylaxis (co-trimoxazole) and screen for tuberculosis and cryptococcal antigen", lo:200, hi:null },
     inc:["Recovery on effective antiretroviral therapy","Normal variation; higher in the afternoon than the morning"],
@@ -2832,10 +2832,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Qualitative", si:"Qualitative", factor:null },
     ranges:[
-      { rid:"r1", grp:"CBNAAT / Xpert MTB/RIF", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"MTB not detected"}, si:{lo:null,hi:null,txt:"MTB not detected"} },
-      { rid:"r2", grp:"Rifampicin resistance", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Not detected"}, si:{lo:null,hi:null,txt:"Not detected"} },
-      { rid:"r3", grp:"AFB smear (Ziehl-Neelsen / fluorescence)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No acid-fast bacilli seen"}, si:{lo:null,hi:null,txt:"No AFB seen"} },
-      { rid:"r4", grp:"Mycobacterial culture", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No growth after 6–8 weeks (liquid culture 2–6 weeks)"}, si:{lo:null,hi:null,txt:"No growth"} }
+      { rid:"r1", kind:"note", grp:"CBNAAT / Xpert MTB/RIF", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"MTB not detected"}, si:{lo:null,hi:null,txt:"MTB not detected"} },
+      { rid:"r2", kind:"note", grp:"Rifampicin resistance", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Not detected"}, si:{lo:null,hi:null,txt:"Not detected"} },
+      { rid:"r3", kind:"note", grp:"AFB smear (Ziehl-Neelsen / fluorescence)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No acid-fast bacilli seen"}, si:{lo:null,hi:null,txt:"No AFB seen"} },
+      { rid:"r4", kind:"note", grp:"Mycobacterial culture", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No growth after 6–8 weeks (liquid culture 2–6 weeks)"}, si:{lo:null,hi:null,txt:"No growth"} }
     ],
     critical:{ txt:"Rifampicin resistance detected — presumptive MDR-TB; notify the programme and start a drug-resistant regimen urgently", lo:null, hi:null },
     inc:["Pulmonary or extrapulmonary tuberculosis","Non-tuberculous mycobacteria on AFB smear (smear cannot distinguish them; culture or molecular testing can)","CBNAAT may remain positive for months after successful treatment because it detects dead bacilli — it must NOT be used to monitor response"],
@@ -2857,8 +2857,8 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/mL", si:"µmol/L", factor:6.934 },
     ranges:[
-      { rid:"r1", grp:"Usual therapeutic range (epilepsy)", sex:"any", age:"adult", preg:null, conv:{lo:50,hi:100}, si:{lo:347,hi:693} },
-      { rid:"r2", grp:"Toxicity increasingly likely", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:null}, si:{lo:693,hi:null} }
+      { rid:"r1", kind:"target", grp:"Usual therapeutic range (epilepsy)", sex:"any", age:"adult", preg:null, conv:{lo:50,hi:100}, si:{lo:347,hi:693} },
+      { rid:"r2", kind:"dx", grp:"Toxicity increasingly likely", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:null}, si:{lo:693,hi:null} }
     ],
     critical:{ txt:">150 µg/mL (>1040 µmol/L) — severe toxicity; risk of coma, cerebral oedema and hyperammonaemia", lo:null, hi:150 },
     inc:["Overdose, deliberate or accidental","Dose increase; hepatic impairment","Displacement from protein binding by aspirin and other highly bound drugs (raises the FREE fraction even when total level looks normal)","Hypoalbuminaemia — raises free valproate while total may be normal"],
@@ -2879,8 +2879,8 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/mL", si:"µmol/L", factor:4.23 },
     ranges:[
-      { rid:"r1", grp:"Therapeutic range", sex:"any", age:"adult", preg:null, conv:{lo:4,hi:12}, si:{lo:17,hi:51} },
-      { rid:"r2", grp:"Toxicity increasingly likely", sex:"any", age:"adult", preg:null, conv:{lo:12,hi:null}, si:{lo:51,hi:null} }
+      { rid:"r1", kind:"target", grp:"Therapeutic range", sex:"any", age:"adult", preg:null, conv:{lo:4,hi:12}, si:{lo:17,hi:51} },
+      { rid:"r2", kind:"dx", grp:"Toxicity increasingly likely", sex:"any", age:"adult", preg:null, conv:{lo:12,hi:null}, si:{lo:51,hi:null} }
     ],
     critical:{ txt:">20 µg/mL (>85 µmol/L) — severe toxicity: ataxia, nystagmus, coma, arrhythmia, seizures", lo:null, hi:20 },
     inc:["Overdose","Enzyme inhibitors: macrolides (erythromycin, clarithromycin), azole antifungals, valproate, isoniazid, diltiazem, verapamil, grapefruit juice","Hepatic impairment"],
@@ -2901,10 +2901,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mmol/L", si:"mmol/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Therapeutic (12-h post-dose)", sex:"any", age:"adult", preg:null, conv:{lo:0.4,hi:1.0}, si:{lo:0.4,hi:1.0} },
-      { rid:"r2", grp:"Acute mania / maintenance upper target", sex:"any", age:"adult", preg:null, conv:{lo:0.8,hi:1.0}, si:{lo:0.8,hi:1.0} },
-      { rid:"r3", grp:"Elderly — preferred range", sex:"any", age:"adult", preg:null, conv:{lo:0.4,hi:0.8}, si:{lo:0.4,hi:0.8} },
-      { rid:"r4", grp:"Toxic", sex:"any", age:"adult", preg:null, conv:{lo:1.5,hi:null}, si:{lo:1.5,hi:null} }
+      { rid:"r1", kind:"target", grp:"Therapeutic (12-h post-dose)", sex:"any", age:"adult", preg:null, conv:{lo:0.4,hi:1.0}, si:{lo:0.4,hi:1.0} },
+      { rid:"r2", kind:"target", grp:"Acute mania / maintenance upper target", sex:"any", age:"adult", preg:null, conv:{lo:0.8,hi:1.0}, si:{lo:0.8,hi:1.0} },
+      { rid:"r3", kind:"target", grp:"Elderly — preferred range", sex:"any", age:"adult", preg:null, conv:{lo:0.4,hi:0.8}, si:{lo:0.4,hi:0.8} },
+      { rid:"r4", kind:"cutoff", grp:"Toxic", sex:"any", age:"adult", preg:null, conv:{lo:1.5,hi:null}, si:{lo:1.5,hi:null} }
     ],
     critical:{ txt:">1.5 mmol/L — lithium toxicity; >2.5 mmol/L is a medical emergency requiring urgent nephrology input and possible haemodialysis", lo:null, hi:1.5 },
     inc:["Dehydration, vomiting, diarrhoea, hot weather, fever — all concentrate lithium","Renal impairment","Drug interactions: NSAIDs, ACE inhibitors, ARBs, thiazide diuretics, metronidazole — all raise lithium","Low-sodium diet (the kidney reabsorbs lithium in place of sodium)","Overdose"],
@@ -2925,9 +2925,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"nmol/L", factor:1.28 },
     ranges:[
-      { rid:"r1", grp:"Heart failure — target", sex:"any", age:"adult", preg:null, conv:{lo:0.5,hi:0.9}, si:{lo:0.6,hi:1.2} },
-      { rid:"r2", grp:"Atrial fibrillation — usual range", sex:"any", age:"adult", preg:null, conv:{lo:0.8,hi:2.0}, si:{lo:1.0,hi:2.6} },
-      { rid:"r3", grp:"Toxicity increasingly likely", sex:"any", age:"adult", preg:null, conv:{lo:2.0,hi:null}, si:{lo:2.6,hi:null} }
+      { rid:"r1", kind:"target", grp:"Heart failure — target", sex:"any", age:"adult", preg:null, conv:{lo:0.5,hi:0.9}, si:{lo:0.6,hi:1.2} },
+      { rid:"r2", kind:"target", grp:"Atrial fibrillation — usual range", sex:"any", age:"adult", preg:null, conv:{lo:0.8,hi:2.0}, si:{lo:1.0,hi:2.6} },
+      { rid:"r3", kind:"dx", grp:"Toxicity increasingly likely", sex:"any", age:"adult", preg:null, conv:{lo:2.0,hi:null}, si:{lo:2.6,hi:null} }
     ],
     critical:{ txt:">2.5 ng/mL with arrhythmia, vomiting or confusion — digoxin toxicity; consider digoxin-specific antibody fragments", lo:null, hi:2.5 },
     inc:["Renal impairment — digoxin is renally cleared and accumulates","Drug interactions: amiodarone, verapamil, quinidine, clarithromycin, itraconazole, ciclosporin all raise digoxin substantially","Hypothyroidism","Overdose","Sampling too soon after the dose (artefactual)"],
@@ -2948,10 +2948,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/mL", si:"mg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Trough — standard infection", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:15}, si:{lo:10,hi:15} },
-      { rid:"r2", grp:"Trough — serious MRSA infection", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:20}, si:{lo:15,hi:20} },
-      { rid:"r3", grp:"AUC₂₄/MIC target (preferred method)", sex:"any", age:"adult", preg:null, conv:{lo:400,hi:600}, si:{lo:400,hi:600} },
-      { rid:"r4", grp:"Nephrotoxicity risk rises", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:null}, si:{lo:20,hi:null} }
+      { rid:"r1", kind:"target", grp:"Trough — standard infection", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:15}, si:{lo:10,hi:15} },
+      { rid:"r2", kind:"target", grp:"Trough — serious MRSA infection", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:20}, si:{lo:15,hi:20} },
+      { rid:"r3", kind:"target", grp:"AUC₂₄/MIC target (preferred method)", sex:"any", age:"adult", preg:null, conv:{lo:400,hi:600}, si:{lo:400,hi:600} },
+      { rid:"r4", kind:"cutoff", grp:"Nephrotoxicity risk rises", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:null}, si:{lo:20,hi:null} }
     ],
     critical:{ txt:"Trough >25 µg/mL, or any rising level with rising creatinine — withhold the next dose and review", lo:null, hi:25 },
     inc:["Renal impairment — the dominant factor","Dose too high or interval too short","Concomitant nephrotoxins: aminoglycosides, piperacillin-tazobactam, contrast, NSAIDs","Sampling too early (not a true trough)"],
@@ -2972,10 +2972,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/mL", si:"µmol/L", factor:6.62 },
     ranges:[
-      { rid:"r1", grp:"Treatment line at 4 h post-ingestion", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:null}, si:{lo:662,hi:null} },
-      { rid:"r2", grp:"Treatment line at 8 h", sex:"any", age:"adult", preg:null, conv:{lo:50,hi:null}, si:{lo:331,hi:null} },
-      { rid:"r3", grp:"Treatment line at 12 h", sex:"any", age:"adult", preg:null, conv:{lo:25,hi:null}, si:{lo:166,hi:null} },
-      { rid:"r4", grp:"Therapeutic (analgesic) concentration", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:20}, si:{lo:66,hi:132} }
+      { rid:"r1", kind:"target", grp:"Treatment line at 4 h post-ingestion", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:null}, si:{lo:662,hi:null} },
+      { rid:"r2", kind:"target", grp:"Treatment line at 8 h", sex:"any", age:"adult", preg:null, conv:{lo:50,hi:null}, si:{lo:331,hi:null} },
+      { rid:"r3", kind:"target", grp:"Treatment line at 12 h", sex:"any", age:"adult", preg:null, conv:{lo:25,hi:null}, si:{lo:166,hi:null} },
+      { rid:"r4", kind:"target", grp:"Therapeutic (analgesic) concentration", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:20}, si:{lo:66,hi:132} }
     ],
     critical:{ txt:"Level above the treatment line, OR staggered/unknown-time ingestion with any raised ALT or INR — start N-acetylcysteine immediately", lo:null, hi:null },
     inc:["Acute overdose, deliberate or accidental","Therapeutic excess, particularly with combination cold remedies containing paracetamol — a common and under-recognised route to toxicity","Higher risk at lower levels: chronic alcohol use, malnutrition, anorexia, enzyme-inducing drugs (phenytoin, carbamazepine, rifampicin, isoniazid)"],
@@ -2996,10 +2996,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/dL", si:"mmol/L", factor:0.0724 },
     ranges:[
-      { rid:"r1", grp:"Therapeutic (anti-inflammatory)", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:30}, si:{lo:1.1,hi:2.2} },
-      { rid:"r2", grp:"Mild toxicity", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:50}, si:{lo:2.2,hi:3.6} },
-      { rid:"r3", grp:"Moderate toxicity", sex:"any", age:"adult", preg:null, conv:{lo:50,hi:70}, si:{lo:3.6,hi:5.1} },
-      { rid:"r4", grp:"Severe — consider haemodialysis", sex:"any", age:"adult", preg:null, conv:{lo:70,hi:null}, si:{lo:5.1,hi:null} }
+      { rid:"r1", kind:"target", grp:"Therapeutic (anti-inflammatory)", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:30}, si:{lo:1.1,hi:2.2} },
+      { rid:"r2", kind:"dx", grp:"Mild toxicity", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:50}, si:{lo:2.2,hi:3.6} },
+      { rid:"r3", kind:"dx", grp:"Moderate toxicity", sex:"any", age:"adult", preg:null, conv:{lo:50,hi:70}, si:{lo:3.6,hi:5.1} },
+      { rid:"r4", kind:"cutoff", grp:"Severe — consider haemodialysis", sex:"any", age:"adult", preg:null, conv:{lo:70,hi:null}, si:{lo:5.1,hi:null} }
     ],
     critical:{ txt:">70 mg/dL (5.1 mmol/L), or any level with acidaemia, altered consciousness, pulmonary oedema or renal failure — urgent dialysis assessment", lo:null, hi:70 },
     inc:["Acute overdose","Chronic therapeutic excess, especially in the elderly — often missed, and more lethal at lower levels than acute poisoning","Topical methyl salicylate (oil of wintergreen) — extremely concentrated","Reduced clearance in renal impairment"],
@@ -3020,9 +3020,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"U/L", si:"U/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Plasma (butyryl)cholinesterase — adult", sex:"any", age:"adult", preg:null, conv:{lo:4900,hi:11900}, si:{lo:4900,hi:11900} },
-      { rid:"r2", grp:"Mild OP poisoning (20–50% of baseline)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Activity 20–50% of the reference mean"}, si:{lo:null,hi:null,txt:"20–50% of reference mean"} },
-      { rid:"r3", grp:"Severe OP poisoning (<20% of baseline)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Activity below 20% of the reference mean"}, si:{lo:null,hi:null,txt:"<20% of reference mean"} }
+      { rid:"r1", kind:"ref", grp:"Plasma (butyryl)cholinesterase — adult", sex:"any", age:"adult", preg:null, conv:{lo:4900,hi:11900}, si:{lo:4900,hi:11900} },
+      { rid:"r2", kind:"note", grp:"Mild OP poisoning (20–50% of baseline)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Activity 20–50% of the reference mean"}, si:{lo:null,hi:null,txt:"20–50% of reference mean"} },
+      { rid:"r3", kind:"note", grp:"Severe OP poisoning (<20% of baseline)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Activity below 20% of the reference mean"}, si:{lo:null,hi:null,txt:"<20% of reference mean"} }
     ],
     critical:{ txt:"Cholinergic crisis — bronchorrhoea, bradycardia, miosis, fasciculation, respiratory failure. Treat with atropine titrated to drying of secretions plus pralidoxime; do not wait for the enzyme result", lo:null, hi:null },
     inc:["Not clinically significant (nephrotic syndrome, obesity, hyperlipidaemia cause mild elevation)"],
@@ -3043,10 +3043,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/dL", si:"mmol/L", factor:0.217 },
     ranges:[
-      { rid:"r1", grp:"Not detected", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:2.2} },
-      { rid:"r2", grp:"Legal driving limit (India, 30 mg/100 mL)", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:null}, si:{lo:6.5,hi:null} },
-      { rid:"r3", grp:"Obvious intoxication in a non-tolerant adult", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:200}, si:{lo:21.7,hi:43.4} },
-      { rid:"r4", grp:"Stupor / coma risk (non-tolerant)", sex:"any", age:"adult", preg:null, conv:{lo:300,hi:null}, si:{lo:65.1,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Not detected", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:2.2} },
+      { rid:"r2", kind:"target", grp:"Legal driving limit (India, 30 mg/100 mL)", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:null}, si:{lo:6.5,hi:null} },
+      { rid:"r3", kind:"cutoff", grp:"Obvious intoxication in a non-tolerant adult", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:200}, si:{lo:21.7,hi:43.4} },
+      { rid:"r4", kind:"cutoff", grp:"Stupor / coma risk (non-tolerant)", sex:"any", age:"adult", preg:null, conv:{lo:300,hi:null}, si:{lo:65.1,hi:null} }
     ],
     critical:{ txt:">300 mg/dL in a non-tolerant adult, or any level with coma or respiratory depression — protect the airway and exclude head injury, hypoglycaemia and co-ingestion", lo:null, hi:300 },
     inc:["Ethanol ingestion","Alcohol-based skin preparation contaminating the sample (artefactual)","Rarely, auto-brewery syndrome"],
@@ -3067,11 +3067,11 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/dL", si:"µmol/L", factor:0.0483 },
     ranges:[
-      { rid:"r1", grp:"Child — reference value (action threshold)", sex:"any", age:"child", preg:null, conv:{lo:null,hi:3.5}, si:{lo:null,hi:0.17} },
-      { rid:"r2", grp:"Child — chelation usually considered", sex:"any", age:"child", preg:null, conv:{lo:45,hi:null}, si:{lo:2.17,hi:null} },
-      { rid:"r3", grp:"Adult — background", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:0.24} },
-      { rid:"r4", grp:"Adult — occupational action level", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:null}, si:{lo:0.97,hi:null} },
-      { rid:"r5", grp:"Adult — remove from exposure", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:null}, si:{lo:1.45,hi:null} }
+      { rid:"r1", kind:"cutoff", grp:"Child — reference value (action threshold)", sex:"any", age:"child", preg:null, conv:{lo:null,hi:3.5}, si:{lo:null,hi:0.17} },
+      { rid:"r2", kind:"target", grp:"Child — chelation usually considered", sex:"any", age:"child", preg:null, conv:{lo:45,hi:null}, si:{lo:2.17,hi:null} },
+      { rid:"r3", kind:"ref", grp:"Adult — background", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:0.24} },
+      { rid:"r4", kind:"target", grp:"Adult — occupational action level", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:null}, si:{lo:0.97,hi:null} },
+      { rid:"r5", kind:"cutoff", grp:"Adult — remove from exposure", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:null}, si:{lo:1.45,hi:null} }
     ],
     critical:{ txt:">70 µg/dL, or any level with encephalopathy (headache, vomiting, seizures, altered consciousness) — a medical emergency requiring urgent chelation", lo:null, hi:70 },
     inc:["Occupational exposure: battery manufacture and recycling, smelting, welding, painting, pottery glazing, construction","Traditional cosmetics and remedies: surma, kajal, some ayurvedic and herbal preparations","Contaminated spices, turmeric adulterated with lead chromate, and contaminated water from lead pipes or solder","Old lead-based paint in children (hand-to-mouth ingestion); contaminated soil","Retained lead bullets or pellets"],
@@ -3093,12 +3093,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"µg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Age <50 y", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:2.5}, si:{lo:null,hi:2.5} },
-      { rid:"r2", grp:"Age 50–59 y", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:3.0}, si:{lo:null,hi:3.0} },
-      { rid:"r3", grp:"Age 60–69 y", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:4.0}, si:{lo:null,hi:4.0} },
-      { rid:"r4", grp:"Age ≥70 y", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:5.0}, si:{lo:null,hi:5.0} },
-      { rid:"r5", grp:"Free:total PSA ratio — higher cancer risk", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"<10% suggests malignancy; >25% favours benign hyperplasia"}, si:{lo:null,hi:null,txt:"<10% suggests malignancy"} },
-      { rid:"r6", grp:"Post-radical prostatectomy — biochemical recurrence", sex:"M", age:"adult", preg:null, conv:{lo:0.2,hi:null}, si:{lo:0.2,hi:null} }
+      { rid:"r7", analyte:{key:"total",label:"Total PSA"}, kind:"ref", grp:"Age <50 y", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:2.5}, si:{lo:null,hi:2.5} },
+      { rid:"r8", analyte:{key:"total",label:"Total PSA"}, kind:"ref", grp:"Age 50–59 y", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:3.0}, si:{lo:null,hi:3.0} },
+      { rid:"r9", analyte:{key:"total",label:"Total PSA"}, kind:"ref", grp:"Age 60–69 y", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:4.0}, si:{lo:null,hi:4.0} },
+      { rid:"r10", analyte:{key:"total",label:"Total PSA"}, kind:"ref", grp:"Age ≥70 y", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:5.0}, si:{lo:null,hi:5.0} },
+      { rid:"r11", analyte:{key:"ratio",label:"Free:Total PSA Ratio"}, kind:"cutoff", grp:"Free:total PSA ratio — higher cancer risk", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"<10% suggests malignancy; >25% favours benign hyperplasia"}, si:{lo:null,hi:null,txt:"<10% suggests malignancy"} },
+      { rid:"r12", analyte:{key:"total",label:"Total PSA"}, kind:"dx", grp:"Post-radical prostatectomy — biochemical recurrence", sex:"M", age:"adult", preg:null, conv:{lo:0.2,hi:null}, si:{lo:0.2,hi:null} }
     ],
     critical:null,
     inc:["Prostate cancer","Benign prostatic hyperplasia — by far the commonest cause of a modestly raised PSA","Prostatitis and urinary tract infection (can raise PSA dramatically; recheck after 6 weeks)","Acute urinary retention, catheterisation, prostate biopsy, digital rectal examination","Ejaculation and vigorous cycling within 48 h"],
@@ -3119,9 +3119,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"µg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Non-smoker", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:3.0}, si:{lo:null,hi:3.0} },
-      { rid:"r2", grp:"Smoker", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5.0}, si:{lo:null,hi:5.0} },
-      { rid:"r3", grp:"Post-operative surveillance — concerning rise", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Any confirmed sustained rise above the post-operative nadir warrants imaging"}, si:{lo:null,hi:null,txt:"Sustained rise above nadir"} }
+      { rid:"r1", kind:"ref", grp:"Non-smoker", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:3.0}, si:{lo:null,hi:3.0} },
+      { rid:"r2", kind:"ref", grp:"Smoker", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5.0}, si:{lo:null,hi:5.0} },
+      { rid:"r3", kind:"note", grp:"Post-operative surveillance — concerning rise", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Any confirmed sustained rise above the post-operative nadir warrants imaging"}, si:{lo:null,hi:null,txt:"Sustained rise above nadir"} }
     ],
     critical:null,
     inc:["Colorectal cancer (the main use), and also gastric, pancreatic, lung, breast, medullary thyroid and ovarian cancers","Smoking — a common benign cause","Benign conditions: inflammatory bowel disease, pancreatitis, cirrhosis, peptic ulcer, hypothyroidism, chronic obstructive pulmonary disease","Any inflammatory state"],
@@ -3142,8 +3142,8 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"U/mL", si:"kU/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:35}, si:{lo:null,hi:35} },
-      { rid:"r2", grp:"Post-menopausal (lower threshold often used)", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} }
+      { rid:"r1", kind:"ref", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:35}, si:{lo:null,hi:35} },
+      { rid:"r2", kind:"cutoff", grp:"Post-menopausal (lower threshold often used)", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} }
     ],
     critical:null,
     inc:["Epithelial ovarian cancer — the principal malignant association","Endometrial, fallopian tube, pancreatic, breast, lung and gastric cancers","Benign gynaecological disease: endometriosis, fibroids, pelvic inflammatory disease, ovarian cysts, menstruation, pregnancy","Any cause of peritoneal or pleural irritation: cirrhosis with ascites, heart failure, tuberculosis, recent abdominal surgery, pancreatitis","Tuberculous peritonitis — an important Indian consideration, which can raise CA 125 markedly and mimic ovarian malignancy"],
@@ -3164,8 +3164,8 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"U/mL", si:"kU/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:37}, si:{lo:null,hi:37} },
-      { rid:"r2", grp:"Markedly raised — malignancy more likely", sex:"any", age:"adult", preg:null, conv:{lo:1000,hi:null}, si:{lo:1000,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:37}, si:{lo:null,hi:37} },
+      { rid:"r2", kind:"cutoff", grp:"Markedly raised — malignancy more likely", sex:"any", age:"adult", preg:null, conv:{lo:1000,hi:null}, si:{lo:1000,hi:null} }
     ],
     critical:null,
     inc:["Pancreatic adenocarcinoma and cholangiocarcinoma","Gastric and colorectal cancer","Biliary obstruction of ANY cause, including benign stones — a major confounder","Acute and chronic pancreatitis, cholangitis, cirrhosis","Hypothyroidism, bronchiectasis"],
@@ -3186,11 +3186,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"µg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult (non-pregnant)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} },
-      { rid:"r2", grp:"HCC — highly suggestive in cirrhosis", sex:"any", age:"adult", preg:null, conv:{lo:400,hi:null}, si:{lo:400,hi:null} },
-      { rid:"r3", grp:"Newborn (physiologically very high)", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:100000}, si:{lo:null,hi:100000} },
-      { rid:"r4", grp:"Infant (falls to adult level by ~1 year)", sex:"any", age:"infant", preg:null, conv:{lo:null,hi:100}, si:{lo:null,hi:100} },
-      { rid:"r5", grp:"Antenatal screening (reported as MoM)", sex:"F", age:"adult", preg:"any", conv:{lo:null,hi:null,txt:"≥2.0–2.5 MoM raises suspicion of a neural tube defect; low MoM features in Down syndrome risk calculation"}, si:{lo:null,hi:null,txt:"≥2.0–2.5 MoM abnormal"} }
+      { rid:"r1", kind:"ref", grp:"Adult (non-pregnant)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} },
+      { rid:"r2", kind:"dx", grp:"HCC — highly suggestive in cirrhosis", sex:"any", age:"adult", preg:null, conv:{lo:400,hi:null}, si:{lo:400,hi:null} },
+      { rid:"r3", kind:"ref", grp:"Newborn (physiologically very high)", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:100000}, si:{lo:null,hi:100000} },
+      { rid:"r4", kind:"ref", grp:"Infant (falls to adult level by ~1 year)", sex:"any", age:"infant", preg:null, conv:{lo:null,hi:100}, si:{lo:null,hi:100} },
+      { rid:"r5", kind:"note", grp:"Antenatal screening (reported as MoM)", sex:"F", age:"adult", preg:"any", conv:{lo:null,hi:null,txt:"≥2.0–2.5 MoM raises suspicion of a neural tube defect; low MoM features in Down syndrome risk calculation"}, si:{lo:null,hi:null,txt:"≥2.0–2.5 MoM abnormal"} }
     ],
     critical:null,
     inc:["Hepatocellular carcinoma","Non-seminomatous germ cell tumours (yolk sac elements) — AFP is NEVER raised in pure seminoma, a diagnostically useful fact","Hepatoblastoma in children","Chronic hepatitis and cirrhosis — modest elevation without cancer, a frequent confounder","Pregnancy (physiological); neural tube defects and abdominal wall defects raise it further","Physiologically very high in newborns, falling to adult levels by about one year"],
@@ -3211,11 +3211,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"mIU/mL", si:"IU/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Non-pregnant", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
-      { rid:"r2", grp:"Adult male / post-menopausal baseline", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
-      { rid:"r3", grp:"Discriminatory zone (IUP should be visible on TVS)", sex:"F", age:"adult", preg:"T1", conv:{lo:1500,hi:3500}, si:{lo:1500,hi:3500} },
-      { rid:"r4", grp:"Expected 48-h rise in viable IUP", sex:"F", age:"adult", preg:"T1", conv:{lo:null,hi:null,txt:"≥35–53% rise over 48 h (a sub-optimal rise suggests ectopic or failing pregnancy)"}, si:{lo:null,hi:null,txt:"≥35–53% rise over 48 h"} },
-      { rid:"r5", grp:"Peak (8–11 weeks)", sex:"F", age:"adult", preg:"T1", conv:{lo:25000,hi:290000}, si:{lo:25000,hi:290000} }
+      { rid:"r1", kind:"ref", grp:"Non-pregnant", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
+      { rid:"r2", kind:"ref", grp:"Adult male / post-menopausal baseline", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
+      { rid:"r3", kind:"cutoff", grp:"Discriminatory zone (IUP should be visible on TVS)", sex:"F", age:"adult", preg:"T1", conv:{lo:1500,hi:3500}, si:{lo:1500,hi:3500} },
+      { rid:"r4", kind:"note", grp:"Expected 48-h rise in viable IUP", sex:"F", age:"adult", preg:"T1", conv:{lo:null,hi:null,txt:"≥35–53% rise over 48 h (a sub-optimal rise suggests ectopic or failing pregnancy)"}, si:{lo:null,hi:null,txt:"≥35–53% rise over 48 h"} },
+      { rid:"r5", kind:"target", grp:"Peak (8–11 weeks)", sex:"F", age:"adult", preg:"T1", conv:{lo:25000,hi:290000}, si:{lo:25000,hi:290000} }
     ],
     critical:{ txt:"Positive hCG with pain, bleeding or haemodynamic instability — exclude ectopic pregnancy urgently", lo:null, hi:null },
     inc:["Pregnancy — intrauterine, ectopic or molar","Gestational trophoblastic disease — typically very high, often above 100,000","Germ cell tumours (seminoma and non-seminomatous), and rarely other malignancies","hCG trigger injection in assisted conception","Pituitary hCG in peri- and post-menopausal women (low-level, benign)"],
@@ -3236,10 +3236,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"IU/mL", si:"IU/mL", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Rheumatoid factor — negative", analyte:{key:"rf",label:"Rheumatoid Factor"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:14}, si:{lo:null,hi:14} },
-      { rid:"r2", grp:"RF — high titre (≥3× upper limit)", analyte:{key:"rf",label:"Rheumatoid Factor"}, sex:"any", age:"adult", preg:null, conv:{lo:42,hi:null}, si:{lo:42,hi:null} },
-      { rid:"r3", grp:"Anti-CCP — negative", analyte:{key:"ccp",label:"Anti-CCP (ACPA)",convUnit:"U/mL",siUnit:"U/mL"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
-      { rid:"r4", grp:"Anti-CCP — high titre (≥3× upper limit)", analyte:{key:"ccp",label:"Anti-CCP (ACPA)",convUnit:"U/mL",siUnit:"U/mL"}, sex:"any", age:"adult", preg:null, conv:{lo:60,hi:null}, si:{lo:60,hi:null} }
+      { rid:"r1", kind:"dx", grp:"Rheumatoid factor — negative", analyte:{key:"rf",label:"Rheumatoid Factor"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:14}, si:{lo:null,hi:14} },
+      { rid:"r2", kind:"dx", grp:"RF — high titre (≥3× upper limit)", analyte:{key:"rf",label:"Rheumatoid Factor"}, sex:"any", age:"adult", preg:null, conv:{lo:42,hi:null}, si:{lo:42,hi:null} },
+      { rid:"r3", kind:"dx", grp:"Anti-CCP — negative", analyte:{key:"ccp",label:"Anti-CCP (ACPA)",convUnit:"U/mL",siUnit:"U/mL"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
+      { rid:"r4", kind:"dx", grp:"Anti-CCP — high titre (≥3× upper limit)", analyte:{key:"ccp",label:"Anti-CCP (ACPA)",convUnit:"U/mL",siUnit:"U/mL"}, sex:"any", age:"adult", preg:null, conv:{lo:60,hi:null}, si:{lo:60,hi:null} }
     ],
     critical:null,
     inc:["Rheumatoid arthritis — RF positive in about 70–80%, anti-CCP in about 60–70% but with far higher specificity","Sjögren syndrome (RF frequently positive, often at high titre)","Chronic infection: hepatitis C, tuberculosis, infective endocarditis, leprosy, chronic parasitic infection","Other autoimmune disease: SLE, systemic sclerosis, mixed connective tissue disease","Cryoglobulinaemia","Healthy older people — RF positivity rises with age and reaches 5–10% in the elderly","Smoking (associated with anti-CCP positivity)"],
@@ -3260,9 +3260,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"IU/mL", si:"IU/mL", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Anti-dsDNA — negative", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:30} },
-      { rid:"r2", grp:"Anti-dsDNA — positive (SLE-specific)", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:null}, si:{lo:30,hi:null} },
-      { rid:"r3", grp:"ENA panel (Sm, RNP, Ro/SSA, La/SSB, Scl-70, Jo-1)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative for all specificities"}, si:{lo:null,hi:null,txt:"Negative"} }
+      { rid:"r1", kind:"dx", grp:"Anti-dsDNA — negative", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:30} },
+      { rid:"r2", kind:"dx", grp:"Anti-dsDNA — positive (SLE-specific)", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:null}, si:{lo:30,hi:null} },
+      { rid:"r3", kind:"note", grp:"ENA panel (Sm, RNP, Ro/SSA, La/SSB, Scl-70, Jo-1)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative for all specificities"}, si:{lo:null,hi:null,txt:"Negative"} }
     ],
     critical:{ txt:"Anti-Ro/SSA positive in pregnancy — risk of fetal congenital heart block; arrange fetal cardiac monitoring", lo:null, hi:null },
     inc:["Anti-dsDNA: highly specific for SLE; titre correlates with disease activity and particularly with lupus nephritis","Anti-Sm: the most specific antibody for SLE, though present in only about 30%","Anti-RNP: mixed connective tissue disease (high titre), SLE","Anti-Ro/SSA and anti-La/SSB: Sjögren syndrome, subacute cutaneous lupus, neonatal lupus and congenital heart block","Anti-Scl-70 (topoisomerase I): diffuse systemic sclerosis, associated with interstitial lung disease","Anti-Jo-1: antisynthetase syndrome — myositis with interstitial lung disease, arthritis and mechanic's hands","Anti-centromere: limited cutaneous systemic sclerosis (CREST)"],
@@ -3283,9 +3283,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Qualitative", si:"Qualitative", factor:null },
     ranges:[
-      { rid:"r1", grp:"Indirect immunofluorescence pattern", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (no c-ANCA or p-ANCA pattern)"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r2", grp:"Anti-PR3 (usually c-ANCA)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative — positive associated with granulomatosis with polyangiitis"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r3", grp:"Anti-MPO (usually p-ANCA)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative — positive associated with microscopic polyangiitis and eosinophilic GPA"}, si:{lo:null,hi:null,txt:"Negative"} }
+      { rid:"r1", kind:"note", grp:"Indirect immunofluorescence pattern", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative (no c-ANCA or p-ANCA pattern)"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r2", kind:"note", grp:"Anti-PR3 (usually c-ANCA)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative — positive associated with granulomatosis with polyangiitis"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r3", kind:"note", grp:"Anti-MPO (usually p-ANCA)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative — positive associated with microscopic polyangiitis and eosinophilic GPA"}, si:{lo:null,hi:null,txt:"Negative"} }
     ],
     critical:{ txt:"ANCA positive with haemoptysis, haematuria, red cell casts or rapidly rising creatinine — pulmonary-renal syndrome; immunosuppression and possible plasma exchange are urgent", lo:null, hi:null },
     inc:["PR3-ANCA: granulomatosis with polyangiitis (Wegener)","MPO-ANCA: microscopic polyangiitis, eosinophilic granulomatosis with polyangiitis (Churg-Strauss)","Drug-induced ANCA vasculitis: hydralazine, propylthiouracil, levamisole-adulterated cocaine, minocycline (often very high MPO titres)","Atypical p-ANCA: inflammatory bowel disease, autoimmune hepatitis, primary sclerosing cholangitis — these are NOT vasculitis","Chronic infection: endocarditis, tuberculosis — important mimics that can be ANCA positive"],
@@ -3306,8 +3306,8 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/dL", si:"g/L", factor:0.01 },
     ranges:[
-      { rid:"r1", grp:"C3 — adult", analyte:{key:"c3",label:"Complement C3"}, sex:"any", age:"adult", preg:null, conv:{lo:90,hi:180}, si:{lo:0.90,hi:1.80} },
-      { rid:"r2", grp:"C4 — adult", analyte:{key:"c4",label:"Complement C4"}, sex:"any", age:"adult", preg:null, conv:{lo:10,hi:40}, si:{lo:0.10,hi:0.40} }
+      { rid:"r1", kind:"ref", grp:"C3 — adult", analyte:{key:"c3",label:"Complement C3"}, sex:"any", age:"adult", preg:null, conv:{lo:90,hi:180}, si:{lo:0.90,hi:1.80} },
+      { rid:"r2", kind:"ref", grp:"C4 — adult", analyte:{key:"c4",label:"Complement C4"}, sex:"any", age:"adult", preg:null, conv:{lo:10,hi:40}, si:{lo:0.10,hi:0.40} }
     ],
     critical:null,
     inc:["Acute-phase response — both C3 and C4 are acute-phase proteins and rise with infection, inflammation and malignancy, which can mask consumption"],
@@ -3328,11 +3328,11 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/dL", si:"g/L", factor:0.01 },
     ranges:[
-      { rid:"r1", grp:"IgG — adult", analyte:{key:"igg",label:"IgG"}, sex:"any", age:"adult", preg:null, conv:{lo:700,hi:1600}, si:{lo:7.0,hi:16.0} },
-      { rid:"r2", grp:"IgA — adult", analyte:{key:"iga",label:"IgA"}, sex:"any", age:"adult", preg:null, conv:{lo:70,hi:400}, si:{lo:0.70,hi:4.00} },
-      { rid:"r3", grp:"IgM — adult", analyte:{key:"igm",label:"IgM"}, sex:"any", age:"adult", preg:null, conv:{lo:40,hi:230}, si:{lo:0.40,hi:2.30} },
-      { rid:"r4", grp:"IgG — infant (physiological nadir 3–6 mo)", analyte:{key:"igg",label:"IgG"}, sex:"any", age:"infant", preg:null, conv:{lo:200,hi:700}, si:{lo:2.0,hi:7.0} },
-      { rid:"r5", grp:"Serum protein electrophoresis", analyte:{key:"spep",label:"Protein Electrophoresis",convUnit:"Descriptive",siUnit:"Descriptive",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No monoclonal (M) band; normal polyclonal gamma region"}, si:{lo:null,hi:null,txt:"No monoclonal band"} }
+      { rid:"r1", kind:"ref", grp:"IgG — adult", analyte:{key:"igg",label:"IgG"}, sex:"any", age:"adult", preg:null, conv:{lo:700,hi:1600}, si:{lo:7.0,hi:16.0} },
+      { rid:"r2", kind:"ref", grp:"IgA — adult", analyte:{key:"iga",label:"IgA"}, sex:"any", age:"adult", preg:null, conv:{lo:70,hi:400}, si:{lo:0.70,hi:4.00} },
+      { rid:"r3", kind:"ref", grp:"IgM — adult", analyte:{key:"igm",label:"IgM"}, sex:"any", age:"adult", preg:null, conv:{lo:40,hi:230}, si:{lo:0.40,hi:2.30} },
+      { rid:"r4", kind:"ref", grp:"IgG — infant (physiological nadir 3–6 mo)", analyte:{key:"igg",label:"IgG"}, sex:"any", age:"infant", preg:null, conv:{lo:200,hi:700}, si:{lo:2.0,hi:7.0} },
+      { rid:"r5", kind:"note", grp:"Serum protein electrophoresis", analyte:{key:"spep",label:"Protein Electrophoresis",convUnit:"Descriptive",siUnit:"Descriptive",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No monoclonal (M) band; normal polyclonal gamma region"}, si:{lo:null,hi:null,txt:"No monoclonal band"} }
     ],
     critical:{ txt:"Monoclonal band with hypercalcaemia, renal failure, anaemia or bone lesions (CRAB) — probable myeloma; urgent haematology referral", lo:null, hi:null },
     inc:["Monoclonal rise: multiple myeloma, MGUS, Waldenström macroglobulinaemia (IgM), amyloidosis, solitary plasmacytoma","Polyclonal rise: chronic infection (including tuberculosis and HIV), chronic liver disease, autoimmune disease, sarcoidosis","IgA raised in mucosal infection, IgA nephropathy, alcoholic liver disease","IgE raised in allergy and parasitic infestation"],
@@ -3354,14 +3354,14 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"Descriptive", si:"Descriptive", factor:null },
     ranges:[
-      { rid:"r9", analyte:{key:"appearance",label:"Appearance"}, grp:"Appearance", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Clear, pale yellow"}, si:{lo:null,hi:null,txt:"Clear, pale yellow"} },
-      { rid:"r10", analyte:{key:"ph",label:"pH"}, grp:"pH", sex:"any", age:"adult", preg:null, conv:{lo:4.5,hi:8.0}, si:{lo:4.5,hi:8.0} },
-      { rid:"r11", analyte:{key:"sg",label:"Specific Gravity"}, grp:"Specific gravity", sex:"any", age:"adult", preg:null, conv:{lo:1.003,hi:1.030}, si:{lo:1.003,hi:1.030} },
-      { rid:"r12", analyte:{key:"protein",label:"Protein"}, grp:"Protein", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Nil or trace (dipstick); >1+ needs quantification by ACR or PCR"}, si:{lo:null,hi:null,txt:"Nil or trace"} },
-      { rid:"r13", analyte:{key:"dipstick",label:"Glucose / Ketones / Nitrite / Bilirubin"}, grp:"Glucose / ketones / nitrite / bilirubin", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r14", analyte:{key:"rbc",label:"Red Cells"}, grp:"Red cells (microscopy)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:2}, si:{lo:null,hi:2} },
-      { rid:"r15", analyte:{key:"wbc",label:"White Cells / Pus Cells"}, grp:"White cells / pus cells (microscopy)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
-      { rid:"r16", analyte:{key:"casts",label:"Casts"}, grp:"Casts", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Occasional hyaline casts only; RED CELL casts always abnormal"}, si:{lo:null,hi:null,txt:"Occasional hyaline casts only"} }
+      { rid:"r9", kind:"note", analyte:{key:"appearance",label:"Appearance"}, grp:"Appearance", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Clear, pale yellow"}, si:{lo:null,hi:null,txt:"Clear, pale yellow"} },
+      { rid:"r10", kind:"ref", analyte:{key:"ph",label:"pH"}, grp:"pH", sex:"any", age:"adult", preg:null, conv:{lo:4.5,hi:8.0}, si:{lo:4.5,hi:8.0} },
+      { rid:"r11", kind:"ref", analyte:{key:"sg",label:"Specific Gravity"}, grp:"Specific gravity", sex:"any", age:"adult", preg:null, conv:{lo:1.003,hi:1.030}, si:{lo:1.003,hi:1.030} },
+      { rid:"r12", kind:"note", analyte:{key:"protein",label:"Protein"}, grp:"Protein", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Nil or trace (dipstick); >1+ needs quantification by ACR or PCR"}, si:{lo:null,hi:null,txt:"Nil or trace"} },
+      { rid:"r13", kind:"note", analyte:{key:"dipstick",label:"Glucose / Ketones / Nitrite / Bilirubin"}, grp:"Glucose / ketones / nitrite / bilirubin", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r14", kind:"ref", analyte:{key:"rbc",label:"Red Cells"}, grp:"Red cells (microscopy)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:2}, si:{lo:null,hi:2} },
+      { rid:"r15", kind:"ref", analyte:{key:"wbc",label:"White Cells / Pus Cells"}, grp:"White cells / pus cells (microscopy)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
+      { rid:"r16", kind:"note", analyte:{key:"casts",label:"Casts"}, grp:"Casts", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Occasional hyaline casts only; RED CELL casts always abnormal"}, si:{lo:null,hi:null,txt:"Occasional hyaline casts only"} }
     ],
     critical:{ txt:"Red cell casts or dysmorphic red cells with proteinuria — glomerulonephritis; needs same-day renal assessment", lo:null, hi:null },
     inc:["Proteinuria: glomerular disease, diabetic nephropathy, hypertension, pre-eclampsia, orthostatic proteinuria (benign, in young people), fever, exercise","Haematuria: infection, stones, glomerulonephritis, malignancy, trauma, schistosomiasis, anticoagulation","Pyuria: urinary tract infection; sterile pyuria suggests tuberculosis, stones, interstitial nephritis or partially treated infection","Glycosuria: diabetes, pregnancy (lowered renal threshold), SGLT2 inhibitors, renal glycosuria","Ketonuria: fasting, DKA, vomiting, pregnancy","Nitrite: Gram-negative bacteriuria (specific but insensitive — needs several hours' bladder dwell time)"],
@@ -3382,10 +3382,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"CFU/mL", si:"CFU/mL", factor:1 },
     ranges:[
-      { rid:"r1", grp:"No significant growth", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"<10⁴ CFU/mL, or mixed growth suggesting contamination"}, si:{lo:null,hi:null,txt:"<10⁴ CFU/mL"} },
-      { rid:"r2", grp:"Significant bacteriuria — midstream", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"≥10⁵ CFU/mL of a single organism"}, si:{lo:null,hi:null,txt:"≥10⁵ CFU/mL single organism"} },
-      { rid:"r3", grp:"Significant — symptomatic woman (lower threshold)", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"≥10²–10³ CFU/mL with pyuria and typical symptoms"}, si:{lo:null,hi:null,txt:"≥10²–10³ CFU/mL with symptoms"} },
-      { rid:"r4", grp:"Significant — suprapubic aspirate", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Any growth is significant"}, si:{lo:null,hi:null,txt:"Any growth"} }
+      { rid:"r1", kind:"note", grp:"No significant growth", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"<10⁴ CFU/mL, or mixed growth suggesting contamination"}, si:{lo:null,hi:null,txt:"<10⁴ CFU/mL"} },
+      { rid:"r2", kind:"note", grp:"Significant bacteriuria — midstream", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"≥10⁵ CFU/mL of a single organism"}, si:{lo:null,hi:null,txt:"≥10⁵ CFU/mL single organism"} },
+      { rid:"r3", kind:"cutoff", grp:"Significant — symptomatic woman (lower threshold)", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"≥10²–10³ CFU/mL with pyuria and typical symptoms"}, si:{lo:null,hi:null,txt:"≥10²–10³ CFU/mL with symptoms"} },
+      { rid:"r4", kind:"note", grp:"Significant — suprapubic aspirate", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Any growth is significant"}, si:{lo:null,hi:null,txt:"Any growth"} }
     ],
     critical:{ txt:"Carbapenem-resistant or ESBL-producing organism, or urosepsis with positive blood cultures — inform the clinician and infection control", lo:null, hi:null },
     inc:["Escherichia coli — the commonest uropathogen by a wide margin","Klebsiella, Proteus (associated with struvite stones and alkaline urine), Enterococcus, Pseudomonas","Candida — usually colonisation in a catheterised patient rather than true infection","Mixed growth of three or more organisms usually indicates contamination, not infection"],
@@ -3406,13 +3406,13 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/day", si:"g/day", factor:0.001 },
     ranges:[
-      { rid:"r1", grp:"24-h protein — normal", analyte:{key:"p24",label:"24-hour Protein"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:150}, si:{lo:null,hi:0.15} },
-      { rid:"r2", grp:"24-h protein — significant proteinuria", analyte:{key:"p24",label:"24-hour Protein"}, sex:"any", age:"adult", preg:null, conv:{lo:500,hi:null}, si:{lo:0.5,hi:null} },
-      { rid:"r3", grp:"24-h protein — nephrotic range", analyte:{key:"p24",label:"24-hour Protein"}, sex:"any", age:"adult", preg:null, conv:{lo:3500,hi:null}, si:{lo:3.5,hi:null} },
-      { rid:"r4", grp:"24-h protein — pre-eclampsia threshold", analyte:{key:"p24",label:"24-hour Protein"}, sex:"F", age:"adult", preg:"any", conv:{lo:300,hi:null}, si:{lo:0.3,hi:null} },
-      { rid:"r5", grp:"Protein:creatinine ratio — normal", analyte:{key:"pcr",label:"Protein:Creatinine Ratio",convUnit:"mg/g",siUnit:"mg/mmol",factor:0.113}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:150}, si:{lo:null,hi:17} },
-      { rid:"r6", grp:"PCR — pre-eclampsia threshold", analyte:{key:"pcr",label:"Protein:Creatinine Ratio",convUnit:"mg/g",siUnit:"mg/mmol",factor:0.113}, sex:"F", age:"adult", preg:"any", conv:{lo:265,hi:null}, si:{lo:30,hi:null} },
-      { rid:"r7", grp:"PCR — nephrotic range", analyte:{key:"pcr",label:"Protein:Creatinine Ratio",convUnit:"mg/g",siUnit:"mg/mmol",factor:0.113}, sex:"any", age:"adult", preg:null, conv:{lo:3000,hi:null}, si:{lo:339,hi:null} }
+      { rid:"r1", kind:"ref", grp:"24-h protein — normal", analyte:{key:"p24",label:"24-hour Protein"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:150}, si:{lo:null,hi:0.15} },
+      { rid:"r2", kind:"dx", grp:"24-h protein — significant proteinuria", analyte:{key:"p24",label:"24-hour Protein"}, sex:"any", age:"adult", preg:null, conv:{lo:500,hi:null}, si:{lo:0.5,hi:null} },
+      { rid:"r3", kind:"dx", grp:"24-h protein — nephrotic range", analyte:{key:"p24",label:"24-hour Protein"}, sex:"any", age:"adult", preg:null, conv:{lo:3500,hi:null}, si:{lo:3.5,hi:null} },
+      { rid:"r4", kind:"cutoff", grp:"24-h protein — pre-eclampsia threshold", analyte:{key:"p24",label:"24-hour Protein"}, sex:"F", age:"adult", preg:"any", conv:{lo:300,hi:null}, si:{lo:0.3,hi:null} },
+      { rid:"r5", kind:"ref", grp:"Protein:creatinine ratio — normal", analyte:{key:"pcr",label:"Protein:Creatinine Ratio",convUnit:"mg/g",siUnit:"mg/mmol",factor:0.113}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:150}, si:{lo:null,hi:17} },
+      { rid:"r6", kind:"cutoff", grp:"PCR — pre-eclampsia threshold", analyte:{key:"pcr",label:"Protein:Creatinine Ratio",convUnit:"mg/g",siUnit:"mg/mmol",factor:0.113}, sex:"F", age:"adult", preg:"any", conv:{lo:265,hi:null}, si:{lo:30,hi:null} },
+      { rid:"r7", kind:"dx", grp:"PCR — nephrotic range", analyte:{key:"pcr",label:"Protein:Creatinine Ratio",convUnit:"mg/g",siUnit:"mg/mmol",factor:0.113}, sex:"any", age:"adult", preg:null, conv:{lo:3000,hi:null}, si:{lo:339,hi:null} }
     ],
     critical:null,
     inc:["Glomerular disease: diabetic nephropathy, glomerulonephritis, minimal change disease, FSGS, membranous nephropathy","Pre-eclampsia","Hypertensive nephrosclerosis","Tubular proteinuria: interstitial nephritis, heavy metals, Fanconi syndrome (usually low-grade)","Overflow proteinuria: myeloma light chains, myoglobin, haemoglobin","Transient and benign: fever, vigorous exercise, orthostatic proteinuria in adolescents, heart failure"],
@@ -3433,12 +3433,12 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mOsm/kg", si:"mmol/kg", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Urine osmolality — random", analyte:{key:"uosm",label:"Urine Osmolality"}, sex:"any", age:"adult", preg:null, conv:{lo:50,hi:1200}, si:{lo:50,hi:1200} },
-      { rid:"r2", grp:"Maximally concentrated (after water deprivation)", analyte:{key:"uosm",label:"Urine Osmolality"}, sex:"any", age:"adult", preg:null, conv:{lo:800,hi:null}, si:{lo:800,hi:null} },
-      { rid:"r3", grp:"Urine sodium — pre-renal / hypovolaemia", analyte:{key:"una",label:"Urine Sodium",convUnit:"mmol/L",siUnit:"mmol/L"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
-      { rid:"r4", grp:"Urine sodium — SIADH or intrinsic renal", analyte:{key:"una",label:"Urine Sodium",convUnit:"mmol/L",siUnit:"mmol/L"}, sex:"any", age:"adult", preg:null, conv:{lo:40,hi:null}, si:{lo:40,hi:null} },
-      { rid:"r5", grp:"Fractional excretion of sodium — pre-renal", analyte:{key:"fena",label:"Fractional Excretion of Na",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1}, si:{lo:null,hi:1} },
-      { rid:"r6", grp:"Fractional excretion of sodium — intrinsic (ATN)", analyte:{key:"fena",label:"Fractional Excretion of Na",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:2,hi:null}, si:{lo:2,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Urine osmolality — random", analyte:{key:"uosm",label:"Urine Osmolality"}, sex:"any", age:"adult", preg:null, conv:{lo:50,hi:1200}, si:{lo:50,hi:1200} },
+      { rid:"r2", kind:"cutoff", grp:"Maximally concentrated (after water deprivation)", analyte:{key:"uosm",label:"Urine Osmolality"}, sex:"any", age:"adult", preg:null, conv:{lo:800,hi:null}, si:{lo:800,hi:null} },
+      { rid:"r3", kind:"dx", grp:"Urine sodium — pre-renal / hypovolaemia", analyte:{key:"una",label:"Urine Sodium",convUnit:"mmol/L",siUnit:"mmol/L"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
+      { rid:"r4", kind:"dx", grp:"Urine sodium — SIADH or intrinsic renal", analyte:{key:"una",label:"Urine Sodium",convUnit:"mmol/L",siUnit:"mmol/L"}, sex:"any", age:"adult", preg:null, conv:{lo:40,hi:null}, si:{lo:40,hi:null} },
+      { rid:"r5", kind:"dx", grp:"Fractional excretion of sodium — pre-renal", analyte:{key:"fena",label:"Fractional Excretion of Na",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1}, si:{lo:null,hi:1} },
+      { rid:"r6", kind:"dx", grp:"Fractional excretion of sodium — intrinsic (ATN)", analyte:{key:"fena",label:"Fractional Excretion of Na",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:2,hi:null}, si:{lo:2,hi:null} }
     ],
     critical:null,
     inc:["High urine osmolality: dehydration, SIADH, hypovolaemia with appropriate ADH response","High urine sodium: SIADH, diuretics, salt-wasting nephropathy, adrenal insufficiency, acute tubular necrosis"],
@@ -3459,13 +3459,13 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"Descriptive", si:"Descriptive", factor:null },
     ranges:[
-      { rid:"r8", analyte:{key:"pressure",label:"Opening Pressure"}, grp:"Opening pressure (adult, lateral decubitus)", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:20}, si:{lo:10,hi:20} },
-      { rid:"r9", analyte:{key:"appearance",label:"Appearance"}, grp:"Appearance", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Crystal clear and colourless"}, si:{lo:null,hi:null,txt:"Crystal clear and colourless"} },
-      { rid:"r10", analyte:{key:"wbc",label:"White Cells"}, grp:"White cells (adult)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
-      { rid:"r11", analyte:{key:"wbc",label:"White Cells"}, grp:"White cells (neonate)", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
-      { rid:"r12", analyte:{key:"protein",label:"Protein"}, grp:"Protein (adult)", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:45}, si:{lo:0.15,hi:0.45} },
-      { rid:"r13", analyte:{key:"protein",label:"Protein"}, grp:"Protein (neonate)", sex:"any", age:"neonate", preg:null, conv:{lo:60,hi:150}, si:{lo:0.6,hi:1.5} },
-      { rid:"r14", analyte:{key:"glucratio",label:"CSF:Plasma Glucose Ratio"}, grp:"Glucose (CSF:plasma ratio)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"≥0.6 of plasma (≥0.5 acceptable); absolute 45–80 mg/dL"}, si:{lo:null,hi:null,txt:"≥0.6 of plasma; 2.5–4.4 mmol/L"} }
+      { rid:"r8", kind:"ref", analyte:{key:"pressure",label:"Opening Pressure"}, grp:"Opening pressure (adult, lateral decubitus)", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:20}, si:{lo:10,hi:20} },
+      { rid:"r9", kind:"note", analyte:{key:"appearance",label:"Appearance"}, grp:"Appearance", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Crystal clear and colourless"}, si:{lo:null,hi:null,txt:"Crystal clear and colourless"} },
+      { rid:"r10", kind:"ref", analyte:{key:"wbc",label:"White Cells"}, grp:"White cells (adult)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
+      { rid:"r11", kind:"ref", analyte:{key:"wbc",label:"White Cells"}, grp:"White cells (neonate)", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:20} },
+      { rid:"r12", kind:"ref", analyte:{key:"protein",label:"Protein"}, grp:"Protein (adult)", sex:"any", age:"adult", preg:null, conv:{lo:15,hi:45}, si:{lo:0.15,hi:0.45} },
+      { rid:"r13", kind:"ref", analyte:{key:"protein",label:"Protein"}, grp:"Protein (neonate)", sex:"any", age:"neonate", preg:null, conv:{lo:60,hi:150}, si:{lo:0.6,hi:1.5} },
+      { rid:"r14", kind:"note", analyte:{key:"glucratio",label:"CSF:Plasma Glucose Ratio"}, grp:"Glucose (CSF:plasma ratio)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"≥0.6 of plasma (≥0.5 acceptable); absolute 45–80 mg/dL"}, si:{lo:null,hi:null,txt:"≥0.6 of plasma; 2.5–4.4 mmol/L"} }
     ],
     critical:{ txt:"Turbid CSF, neutrophil pleocytosis, high protein or low glucose — bacterial meningitis. Give antibiotics IMMEDIATELY; never delay them for the lumbar puncture or its result", lo:null, hi:null },
     inc:["BACTERIAL: turbid, neutrophils in the hundreds to thousands, protein high (often >1 g/L), glucose LOW (ratio <0.4)","VIRAL: clear, lymphocytes tens to hundreds, protein normal or mildly raised, glucose NORMAL","TUBERCULOUS: clear or cobweb clot, lymphocytes (neutrophils may dominate early), protein HIGH (often >1–2 g/L), glucose LOW, raised adenosine deaminase","FUNGAL (cryptococcal): lymphocytes, high protein, low glucose, positive India ink or cryptococcal antigen","Subarachnoid haemorrhage: uniformly blood-stained in all tubes, xanthochromia after 12 h","Guillain-Barré: high protein with NORMAL cell count (albuminocytological dissociation)"],
@@ -3486,10 +3486,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"U/L", si:"U/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"CSF — TB meningitis suggested", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:null}, si:{lo:10,hi:null} },
-      { rid:"r2", grp:"Pleural fluid — TB pleuritis suggested", sex:"any", age:"adult", preg:null, conv:{lo:40,hi:null}, si:{lo:40,hi:null} },
-      { rid:"r3", grp:"Ascitic fluid — TB peritonitis suggested", sex:"any", age:"adult", preg:null, conv:{lo:39,hi:null}, si:{lo:39,hi:null} },
-      { rid:"r4", grp:"Pericardial fluid — TB pericarditis suggested", sex:"any", age:"adult", preg:null, conv:{lo:40,hi:null}, si:{lo:40,hi:null} }
+      { rid:"r5", analyte:{key:"csf",label:"CSF ADA"}, kind:"dx", grp:"CSF — TB meningitis suggested", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:null}, si:{lo:10,hi:null} },
+      { rid:"r6", analyte:{key:"pleural",label:"Pleural Fluid ADA"}, kind:"dx", grp:"Pleural fluid — TB pleuritis suggested", sex:"any", age:"adult", preg:null, conv:{lo:40,hi:null}, si:{lo:40,hi:null} },
+      { rid:"r7", analyte:{key:"ascitic",label:"Ascitic Fluid ADA"}, kind:"dx", grp:"Ascitic fluid — TB peritonitis suggested", sex:"any", age:"adult", preg:null, conv:{lo:39,hi:null}, si:{lo:39,hi:null} },
+      { rid:"r8", analyte:{key:"pericardial",label:"Pericardial Fluid ADA"}, kind:"dx", grp:"Pericardial fluid — TB pericarditis suggested", sex:"any", age:"adult", preg:null, conv:{lo:40,hi:null}, si:{lo:40,hi:null} }
     ],
     critical:null,
     inc:["Tuberculosis of the relevant serosal surface — the main diagnostic use","Empyema and parapneumonic effusion (can raise pleural ADA substantially)","Lymphoma and leukaemia","Rheumatoid pleuritis and other inflammatory effusions","Brucellosis; some bacterial meningitides"],
@@ -3510,10 +3510,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"Descriptive", si:"Descriptive", factor:null },
     ranges:[
-      { rid:"r1", grp:"Light's criteria — EXUDATE if any one is met", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Fluid:serum protein >0.5; fluid:serum LDH >0.6; fluid LDH >2/3 upper limit of serum LDH"}, si:{lo:null,hi:null,txt:"Protein ratio >0.5, LDH ratio >0.6, or LDH >2/3 serum ULN"} },
-      { rid:"r2", grp:"Transudate", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Meets none of Light's criteria — heart failure, cirrhosis, nephrotic syndrome"}, si:{lo:null,hi:null,txt:"Meets no Light's criterion"} },
-      { rid:"r3", grp:"Complicated effusion / empyema — drain", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"pH <7.20, glucose <40 mg/dL (2.2 mmol/L), or frank pus / positive Gram stain"}, si:{lo:null,hi:null,txt:"pH <7.20 or glucose <2.2 mmol/L"} },
-      { rid:"r4", grp:"Chylothorax", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Triglycerides >110 mg/dL (1.24 mmol/L)"}, si:{lo:null,hi:null,txt:"Triglycerides >1.24 mmol/L"} }
+      { rid:"r1", kind:"note", grp:"Light's criteria — EXUDATE if any one is met", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Fluid:serum protein >0.5; fluid:serum LDH >0.6; fluid LDH >2/3 upper limit of serum LDH"}, si:{lo:null,hi:null,txt:"Protein ratio >0.5, LDH ratio >0.6, or LDH >2/3 serum ULN"} },
+      { rid:"r2", kind:"note", grp:"Transudate", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Meets none of Light's criteria — heart failure, cirrhosis, nephrotic syndrome"}, si:{lo:null,hi:null,txt:"Meets no Light's criterion"} },
+      { rid:"r3", kind:"note", grp:"Complicated effusion / empyema — drain", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"pH <7.20, glucose <40 mg/dL (2.2 mmol/L), or frank pus / positive Gram stain"}, si:{lo:null,hi:null,txt:"pH <7.20 or glucose <2.2 mmol/L"} },
+      { rid:"r4", kind:"note", grp:"Chylothorax", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Triglycerides >110 mg/dL (1.24 mmol/L)"}, si:{lo:null,hi:null,txt:"Triglycerides >1.24 mmol/L"} }
     ],
     critical:{ txt:"pH <7.20, glucose <40 mg/dL, frank pus or a positive Gram stain — complicated parapneumonic effusion or empyema requiring chest tube drainage", lo:null, hi:null },
     inc:["EXUDATE: infection (parapneumonic, empyema, tuberculosis), malignancy, pulmonary embolism, pancreatitis, rheumatoid disease, post-cardiac injury syndrome","TRANSUDATE: heart failure, cirrhosis with hepatic hydrothorax, nephrotic syndrome, hypoalbuminaemia, peritoneal dialysis","Lymphocyte-predominant exudate: tuberculosis, malignancy, lymphoma, chronic effusion","Neutrophil-predominant exudate: parapneumonic effusion, empyema, pulmonary embolism, early tuberculosis","Eosinophilic effusion: air or blood in the pleural space, drug reaction, parasitic infection"],
@@ -3534,11 +3534,11 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"Descriptive", si:"Descriptive", factor:null },
     ranges:[
-      { rid:"r1", grp:"Normal", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Clear, viscous, straw-coloured; WCC <200/µL with <25% neutrophils"}, si:{lo:null,hi:null,txt:"WCC <200/µL"} },
-      { rid:"r2", grp:"Non-inflammatory (e.g. osteoarthritis)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"WCC 200–2000/µL, <25% neutrophils"}, si:{lo:null,hi:null,txt:"WCC 200–2000/µL"} },
-      { rid:"r3", grp:"Inflammatory (gout, RA, reactive)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"WCC 2000–50000/µL, often >50% neutrophils"}, si:{lo:null,hi:null,txt:"WCC 2000–50000/µL"} },
-      { rid:"r4", grp:"Septic arthritis likely", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"WCC >50000/µL with >75–90% neutrophils (but infection can occur at lower counts)"}, si:{lo:null,hi:null,txt:"WCC >50000/µL, >75% neutrophils"} },
-      { rid:"r5", grp:"Crystals", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"None. Gout: needle-shaped, NEGATIVELY birefringent urate. Pseudogout: rhomboid, POSITIVELY birefringent CPPD"}, si:{lo:null,hi:null,txt:"No crystals"} }
+      { rid:"r1", kind:"note", grp:"Normal", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Clear, viscous, straw-coloured; WCC <200/µL with <25% neutrophils"}, si:{lo:null,hi:null,txt:"WCC <200/µL"} },
+      { rid:"r2", kind:"note", grp:"Non-inflammatory (e.g. osteoarthritis)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"WCC 200–2000/µL, <25% neutrophils"}, si:{lo:null,hi:null,txt:"WCC 200–2000/µL"} },
+      { rid:"r3", kind:"note", grp:"Inflammatory (gout, RA, reactive)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"WCC 2000–50000/µL, often >50% neutrophils"}, si:{lo:null,hi:null,txt:"WCC 2000–50000/µL"} },
+      { rid:"r4", kind:"cutoff", grp:"Septic arthritis likely", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"WCC >50000/µL with >75–90% neutrophils (but infection can occur at lower counts)"}, si:{lo:null,hi:null,txt:"WCC >50000/µL, >75% neutrophils"} },
+      { rid:"r5", kind:"note", grp:"Crystals", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"None. Gout: needle-shaped, NEGATIVELY birefringent urate. Pseudogout: rhomboid, POSITIVELY birefringent CPPD"}, si:{lo:null,hi:null,txt:"No crystals"} }
     ],
     critical:{ txt:"Positive Gram stain, frank pus, or a high neutrophil count in an acutely hot swollen joint — septic arthritis destroys cartilage within days; urgent washout and antibiotics", lo:null, hi:null },
     inc:["Septic arthritis — Staphylococcus aureus most commonly; gonococcal in young sexually active adults; tuberculosis in chronic monoarthritis in India","Crystal arthropathy: monosodium urate (gout), calcium pyrophosphate (pseudogout)","Inflammatory arthritis: rheumatoid arthritis, reactive arthritis, psoriatic arthritis, spondyloarthropathy","Haemarthrosis: trauma, haemophilia, anticoagulation, pigmented villonodular synovitis"],
@@ -3560,10 +3560,10 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"Descriptive", si:"Descriptive", factor:null },
     ranges:[
-      { rid:"r1", grp:"Appearance", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Formed, brown; no blood, mucus or visible worms"}, si:{lo:null,hi:null,txt:"Formed, brown"} },
-      { rid:"r2", grp:"Microscopy", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No ova, cysts, trophozoites or larvae; occasional epithelial cells"}, si:{lo:null,hi:null,txt:"No ova, cysts or parasites"} },
-      { rid:"r3", grp:"Pus cells", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Nil to occasional; sheets of pus cells suggest invasive bacterial or amoebic colitis"}, si:{lo:null,hi:null,txt:"Nil to occasional"} },
-      { rid:"r4", grp:"Reducing substances (infants)", sex:"any", age:"infant", preg:null, conv:{lo:null,hi:null,txt:"Negative; positive suggests carbohydrate malabsorption (e.g. lactose intolerance)"}, si:{lo:null,hi:null,txt:"Negative"} }
+      { rid:"r1", kind:"note", grp:"Appearance", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Formed, brown; no blood, mucus or visible worms"}, si:{lo:null,hi:null,txt:"Formed, brown"} },
+      { rid:"r2", kind:"note", grp:"Microscopy", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No ova, cysts, trophozoites or larvae; occasional epithelial cells"}, si:{lo:null,hi:null,txt:"No ova, cysts or parasites"} },
+      { rid:"r3", kind:"note", grp:"Pus cells", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Nil to occasional; sheets of pus cells suggest invasive bacterial or amoebic colitis"}, si:{lo:null,hi:null,txt:"Nil to occasional"} },
+      { rid:"r4", kind:"note", grp:"Reducing substances (infants)", sex:"any", age:"infant", preg:null, conv:{lo:null,hi:null,txt:"Negative; positive suggests carbohydrate malabsorption (e.g. lactose intolerance)"}, si:{lo:null,hi:null,txt:"Negative"} }
     ],
     critical:null,
     inc:["Protozoa: Entamoeba histolytica, Giardia lamblia, Cryptosporidium, Cyclospora","Helminths: Ascaris, hookworm, Trichuris, Strongyloides, Taenia, Hymenolepis — all common in India","Blood and mucus with sheets of pus cells: invasive bacterial colitis (Shigella, Campylobacter, invasive E. coli) or amoebic dysentery","Fat globules: steatorrhoea from pancreatic insufficiency or malabsorption"],
@@ -3584,9 +3584,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"Descriptive", si:"Descriptive", factor:null },
     ranges:[
-      { rid:"r1", grp:"Routine stool culture", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No Salmonella, Shigella, Campylobacter or Vibrio isolated; normal enteric flora"}, si:{lo:null,hi:null,txt:"No enteric pathogen isolated"} },
-      { rid:"r2", grp:"C. difficile two-step algorithm", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"GDH antigen negative, or GDH positive with toxin negative (possible carriage)"}, si:{lo:null,hi:null,txt:"GDH and toxin negative"} },
-      { rid:"r3", grp:"C. difficile infection", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"GDH positive AND toxin positive in a patient with diarrhoea"}, si:{lo:null,hi:null,txt:"GDH and toxin both positive"} }
+      { rid:"r1", kind:"note", grp:"Routine stool culture", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No Salmonella, Shigella, Campylobacter or Vibrio isolated; normal enteric flora"}, si:{lo:null,hi:null,txt:"No enteric pathogen isolated"} },
+      { rid:"r2", kind:"note", grp:"C. difficile two-step algorithm", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"GDH antigen negative, or GDH positive with toxin negative (possible carriage)"}, si:{lo:null,hi:null,txt:"GDH and toxin negative"} },
+      { rid:"r3", kind:"note", grp:"C. difficile infection", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"GDH positive AND toxin positive in a patient with diarrhoea"}, si:{lo:null,hi:null,txt:"GDH and toxin both positive"} }
     ],
     critical:{ txt:"Vibrio cholerae isolated — notifiable; inform public health immediately. Severe C. difficile with ileus, megacolon or rising lactate needs urgent surgical review", lo:null, hi:null },
     inc:["Salmonella (typhoidal and non-typhoidal), Shigella, Campylobacter, Vibrio cholerae, Aeromonas, Plesiomonas","Clostridioides difficile after antibiotic exposure, particularly clindamycin, cephalosporins and fluoroquinolones","Enteropathogenic, enterotoxigenic and enteroinvasive E. coli — not identified by routine culture without specific request"],
@@ -3607,9 +3607,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"µg Hb/g faeces", si:"µg Hb/g faeces", factor:1 },
     ranges:[
-      { rid:"r1", grp:"FIT — negative (symptomatic referral threshold)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} },
-      { rid:"r2", grp:"FIT — positive, refer for colonoscopy", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:null}, si:{lo:10,hi:null} },
-      { rid:"r3", grp:"FIT — population screening threshold (varies)", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:150}, si:{lo:20,hi:150} }
+      { rid:"r1", kind:"dx", grp:"FIT — negative (symptomatic referral threshold)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} },
+      { rid:"r2", kind:"cutoff", grp:"FIT — positive, refer for colonoscopy", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:null}, si:{lo:10,hi:null} },
+      { rid:"r3", kind:"cutoff", grp:"FIT — population screening threshold (varies)", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:150}, si:{lo:20,hi:150} }
     ],
     critical:null,
     inc:["Colorectal cancer and advanced adenoma — the target conditions","Any gastrointestinal bleeding: peptic ulcer, angiodysplasia, inflammatory bowel disease, diverticular disease","Haemorrhoids and anal fissure","Hookworm infestation — a common cause of occult GI blood loss in India","NSAID-induced mucosal injury"],
@@ -3630,9 +3630,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"µg/g", si:"µg/g", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Normal — IBD unlikely", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:50}, si:{lo:null,hi:50} },
-      { rid:"r2", grp:"Borderline — repeat in 4–6 weeks", sex:"any", age:"adult", preg:null, conv:{lo:50,hi:150}, si:{lo:50,hi:150} },
-      { rid:"r3", grp:"Raised — organic inflammation likely; refer", sex:"any", age:"adult", preg:null, conv:{lo:150,hi:null}, si:{lo:150,hi:null} }
+      { rid:"r1", kind:"cutoff", grp:"Normal — IBD unlikely", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:50}, si:{lo:null,hi:50} },
+      { rid:"r2", kind:"dx", grp:"Borderline — repeat in 4–6 weeks", sex:"any", age:"adult", preg:null, conv:{lo:50,hi:150}, si:{lo:50,hi:150} },
+      { rid:"r3", kind:"cutoff", grp:"Raised — organic inflammation likely; refer", sex:"any", age:"adult", preg:null, conv:{lo:150,hi:null}, si:{lo:150,hi:null} }
     ],
     critical:null,
     inc:["Inflammatory bowel disease — Crohn disease and ulcerative colitis","NSAID enteropathy — a very common cause of a mildly raised result","Infective gastroenteritis and recent gastrointestinal infection","Colorectal cancer, diverticulitis, coeliac disease with active inflammation","Intestinal tuberculosis — relevant in India, where it closely mimics Crohn disease"],
@@ -3653,9 +3653,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"Descriptive", si:"Descriptive", factor:null },
     ranges:[
-      { rid:"r1", grp:"ABO group", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"A, B, AB or O — determined by forward (cell) and reverse (serum) grouping, which must agree"}, si:{lo:null,hi:null,txt:"A, B, AB or O"} },
-      { rid:"r2", grp:"Rh D type", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"D positive or D negative; weak D requires further testing"}, si:{lo:null,hi:null,txt:"D positive or D negative"} },
-      { rid:"r3", grp:"Antibody screen", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative — no clinically significant red cell alloantibodies detected"}, si:{lo:null,hi:null,txt:"Negative"} }
+      { rid:"r1", kind:"note", grp:"ABO group", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"A, B, AB or O — determined by forward (cell) and reverse (serum) grouping, which must agree"}, si:{lo:null,hi:null,txt:"A, B, AB or O"} },
+      { rid:"r2", kind:"note", grp:"Rh D type", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"D positive or D negative; weak D requires further testing"}, si:{lo:null,hi:null,txt:"D positive or D negative"} },
+      { rid:"r3", kind:"note", grp:"Antibody screen", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative — no clinically significant red cell alloantibodies detected"}, si:{lo:null,hi:null,txt:"Negative"} }
     ],
     critical:{ txt:"ABO discrepancy between forward and reverse grouping, or a positive antibody screen in pregnancy — resolve before transfusion; inform the clinician", lo:null, hi:null },
     inc:["Positive antibody screen: previous transfusion, previous pregnancy, or transplantation leading to alloimmunisation","ABO discrepancies: recent transfusion of non-group-specific blood, stem cell transplant, hypogammaglobulinaemia (weak reverse group), cold agglutinins, newborns (reverse grouping is unreliable because antibodies are maternal)"],
@@ -3676,9 +3676,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"Descriptive", si:"Descriptive", factor:null },
     ranges:[
-      { rid:"r1", grp:"Crossmatch result", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Compatible — no agglutination or haemolysis with donor cells"}, si:{lo:null,hi:null,txt:"Compatible"} },
-      { rid:"r2", grp:"Antibody screen", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative; if positive, identify the specificity and select antigen-negative units"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r3", grp:"Emergency release options", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"O negative immediately; group-specific ~10–15 min; full crossmatch ~45 min"}, si:{lo:null,hi:null,txt:"O neg immediate; group-specific 10–15 min; full XM 45 min"} }
+      { rid:"r1", kind:"note", grp:"Crossmatch result", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Compatible — no agglutination or haemolysis with donor cells"}, si:{lo:null,hi:null,txt:"Compatible"} },
+      { rid:"r2", kind:"note", grp:"Antibody screen", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative; if positive, identify the specificity and select antigen-negative units"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r3", kind:"note", grp:"Emergency release options", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"O negative immediately; group-specific ~10–15 min; full crossmatch ~45 min"}, si:{lo:null,hi:null,txt:"O neg immediate; group-specific 10–15 min; full XM 45 min"} }
     ],
     critical:{ txt:"Incompatible crossmatch, or a transfusion reaction with fever, hypotension, loin pain or dark urine — STOP the transfusion immediately, keep the line open with saline, and return the unit and a fresh sample to the blood bank", lo:null, hi:null },
     inc:["Incompatibility from ABO mismatch (usually a clerical or identification error) or from red cell alloantibodies","Positive antibody screen from previous transfusion or pregnancy","Autoantibodies causing incompatibility with all units — these patients need specialist serological work and 'least incompatible' units"],
@@ -3699,9 +3699,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"Qualitative", si:"Qualitative", factor:null },
     ranges:[
-      { rid:"r1", grp:"Direct antiglobulin test (DAT)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative — no IgG or C3d coating the patient's red cells"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r2", grp:"Indirect antiglobulin test (IAT)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative — no free red cell antibodies in the serum"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r3", grp:"Neonatal DAT (HDN)", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:null,txt:"Negative; positive indicates maternal antibody coating fetal cells"}, si:{lo:null,hi:null,txt:"Negative"} }
+      { rid:"r1", kind:"note", grp:"Direct antiglobulin test (DAT)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative — no IgG or C3d coating the patient's red cells"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r2", kind:"note", grp:"Indirect antiglobulin test (IAT)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative — no free red cell antibodies in the serum"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r3", kind:"note", grp:"Neonatal DAT (HDN)", sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:null,txt:"Negative; positive indicates maternal antibody coating fetal cells"}, si:{lo:null,hi:null,txt:"Negative"} }
     ],
     critical:{ txt:"Positive DAT in a jaundiced neonate — haemolytic disease of the newborn; monitor bilirubin closely against the hour-specific nomogram and prepare for phototherapy or exchange transfusion", lo:null, hi:null },
     inc:["Warm autoimmune haemolytic anaemia (IgG positive) — idiopathic, or secondary to lymphoma, CLL, SLE or drugs","Cold agglutinin disease (C3d positive) — Mycoplasma, infectious mononucleosis, lymphoproliferative disease","Haemolytic disease of the newborn — Rh D, ABO or other maternal antibodies","Delayed haemolytic transfusion reaction","Drug-induced: methyldopa, penicillins, cephalosporins, quinine","Positive DAT without haemolysis — occurs in a small percentage of healthy people and hospital inpatients"],
@@ -3722,11 +3722,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"IU/mL", si:"kU/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Total IgE — adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:100}, si:{lo:null,hi:100} },
-      { rid:"r2", grp:"Total IgE — child (1–5 y)", sex:"any", age:"child", preg:null, conv:{lo:null,hi:60}, si:{lo:null,hi:60} },
-      { rid:"r3", grp:"Total IgE — infant", sex:"any", age:"infant", preg:null, conv:{lo:null,hi:15}, si:{lo:null,hi:15} },
-      { rid:"r4", grp:"Specific IgE — negative", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.35}, si:{lo:null,hi:0.35} },
-      { rid:"r5", grp:"ABPA — total IgE threshold", sex:"any", age:"adult", preg:null, conv:{lo:1000,hi:null}, si:{lo:1000,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Total IgE — adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:100}, si:{lo:null,hi:100} },
+      { rid:"r2", kind:"ref", grp:"Total IgE — child (1–5 y)", sex:"any", age:"child", preg:null, conv:{lo:null,hi:60}, si:{lo:null,hi:60} },
+      { rid:"r3", kind:"ref", grp:"Total IgE — infant", sex:"any", age:"infant", preg:null, conv:{lo:null,hi:15}, si:{lo:null,hi:15} },
+      { rid:"r4", kind:"dx", grp:"Specific IgE — negative", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.35}, si:{lo:null,hi:0.35} },
+      { rid:"r5", kind:"cutoff", grp:"ABPA — total IgE threshold", sex:"any", age:"adult", preg:null, conv:{lo:1000,hi:null}, si:{lo:1000,hi:null} }
     ],
     critical:null,
     inc:["Atopic disease: allergic asthma, allergic rhinitis, atopic dermatitis, food allergy","PARASITIC INFESTATION — a leading cause of very high total IgE in India (helminths, strongyloides, filaria, toxocara)","Allergic bronchopulmonary aspergillosis — total IgE usually above 1000 IU/mL and a key diagnostic criterion","Hyper-IgE (Job) syndrome; Wiskott-Aldrich syndrome","Drug reactions, some lymphomas, HIV"],
@@ -3747,12 +3747,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/L", si:"ng/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"CTX — premenopausal female", analyte:{key:"ctx",label:"CTX (β-CrossLaps)"}, sex:"F", age:"adult", preg:null, conv:{lo:25,hi:573}, si:{lo:25,hi:573} },
-      { rid:"r2", grp:"CTX — postmenopausal female", analyte:{key:"ctx",label:"CTX (β-CrossLaps)"}, sex:"F", age:"adult", preg:null, conv:{lo:104,hi:1008}, si:{lo:104,hi:1008} },
-      { rid:"r3", grp:"CTX — adult male", analyte:{key:"ctx",label:"CTX (β-CrossLaps)"}, sex:"M", age:"adult", preg:null, conv:{lo:35,hi:836}, si:{lo:35,hi:836} },
-      { rid:"r4", grp:"P1NP — premenopausal female", analyte:{key:"p1np",label:"P1NP",convUnit:"µg/L",siUnit:"µg/L"}, sex:"F", age:"adult", preg:null, conv:{lo:15,hi:59}, si:{lo:15,hi:59} },
-      { rid:"r5", grp:"P1NP — postmenopausal female", analyte:{key:"p1np",label:"P1NP",convUnit:"µg/L",siUnit:"µg/L"}, sex:"F", age:"adult", preg:null, conv:{lo:16,hi:96}, si:{lo:16,hi:96} },
-      { rid:"r6", grp:"P1NP — adult male", analyte:{key:"p1np",label:"P1NP",convUnit:"µg/L",siUnit:"µg/L"}, sex:"M", age:"adult", preg:null, conv:{lo:14,hi:79}, si:{lo:14,hi:79} }
+      { rid:"r1", kind:"ref", grp:"CTX — premenopausal female", analyte:{key:"ctx",label:"CTX (β-CrossLaps)"}, sex:"F", age:"adult", preg:null, conv:{lo:25,hi:573}, si:{lo:25,hi:573} },
+      { rid:"r2", kind:"ref", grp:"CTX — postmenopausal female", analyte:{key:"ctx",label:"CTX (β-CrossLaps)"}, sex:"F", age:"adult", preg:null, conv:{lo:104,hi:1008}, si:{lo:104,hi:1008} },
+      { rid:"r3", kind:"ref", grp:"CTX — adult male", analyte:{key:"ctx",label:"CTX (β-CrossLaps)"}, sex:"M", age:"adult", preg:null, conv:{lo:35,hi:836}, si:{lo:35,hi:836} },
+      { rid:"r4", kind:"ref", grp:"P1NP — premenopausal female", analyte:{key:"p1np",label:"P1NP",convUnit:"µg/L",siUnit:"µg/L"}, sex:"F", age:"adult", preg:null, conv:{lo:15,hi:59}, si:{lo:15,hi:59} },
+      { rid:"r5", kind:"ref", grp:"P1NP — postmenopausal female", analyte:{key:"p1np",label:"P1NP",convUnit:"µg/L",siUnit:"µg/L"}, sex:"F", age:"adult", preg:null, conv:{lo:16,hi:96}, si:{lo:16,hi:96} },
+      { rid:"r6", kind:"ref", grp:"P1NP — adult male", analyte:{key:"p1np",label:"P1NP",convUnit:"µg/L",siUnit:"µg/L"}, sex:"M", age:"adult", preg:null, conv:{lo:14,hi:79}, si:{lo:14,hi:79} }
     ],
     critical:null,
     inc:["High bone turnover: postmenopausal osteoporosis, hyperparathyroidism, hyperthyroidism, Paget disease, bone metastases, myeloma","Recent fracture — raised for up to 6 months","Immobilisation, chronic kidney disease (reduced clearance of CTX)","Teriparatide and other anabolic therapy (P1NP rises, which is the expected therapeutic response)"],
@@ -3774,9 +3774,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/mL", si:"µmol/L", factor:5.55 },
     ranges:[
-      { rid:"r1", grp:"Therapeutic (asthma/COPD)", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:20}, si:{lo:55,hi:111} },
-      { rid:"r2", grp:"Neonatal apnoea target", sex:"any", age:"neonate", preg:null, conv:{lo:6,hi:12}, si:{lo:33,hi:67} },
-      { rid:"r3", grp:"Toxicity increasingly likely", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:null}, si:{lo:111,hi:null} }
+      { rid:"r1", kind:"target", grp:"Therapeutic (asthma/COPD)", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:20}, si:{lo:55,hi:111} },
+      { rid:"r2", kind:"target", grp:"Neonatal apnoea target", sex:"any", age:"neonate", preg:null, conv:{lo:6,hi:12}, si:{lo:33,hi:67} },
+      { rid:"r3", kind:"dx", grp:"Toxicity increasingly likely", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:null}, si:{lo:111,hi:null} }
     ],
     critical:{ txt:">30 µg/mL (>167 µmol/L) — seizures and life-threatening arrhythmias; consider haemodialysis or charcoal haemoperfusion", lo:null, hi:30 },
     inc:["Heart failure, liver disease, viral infection, fever — all reduce clearance","Enzyme inhibitors: ciprofloxacin, erythromycin, clarithromycin, cimetidine, allopurinol, fluvoxamine","Smoking cessation — clearance falls and levels rise on an unchanged dose","Overdose"],
@@ -3797,9 +3797,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/mL", si:"µmol/L", factor:4.31 },
     ranges:[
-      { rid:"r1", grp:"Therapeutic (adult)", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:40}, si:{lo:43,hi:172} },
-      { rid:"r2", grp:"Neonatal seizures target", sex:"any", age:"neonate", preg:null, conv:{lo:15,hi:40}, si:{lo:65,hi:172} },
-      { rid:"r3", grp:"Sedation / toxicity likely", sex:"any", age:"adult", preg:null, conv:{lo:40,hi:null}, si:{lo:172,hi:null} }
+      { rid:"r1", kind:"target", grp:"Therapeutic (adult)", sex:"any", age:"adult", preg:null, conv:{lo:10,hi:40}, si:{lo:43,hi:172} },
+      { rid:"r2", kind:"target", grp:"Neonatal seizures target", sex:"any", age:"neonate", preg:null, conv:{lo:15,hi:40}, si:{lo:65,hi:172} },
+      { rid:"r3", kind:"dx", grp:"Sedation / toxicity likely", sex:"any", age:"adult", preg:null, conv:{lo:40,hi:null}, si:{lo:172,hi:null} }
     ],
     critical:{ txt:">60 µg/mL (>259 µmol/L) — coma and respiratory depression; supportive care, consider urinary alkalinisation", lo:null, hi:60 },
     inc:["Overdose; reduced clearance in hepatic or renal impairment","Valproate co-therapy raises phenobarbitone substantially","Neonates and the elderly clear it more slowly"],
@@ -3820,11 +3820,11 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/mL", si:"mg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Gentamicin trough — multiple daily dosing", analyte:{key:"genttrough",label:"Gentamicin Trough"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:2}, si:{lo:null,hi:2} },
-      { rid:"r2", grp:"Gentamicin peak — multiple daily dosing", analyte:{key:"gentpeak",label:"Gentamicin Peak"}, sex:"any", age:"adult", preg:null, conv:{lo:5,hi:10}, si:{lo:5,hi:10} },
-      { rid:"r3", grp:"Gentamicin trough — once daily", analyte:{key:"genttrough",label:"Gentamicin Trough"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1}, si:{lo:null,hi:1} },
-      { rid:"r4", grp:"Amikacin trough", analyte:{key:"amiktrough",label:"Amikacin Trough"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
-      { rid:"r5", grp:"Amikacin peak", analyte:{key:"amikpeak",label:"Amikacin Peak"}, sex:"any", age:"adult", preg:null, conv:{lo:20,hi:30}, si:{lo:20,hi:30} }
+      { rid:"r1", kind:"target", grp:"Gentamicin trough — multiple daily dosing", analyte:{key:"genttrough",label:"Gentamicin Trough"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:2}, si:{lo:null,hi:2} },
+      { rid:"r2", kind:"target", grp:"Gentamicin peak — multiple daily dosing", analyte:{key:"gentpeak",label:"Gentamicin Peak"}, sex:"any", age:"adult", preg:null, conv:{lo:5,hi:10}, si:{lo:5,hi:10} },
+      { rid:"r3", kind:"target", grp:"Gentamicin trough — once daily", analyte:{key:"genttrough",label:"Gentamicin Trough"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1}, si:{lo:null,hi:1} },
+      { rid:"r4", kind:"target", grp:"Amikacin trough", analyte:{key:"amiktrough",label:"Amikacin Trough"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
+      { rid:"r5", kind:"target", grp:"Amikacin peak", analyte:{key:"amikpeak",label:"Amikacin Peak"}, sex:"any", age:"adult", preg:null, conv:{lo:20,hi:30}, si:{lo:20,hi:30} }
     ],
     critical:{ txt:"Raised trough with rising creatinine, or any new tinnitus, hearing loss or vertigo — withhold the next dose and review the indication", lo:null, hi:null },
     inc:["Renal impairment — the dominant factor; aminoglycosides are entirely renally cleared","Dose too high or interval too short","Dehydration, concurrent nephrotoxins (vancomycin, NSAIDs, contrast, amphotericin)","Elderly patients with reduced but apparently 'normal' creatinine"],
@@ -3845,10 +3845,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"µg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Tacrolimus — early post-transplant (0–3 mo)", analyte:{key:"tac",label:"Tacrolimus (C0 trough)"}, sex:"any", age:"adult", preg:null, conv:{lo:8,hi:12}, si:{lo:8,hi:12} },
-      { rid:"r2", grp:"Tacrolimus — maintenance (>6 mo)", analyte:{key:"tac",label:"Tacrolimus (C0 trough)"}, sex:"any", age:"adult", preg:null, conv:{lo:5,hi:8}, si:{lo:5,hi:8} },
-      { rid:"r3", grp:"Ciclosporin — early post-transplant C0", analyte:{key:"csa",label:"Ciclosporin (C0 trough)"}, sex:"any", age:"adult", preg:null, conv:{lo:150,hi:300}, si:{lo:150,hi:300} },
-      { rid:"r4", grp:"Ciclosporin — maintenance C0", analyte:{key:"csa",label:"Ciclosporin (C0 trough)"}, sex:"any", age:"adult", preg:null, conv:{lo:80,hi:150}, si:{lo:80,hi:150} }
+      { rid:"r1", kind:"target", grp:"Tacrolimus — early post-transplant (0–3 mo)", analyte:{key:"tac",label:"Tacrolimus (C0 trough)"}, sex:"any", age:"adult", preg:null, conv:{lo:8,hi:12}, si:{lo:8,hi:12} },
+      { rid:"r2", kind:"target", grp:"Tacrolimus — maintenance (>6 mo)", analyte:{key:"tac",label:"Tacrolimus (C0 trough)"}, sex:"any", age:"adult", preg:null, conv:{lo:5,hi:8}, si:{lo:5,hi:8} },
+      { rid:"r3", kind:"target", grp:"Ciclosporin — early post-transplant C0", analyte:{key:"csa",label:"Ciclosporin (C0 trough)"}, sex:"any", age:"adult", preg:null, conv:{lo:150,hi:300}, si:{lo:150,hi:300} },
+      { rid:"r4", kind:"target", grp:"Ciclosporin — maintenance C0", analyte:{key:"csa",label:"Ciclosporin (C0 trough)"}, sex:"any", age:"adult", preg:null, conv:{lo:80,hi:150}, si:{lo:80,hi:150} }
     ],
     critical:{ txt:"Markedly raised level with rising creatinine, tremor, hypertension or seizures — calcineurin inhibitor toxicity; discuss with the transplant unit before changing the dose", lo:null, hi:null },
     inc:["CYP3A4 inhibitors: azole antifungals (fluconazole, voriconazole), macrolides (clarithromycin, erythromycin), diltiazem, verapamil, protease inhibitors, grapefruit juice","Diarrhoea — paradoxically raises tacrolimus by altering intestinal metabolism and P-glycoprotein","Liver dysfunction"],
@@ -3869,9 +3869,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"µmol/L", si:"µmol/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"24 h post high-dose infusion", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} },
-      { rid:"r2", grp:"48 h post infusion", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1.0}, si:{lo:null,hi:1.0} },
-      { rid:"r3", grp:"72 h post infusion — rescue may stop below this", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.1}, si:{lo:null,hi:0.1} }
+      { rid:"r1", kind:"cutoff", grp:"24 h post high-dose infusion", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} },
+      { rid:"r2", kind:"cutoff", grp:"48 h post infusion", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1.0}, si:{lo:null,hi:1.0} },
+      { rid:"r3", kind:"cutoff", grp:"72 h post infusion — rescue may stop below this", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.1}, si:{lo:null,hi:0.1} }
     ],
     critical:{ txt:"Delayed clearance (level above the protocol threshold at 48–72 h) — continue and escalate folinic acid, intensify hydration and alkalinisation, and consider glucarpidase", lo:null, hi:null },
     inc:["Acute kidney injury — methotrexate is renally cleared and nephrotoxic, creating a vicious cycle","Third-space fluid (ascites, pleural effusion) — methotrexate accumulates and is released slowly, markedly prolonging exposure","Drug interactions: NSAIDs, penicillins, probenecid, proton pump inhibitors, co-trimoxazole, salicylates","Dehydration and acidic urine, which promote tubular precipitation"],
@@ -3892,9 +3892,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/dL", si:"pmol/L", factor:27.7 },
     ranges:[
-      { rid:"r1", grp:"Aldosterone — upright, mid-morning", analyte:{key:"aldo",label:"Aldosterone"}, sex:"any", age:"adult", preg:null, conv:{lo:4,hi:31}, si:{lo:111,hi:858} },
-      { rid:"r2", grp:"Plasma renin activity", analyte:{key:"renin",label:"Plasma Renin Activity",convUnit:"ng/mL/h",siUnit:"ng/mL/h",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.5,hi:4.0}, si:{lo:0.5,hi:4.0} },
-      { rid:"r3", grp:"ARR — screen positive for primary aldosteronism", analyte:{key:"arr",label:"Aldosterone:Renin Ratio",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:30,hi:null}, si:{lo:30,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Aldosterone — upright, mid-morning", analyte:{key:"aldo",label:"Aldosterone"}, sex:"any", age:"adult", preg:null, conv:{lo:4,hi:31}, si:{lo:111,hi:858} },
+      { rid:"r2", kind:"ref", grp:"Plasma renin activity", analyte:{key:"renin",label:"Plasma Renin Activity",convUnit:"ng/mL/h",siUnit:"ng/mL/h",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.5,hi:4.0}, si:{lo:0.5,hi:4.0} },
+      { rid:"r3", kind:"dx", grp:"ARR — screen positive for primary aldosteronism", analyte:{key:"arr",label:"Aldosterone:Renin Ratio",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:30,hi:null}, si:{lo:30,hi:null} }
     ],
     critical:null,
     inc:["Primary aldosteronism (Conn syndrome): HIGH aldosterone with SUPPRESSED renin and a high ratio","Secondary hyperaldosteronism: both high — renal artery stenosis, heart failure, cirrhosis, diuretics, renin-secreting tumour","Pregnancy (both rise physiologically)"],
@@ -3915,10 +3915,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"µg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Post-total thyroidectomy and ablation — excellent response", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.2}, si:{lo:null,hi:0.2} },
-      { rid:"r2", grp:"Post-ablation, on suppression — indeterminate", sex:"any", age:"adult", preg:null, conv:{lo:0.2,hi:1.0}, si:{lo:0.2,hi:1.0} },
-      { rid:"r3", grp:"Post-ablation — biochemical incomplete response", sex:"any", age:"adult", preg:null, conv:{lo:1.0,hi:null}, si:{lo:1.0,hi:null} },
-      { rid:"r4", grp:"Intact thyroid (not a cancer marker in this setting)", sex:"any", age:"adult", preg:null, conv:{lo:1.5,hi:38}, si:{lo:1.5,hi:38} }
+      { rid:"r1", kind:"dx", grp:"Post-total thyroidectomy and ablation — excellent response", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.2}, si:{lo:null,hi:0.2} },
+      { rid:"r2", kind:"dx", grp:"Post-ablation, on suppression — indeterminate", sex:"any", age:"adult", preg:null, conv:{lo:0.2,hi:1.0}, si:{lo:0.2,hi:1.0} },
+      { rid:"r3", kind:"dx", grp:"Post-ablation — biochemical incomplete response", sex:"any", age:"adult", preg:null, conv:{lo:1.0,hi:null}, si:{lo:1.0,hi:null} },
+      { rid:"r4", kind:"note", grp:"Intact thyroid (not a cancer marker in this setting)", sex:"any", age:"adult", preg:null, conv:{lo:1.5,hi:38}, si:{lo:1.5,hi:38} }
     ],
     critical:null,
     inc:["Residual, recurrent or metastatic differentiated thyroid cancer after total thyroidectomy and ablation","Any thyroid tissue: thyroiditis, Graves disease, nodular goitre — which is why it is NOT a diagnostic test before thyroidectomy","A rising trend on serial measurement is more significant than any single value"],
@@ -3939,9 +3939,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"pg/mL", si:"ng/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} },
-      { rid:"r2", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
-      { rid:"r3", grp:"Medullary thyroid carcinoma highly likely", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:null}, si:{lo:100,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:10} },
+      { rid:"r2", kind:"ref", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:null,hi:5}, si:{lo:null,hi:5} },
+      { rid:"r3", kind:"cutoff", grp:"Medullary thyroid carcinoma highly likely", sex:"any", age:"adult", preg:null, conv:{lo:100,hi:null}, si:{lo:100,hi:null} }
     ],
     critical:null,
     inc:["Medullary thyroid carcinoma — the principal indication; levels correlate with tumour burden","C-cell hyperplasia","Proton pump inhibitors (a common and often-forgotten cause of modest elevation)","Chronic kidney disease, smoking, autoimmune thyroiditis, hypergastrinaemia","Neuroendocrine tumours, small cell lung cancer","Neonates and infants (physiologically higher)"],
@@ -3962,9 +3962,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/L", si:"mg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:0.8,hi:2.4}, si:{lo:0.8,hi:2.4} },
-      { rid:"r2", grp:"Myeloma ISS stage I", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:3.5}, si:{lo:null,hi:3.5} },
-      { rid:"r3", grp:"Myeloma ISS stage III", sex:"any", age:"adult", preg:null, conv:{lo:5.5,hi:null}, si:{lo:5.5,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:0.8,hi:2.4}, si:{lo:0.8,hi:2.4} },
+      { rid:"r2", kind:"dx", grp:"Myeloma ISS stage I", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:3.5}, si:{lo:null,hi:3.5} },
+      { rid:"r3", kind:"dx", grp:"Myeloma ISS stage III", sex:"any", age:"adult", preg:null, conv:{lo:5.5,hi:null}, si:{lo:5.5,hi:null} }
     ],
     critical:null,
     inc:["Multiple myeloma — a core component of the International Staging System and a strong prognostic marker","Lymphoma, chronic lymphocytic leukaemia","CHRONIC KIDNEY DISEASE — a major confounder, since the molecule is renally cleared","Chronic inflammation, autoimmune disease, HIV and other chronic viral infections","Dialysis-related amyloidosis in long-term haemodialysis"],
@@ -3985,7 +3985,7 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"U/mL", si:"kU/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:30} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:30}, si:{lo:null,hi:30} }
     ],
     critical:null,
     inc:["Metastatic breast cancer, particularly with bone or liver metastases","Other adenocarcinomas: ovarian, lung, pancreatic, colorectal","Benign conditions: benign breast disease, chronic hepatitis, cirrhosis, sarcoidosis, tuberculosis","Pregnancy and lactation","A transient 'spike' in the first weeks of effective chemotherapy, caused by tumour lysis"],
@@ -4007,12 +4007,12 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"g/dL", si:"g/L", factor:10 },
     ranges:[
-      { rid:"r1", grp:"Albumin fraction", analyte:{key:"alb",label:"Albumin"}, sex:"any", age:"adult", preg:null, conv:{lo:3.5,hi:5.0}, si:{lo:35,hi:50} },
-      { rid:"r2", grp:"Alpha-1 globulin", analyte:{key:"a1",label:"Alpha-1"}, sex:"any", age:"adult", preg:null, conv:{lo:0.1,hi:0.3}, si:{lo:1,hi:3} },
-      { rid:"r3", grp:"Alpha-2 globulin", analyte:{key:"a2",label:"Alpha-2"}, sex:"any", age:"adult", preg:null, conv:{lo:0.6,hi:1.0}, si:{lo:6,hi:10} },
-      { rid:"r4", grp:"Beta globulin", analyte:{key:"beta",label:"Beta"}, sex:"any", age:"adult", preg:null, conv:{lo:0.7,hi:1.2}, si:{lo:7,hi:12} },
-      { rid:"r5", grp:"Gamma globulin", analyte:{key:"gamma",label:"Gamma"}, sex:"any", age:"adult", preg:null, conv:{lo:0.7,hi:1.6}, si:{lo:7,hi:16} },
-      { rid:"r6", grp:"M-protein — any discrete band is abnormal and requires immunofixation", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No discrete band detected"}, si:{lo:null,hi:null,txt:"No discrete band detected"} }
+      { rid:"r1", kind:"ref", grp:"Albumin fraction", analyte:{key:"alb",label:"Albumin"}, sex:"any", age:"adult", preg:null, conv:{lo:3.5,hi:5.0}, si:{lo:35,hi:50} },
+      { rid:"r2", kind:"ref", grp:"Alpha-1 globulin", analyte:{key:"a1",label:"Alpha-1"}, sex:"any", age:"adult", preg:null, conv:{lo:0.1,hi:0.3}, si:{lo:1,hi:3} },
+      { rid:"r3", kind:"ref", grp:"Alpha-2 globulin", analyte:{key:"a2",label:"Alpha-2"}, sex:"any", age:"adult", preg:null, conv:{lo:0.6,hi:1.0}, si:{lo:6,hi:10} },
+      { rid:"r4", kind:"ref", grp:"Beta globulin", analyte:{key:"beta",label:"Beta"}, sex:"any", age:"adult", preg:null, conv:{lo:0.7,hi:1.2}, si:{lo:7,hi:12} },
+      { rid:"r5", kind:"ref", grp:"Gamma globulin", analyte:{key:"gamma",label:"Gamma"}, sex:"any", age:"adult", preg:null, conv:{lo:0.7,hi:1.6}, si:{lo:7,hi:16} },
+      { rid:"r6", kind:"note", grp:"M-protein — any discrete band is abnormal and requires immunofixation", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No discrete band detected"}, si:{lo:null,hi:null,txt:"No discrete band detected"} }
     ],
     critical:null,
     inc:["MONOCLONAL (discrete M-band): multiple myeloma, MGUS, Waldenström macroglobulinaemia, AL amyloidosis, solitary plasmacytoma, lymphoma","POLYCLONAL gamma increase: chronic infection, tuberculosis, chronic liver disease, autoimmune disease, HIV — NOT a paraprotein","Alpha-2 increase: nephrotic syndrome, acute inflammation","Beta increase: iron deficiency (transferrin), nephrotic syndrome"],
@@ -4033,12 +4033,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"mg/L", si:"mg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Serum free kappa", analyte:{key:"kappa",label:"Free Kappa"}, sex:"any", age:"adult", preg:null, conv:{lo:3.3,hi:19.4}, si:{lo:3.3,hi:19.4} },
-      { rid:"r2", grp:"Serum free lambda", analyte:{key:"lambda",label:"Free Lambda"}, sex:"any", age:"adult", preg:null, conv:{lo:5.7,hi:26.3}, si:{lo:5.7,hi:26.3} },
-      { rid:"r3", grp:"Kappa:lambda ratio — normal renal function", analyte:{key:"ratio",label:"Kappa:Lambda Ratio",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.26,hi:1.65}, si:{lo:0.26,hi:1.65} },
-      { rid:"r4", grp:"Kappa:lambda ratio — renal impairment", analyte:{key:"ratio",label:"Kappa:Lambda Ratio",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.37,hi:3.1}, si:{lo:0.37,hi:3.1} },
-      { rid:"r5", grp:"Urine Bence Jones protein — normal result is NOT DETECTED", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Not detected"}, si:{lo:null,hi:null,txt:"Not detected"} },
-      { rid:"r6", grp:"Involved FLC ≥100 mg/L with ratio ≥100 — a myeloma-defining event", analyte:{key:"ratio",label:"Kappa:Lambda Ratio",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:100,hi:null}, si:{lo:100,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Serum free kappa", analyte:{key:"kappa",label:"Free Kappa"}, sex:"any", age:"adult", preg:null, conv:{lo:3.3,hi:19.4}, si:{lo:3.3,hi:19.4} },
+      { rid:"r2", kind:"ref", grp:"Serum free lambda", analyte:{key:"lambda",label:"Free Lambda"}, sex:"any", age:"adult", preg:null, conv:{lo:5.7,hi:26.3}, si:{lo:5.7,hi:26.3} },
+      { rid:"r3", kind:"ref", grp:"Kappa:lambda ratio — normal renal function", analyte:{key:"ratio",label:"Kappa:Lambda Ratio",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.26,hi:1.65}, si:{lo:0.26,hi:1.65} },
+      { rid:"r4", kind:"ref", grp:"Kappa:lambda ratio — renal impairment", analyte:{key:"ratio",label:"Kappa:Lambda Ratio",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.37,hi:3.1}, si:{lo:0.37,hi:3.1} },
+      { rid:"r5", kind:"note", grp:"Urine Bence Jones protein — normal result is NOT DETECTED", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Not detected"}, si:{lo:null,hi:null,txt:"Not detected"} },
+      { rid:"r6", kind:"dx", grp:"Involved FLC ≥100 mg/L with ratio ≥100 — a myeloma-defining event", analyte:{key:"ratio",label:"Kappa:Lambda Ratio",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:100,hi:null}, si:{lo:100,hi:null} }
     ],
     critical:{ txt:"Involved free light chain ≥100 mg/L with a ratio ≥100 is a myeloma-defining event even without CRAB features — refer urgently; also consider light chain cast nephropathy in unexplained acute kidney injury", lo:null, hi:null, analyte:["ratio"] },
     inc:["Multiple myeloma, especially light-chain-only and non-secretory disease","AL amyloidosis — free light chains are the key screening test","Light chain deposition disease, Waldenström macroglobulinaemia, MGUS","BOTH light chains raised with a NORMAL ratio: renal impairment or polyclonal immune activation, not a clonal disorder"],
@@ -4059,11 +4059,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"pg/mL", si:"pmol/L", factor:5.07 },
     ranges:[
-      { rid:"r1", grp:"Plasma free metanephrine", analyte:{key:"pmn",label:"Plasma Metanephrine"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:90}, si:{lo:null,hi:456} },
-      { rid:"r2", grp:"Plasma free normetanephrine", analyte:{key:"pnmn",label:"Plasma Normetanephrine"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:180}, si:{lo:null,hi:913} },
-      { rid:"r3", grp:"24-h urine metanephrine", analyte:{key:"umn",label:"Urine Metanephrine",convUnit:"µg/24 h",siUnit:"µg/24 h",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:400}, si:{lo:null,hi:400} },
-      { rid:"r4", grp:"24-h urine normetanephrine", analyte:{key:"unmn",label:"Urine Normetanephrine",convUnit:"µg/24 h",siUnit:"µg/24 h",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:900}, si:{lo:null,hi:900} },
-      { rid:"r5", grp:"Above 3–4× the upper limit — phaeochromocytoma very likely", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Interpret by magnitude, not presence alone"}, si:{lo:null,hi:null,txt:"Interpret by magnitude, not presence alone"} }
+      { rid:"r1", kind:"ref", grp:"Plasma free metanephrine", analyte:{key:"pmn",label:"Plasma Metanephrine"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:90}, si:{lo:null,hi:456} },
+      { rid:"r2", kind:"ref", grp:"Plasma free normetanephrine", analyte:{key:"pnmn",label:"Plasma Normetanephrine"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:180}, si:{lo:null,hi:913} },
+      { rid:"r3", kind:"ref", grp:"24-h urine metanephrine", analyte:{key:"umn",label:"Urine Metanephrine",convUnit:"µg/24 h",siUnit:"µg/24 h",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:400}, si:{lo:null,hi:400} },
+      { rid:"r4", kind:"ref", grp:"24-h urine normetanephrine", analyte:{key:"unmn",label:"Urine Normetanephrine",convUnit:"µg/24 h",siUnit:"µg/24 h",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:900}, si:{lo:null,hi:900} },
+      { rid:"r5", kind:"cutoff", grp:"Above 3–4× the upper limit — phaeochromocytoma very likely", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Interpret by magnitude, not presence alone"}, si:{lo:null,hi:null,txt:"Interpret by magnitude, not presence alone"} }
     ],
     critical:{ txt:"Confirmed phaeochromocytoma — do NOT start a beta-blocker first or proceed to biopsy or surgery without adequate alpha-blockade; unopposed beta-blockade can precipitate a hypertensive crisis", lo:null, hi:null },
     inc:["PHAEOCHROMOCYTOMA and paraganglioma — the indication","Physiological and drug causes of modest elevation: upright posture, stress, acute illness, pain, tricyclic antidepressants, paracetamol, labetalol, levodopa, sympathomimetics, caffeine, nicotine","Obstructive sleep apnoea, heart failure, clonidine withdrawal","Renal failure (urine fractions)"],
@@ -4084,12 +4084,12 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/dL", si:"µmol/L", factor:0.157 },
     ranges:[
-      { rid:"r1", grp:"Serum copper — adult male", analyte:{key:"cu",label:"Serum Copper"}, sex:"M", age:"adult", preg:null, conv:{lo:70,hi:140}, si:{lo:11.0,hi:22.0} },
-      { rid:"r2", grp:"Serum copper — adult female", analyte:{key:"cu",label:"Serum Copper"}, sex:"F", age:"adult", preg:null, conv:{lo:80,hi:155}, si:{lo:12.6,hi:24.3} },
-      { rid:"r3", grp:"Caeruloplasmin", analyte:{key:"cp",label:"Caeruloplasmin",convUnit:"mg/dL",siUnit:"g/L",factor:0.01}, sex:"any", age:"adult", preg:null, conv:{lo:20,hi:40}, si:{lo:0.2,hi:0.4} },
-      { rid:"r4", grp:"Caeruloplasmin — supportive of Wilson disease", analyte:{key:"cp",label:"Caeruloplasmin",convUnit:"mg/dL",siUnit:"g/L",factor:0.01}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:0.2} },
-      { rid:"r5", grp:"24-h urinary copper — normal", analyte:{key:"ucu",label:"24-h Urine Copper",convUnit:"µg/24 h",siUnit:"µg/24 h",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:40}, si:{lo:null,hi:40} },
-      { rid:"r6", grp:"24-h urinary copper — diagnostic threshold for Wilson disease", analyte:{key:"ucu",label:"24-h Urine Copper",convUnit:"µg/24 h",siUnit:"µg/24 h",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:100,hi:null}, si:{lo:100,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Serum copper — adult male", analyte:{key:"cu",label:"Serum Copper"}, sex:"M", age:"adult", preg:null, conv:{lo:70,hi:140}, si:{lo:11.0,hi:22.0} },
+      { rid:"r2", kind:"ref", grp:"Serum copper — adult female", analyte:{key:"cu",label:"Serum Copper"}, sex:"F", age:"adult", preg:null, conv:{lo:80,hi:155}, si:{lo:12.6,hi:24.3} },
+      { rid:"r3", kind:"ref", grp:"Caeruloplasmin", analyte:{key:"cp",label:"Caeruloplasmin",convUnit:"mg/dL",siUnit:"g/L",factor:0.01}, sex:"any", age:"adult", preg:null, conv:{lo:20,hi:40}, si:{lo:0.2,hi:0.4} },
+      { rid:"r4", kind:"dx", grp:"Caeruloplasmin — supportive of Wilson disease", analyte:{key:"cp",label:"Caeruloplasmin",convUnit:"mg/dL",siUnit:"g/L",factor:0.01}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:0.2} },
+      { rid:"r5", kind:"ref", grp:"24-h urinary copper — normal", analyte:{key:"ucu",label:"24-h Urine Copper",convUnit:"µg/24 h",siUnit:"µg/24 h",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:40}, si:{lo:null,hi:40} },
+      { rid:"r6", kind:"cutoff", grp:"24-h urinary copper — diagnostic threshold for Wilson disease", analyte:{key:"ucu",label:"24-h Urine Copper",convUnit:"µg/24 h",siUnit:"µg/24 h",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:100,hi:null}, si:{lo:100,hi:null} }
     ],
     critical:{ txt:"Fulminant Wilson disease — Coombs-negative haemolytic anaemia with acute liver failure, low alkaline phosphatase and a high bilirubin:ALP ratio; refer immediately for transplant assessment", lo:null, hi:null },
     inc:["Serum copper and caeruloplasmin rise in: acute and chronic inflammation (both are acute-phase reactants), pregnancy, oestrogen and oral contraceptive use, lymphoma, biliary obstruction, rheumatoid arthritis","Urinary copper rises in Wilson disease and after chelation","Copper toxicity from contaminated water or copper sulphate ingestion (a recognised means of self-poisoning in parts of India, causing haemolysis, hepatic and renal failure)"],
@@ -4110,9 +4110,9 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/dL", si:"µmol/L", factor:0.153 },
     ranges:[
-      { rid:"r1", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:70,hi:120}, si:{lo:10.7,hi:18.4} },
-      { rid:"r2", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:65,hi:110}, si:{lo:9.9,hi:16.8} },
-      { rid:"r3", grp:"Deficiency likely", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:70}, si:{lo:null,hi:10.7} }
+      { rid:"r1", kind:"ref", grp:"Adult", sex:"any", age:"adult", preg:null, conv:{lo:70,hi:120}, si:{lo:10.7,hi:18.4} },
+      { rid:"r2", kind:"ref", grp:"Child", sex:"any", age:"child", preg:null, conv:{lo:65,hi:110}, si:{lo:9.9,hi:16.8} },
+      { rid:"r3", kind:"dx", grp:"Deficiency likely", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:70}, si:{lo:null,hi:10.7} }
     ],
     critical:null,
     inc:["Supplementation and over-supplementation","Haemolysis or delayed separation (artefactual)","Contaminated collection tube (artefactual)"],
@@ -4133,11 +4133,11 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"µg/dL", si:"µmol/L", factor:0.0349 },
     ranges:[
-      { rid:"r1", grp:"Adult — adequate", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:80}, si:{lo:1.05,hi:2.79} },
-      { rid:"r2", grp:"Child — adequate", sex:"any", age:"child", preg:null, conv:{lo:20,hi:50}, si:{lo:0.70,hi:1.75} },
-      { rid:"r3", grp:"Marginal status", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:30}, si:{lo:0.70,hi:1.05} },
-      { rid:"r4", grp:"Deficiency (WHO: <0.70 µmol/L)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:0.70} },
-      { rid:"r5", grp:"Severe deficiency — ocular risk", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:0.35} }
+      { rid:"r1", kind:"ref", grp:"Adult — adequate", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:80}, si:{lo:1.05,hi:2.79} },
+      { rid:"r2", kind:"ref", grp:"Child — adequate", sex:"any", age:"child", preg:null, conv:{lo:20,hi:50}, si:{lo:0.70,hi:1.75} },
+      { rid:"r3", kind:"dx", grp:"Marginal status", sex:"any", age:"adult", preg:null, conv:{lo:20,hi:30}, si:{lo:0.70,hi:1.05} },
+      { rid:"r4", kind:"dx", grp:"Deficiency (WHO: <0.70 µmol/L)", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:20}, si:{lo:null,hi:0.70} },
+      { rid:"r5", kind:"dx", grp:"Severe deficiency — ocular risk", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:10}, si:{lo:null,hi:0.35} }
     ],
     critical:{ txt:"Severe deficiency with corneal signs (xerosis, Bitot spots, keratomalacia) — give high-dose vitamin A immediately per WHO schedule; corneal melting can blind within days", lo:null, hi:null },
     inc:["Excess supplementation and hypervitaminosis A: headache, raised intracranial pressure, bone pain, hepatotoxicity, alopecia, dry skin","Chronic kidney disease (reduced clearance of retinol-binding protein)","Non-fasting sample"],
@@ -4158,8 +4158,8 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"nmol/L", si:"nmol/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Whole blood thiamine diphosphate — adult", sex:"any", age:"adult", preg:null, conv:{lo:70,hi:180}, si:{lo:70,hi:180} },
-      { rid:"r2", grp:"Deficiency", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:70}, si:{lo:null,hi:70} }
+      { rid:"r1", kind:"ref", grp:"Whole blood thiamine diphosphate — adult", sex:"any", age:"adult", preg:null, conv:{lo:70,hi:180}, si:{lo:70,hi:180} },
+      { rid:"r2", kind:"dx", grp:"Deficiency", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:70}, si:{lo:null,hi:70} }
     ],
     critical:{ txt:"Suspected Wernicke encephalopathy (confusion, ophthalmoplegia, ataxia — the full triad is present in only a minority) — give high-dose parenteral thiamine IMMEDIATELY and always before glucose; delay causes irreversible Korsakoff psychosis", lo:null, hi:null },
     inc:["Supplementation","Rarely of clinical significance — thiamine has no meaningful toxicity"],
@@ -4180,9 +4180,9 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"ng/mL", si:"µg/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:28,hi:72}, si:{lo:28,hi:72} },
-      { rid:"r2", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:25,hi:58}, si:{lo:25,hi:58} },
-      { rid:"r3", grp:"Rhabdomyolysis — markedly raised", sex:"any", age:"adult", preg:null, conv:{lo:1000,hi:null}, si:{lo:1000,hi:null} }
+      { rid:"r1", kind:"ref", grp:"Adult male", sex:"M", age:"adult", preg:null, conv:{lo:28,hi:72}, si:{lo:28,hi:72} },
+      { rid:"r2", kind:"ref", grp:"Adult female", sex:"F", age:"adult", preg:null, conv:{lo:25,hi:58}, si:{lo:25,hi:58} },
+      { rid:"r3", kind:"cutoff", grp:"Rhabdomyolysis — markedly raised", sex:"any", age:"adult", preg:null, conv:{lo:1000,hi:null}, si:{lo:1000,hi:null} }
     ],
     critical:{ txt:"Rhabdomyolysis with myoglobinuria — begin aggressive intravenous fluids early to prevent acute kidney injury, and monitor potassium, calcium and phosphate closely; hyperkalaemia is the immediate threat to life", lo:null, hi:null },
     inc:["RHABDOMYOLYSIS: crush injury, prolonged immobilisation ('long lie'), seizures, extreme exertion, heat stroke, compartment syndrome","Drugs and toxins: statins (especially with fibrates or macrolides), alcohol, cocaine, snake bite, neuroleptic malignant syndrome, malignant hyperthermia","Myositis, muscular dystrophy, metabolic myopathies","Myocardial infarction (rises early but is non-specific)","RENAL FAILURE — myoglobin is renally cleared, so it accumulates","Intramuscular injections, recent surgery, severe burns"],
@@ -4203,10 +4203,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Index/Reactive", si:"Index/Reactive", factor:1 },
     ranges:[
-      { rid:"r1", grp:"IgM anti-HAV — normal result is NON-REACTIVE", analyte:{key:"igmhav",label:"IgM anti-HAV",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
-      { rid:"r2", grp:"Total/IgG anti-HAV — reactive indicates past infection or vaccination (immune)", analyte:{key:"igghav",label:"IgG anti-HAV",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive (reactive = immune)"}, si:{lo:null,hi:null,txt:"Non-reactive (reactive = immune)"} },
-      { rid:"r3", grp:"IgM anti-HEV — normal result is NON-REACTIVE", analyte:{key:"igmhev",label:"IgM anti-HEV",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
-      { rid:"r4", grp:"IgG anti-HEV — reactive indicates past exposure", analyte:{key:"igghev",label:"IgG anti-HEV",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive (reactive = past exposure)"}, si:{lo:null,hi:null,txt:"Non-reactive (reactive = past exposure)"} }
+      { rid:"r1", kind:"note", grp:"IgM anti-HAV — normal result is NON-REACTIVE", analyte:{key:"igmhav",label:"IgM anti-HAV",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
+      { rid:"r2", kind:"note", grp:"Total/IgG anti-HAV — reactive indicates past infection or vaccination (immune)", analyte:{key:"igghav",label:"IgG anti-HAV",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive (reactive = immune)"}, si:{lo:null,hi:null,txt:"Non-reactive (reactive = immune)"} },
+      { rid:"r3", kind:"note", grp:"IgM anti-HEV — normal result is NON-REACTIVE", analyte:{key:"igmhev",label:"IgM anti-HEV",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
+      { rid:"r4", kind:"note", grp:"IgG anti-HEV — reactive indicates past exposure", analyte:{key:"igghev",label:"IgG anti-HEV",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive (reactive = past exposure)"}, si:{lo:null,hi:null,txt:"Non-reactive (reactive = past exposure)"} }
     ],
     critical:{ txt:"Acute hepatitis with rising INR, falling albumin or any encephalopathy — acute liver failure; refer urgently to a liver unit. Hepatitis E in the third trimester carries 20–25% maternal mortality", lo:null, hi:null },
     inc:["IgM anti-HAV reactive: acute hepatitis A (persists 3–6 months)","IgM anti-HEV reactive: acute hepatitis E","IgG anti-HAV alone: past infection or vaccination — immune","IgG anti-HEV alone: past exposure, common in endemic areas","False-positive IgM can occur with rheumatoid factor, polyclonal stimulation and other acute viral illnesses"],
@@ -4227,12 +4227,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"Index/IU per mL", si:"Index/IU per mL", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Toxoplasma IgM — normal result is NON-REACTIVE", analyte:{key:"toxoigm",label:"Toxoplasma IgM",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
-      { rid:"r2", grp:"Rubella IgG — immune threshold", analyte:{key:"rubigg",label:"Rubella IgG",convUnit:"IU/mL",siUnit:"IU/mL",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:10,hi:null}, si:{lo:10,hi:null} },
-      { rid:"r3", grp:"Rubella IgM — normal result is NON-REACTIVE", analyte:{key:"rubigm",label:"Rubella IgM",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
-      { rid:"r4", grp:"CMV IgM — normal result is NON-REACTIVE", analyte:{key:"cmvigm",label:"CMV IgM",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
-      { rid:"r5", grp:"IgG avidity — HIGH avidity excludes infection within the last 3–4 months", analyte:{key:"avidity",label:"IgG Avidity",convUnit:"index",siUnit:"index",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"HIGH avidity = infection >3–4 months ago"}, si:{lo:null,hi:null,txt:"HIGH avidity = infection >3–4 months ago"} },
-      { rid:"r6", grp:"Congenital CMV — PCR on neonatal urine/saliva within 3 weeks of birth", analyte:{key:"cmvpcr",label:"Neonatal CMV PCR",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:null,txt:"Not detected"}, si:{lo:null,hi:null,txt:"Not detected"} }
+      { rid:"r1", kind:"note", grp:"Toxoplasma IgM — normal result is NON-REACTIVE", analyte:{key:"toxoigm",label:"Toxoplasma IgM",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
+      { rid:"r2", kind:"cutoff", grp:"Rubella IgG — immune threshold", analyte:{key:"rubigg",label:"Rubella IgG",convUnit:"IU/mL",siUnit:"IU/mL",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:10,hi:null}, si:{lo:10,hi:null} },
+      { rid:"r3", kind:"note", grp:"Rubella IgM — normal result is NON-REACTIVE", analyte:{key:"rubigm",label:"Rubella IgM",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
+      { rid:"r4", kind:"note", grp:"CMV IgM — normal result is NON-REACTIVE", analyte:{key:"cmvigm",label:"CMV IgM",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Non-reactive"}, si:{lo:null,hi:null,txt:"Non-reactive"} },
+      { rid:"r5", kind:"note", grp:"IgG avidity — HIGH avidity excludes infection within the last 3–4 months", analyte:{key:"avidity",label:"IgG Avidity",convUnit:"index",siUnit:"index",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"HIGH avidity = infection >3–4 months ago"}, si:{lo:null,hi:null,txt:"HIGH avidity = infection >3–4 months ago"} },
+      { rid:"r6", kind:"note", grp:"Congenital CMV — PCR on neonatal urine/saliva within 3 weeks of birth", analyte:{key:"cmvpcr",label:"Neonatal CMV PCR",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"neonate", preg:null, conv:{lo:null,hi:null,txt:"Not detected"}, si:{lo:null,hi:null,txt:"Not detected"} }
     ],
     critical:{ txt:"Confirmed acute maternal toxoplasmosis, rubella or CMV in pregnancy — refer to fetal medicine the same day; management is time-critical and gestation-dependent", lo:null, hi:null },
     inc:["Acute infection: IgM reactive WITH low IgG avidity and a rising IgG titre on paired samples","Past infection: IgG reactive with high avidity, IgM non-reactive","Rubella IgG above 10 IU/mL: immune (from vaccination or past infection)","FALSE-POSITIVE IgM is common — toxoplasma and CMV IgM can persist for a year or more after infection, and cross-react with rheumatoid factor, EBV, other acute infections and polyclonal B-cell activation"],
@@ -4254,11 +4254,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"MoM", si:"MoM", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Each marker is reported as a multiple of the median (MoM); ~1.0 is average", sex:"F", age:"adult", preg:"any", conv:{lo:null,hi:null,txt:"≈1.0 MoM"}, si:{lo:null,hi:null,txt:"≈1.0 MoM"} },
-      { rid:"r2", grp:"Trisomy 21 risk — screen negative (low risk)", analyte:{key:"t21",label:"Trisomy 21 Risk",convUnit:"risk",siUnit:"risk",noConvert:true}, sex:"F", age:"adult", preg:"any", conv:{lo:null,hi:null,txt:"Below the laboratory cut-off, commonly <1 in 250"}, si:{lo:null,hi:null,txt:"Below the laboratory cut-off"} },
-      { rid:"r3", grp:"Trisomy 21 risk — screen positive (high risk)", analyte:{key:"t21",label:"Trisomy 21 Risk",convUnit:"risk",siUnit:"risk",noConvert:true}, sex:"F", age:"adult", preg:"any", conv:{lo:null,hi:null,txt:"At or above the cut-off, commonly ≥1 in 250 — offer NIPT or diagnostic testing"}, si:{lo:null,hi:null,txt:"At or above the cut-off — offer NIPT or diagnostic testing"} },
-      { rid:"r4", grp:"AFP — raised (≥2.0–2.5 MoM) suggests a neural tube or abdominal wall defect", analyte:{key:"afp",label:"AFP (MoM)"}, sex:"F", age:"adult", preg:"T2", conv:{lo:null,hi:2.0}, si:{lo:null,hi:2.0} },
-      { rid:"r5", grp:"NIPT (cell-free DNA) — detection rate for trisomy 21", analyte:{key:"nipt",label:"NIPT",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"F", age:"adult", preg:"any", conv:{lo:null,hi:null,txt:">99% sensitivity; still a screening test, not diagnostic"}, si:{lo:null,hi:null,txt:">99% sensitivity; still a screening test"} }
+      { rid:"r1", kind:"note", grp:"Each marker is reported as a multiple of the median (MoM); ~1.0 is average", sex:"F", age:"adult", preg:"any", conv:{lo:null,hi:null,txt:"≈1.0 MoM"}, si:{lo:null,hi:null,txt:"≈1.0 MoM"} },
+      { rid:"r2", kind:"cutoff", grp:"Trisomy 21 risk — screen negative (low risk)", analyte:{key:"t21",label:"Trisomy 21 Risk",convUnit:"risk",siUnit:"risk",noConvert:true}, sex:"F", age:"adult", preg:"any", conv:{lo:null,hi:null,txt:"Below the laboratory cut-off, commonly <1 in 250"}, si:{lo:null,hi:null,txt:"Below the laboratory cut-off"} },
+      { rid:"r3", kind:"cutoff", grp:"Trisomy 21 risk — screen positive (high risk)", analyte:{key:"t21",label:"Trisomy 21 Risk",convUnit:"risk",siUnit:"risk",noConvert:true}, sex:"F", age:"adult", preg:"any", conv:{lo:null,hi:null,txt:"At or above the cut-off, commonly ≥1 in 250 — offer NIPT or diagnostic testing"}, si:{lo:null,hi:null,txt:"At or above the cut-off — offer NIPT or diagnostic testing"} },
+      { rid:"r4", kind:"dx", grp:"AFP — raised (≥2.0–2.5 MoM) suggests a neural tube or abdominal wall defect", analyte:{key:"afp",label:"AFP (MoM)"}, sex:"F", age:"adult", preg:"T2", conv:{lo:null,hi:2.0}, si:{lo:null,hi:2.0} },
+      { rid:"r5", kind:"note", grp:"NIPT (cell-free DNA) — detection rate for trisomy 21", analyte:{key:"nipt",label:"NIPT",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"F", age:"adult", preg:"any", conv:{lo:null,hi:null,txt:">99% sensitivity; still a screening test, not diagnostic"}, si:{lo:null,hi:null,txt:">99% sensitivity; still a screening test"} }
     ],
     critical:{ txt:"Screen-positive result — arrange genetic counselling promptly; gestational age limits the window for diagnostic testing and for any decision the couple may wish to make", lo:null, hi:null, analyte:["t21"] },
     inc:["RAISED AFP: open neural tube defect, abdominal wall defect, underestimated gestational age, multiple pregnancy, fetal demise, placental pathology","RAISED hCG with LOW PAPP-A, LOW oestriol and RAISED inhibin A: the classic quadruple pattern of trisomy 21","LOW PAPP-A also predicts pre-eclampsia, fetal growth restriction and stillbirth independent of aneuploidy — a clinically useful by-product","Very high hCG: molar pregnancy, multiple pregnancy"],
@@ -4279,10 +4279,10 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"% / MFI ratio", si:"% / MFI ratio", factor:1 },
     ranges:[
-      { rid:"r1", grp:"EMA binding — reduced mean fluorescence vs control suggests hereditary spherocytosis", analyte:{key:"ema",label:"EMA Binding",convUnit:"ratio to control",siUnit:"ratio to control",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Normal: ratio comparable to control; reduced binding = positive screen"}, si:{lo:null,hi:null,txt:"Normal: comparable to control"} },
-      { rid:"r2", grp:"Classical osmotic fragility — 50% haemolysis (MCF)", analyte:{key:"mcf",label:"Median Corpuscular Fragility",convUnit:"% NaCl",siUnit:"% NaCl",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.40,hi:0.45}, si:{lo:0.40,hi:0.45} },
-      { rid:"r3", grp:"Increased fragility (haemolysis at higher saline concentration)", analyte:{key:"mcf",label:"Median Corpuscular Fragility",convUnit:"% NaCl",siUnit:"% NaCl",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.46,hi:null}, si:{lo:0.46,hi:null} },
-      { rid:"r4", grp:"Decreased fragility", analyte:{key:"mcf",label:"Median Corpuscular Fragility",convUnit:"% NaCl",siUnit:"% NaCl",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.39}, si:{lo:null,hi:0.39} }
+      { rid:"r1", kind:"dx", grp:"EMA binding — reduced mean fluorescence vs control suggests hereditary spherocytosis", analyte:{key:"ema",label:"EMA Binding",convUnit:"ratio to control",siUnit:"ratio to control",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Normal: ratio comparable to control; reduced binding = positive screen"}, si:{lo:null,hi:null,txt:"Normal: comparable to control"} },
+      { rid:"r2", kind:"ref", grp:"Classical osmotic fragility — 50% haemolysis (MCF)", analyte:{key:"mcf",label:"Median Corpuscular Fragility",convUnit:"% NaCl",siUnit:"% NaCl",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.40,hi:0.45}, si:{lo:0.40,hi:0.45} },
+      { rid:"r3", kind:"dx", grp:"Increased fragility (haemolysis at higher saline concentration)", analyte:{key:"mcf",label:"Median Corpuscular Fragility",convUnit:"% NaCl",siUnit:"% NaCl",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.46,hi:null}, si:{lo:0.46,hi:null} },
+      { rid:"r4", kind:"dx", grp:"Decreased fragility", analyte:{key:"mcf",label:"Median Corpuscular Fragility",convUnit:"% NaCl",siUnit:"% NaCl",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.39}, si:{lo:null,hi:0.39} }
     ],
     critical:null,
     inc:["INCREASED fragility: hereditary spherocytosis (the main indication), autoimmune haemolytic anaemia with spherocytes, ABO haemolytic disease of the newborn, hypophosphataemia, severe burns"],
@@ -4303,11 +4303,11 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"g/dL", si:"g/L", factor:10 },
     ranges:[
-      { rid:"r1", grp:"Normal pericardial fluid volume", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"15–50 mL of clear straw-coloured fluid"}, si:{lo:null,hi:null,txt:"15–50 mL clear straw-coloured"} },
-      { rid:"r2", grp:"Fluid:serum protein ratio — exudate", analyte:{key:"protratio",label:"Fluid:Serum Protein",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.5,hi:null}, si:{lo:0.5,hi:null} },
-      { rid:"r3", grp:"Fluid:serum LDH ratio — exudate", analyte:{key:"ldhratio",label:"Fluid:Serum LDH",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.6,hi:null}, si:{lo:0.6,hi:null} },
-      { rid:"r4", grp:"Adenosine deaminase — supports tuberculous pericarditis", analyte:{key:"ada",label:"Pericardial ADA",convUnit:"U/L",siUnit:"U/L",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:40,hi:null}, si:{lo:40,hi:null} },
-      { rid:"r5", grp:"Lymphocyte predominance — tuberculous or malignant", analyte:{key:"lymph",label:"Lymphocytes",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:50,hi:null}, si:{lo:50,hi:null} }
+      { rid:"r1", kind:"note", grp:"Normal pericardial fluid volume", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"15–50 mL of clear straw-coloured fluid"}, si:{lo:null,hi:null,txt:"15–50 mL clear straw-coloured"} },
+      { rid:"r2", kind:"dx", grp:"Fluid:serum protein ratio — exudate", analyte:{key:"protratio",label:"Fluid:Serum Protein",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.5,hi:null}, si:{lo:0.5,hi:null} },
+      { rid:"r3", kind:"dx", grp:"Fluid:serum LDH ratio — exudate", analyte:{key:"ldhratio",label:"Fluid:Serum LDH",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.6,hi:null}, si:{lo:0.6,hi:null} },
+      { rid:"r4", kind:"dx", grp:"Adenosine deaminase — supports tuberculous pericarditis", analyte:{key:"ada",label:"Pericardial ADA",convUnit:"U/L",siUnit:"U/L",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:40,hi:null}, si:{lo:40,hi:null} },
+      { rid:"r5", kind:"dx", grp:"Lymphocyte predominance — tuberculous or malignant", analyte:{key:"lymph",label:"Lymphocytes",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:50,hi:null}, si:{lo:50,hi:null} }
     ],
     critical:{ txt:"Cardiac tamponade (hypotension, raised JVP, pulsus paradoxus, echocardiographic right ventricular collapse) — this is a clinical emergency requiring immediate drainage, not a laboratory diagnosis. Purulent pericarditis requires urgent surgical drainage and antibiotics", lo:null, hi:null },
     inc:["TUBERCULOUS pericarditis: lymphocytic exudate with high protein, high ADA, low glucose — the commonest cause of a large chronic pericardial effusion in India and a leading cause of constrictive pericarditis","MALIGNANT: lymphocytic or haemorrhagic exudate with positive cytology — lung, breast, lymphoma, mesothelioma","PURULENT (bacterial): neutrophilic, very low glucose, high LDH, positive Gram stain — a surgical emergency with high mortality","Uraemic pericarditis, post-myocardial infarction, post-cardiac surgery, autoimmune (lupus, rheumatoid), hypothyroid (often a large transudative effusion), viral"],
@@ -4328,15 +4328,15 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mg/24 h", si:"mmol/24 h", factor:0.025 },
     ranges:[
-      { rid:"r1", grp:"Urine volume — target for stone prevention", analyte:{key:"vol",label:"24-h Volume",convUnit:"mL/24 h",siUnit:"L/24 h",factor:0.001}, sex:"any", age:"adult", preg:null, conv:{lo:2000,hi:null}, si:{lo:2.0,hi:null} },
-      { rid:"r2", grp:"Calcium — adult male", analyte:{key:"ca",label:"Urine Calcium"}, sex:"M", age:"adult", preg:null, conv:{lo:null,hi:300}, si:{lo:null,hi:7.5} },
-      { rid:"r3", grp:"Calcium — adult female", analyte:{key:"ca",label:"Urine Calcium"}, sex:"F", age:"adult", preg:null, conv:{lo:null,hi:250}, si:{lo:null,hi:6.25} },
-      { rid:"r4", grp:"Oxalate", analyte:{key:"ox",label:"Urine Oxalate",convUnit:"mg/24 h",siUnit:"µmol/24 h",factor:11.1}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:45}, si:{lo:null,hi:500} },
-      { rid:"r5", grp:"Citrate — low citrate promotes stones", analyte:{key:"cit",label:"Urine Citrate",convUnit:"mg/24 h",siUnit:"mmol/24 h",factor:0.0052}, sex:"any", age:"adult", preg:null, conv:{lo:320,hi:null}, si:{lo:1.67,hi:null} },
-      { rid:"r6", grp:"Uric acid", analyte:{key:"ua",label:"Urine Uric Acid",convUnit:"mg/24 h",siUnit:"mmol/24 h",factor:0.00595}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:800}, si:{lo:null,hi:4.76} },
-      { rid:"r7", grp:"Sodium — a surrogate for salt intake, which drives calcium excretion", analyte:{key:"na",label:"Urine Sodium",convUnit:"mmol/24 h",siUnit:"mmol/24 h",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:100}, si:{lo:null,hi:100} },
-      { rid:"r8", grp:"Creatinine — completeness check, male", analyte:{key:"cr",label:"Urine Creatinine",convUnit:"mg/kg/24 h",siUnit:"mg/kg/24 h",noConvert:true}, sex:"M", age:"adult", preg:null, conv:{lo:18,hi:24}, si:{lo:18,hi:24} },
-      { rid:"r9", grp:"Creatinine — completeness check, female", analyte:{key:"cr",label:"Urine Creatinine",convUnit:"mg/kg/24 h",siUnit:"mg/kg/24 h",noConvert:true}, sex:"F", age:"adult", preg:null, conv:{lo:15,hi:20}, si:{lo:15,hi:20} }
+      { rid:"r1", kind:"target", grp:"Urine volume — target for stone prevention", analyte:{key:"vol",label:"24-h Volume",convUnit:"mL/24 h",siUnit:"L/24 h",factor:0.001}, sex:"any", age:"adult", preg:null, conv:{lo:2000,hi:null}, si:{lo:2.0,hi:null} },
+      { rid:"r2", kind:"ref", grp:"Calcium — adult male", analyte:{key:"ca",label:"Urine Calcium"}, sex:"M", age:"adult", preg:null, conv:{lo:null,hi:300}, si:{lo:null,hi:7.5} },
+      { rid:"r3", kind:"ref", grp:"Calcium — adult female", analyte:{key:"ca",label:"Urine Calcium"}, sex:"F", age:"adult", preg:null, conv:{lo:null,hi:250}, si:{lo:null,hi:6.25} },
+      { rid:"r4", kind:"ref", grp:"Oxalate", analyte:{key:"ox",label:"Urine Oxalate",convUnit:"mg/24 h",siUnit:"µmol/24 h",factor:11.1}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:45}, si:{lo:null,hi:500} },
+      { rid:"r5", kind:"ref", grp:"Citrate — low citrate promotes stones", analyte:{key:"cit",label:"Urine Citrate",convUnit:"mg/24 h",siUnit:"mmol/24 h",factor:0.0052}, sex:"any", age:"adult", preg:null, conv:{lo:320,hi:null}, si:{lo:1.67,hi:null} },
+      { rid:"r6", kind:"ref", grp:"Uric acid", analyte:{key:"ua",label:"Urine Uric Acid",convUnit:"mg/24 h",siUnit:"mmol/24 h",factor:0.00595}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:800}, si:{lo:null,hi:4.76} },
+      { rid:"r7", kind:"ref", grp:"Sodium — a surrogate for salt intake, which drives calcium excretion", analyte:{key:"na",label:"Urine Sodium",convUnit:"mmol/24 h",siUnit:"mmol/24 h",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:100}, si:{lo:null,hi:100} },
+      { rid:"r8", kind:"ref", grp:"Creatinine — completeness check, male", analyte:{key:"cr",label:"Urine Creatinine",convUnit:"mg/kg/24 h",siUnit:"mg/kg/24 h",noConvert:true}, sex:"M", age:"adult", preg:null, conv:{lo:18,hi:24}, si:{lo:18,hi:24} },
+      { rid:"r9", kind:"ref", grp:"Creatinine — completeness check, female", analyte:{key:"cr",label:"Urine Creatinine",convUnit:"mg/kg/24 h",siUnit:"mg/kg/24 h",noConvert:true}, sex:"F", age:"adult", preg:null, conv:{lo:15,hi:20}, si:{lo:15,hi:20} }
     ],
     critical:{ txt:"Markedly raised urinary oxalate (above about 100 mg/24 h) in a young patient with recurrent stones or nephrocalcinosis — consider PRIMARY HYPEROXALURIA and refer; untreated it causes end-stage renal failure and systemic oxalosis", lo:null, hi:null, analyte:["ox"] },
     inc:["HYPERCALCIURIA: idiopathic (the commonest), high salt intake, primary hyperparathyroidism, vitamin D excess, sarcoidosis, distal renal tubular acidosis, immobilisation, loop diuretics, glucocorticoids","HYPEROXALURIA: dietary (spinach, beetroot, nuts, tea, chocolate, high-dose vitamin C), enteric (fat malabsorption, after bariatric surgery, inflammatory bowel disease), primary hyperoxaluria (genetic)","HYPERURICOSURIA: high purine intake, gout, myeloproliferative disease, uricosuric drugs","HYPERNATRIURIA: high dietary salt — raises calcium excretion and is one of the most modifiable factors"],
@@ -4357,11 +4357,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"% of gated cells", si:"% of gated cells", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Normal peripheral blood — no aberrant population", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No immunophenotypically abnormal or clonal population identified"}, si:{lo:null,hi:null,txt:"No abnormal population identified"} },
-      { rid:"r2", grp:"Blasts (CD34+/CD117+) in marrow — acute leukaemia threshold", analyte:{key:"blast",label:"Blasts",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:20,hi:null}, si:{lo:20,hi:null} },
-      { rid:"r3", grp:"Kappa:lambda ratio on B cells — polyclonal (normal)", analyte:{key:"klratio",label:"Surface κ:λ Ratio",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.5,hi:3.0}, si:{lo:0.5,hi:3.0} },
-      { rid:"r4", grp:"Minimal residual disease — commonly reported threshold", analyte:{key:"mrd",label:"MRD",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.01}, si:{lo:null,hi:0.01} },
-      { rid:"r5", grp:"PNH clone — granulocyte GPI-deficient population", analyte:{key:"pnh",label:"PNH Clone",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.01}, si:{lo:null,hi:0.01} }
+      { rid:"r1", kind:"note", grp:"Normal peripheral blood — no aberrant population", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"No immunophenotypically abnormal or clonal population identified"}, si:{lo:null,hi:null,txt:"No abnormal population identified"} },
+      { rid:"r2", kind:"cutoff", grp:"Blasts (CD34+/CD117+) in marrow — acute leukaemia threshold", analyte:{key:"blast",label:"Blasts",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:20,hi:null}, si:{lo:20,hi:null} },
+      { rid:"r3", kind:"ref", grp:"Kappa:lambda ratio on B cells — polyclonal (normal)", analyte:{key:"klratio",label:"Surface κ:λ Ratio",convUnit:"ratio",siUnit:"ratio",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.5,hi:3.0}, si:{lo:0.5,hi:3.0} },
+      { rid:"r4", kind:"cutoff", grp:"Minimal residual disease — commonly reported threshold", analyte:{key:"mrd",label:"MRD",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.01}, si:{lo:null,hi:0.01} },
+      { rid:"r5", kind:"dx", grp:"PNH clone — granulocyte GPI-deficient population", analyte:{key:"pnh",label:"PNH Clone",convUnit:"%",siUnit:"%",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.01}, si:{lo:null,hi:0.01} }
     ],
     critical:{ txt:"Acute promyelocytic leukaemia suspected (characteristic phenotype with coagulopathy) — a haematological emergency; start ATRA on suspicion without waiting for genetic confirmation, and correct the coagulopathy aggressively", lo:null, hi:null },
     inc:["Acute leukaemia: 20% or more blasts with a lineage-defining phenotype (myeloid, B-lymphoid, T-lymphoid, or mixed phenotype)","Chronic lymphoproliferative disorders: CLL with its characteristic phenotype, mantle cell, follicular, hairy cell and marginal zone lymphoma, each with distinct marker patterns","Clonal B cells shown by a skewed surface kappa:lambda ratio","Plasma cell neoplasms: aberrant CD56+, CD19-negative plasma cells","Aberrant T-cell phenotypes in T-cell lymphoma and Sézary syndrome","Detectable MRD after treatment — a powerful predictor of relapse"],
@@ -4382,11 +4382,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"bands", si:"bands", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Oligoclonal bands — normal", analyte:{key:"ocb",label:"Oligoclonal Bands",convUnit:"bands",siUnit:"bands",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1}, si:{lo:null,hi:1} },
-      { rid:"r2", grp:"Positive — ≥2 bands in CSF and absent from paired serum", analyte:{key:"ocb",label:"Oligoclonal Bands",convUnit:"bands",siUnit:"bands",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:2,hi:null}, si:{lo:2,hi:null} },
-      { rid:"r3", grp:"IgG index — normal", analyte:{key:"iggindex",label:"IgG Index",convUnit:"index",siUnit:"index",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.7}, si:{lo:null,hi:0.7} },
-      { rid:"r4", grp:"IgG index — raised, indicating intrathecal IgG synthesis", analyte:{key:"iggindex",label:"IgG Index",convUnit:"index",siUnit:"index",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.7,hi:null}, si:{lo:0.7,hi:null} },
-      { rid:"r5", grp:"CSF kappa free light chain index — quantitative alternative", analyte:{key:"kfl",label:"CSF κ-FLC Index",convUnit:"index",siUnit:"index",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Laboratory-specific cut-off; performance comparable to OCB"}, si:{lo:null,hi:null,txt:"Laboratory-specific cut-off"} }
+      { rid:"r1", kind:"ref", grp:"Oligoclonal bands — normal", analyte:{key:"ocb",label:"Oligoclonal Bands",convUnit:"bands",siUnit:"bands",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:1}, si:{lo:null,hi:1} },
+      { rid:"r2", kind:"dx", grp:"Positive — ≥2 bands in CSF and absent from paired serum", analyte:{key:"ocb",label:"Oligoclonal Bands",convUnit:"bands",siUnit:"bands",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:2,hi:null}, si:{lo:2,hi:null} },
+      { rid:"r3", kind:"ref", grp:"IgG index — normal", analyte:{key:"iggindex",label:"IgG Index",convUnit:"index",siUnit:"index",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:0.7}, si:{lo:null,hi:0.7} },
+      { rid:"r4", kind:"dx", grp:"IgG index — raised, indicating intrathecal IgG synthesis", analyte:{key:"iggindex",label:"IgG Index",convUnit:"index",siUnit:"index",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:0.7,hi:null}, si:{lo:0.7,hi:null} },
+      { rid:"r5", kind:"note", grp:"CSF kappa free light chain index — quantitative alternative", analyte:{key:"kfl",label:"CSF κ-FLC Index",convUnit:"index",siUnit:"index",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Laboratory-specific cut-off; performance comparable to OCB"}, si:{lo:null,hi:null,txt:"Laboratory-specific cut-off"} }
     ],
     critical:null,
     inc:["MULTIPLE SCLEROSIS — oligoclonal bands are present in 85–95% of cases and now satisfy the dissemination-in-time criterion in the McDonald diagnostic framework","CNS infection: neurosyphilis, subacute sclerosing panencephalitis, HIV, Lyme neuroborreliosis, tuberculous and viral meningoencephalitis","Autoimmune and inflammatory CNS disease: neurosarcoidosis, lupus with CNS involvement, paraneoplastic and autoimmune encephalitis","CNS lymphoma","Identical bands in BOTH CSF and serum: a systemic paraprotein or systemic immune activation, NOT intrathecal synthesis"],
@@ -4407,12 +4407,12 @@ const LABREF_TESTS = [
     assayDep:false,
     units:{ conv:"mmol/L", si:"mmol/L", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Normal — cystic fibrosis unlikely (infants ≤6 months)", sex:"any", age:"infant", preg:null, conv:{lo:null,hi:29}, si:{lo:null,hi:29} },
-      { rid:"r2", grp:"Intermediate — repeat and proceed to CFTR genetics", sex:"any", age:"infant", preg:null, conv:{lo:30,hi:59}, si:{lo:30,hi:59} },
-      { rid:"r3", grp:"Positive — consistent with cystic fibrosis", sex:"any", age:"infant", preg:null, conv:{lo:60,hi:null}, si:{lo:60,hi:null} },
-      { rid:"r4", grp:"Normal — children and adults", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:29}, si:{lo:null,hi:29} },
-      { rid:"r5", grp:"Intermediate — children and adults", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:59}, si:{lo:30,hi:59} },
-      { rid:"r6", grp:"Positive — children and adults", sex:"any", age:"adult", preg:null, conv:{lo:60,hi:null}, si:{lo:60,hi:null} }
+      { rid:"r1", kind:"cutoff", grp:"Normal — cystic fibrosis unlikely (infants ≤6 months)", sex:"any", age:"infant", preg:null, conv:{lo:null,hi:29}, si:{lo:null,hi:29} },
+      { rid:"r2", kind:"dx", grp:"Intermediate — repeat and proceed to CFTR genetics", sex:"any", age:"infant", preg:null, conv:{lo:30,hi:59}, si:{lo:30,hi:59} },
+      { rid:"r3", kind:"dx", grp:"Positive — consistent with cystic fibrosis", sex:"any", age:"infant", preg:null, conv:{lo:60,hi:null}, si:{lo:60,hi:null} },
+      { rid:"r4", kind:"ref", grp:"Normal — children and adults", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:29}, si:{lo:null,hi:29} },
+      { rid:"r5", kind:"dx", grp:"Intermediate — children and adults", sex:"any", age:"adult", preg:null, conv:{lo:30,hi:59}, si:{lo:30,hi:59} },
+      { rid:"r6", kind:"dx", grp:"Positive — children and adults", sex:"any", age:"adult", preg:null, conv:{lo:60,hi:null}, si:{lo:60,hi:null} }
     ],
     critical:{ txt:"Infants with cystic fibrosis can present with hyponatraemic, hypochloraemic metabolic alkalosis and shock from salt loss, especially in hot weather — a life-threatening pseudo-Bartter presentation requiring urgent saline and potassium replacement", lo:null, hi:null },
     inc:["CYSTIC FIBROSIS — the indication","False positives: untreated adrenal insufficiency, hypothyroidism, nephrogenic diabetes insipidus, severe malnutrition, ectodermal dysplasia, glycogen storage disease type I, mucopolysaccharidosis, anorexia nervosa, eczema at the collection site","Technical error: evaporation, contamination, or an inadequate sweat sample"],
@@ -4433,11 +4433,11 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"DOB / Index", si:"DOB / Index", factor:1 },
     ranges:[
-      { rid:"r1", grp:"Urea breath test — negative", analyte:{key:"ubt",label:"Urea Breath Test",convUnit:"DOB ‰",siUnit:"DOB ‰",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:4}, si:{lo:null,hi:4} },
-      { rid:"r2", grp:"Urea breath test — positive (kit-specific cut-off)", analyte:{key:"ubt",label:"Urea Breath Test",convUnit:"DOB ‰",siUnit:"DOB ‰",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:4,hi:null}, si:{lo:4,hi:null} },
-      { rid:"r3", grp:"Stool antigen — normal result is NEGATIVE", analyte:{key:"hpsa",label:"Stool Antigen",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r4", grp:"Rapid urease test on biopsy — normal result is NEGATIVE", analyte:{key:"rut",label:"Rapid Urease Test",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
-      { rid:"r5", grp:"Serum IgG antibody — cannot distinguish current from past infection", analyte:{key:"igg",label:"Serum IgG",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Not for diagnosis of active infection or for confirming cure"}, si:{lo:null,hi:null,txt:"Not for active infection or cure"} }
+      { rid:"r1", kind:"dx", grp:"Urea breath test — negative", analyte:{key:"ubt",label:"Urea Breath Test",convUnit:"DOB ‰",siUnit:"DOB ‰",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:4}, si:{lo:null,hi:4} },
+      { rid:"r2", kind:"cutoff", grp:"Urea breath test — positive (kit-specific cut-off)", analyte:{key:"ubt",label:"Urea Breath Test",convUnit:"DOB ‰",siUnit:"DOB ‰",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:4,hi:null}, si:{lo:4,hi:null} },
+      { rid:"r3", kind:"dx", grp:"Stool antigen — normal result is NEGATIVE", analyte:{key:"hpsa",label:"Stool Antigen",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r4", kind:"dx", grp:"Rapid urease test on biopsy — normal result is NEGATIVE", analyte:{key:"rut",label:"Rapid Urease Test",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Negative"}, si:{lo:null,hi:null,txt:"Negative"} },
+      { rid:"r5", kind:"note", grp:"Serum IgG antibody — cannot distinguish current from past infection", analyte:{key:"igg",label:"Serum IgG",convUnit:"qualitative",siUnit:"qualitative",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Not for diagnosis of active infection or for confirming cure"}, si:{lo:null,hi:null,txt:"Not for active infection or cure"} }
     ],
     critical:{ txt:"Dyspepsia with alarm features — weight loss, dysphagia, persistent vomiting, anaemia, gastrointestinal bleeding, a palpable mass, or new onset over the age of 45–50 — requires ENDOSCOPY, not a test-and-treat approach", lo:null, hi:null },
     inc:["Active H. pylori infection — very common in India, with population prevalence often above 50–70% and acquisition typically in childhood","False positives are uncommon; other urease-producing organisms (Proteus, Klebsiella in achlorhydria) can rarely cause a positive urease-based test"],
@@ -4458,12 +4458,12 @@ const LABREF_TESTS = [
     assayDep:true,
     units:{ conv:"IU/mL", si:"IU/mL", factor:1 },
     ranges:[
-      { rid:"r1", grp:"ASO — adult upper limit of normal", analyte:{key:"aso",label:"ASO Titre"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:200}, si:{lo:null,hi:200} },
-      { rid:"r2", grp:"ASO — school-age child (5–15 y) upper limit of normal", analyte:{key:"aso",label:"ASO Titre"}, sex:"any", age:"child", preg:null, conv:{lo:null,hi:320}, si:{lo:null,hi:320} },
-      { rid:"r3", grp:"ASO — preschool child upper limit of normal", analyte:{key:"aso",label:"ASO Titre"}, sex:"any", age:"infant", preg:null, conv:{lo:null,hi:120}, si:{lo:null,hi:120} },
-      { rid:"r4", grp:"Anti-DNase B — adult upper limit of normal", analyte:{key:"dnase",label:"Anti-DNase B",convUnit:"U/mL",siUnit:"U/mL",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:200}, si:{lo:null,hi:200} },
-      { rid:"r5", grp:"Anti-DNase B — school-age child upper limit of normal", analyte:{key:"dnase",label:"Anti-DNase B",convUnit:"U/mL",siUnit:"U/mL",noConvert:true}, sex:"any", age:"child", preg:null, conv:{lo:null,hi:480}, si:{lo:null,hi:480} },
-      { rid:"r6", grp:"A two-fold or greater rise between paired sera is the significant result", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Paired sera 2–4 weeks apart: ≥2-fold rise"}, si:{lo:null,hi:null,txt:"≥2-fold rise on paired sera"} }
+      { rid:"r1", kind:"ref", grp:"ASO — adult upper limit of normal", analyte:{key:"aso",label:"ASO Titre"}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:200}, si:{lo:null,hi:200} },
+      { rid:"r2", kind:"ref", grp:"ASO — school-age child (5–15 y) upper limit of normal", analyte:{key:"aso",label:"ASO Titre"}, sex:"any", age:"child", preg:null, conv:{lo:null,hi:320}, si:{lo:null,hi:320} },
+      { rid:"r3", kind:"ref", grp:"ASO — preschool child upper limit of normal", analyte:{key:"aso",label:"ASO Titre"}, sex:"any", age:"infant", preg:null, conv:{lo:null,hi:120}, si:{lo:null,hi:120} },
+      { rid:"r4", kind:"ref", grp:"Anti-DNase B — adult upper limit of normal", analyte:{key:"dnase",label:"Anti-DNase B",convUnit:"U/mL",siUnit:"U/mL",noConvert:true}, sex:"any", age:"adult", preg:null, conv:{lo:null,hi:200}, si:{lo:null,hi:200} },
+      { rid:"r5", kind:"ref", grp:"Anti-DNase B — school-age child upper limit of normal", analyte:{key:"dnase",label:"Anti-DNase B",convUnit:"U/mL",siUnit:"U/mL",noConvert:true}, sex:"any", age:"child", preg:null, conv:{lo:null,hi:480}, si:{lo:null,hi:480} },
+      { rid:"r6", kind:"note", grp:"A two-fold or greater rise between paired sera is the significant result", sex:"any", age:"adult", preg:null, conv:{lo:null,hi:null,txt:"Paired sera 2–4 weeks apart: ≥2-fold rise"}, si:{lo:null,hi:null,txt:"≥2-fold rise on paired sera"} }
     ],
     critical:{ txt:"Acute rheumatic fever with carditis — admit, treat the streptococcal infection, manage heart failure, and start secondary prophylaxis with benzathine penicillin, which must then continue for years; failure to maintain prophylaxis is the principal cause of progressive rheumatic heart disease", lo:null, hi:null },
     inc:["Recent group A streptococcal infection: pharyngitis (ASO rises in 1–3 weeks, peaks at 3–6 weeks, falls over months), pyoderma (anti-DNase B more reliable)","Acute rheumatic fever and post-streptococcal glomerulonephritis — as evidence of antecedent infection","Post-streptococcal reactive arthritis, Sydenham chorea, PANDAS (contested)","Healthy carriers and children in high-exposure populations often have raised baseline titres with no disease","Hyperlipidaemia and some liver disease can cause non-specific elevation"],

@@ -455,30 +455,130 @@ function rowsFor(t, key){
 /* Score every row for a test/component and return the rows tied at the
    top score, alongside the full row list. Used by both bestRange() (which
    just needs ONE row) and tiedCandidates() (which needs to know when more
-   than one row genuinely ties, so the interpreter can ask instead of guess). */
+   than one row genuinely ties, so the interpreter can ask instead of guess).
+   Scoped to kind "ref"/"method" only — a diagnostic/target/cutoff row is
+   never a population reference interval, and letting one tie against a
+   real ref row (or against another dx/cutoff/target row that just happens
+   to share a demographic key) produced exactly the wrong "which group
+   applies?" prompt for tests like Vitamin D, whose dx rows form a clean
+   value-ordered ladder instead — see classifyAgainstLadder(). A test with
+   no ref/method row at all (Vitamin D has none) correctly yields no match
+   here; its content lives entirely in the ladder. */
 function scoredCandidates(t, key){
   const comps = componentsOf(t);
-  const rows = comps ? rowsFor(t, key || comps[0].key) : t.ranges;
+  const rows = (comps ? rowsFor(t, key || comps[0].key) : t.ranges)
+    .filter(r=> r.kind==="ref" || r.kind==="method" || r.kind==null);
   let bs = -1;
   const scored = rows.map(r=>({ r, s:rangeScore(r) }));
   scored.forEach(x=>{ if(x.s>bs) bs = x.s; });
   const top = bs>=0 ? scored.filter(x=>x.s===bs).map(x=>x.r) : [];
   return { top, rows };
 }
+/* The fallback below used to be rows.find(...) || rows[0] with no match
+   check — safe back when `rows` was every range on the test, so there was
+   always at least one genuinely generic row to fall back to. Now that
+   scoredCandidates() kind-restricts `rows` to ref/method only (see above),
+   a test whose general-population content is tagged dx/cutoff/target with
+   no separate ref row (d-dimer: its two adult cutoffs are kind "cutoff",
+   leaving only the three pregnancy-only "ref" rows in `rows`) could have
+   NO row in `rows` that actually matches the current patient at all — the
+   old unconditional rows[0] fallback then returned a pregnancy range for a
+   male patient. Never return a row that fails rangeMatches(); returning
+   null (no ref/method range available) is always safer than guessing. */
 function bestRange(t, key){
   const { top, rows } = scoredCandidates(t, key);
-  return top[0] || rows.find(r=>r.age==="adult"&&r.sex==="any") || rows[0] || null;
+  if(top[0]) return top[0];
+  const matching = rows.filter(r=>rangeMatches(r));
+  return matching.find(r=>r.age==="adult"&&r.sex==="any") || matching[0] || null;
 }
-/* When two or more rows score identically for the current patient mode —
-   e.g. ESR "male <50y" and "male ≥50y" both just match sex=male, age=adult —
-   there is no single correct pick. Returns the tied rows (2+) so the caller
-   can make the user choose by label instead of silently taking the first
-   one, or null when there's no genuine tie. qa/known_tie_groups.json tracks
-   every test where this is expected; qa/validate_ties.js fails the build if
-   a new, unreviewed tie shows up. */
+/* When two or more ref/method rows score identically for the current
+   patient mode — e.g. ESR "male <50y" and "male ≥50y" both just match
+   sex=male, age=adult — there is no single correct pick. Returns the tied
+   rows (2+) so the caller can make the user choose by label instead of
+   silently taking the first one, or null when there's no genuine tie.
+   qa/known_tie_groups.json tracks every test where this is expected;
+   qa/validate_ties.js fails the build if a new, unreviewed tie shows up. */
 function tiedCandidates(t, key){
   const { top } = scoredCandidates(t, key);
   return top.length>1 ? top : null;
+}
+
+/* ---------------------------------------------------- VALUE-ORDERED BANDS
+   A dx/cutoff/target row is never matched by demographic chips the way a
+   ref/method row is — "Vitamin D deficient / insufficient / sufficient /
+   toxic" isn't four options for four different kinds of patient, it's four
+   slices of the VALUE axis. Given a number, exactly one slice applies, and
+   which one is a lookup, not a guess. These helpers find that slice — or,
+   for the handful of tests where the rows genuinely aren't a clean ladder
+   (same demographic key, but picking between them needs clinical context
+   a number can't supply — e.g. anti-Xa's four rows differ by drug/dosing
+   regimen, not by value), say so instead of pretending one is deducible. */
+function ladderRowsFor(t, key){
+  const comps = componentsOf(t);
+  const rows = comps ? rowsFor(t, key || comps[0].key) : t.ranges;
+  return rows.filter(r=> (r.kind==="dx"||r.kind==="cutoff"||r.kind==="target") && rangeMatches(r));
+}
+function bandBounds(r){
+  const u = S.units==="si" ? r.si : r.conv;
+  return [ u&&u.lo!=null ? u.lo : -Infinity, u&&u.hi!=null ? u.hi : Infinity ];
+}
+/* True when every pair of rows is either non-overlapping or one fully
+   contains the other (a severity refinement, e.g. "deficient <20" wholly
+   containing "severely deficient <10") — the two shapes a real value
+   ladder takes. Any other overlap means picking between them needs
+   something a number alone can't supply. */
+function isValueLadder(rows){
+  const withBounds = rows.filter(r=>{ const u=S.units==="si"?r.si:r.conv; return u && (u.lo!=null||u.hi!=null); });
+  if(withBounds.length < rows.length) return false;   // a non-numeric row can't be placed on the axis
+  for(let i=0;i<withBounds.length;i++) for(let j=i+1;j<withBounds.length;j++){
+    const [alo,ahi]=bandBounds(withBounds[i]), [blo,bhi]=bandBounds(withBounds[j]);
+    if(alo<bhi && blo<ahi){                            // intervals overlap at all
+      const nested = (alo<=blo && bhi<=ahi) || (blo<=alo && ahi<=bhi);
+      if(!nested) return false;
+    }
+  }
+  return withBounds.length>0;
+}
+/* The narrowest (most specific) band containing v, so a nested refinement
+   ("severely deficient", inside "deficient") wins over the broader band it
+   sits inside. When v falls in none of them — below the lowest band's
+   floor or above the highest band's ceiling, which happens whenever a
+   ladder doesn't cover the full axis (a single cutoff row is the extreme
+   case: only one "band" exists at all) — returns the nearest edge row
+   instead, flagged so the caller reports "below/above" rather than
+   pretending the value matched it. */
+function bandForValue(rows, v){
+  let best=null, bestWidth=Infinity;
+  rows.forEach(r=>{
+    const [lo,hi] = bandBounds(r);
+    if(v>=lo && v<hi){
+      const w = hi-lo;
+      if(w<bestWidth){ bestWidth=w; best=r; }
+    }
+  });
+  if(best) return { row:best, dir:null };
+  let nearest=null, nearestDist=Infinity, nearestDir=null;
+  rows.forEach(r=>{
+    const [lo,hi] = bandBounds(r);
+    const dist = v<lo ? lo-v : v-hi;
+    const dir = v<lo ? "below" : "above";
+    if(dist<nearestDist){ nearestDist=dist; nearest=r; nearestDir=dir; }
+  });
+  return nearest ? { row:nearest, dir:nearestDir } : null;
+}
+/* Entry point for the Result Interpreter: classify a value against this
+   test/component's dx/cutoff/target rows for the current patient mode.
+   Returns null (nothing to classify), {row} (a clean ladder pick), or
+   {needsChoice:true, choices} (rows that need clinical context, not a
+   value, to choose between — shown as reference info, not forced). */
+function classifyAgainstLadder(t, key, v){
+  const rows = ladderRowsFor(t, key);
+  if(!rows.length) return null;
+  if(rows.length===1 || isValueLadder(rows)){
+    const picked = bandForValue(rows, v);
+    return picked ? { row:picked.row, dir:picked.dir } : null;
+  }
+  return { needsChoice:true, choices: rows };
 }
 /* The unit label and conversion factor for one component, falling back to
    the test's panel-level default when the component doesn't override it. */
@@ -752,6 +852,18 @@ function componentRangeHtml(t, an){
      instead and say so, so the clinician picks by eye from the labels. */
   const tie = tiedCandidates(t, key);
   const br = bestRange(t, key);
+  /* Neither a ref/method winner nor a ref/method tie: the test's
+     general-population content may live entirely in dx/cutoff/target rows
+     with no separate ref row at all (d-dimer's two adult exclusion
+     cutoffs are kind "cutoff" — see qa/known_tie_groups.json's
+     ladder_fallback_groups). The detail page has no entered value to run
+     classifyAgainstLadder() against, so it falls back to showing
+     whichever such rows demographically match the current patient mode,
+     with the same "pick by eye" treatment as a ref/method tie. */
+  const demoFallback = (!tie && !br)
+    ? rowsFor(t,key).filter(r=>rangeMatches(r) && r.kind!=="ref" && r.kind!=="method" && r.kind!=="note")
+    : null;
+  const highlightSet = tie || (demoFallback && demoFallback.length ? demoFallback : null);
   let rows = "";
   if(ov){
     rows += `<tr class="localrow"><td class="grp"><b>Your lab</b>${ov.method?'<br><span class="muted">'+esc(ov.method)+'</span>':''}</td>
@@ -759,7 +871,7 @@ function componentRangeHtml(t, an){
   }
   if(!(S.localOnly && ov)){
     rowsFor(t,key).forEach(r=>{
-      const m = tie ? tie.includes(r) : (r===br);
+      const m = highlightSet ? highlightSet.includes(r) : (r===br);
       const unitSuffix = qualitativeTest(t) ? "" : " "+esc(S.units==="si"?cu.si:cu.conv);
       const rtxt = rangeText(r,S.units);
       rows += `<tr class="${m?'match':''}"><td class="grp">${esc(r.grp)}</td><td class="val${rtxt.length>24?' wrap':''}">${rtxt}${unitSuffix}</td></tr>`;
@@ -767,9 +879,10 @@ function componentRangeHtml(t, an){
   }
   let footnote = "";
   if(!qualitativeTest(t) && !cu.noConvert){
+    const multi = highlightSet && highlightSet.length>1;
     footnote = `<div class="unitnote">Showing ${S.units==="si"?"SI":"conventional"} units (${esc(S.units==="si"?cu.si:cu.conv)}).
       ${cu.factor?`Conversion: ${esc(cu.conv)} × ${cu.factor} = ${esc(cu.si)}.`:""}
-      ${tie ? "More than one highlighted row matches your current patient mode — pick the one that actually fits (see each row's own label) rather than trusting a single one."
+      ${multi ? "More than one highlighted row matches your current patient mode — pick the one that actually fits (see each row's own label) rather than trusting a single one."
             : "Highlighted row matches the current patient mode."}</div>`;
   }
   return rows + footnote;
@@ -1102,11 +1215,23 @@ function renderInterp(el){
     const forcedRid = tieSel ? tieSel.value : null;
     if(tie && !forcedRid){ out.innerHTML = `<div class="alert warn">More than one reference group matches — select which one applies above before interpreting.</div>`; return; }
     const r = activeRange(t, key, forcedRid || undefined);
-    if(!r || (r.lo==null && r.hi==null)){ out.innerHTML = `<div class="alert info">No numeric range available for this group — see the test page.</div>`; return; }
-    let flag="rf-normal", word="Within range";
-    if(r.hi!=null && v>r.hi){ flag="rf-high"; word="ABOVE range"; }
-    else if(r.lo!=null && v<r.lo){ flag="rf-low"; word="BELOW range"; }
-    const causes = word==="ABOVE range" ? t.inc : word==="BELOW range" ? t.dec : null;
+    /* A ref/method comparison (r) and a dx/cutoff/target classification
+       (band) are independent and can both apply — Vitamin D has no ref row
+       at all (band only), HbA1c has both (ref "Normal" AND the
+       prediabetes/diabetes ladder), and a handful of tests have no numeric
+       content for either (text-only results), which is the only case with
+       nothing to show. */
+    const band = classifyAgainstLadder(t, key, v);
+    const hasRef = r && (r.lo!=null || r.hi!=null);
+    if(!hasRef && !band){ out.innerHTML = `<div class="alert info">No numeric range available for this group — see the test page.</div>`; return; }
+
+    let flag=null, word=null, causes=null;
+    if(hasRef){
+      flag="rf-normal"; word="Within range";
+      if(r.hi!=null && v>r.hi){ flag="rf-high"; word="ABOVE range"; }
+      else if(r.lo!=null && v<r.lo){ flag="rf-low"; word="BELOW range"; }
+      causes = word==="ABOVE range" ? t.inc : word==="BELOW range" ? t.dec : null;
+    }
     const cu = componentUnit(t, an);
     const shownUnit = S.units==="si" ? cu.si : cu.conv;
     const ov = compOverride(t.id, key||"_");
@@ -1116,9 +1241,24 @@ function renderInterp(el){
        so it never appears while interpreting a different component. */
     const testCritApplies = !t.critical || !t.critical.analyte || !key || t.critical.analyte.includes(key);
     const crit = (ov&&ov.crit) || (testCritApplies && t.critical ? t.critical.txt : null);
-    out.innerHTML = `<div class="result-flag ${flag}">${v}${shownUnit?" "+esc(shownUnit):""} — ${word}${an?" ("+esc(an.label)+")":""}</div>
-      <div class="kv" style="margin-top:10px"><span class="k">Compared with</span>
-        <span class="v">${esc(r.grp)}${r.local?' <span class="badge b-local">Your lab</span>':''} · ${r.lo!=null?r.lo:"—"} – ${r.hi!=null?r.hi:"—"}</span></div>
+
+    const headline = hasRef
+      ? `<div class="result-flag ${flag}">${v}${shownUnit?" "+esc(shownUnit):""} — ${word}${an?" ("+esc(an.label)+")":""}</div>
+         <div class="kv" style="margin-top:10px"><span class="k">Compared with</span>
+           <span class="v">${esc(r.grp)}${r.local?' <span class="badge b-local">Your lab</span>':''} · ${r.lo!=null?r.lo:"—"} – ${r.hi!=null?r.hi:"—"}</span></div>`
+      : `<div class="result-flag rf-normal">${v}${shownUnit?" "+esc(shownUnit):""}${an?" ("+esc(an.label)+")":""}</div>`;
+
+    let bandHtml = "";
+    if(band && band.row){
+      const dirTxt = band.dir==="below" ? "Below the lowest defined band — nearest: " : band.dir==="above" ? "Above the highest defined band — nearest: " : "";
+      bandHtml = `<div class="kv" style="margin-top:10px"><span class="k">Classification</span>
+        <span class="v">${dirTxt}${esc(band.row.grp)}</span></div>`;
+    } else if(band && band.needsChoice){
+      bandHtml = `<div class="alert info" style="margin-top:10px">This also sits in one of several named categories, but which one depends on clinical context, not just the number — see the test page: ${band.choices.map(c=>esc(c.grp)).join(", ")}.</div>`;
+    }
+
+    out.innerHTML = `${headline}
+      ${bandHtml}
       ${crit?`<div class="alert crit" style="margin-top:10px"><b>Critical value:</b> ${esc(crit)}</div>`:""}
       ${t.assayDep?`<div class="alert warn"><b>Assay-dependent</b> — confirm against your analyser's own cutoff.</div>`:""}
       ${causes&&causes.length?`<h2 class="sec">Consider</h2><ul class="lst">${causes.slice(0,8).map(c=>"<li>"+esc(c)+"</li>").join("")}</ul>`:""}

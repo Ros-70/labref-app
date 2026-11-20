@@ -202,17 +202,63 @@ accepted: interval numbers corrected · label reworded (reported as a
 
 12 behaviours, all verified.
 
+## Method 6 — row-selection tie-break guard (new in v2.0, Stage 2b)
+
+`qa/validate_ties.js` — Node, no browser.
+
+**Why it exists:** two distinct silent-wrong-value bugs, both in the
+interpreter's row-picker rather than the override store (see CHANGELOG's
+Stage 2a/2b): `bestRange()` used to break a genuine *demographic* tie
+(ESR "male <50y" vs "male ≥50y" both just matching sex=male, age=adult) by
+array order, and the ref/method tie-chooser built to fix that in turn
+wrongly fired on `dx`/`cutoff`/`target` rows that form a clean
+*value*-ordered ladder (Vitamin D's four bands all apply to "any adult" —
+the entered number picks the band, not a demographic guess). Both classes
+need a human review gate the same way the rid guard does, because a
+future content change (a new age-banded row, a new diagnostic threshold
+sharing a key with an existing one) can silently reintroduce either failure
+mode.
+
+**What it enforces:**
+
+1. Recomputes every `ref`/`method` collision (same `(analyte, sex, age,
+   preg)` key, two or more rows) and checks each against
+   `qa/known_tie_groups.json`'s `groups` array. A new or changed one fails
+   the build.
+2. Recomputes every `dx`/`cutoff`/`target` group sharing a key and runs the
+   same `isValueLadder()` nesting-aware disjoint-interval check `shell.html`
+   uses (every row has numeric bounds, every pair of intervals disjoint or
+   nested) to tell a clean ladder (needs no review — the interpreter
+   resolves it from the entered value) from a genuine ladder-fallback
+   (needs clinical context a number can't supply). Checks every
+   ladder-fallback group against `known_tie_groups.json`'s
+   `ladder_fallback_groups` array; a new or changed one fails the build.
+
+A reviewed entry that no longer reproduces (because a later content fix
+resolved it, e.g. splitting a bundled measurand into its own analyte key)
+is reported as a non-fatal **notice**, so stale baseline rows surface for
+cleanup without blocking a build that made things strictly better.
+
+Regenerating the baseline is manual and deliberate: add or edit the
+relevant entry in `qa/known_tie_groups.json` directly, with a `_why`
+explaining the clinical reasoning, rather than an `--update` flag — unlike
+the rid guard, a tie's correctness can't be verified mechanically from the
+data alone; it needs a human judgment call about whether the group is a
+genuine ladder, a genuine ambiguity, or a bundled-measurand bug in
+disguise.
+
 ---
 
 ## Current status
 
-All five methods pass against the built `LabRef_v*.html`:
+All six methods pass against the built `LabRef_v*.html`:
 
 ```
 METHOD 2  validate_data.js   ERRORS: none   (180 tests, 26 categories, 11 tubes, 759 range rows)
 METHOD 5  validate_rids.js   ERRORS: none   (759 rids verified unchanged in meaning)
 METHOD 5b test_rid_guard.js  ERRORS: none   (12 guard behaviours verified)
-METHOD 3  audit_build.js     ERRORS: none   (703 KB, self-contained, 6 themes, cite tags: 0)
+METHOD 6  validate_ties.js   ERRORS: none   (22 ref/method ties, 8 ladder-fallback groups, all reviewed)
+METHOD 3  audit_build.js     ERRORS: none   (734 KB, self-contained, 6 themes, cite tags: 0)
 METHOD 1  test_v11_features   PASS          (feature regression, console errors: none)
 METHOD 4  test_all_tests      PASS          (180 pages, 243 interpreter combinations, errors: none)
 ```
@@ -230,7 +276,7 @@ design choice rather than a defect — see KNOWN_GAPS.md:
 ## Running in CI
 
 `.github/workflows/build.yml` runs this suite as **job 1**, and the Android
-build depends on it. Nothing is packaged unless all five methods pass, so a
+build depends on it. Nothing is packaged unless all six methods pass, so a
 clinical data error cannot reach an installable artifact. For a clinical
 reference app that ordering matters more than build speed.
 
@@ -241,7 +287,7 @@ suites also resolve the built HTML by glob in either layout (repo root or `app/`
 asserting exactly one build exists so a stale artifact is a hard error, so
 `bash qa/run_all.sh` works unchanged from inside this package.
 
-A fifth check runs on-device rather than here: `android/app/src/androidTest`
+One more check runs on-device rather than here: `android/app/src/androidTest`
 asserts that the APK actually contains all 180 tests, that the version matches,
 that localStorage works at the pinned origin, and that the JavaScript bridge
 survived R8. Those are host failures this suite structurally cannot see — see

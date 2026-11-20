@@ -38,6 +38,37 @@
    "r5",
    "r6",
    "r7"
+  ],
+  "crp": [
+   "r1",
+   "r2",
+   "r3",
+   "r4",
+   "r5",
+   "r6"
+  ],
+  "tpoab": [
+   "r1",
+   "r2"
+  ],
+  "csfada": [
+   "r1",
+   "r2",
+   "r3",
+   "r4"
+  ],
+  "saag": [
+   "r1",
+   "r2",
+   "r3"
+  ],
+  "psa": [
+   "r1",
+   "r2",
+   "r3",
+   "r4",
+   "r5",
+   "r6"
   ]
  },
  "tests": {
@@ -784,47 +815,47 @@
    }
   },
   "crp": {
-   "r1": {
+   "r7": {
     "grp": "Normal",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "crp"
    },
-   "r2": {
+   "r8": {
     "grp": "Mild rise",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "crp"
    },
-   "r3": {
+   "r9": {
     "grp": "Marked rise (bacterial infection likely)",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "crp"
    },
-   "r4": {
+   "r10": {
     "grp": "hs-CRP — low CV risk",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "hscrp"
    },
-   "r5": {
+   "r11": {
     "grp": "hs-CRP — average CV risk",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "hscrp"
    },
-   "r6": {
+   "r12": {
     "grp": "hs-CRP — high CV risk",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "hscrp"
    }
   },
   "bloodculture": {
@@ -1200,26 +1231,26 @@
    }
   },
   "saag": {
-   "r1": {
+   "r4": {
     "grp": "SAAG ≥1.1 — portal hypertension",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "saag"
    },
-   "r2": {
+   "r5": {
     "grp": "SAAG <1.1 — non-portal cause",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "saag"
    },
-   "r3": {
+   "r6": {
     "grp": "SBP threshold (fluid neutrophils)",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "sbpneut"
    }
   },
   "urea": {
@@ -2499,19 +2530,19 @@
    }
   },
   "tpoab": {
-   "r1": {
+   "r3": {
     "grp": "TPO antibody — negative",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "tpo"
    },
-   "r2": {
+   "r4": {
     "grp": "Thyroglobulin antibody — negative",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "tgab"
    }
   },
   "cortisol": {
@@ -3879,47 +3910,47 @@
    }
   },
   "psa": {
-   "r1": {
+   "r7": {
     "grp": "Age <50 y",
     "sex": "M",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "total"
    },
-   "r2": {
+   "r8": {
     "grp": "Age 50–59 y",
     "sex": "M",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "total"
    },
-   "r3": {
+   "r9": {
     "grp": "Age 60–69 y",
     "sex": "M",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "total"
    },
-   "r4": {
+   "r10": {
     "grp": "Age ≥70 y",
     "sex": "M",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "total"
    },
-   "r5": {
+   "r11": {
     "grp": "Free:total PSA ratio — higher cancer risk",
     "sex": "M",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "ratio"
    },
-   "r6": {
+   "r12": {
     "grp": "Post-radical prostatectomy — biochemical recurrence",
     "sex": "M",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "total"
    }
   },
   "cea": {
@@ -4415,33 +4446,33 @@
    }
   },
   "csfada": {
-   "r1": {
+   "r5": {
     "grp": "CSF — TB meningitis suggested",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "csf"
    },
-   "r2": {
+   "r6": {
     "grp": "Pleural fluid — TB pleuritis suggested",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "pleural"
    },
-   "r3": {
+   "r7": {
     "grp": "Ascitic fluid — TB peritonitis suggested",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "ascitic"
    },
-   "r4": {
+   "r8": {
     "grp": "Pericardial fluid — TB pericarditis suggested",
     "sex": "any",
     "age": "adult",
     "preg": null,
-    "analyte": null
+    "analyte": "pericardial"
    }
   },
   "pleuralfluid": {

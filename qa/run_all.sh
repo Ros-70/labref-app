@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# LabRef full verification — five independent methods.
+# LabRef full verification — six independent methods.
 # Usage:  bash qa/run_all.sh        (run from the repo root, after build.py)
 set -u
 cd "$(dirname "$0")/.."
@@ -17,6 +17,9 @@ node qa/validate_rids.js            || fail=1
 
 hr "METHOD 5b — self-test: the identity guard rejects what it claims to"
 node qa/test_rid_guard.js           || fail=1
+
+hr "METHOD 6 — row-selection tie-break guard (ref/method + ladder-fallback)"
+node qa/validate_ties.js            || fail=1
 
 hr "METHOD 3 — built-artifact structural audit (static analysis)"
 node qa/audit_build.js              || fail=1
@@ -36,5 +39,5 @@ for t in test_v11_features test_all_tests test_panel test5 test3 test6 checkbc f
 done
 
 hr "RESULT"
-if [ "$fail" -eq 0 ]; then echo "All five methods passed."; else echo "FAILURES ABOVE"; fi
+if [ "$fail" -eq 0 ]; then echo "All six methods passed."; else echo "FAILURES ABOVE"; fi
 exit $fail

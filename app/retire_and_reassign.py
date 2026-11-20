@@ -31,6 +31,11 @@ AFFECTED = {
     "folate": ["r1", "r2", "r3", "r4"],
     "urineroutine": ["r1", "r2", "r3", "r4", "r5", "r6", "r7", "r8"],
     "csfanalysis": ["r1", "r2", "r3", "r4", "r5", "r6", "r7"],
+    "crp": ["r1", "r2", "r3", "r4", "r5", "r6"],
+    "tpoab": ["r1", "r2"],
+    "csfada": ["r1", "r2", "r3", "r4"],
+    "saag": ["r1", "r2", "r3"],
+    "psa": ["r1", "r2", "r3", "r4", "r5", "r6"],
 }
 
 
